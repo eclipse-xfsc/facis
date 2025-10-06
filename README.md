@@ -202,6 +202,17 @@ Contributors are welcome to collaborate via GitHub under the organization [`ecli
 
 To contribute, you need to sign the **Eclipse Contributor Agreement (ECA)** and then fork and submit pull requests to the corresponding repository.  
 
+The FACIS repositories follow a consistent structure. Each repositories and its purposes are defined as follows,
+| Repository | Purpose | When to Use |
+|------------|---------|-------------|
+| `facis` | landing page of the FACIS project -links to all subcomponents | |
+|`facis-fap` | landing page for the Federation Architecture Pattern | |
+|`facis-poc'`| proof of concepts implementation and federation collaborations | |
+|`smart-deployment`| deployment stack and orchestration modules | |
+|`orchestration-engine`| core orchestration engine |  |
+|`trusted-cloud`| specification and implementation for Trusted Cloud project| |
+
+
 ---
 
 ## Resources  
