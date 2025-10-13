@@ -202,17 +202,52 @@ Contributors are welcome to collaborate via GitHub under the organization [`ecli
 
 To contribute, you need to sign the **Eclipse Contributor Agreement (ECA)** and then fork and submit pull requests to the corresponding repository.  
 
-The FACIS repositories follow a consistent structure. Each repositories and its purposes are defined as follows,
-| Repository | Purpose | When to Use |
-|------------|---------|-------------|
-| `facis` | landing page of the FACIS project -links to all subcomponents | |
-|`facis-fap` | landing page for the Federation Architecture Pattern | |
-|`facis-poc'`| proof of concepts implementation and federation collaborations | |
-|`smart-deployment`| deployment stack and orchestration modules | |
-|`orchestration-engine`| core orchestration engine |  |
-|`trusted-cloud`| specification and implementation for Trusted Cloud project| |
+This repository serve as the central-entry point for all the FACIS components. 
+| Component | Primary Goal | Repository Link |
+|-----------|--------------|-----------------|
+| FAP (Federation Architecture Pattern) | Standardized Blueprints for building federated services to connect different companies securely. | `eclipse-xfsc/facis-fap` |
+| DCS (Data Connector Service) | open-source software for secure, automated and legally compliant contract services. | `eclipse-xfsc/facis` (Linked within the main Facis repo) |
+| SLA (Service Level Agreements) | Defines the governance framework to ensure performance, security and accountability across multiple providers. | `eclipse-xfsc/facis` (Linked within the main Facis repo) |
+| POC (Proof-Of-Concepts) | Real-world scenarios implementation and validation demonstrating the FAPs and DCS. | `eclipse-xfsc/facis-poc` |
 
+### Core Component Repositories
+These are the main repositories where the development work takes place. 
 
+#### 1. FACIS-FAP (`eclipse-xfsc/facis-fap`)
+This repository is responsible for implementing the standarized templates/ blueprints for the specific collaboration use cases.
+- Patner onboarding (reference #facis-fap1-breakdown)
+  - Specification - Technical and Functional requirements.
+  - Implementation - Source code for FAP
+- Other FAP directories
+
+#### 2. FACIS-PoC (`eclipse-xfsc/facis-poc`)
+This repository contains the examples of how FAPs and DCS are combined to solve the real-world problems.
+- Federation Collaboration
+  - Specification - Defines the use cases and the expected results.
+  - Implementation - Source code and validation for the use cases.
+- Other PoC directories
+
+#### 3. Trusted Coud ('eclipse-xfsc/facis/trusted-cloud)
+This repository provides the specification and implementation for the project focused on the trusted cloud services. 
+- Specificaton - Detailed definition of the trusted service requirements.
+- Implementation - Source code for the trusted services.
+
+### Orchestration and Deployment Tools
+These repositories contains the source code to deploy and manage the federation services according to the FAPs.
+#### 4. Smart Deployment (`eclipse-xfsc/smart-deployment`)
+- Main Sub-components (Easy Stack Builder (ESB))
+  - ORCE (Orchestration Engine)
+  - Catalogue
+  - OCM-WStack
+  - PCM
+  - AA
+- AIFlow Builder
+
+#### 5. Orchestration Engine (`eclipse-xfsc/facis/orchestration-engine)
+This repository manages service flows and monitor performance.
+- core orchestration engine
+- Additional Folder
+  - scenarios/aw40-demonstrator
 ---
 
 ## Resources  
