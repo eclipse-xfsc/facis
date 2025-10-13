@@ -41,10 +41,10 @@ This repository provides the specification and implementation for the project fo
 
 ### Orchestration and Deployment Tools
 These repositories contains the source code to deploy and manage the federation services according to the FAPs.
-#### 4. Smart Deployment ([https://github.com/eclipse-xfsc/deployment](https://github.com/eclipse-xfsc/deployment))
-- Main Sub-components (Easy Stack Builder (ESB))
-  - ORCE (Orchestration Engine)
-  - Catalogue
+#### 4. Smart Deployment 
+- Main Sub-components (ESB - Easy Stack Builder [https://github.com/eclipse-xfsc/easy-stack-builder](https://github.com/eclipse-xfsc/easy-stack-builder) )
+  - ORCE (Orchestration Engine) [https://github.com/eclipse-xfsc/easy-stack-builder-orce](https://github.com/eclipse-xfsc/easy-stack-builder-orce)
+  - Catalogue [https://github.com/eclipse-xfsc/easy-stack-builder-catalogue](https://github.com/eclipse-xfsc/easy-stack-builder-catalogue)
   - OCM-WStack
   - PCM
   - AA
@@ -54,7 +54,7 @@ These repositories contains the source code to deploy and manage the federation 
 This repository manages service flows and monitor performance.
 - core orchestration engine
 - Additional Folder
-  - scenarios/aw40-demonstrator
+  - scenarios/aw40-demonstrator [https://github.com/eclipse-xfsc/aw40-demonstrator](https://github.com/eclipse-xfsc/aw40-demonstrator)
 
 ## Key Objectives and Features  
 
@@ -89,10 +89,8 @@ A **Federation Architecture Pattern (FAP)** is a **modular, reusable blueprint**
   - Reduced complexity in multi-company collaboration  
   - Boosted innovation in Industry 4.0 (real-time monitoring, efficiency optimization, reduced downtime)  
 - **How It Works:**  
-  Each FAP defines **governance, identity management, credential handling, SLA monitoring, and orchestration flows**, ensuring that partners can connect their systems quickly and securely. Organizations retain **full control of their own data and services** while adhering to a **shared governance model**.  
-- **Availability:**  
-  The first FAPs will be made available in **Q3 2025**, with more released gradually through the official [FACIS website](https://www.facis.eu) and the [Eclipse XFSC GitHub repository](https://github.com/eclipse-xfsc).  
-
+  Each FAP defines **governance, identity management, credential handling, SLA monitoring, and orchestration flows**, ensuring that partners can connect their systems quickly and securely. Organizations retain **full control of their own data and services** while adhering to a **shared governance model**.
+  
 In essence, **FAPs are the building blocks of digital federation**, enabling independent organizations to collaborate while safeguarding sovereignty, compliance, and trust.  
 
 ---
