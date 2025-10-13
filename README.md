@@ -1,14 +1,60 @@
-# FACIS Project (Federation Architecture for Composed Infrastructure Services)
+# FACIS (Federation Architecture for Composed Infrastructure Services) Landing Page
 
 ## Introduction  
 **FACIS** stands for *Federation Architecture for Composed Infrastructure Services*.  
-It pioneers the future of digital ecosystems in Europe by addressing fundamental challenges such as **interoperability**, **governance frameworks**, and the increasing demand for distributed and flexible infrastructures.  
+The FACIS landing page act as an entry-point for all open-source components, specification, and implementation developed under FACIS project. The goal is to guide the developers and contributors with the foundational blueprints to build a secure, interoperable and scalable multi-provider cloud-edge continuum. 
 
-FACIS combines innovative technologies such as **Federation Architecture Patterns (FAPs)**, **machine-readable Service Level Agreements (SLAs)**, and **low-code orchestration engines**, together with strong governance frameworks, to build a multi-provider cloud-edge continuum.  
+FACIS combines innovative technologies such as **Federation Architecture Patterns (FAPs)**, **machine-readable Service Level Agreements (SLAs)**, and **low-code orchestration engines**. These along with strong governance frameworks, improves scalability, security, and compliance with regulations, while enabling organizations to retain control of their data. 
 
-This approach improves scalability, security, and compliance with regulations, while enabling organizations to retain control of their data. FACIS is an **open-source and collaborative project** that promotes transparency, inclusiveness, and innovation across the European digital ecosystem.  
+ FACIS is an **open-source and collaborative project** that promotes transparency, inclusiveness, and innovation across the European digital ecosystem. 
 
 ---
+
+## FACIS Repository Structure
+This repository serve as the central-entry point for all the FACIS components. The table provides a high-level view of the core components and their goals.
+| Component | Primary Goal | Repository Link |
+|-----------|--------------|-----------------|
+| FAP (Federation Architecture Pattern) | Standardized Blueprints for building federated services to connect different companies securely. | [https://github.com/eclipse-xfsc/facis/tree/main/FAP](https://github.com/eclipse-xfsc/facis/tree/main/FAP) |
+| DCS (Data Connector Service) | open-source software for secure, automated and legally compliant contract services. | [https://github.com/eclipse-xfsc/facis/tree/main/DCS](https://github.com/eclipse-xfsc/facis/tree/main/DCS) |
+| SLA (Service Level Agreements) | Defines the governance framework to ensure performance, security and accountability across multiple providers. | [https://github.com/eclipse-xfsc/facis/tree/main/SLA](https://github.com/eclipse-xfsc/facis/tree/main/SLA) |
+| POC (Proof-Of-Concepts) | Real-world scenarios implementation and validation demonstrating the FAPs and DCS. | [https://github.com/eclipse-xfsc/facis/tree/main/PoC](https://github.com/eclipse-xfsc/facis/tree/main/PoC) |
+
+
+#### 1. FACIS-FAP 
+This repository is responsible for implementing the standarized templates/ blueprints for the specific collaboration use cases.
+| FAP repos | Description | Repository Link |
+|-----------|-------------|-----------------|
+| FAP 1: Partner onboarding | contains technical specification and implementation | [https://github.com/eclipse-xfsc/facis-fap1-implementation](https://github.com/eclipse-xfsc/facis-fap1-implementation) |
+|FAP 2: IOT & AI pipeline over trusted services | contains implementation for sensing data with IoT and AI based data analysis for dashboard visualization | [https://github.com/eclipse-xfsc/facis-fap2-implementation](https://github.com/eclipse-xfsc/facis-fap2-implementation) |
+
+#### 2. FACIS-PoC ([https://github.com/eclipse-xfsc/facis-aviation-poc](https://github.com/eclipse-xfsc/facis-aviation-poc))
+This repository contains the examples of how FAPs and DCS are combined to solve the real-world problems.
+- Federation Collaboration
+  - Specification - Defines the use cases and the expected results.
+  - Implementation - Source code and validation for the use cases.
+- Other PoC directories
+
+#### 3. Trusted Coud ([https://github.com/eclipse-xfsc/trusted-cloud](https://github.com/eclipse-xfsc/trusted-cloud))
+This repository provides the specification and implementation for the project focused on the trusted cloud services. 
+- Specificaton - Detailed definition of the trusted service requirements.
+- Implementation - Source code for the trusted services.
+
+### Orchestration and Deployment Tools
+These repositories contains the source code to deploy and manage the federation services according to the FAPs.
+#### 4. Smart Deployment ([https://github.com/eclipse-xfsc/deployment](https://github.com/eclipse-xfsc/deployment))
+- Main Sub-components (Easy Stack Builder (ESB))
+  - ORCE (Orchestration Engine)
+  - Catalogue
+  - OCM-WStack
+  - PCM
+  - AA
+- AIFlow Builder
+
+#### 5. Orchestration Engine ([https://github.com/eclipse-xfsc/orchestration-engine](https://github.com/eclipse-xfsc/orchestration-engine))
+This repository manages service flows and monitor performance.
+- core orchestration engine
+- Additional Folder
+  - scenarios/aw40-demonstrator
 
 ## Key Objectives and Features  
 
@@ -192,8 +238,6 @@ Future enhancements and extensions include:
 ## Installation and Usage  
 All outcomes of the FACIS project will be provided as **open-source**. Organizations and developers can access these tools through the **official FACIS website** and the related GitHub repositories.  
 
-FAPs are expected to be available starting from **Q3 2025** on GitHub under the `eclipse-xfsc` organization. Each pattern will include code, documentation, and a deployable low-code orchestration engine.  
-
 ---
 
 ## Contributing  
@@ -202,52 +246,6 @@ Contributors are welcome to collaborate via GitHub under the organization [`ecli
 
 To contribute, you need to sign the **Eclipse Contributor Agreement (ECA)** and then fork and submit pull requests to the corresponding repository.  
 
-This repository serve as the central-entry point for all the FACIS components. 
-| Component | Primary Goal | Repository Link |
-|-----------|--------------|-----------------|
-| FAP (Federation Architecture Pattern) | Standardized Blueprints for building federated services to connect different companies securely. | `eclipse-xfsc/facis-fap` |
-| DCS (Data Connector Service) | open-source software for secure, automated and legally compliant contract services. | `eclipse-xfsc/facis` (Linked within the main Facis repo) |
-| SLA (Service Level Agreements) | Defines the governance framework to ensure performance, security and accountability across multiple providers. | `eclipse-xfsc/facis` (Linked within the main Facis repo) |
-| POC (Proof-Of-Concepts) | Real-world scenarios implementation and validation demonstrating the FAPs and DCS. | `eclipse-xfsc/facis-poc` |
-
-### Core Component Repositories
-These are the main repositories where the development work takes place. 
-
-#### 1. FACIS-FAP (`eclipse-xfsc/facis-fap`)
-This repository is responsible for implementing the standarized templates/ blueprints for the specific collaboration use cases.
-- Patner onboarding (reference #facis-fap1-breakdown)
-  - Specification - Technical and Functional requirements.
-  - Implementation - Source code for FAP
-- Other FAP directories
-
-#### 2. FACIS-PoC (`eclipse-xfsc/facis-poc`)
-This repository contains the examples of how FAPs and DCS are combined to solve the real-world problems.
-- Federation Collaboration
-  - Specification - Defines the use cases and the expected results.
-  - Implementation - Source code and validation for the use cases.
-- Other PoC directories
-
-#### 3. Trusted Coud ('eclipse-xfsc/facis/trusted-cloud)
-This repository provides the specification and implementation for the project focused on the trusted cloud services. 
-- Specificaton - Detailed definition of the trusted service requirements.
-- Implementation - Source code for the trusted services.
-
-### Orchestration and Deployment Tools
-These repositories contains the source code to deploy and manage the federation services according to the FAPs.
-#### 4. Smart Deployment (`eclipse-xfsc/smart-deployment`)
-- Main Sub-components (Easy Stack Builder (ESB))
-  - ORCE (Orchestration Engine)
-  - Catalogue
-  - OCM-WStack
-  - PCM
-  - AA
-- AIFlow Builder
-
-#### 5. Orchestration Engine (`eclipse-xfsc/facis/orchestration-engine)
-This repository manages service flows and monitor performance.
-- core orchestration engine
-- Additional Folder
-  - scenarios/aw40-demonstrator
 ---
 
 ## Resources  
