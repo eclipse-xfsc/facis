@@ -1,7 +1,6 @@
-# FACIS (Federation Architecture for Composed Infrastructure Services) Landing Page
+# FACIS: Federation Architecture for Composed Infrastructure Services
 
 ## Introduction  
-**FACIS** stands for *Federation Architecture for Composed Infrastructure Services*.  
 The FACIS landing page act as an entry-point for all open-source components, specification, and implementation developed under FACIS project. The goal is to guide the developers and contributors with the foundational blueprints to build a secure, interoperable and scalable multi-provider cloud-edge continuum. 
 
 FACIS combines innovative technologies such as **Federation Architecture Patterns (FAPs)**, **machine-readable Service Level Agreements (SLAs)**, and **low-code orchestration engines**. These along with strong governance frameworks, improves scalability, security, and compliance with regulations, while enabling organizations to retain control of their data. 
@@ -10,51 +9,54 @@ FACIS combines innovative technologies such as **Federation Architecture Pattern
 
 ---
 
-## FACIS Repository Structure
+## FACIS Key Deliverables Repository
 This repository serve as the central-entry point for all the FACIS components. The table provides a high-level view of the core components and their goals.
 | Component | Primary Goal | Repository Link |
 |-----------|--------------|-----------------|
-| FAP (Federation Architecture Pattern) | Standardized Blueprints for building federated services to connect different companies securely. | [https://github.com/eclipse-xfsc/facis/tree/main/FAP](https://github.com/eclipse-xfsc/facis/tree/main/FAP) |
-| DCS (Data Connector Service) | open-source software for secure, automated and legally compliant contract services. | [https://github.com/eclipse-xfsc/facis/tree/main/DCS](https://github.com/eclipse-xfsc/facis/tree/main/DCS) |
+| FAP (Federation Architecture Pattern) | Standardized Blueprints for building federated services to connect different companies securely. | [https://github.com/eclipse-xfsc/facis-fap](https://github.com/eclipse-xfsc/facis-fap) |
+| DCS (Digital Contracting Services) | open-source software for secure, automated and legally compliant contract services. | [https://github.com/eclipse-xfsc/facis/tree/main/DCS](https://github.com/eclipse-xfsc/facis/tree/main/DCS) |
 | SLA (Service Level Agreements) | Defines the governance framework to ensure performance, security and accountability across multiple providers. | [https://github.com/eclipse-xfsc/facis/tree/main/SLA](https://github.com/eclipse-xfsc/facis/tree/main/SLA) |
-| POC (Proof-Of-Concepts) | Real-world scenarios implementation and validation demonstrating the FAPs and DCS. | [https://github.com/eclipse-xfsc/facis/tree/main/PoC](https://github.com/eclipse-xfsc/facis/tree/main/PoC) |
+| PoC (Proof-Of-Concepts) | Real-world scenarios implementation and validation demonstrating the FAPs and DCS. | [https://github.com/eclipse-xfsc/facis-poc](https://github.com/eclipse-xfsc/facis-poc) |
+| Demonstrators | prototype implementation showcasing the real-world use cases | *Coming Soon.* |
 
 
-#### 1. FACIS-FAP 
+#### 1. FACIS Federation Architecture Pattern (FAPs) 
 This repository is responsible for implementing the standarized templates/ blueprints for the specific collaboration use cases.
-| FAP repos | Description | Repository Link |
+| FAP Repos | Description | Repository Link |
 |-----------|-------------|-----------------|
-| FAP 1: Partner onboarding | contains technical specification and implementation | [https://github.com/eclipse-xfsc/facis-fap1-implementation](https://github.com/eclipse-xfsc/facis-fap1-implementation) |
-|FAP 2: IOT & AI pipeline over trusted services | contains implementation for sensing data with IoT and AI based data analysis for dashboard visualization | [https://github.com/eclipse-xfsc/facis-fap2-implementation](https://github.com/eclipse-xfsc/facis-fap2-implementation) |
+| FAP 1: Partner onboarding | contains technical specification and implementation. | [https://github.com/eclipse-xfsc/facis-fap1-implementation](https://github.com/eclipse-xfsc/facis-fap1-implementation) |
+| FAP 2: Decentralized Catalogue Managment | Enables trusted service discovery across federated infrastructures. | [https://github.com/eclipse-xfsc/facis-fap2-implementation](https://github.com/eclipse-xfsc/facis-fap2-implementation) |
+|FAP 3: IOT & AI pipeline over trusted services | integrates sensing data with IoT and AI based data analysis for dashboard visualization. | *Coming Soon.* |
 
-#### 2. FACIS-PoC ([https://github.com/eclipse-xfsc/facis-aviation-poc](https://github.com/eclipse-xfsc/facis-aviation-poc))
-This repository contains the examples of how FAPs and DCS are combined to solve the real-world problems.
-- Federation Collaboration
-  - Specification - Defines the use cases and the expected results.
-  - Implementation - Source code and validation for the use cases.
-- Other PoC directories
+#### 2. FACIS Proof-Of-Concepts (PoC) 
+| PoC | Description | Repository Link |
+|-----|-------------|-----------------|
+| Aviation Collaboration | It specifies the industrial usecases for secure cross-organizational service orchestration. | [https://github.com/eclipse-xfsc/facis-aviation-poc](https://github.com/eclipse-xfsc/facis-aviation-poc) |
+| Other PoC directories | - | *Coming Soon.*|
 
-#### 3. Trusted Coud ([https://github.com/eclipse-xfsc/trusted-cloud](https://github.com/eclipse-xfsc/trusted-cloud))
-This repository provides the specification and implementation for the project focused on the trusted cloud services. 
-- Specificaton - Detailed definition of the trusted service requirements.
-- Implementation - Source code for the trusted services.
 
-### Orchestration and Deployment Tools
+#### 4. Orchestration and Smart Deployment Tools
 These repositories contains the source code to deploy and manage the federation services according to the FAPs.
-#### 4. Smart Deployment 
-- Main Sub-components (ESB - Easy Stack Builder [https://github.com/eclipse-xfsc/easy-stack-builder](https://github.com/eclipse-xfsc/easy-stack-builder) )
-  - ORCE (Orchestration Engine) [https://github.com/eclipse-xfsc/easy-stack-builder-orce](https://github.com/eclipse-xfsc/easy-stack-builder-orce)
-  - Catalogue [https://github.com/eclipse-xfsc/easy-stack-builder-catalogue](https://github.com/eclipse-xfsc/easy-stack-builder-catalogue)
-  - OCM-WStack
-  - PCM
-  - AA
-- AIFlow Builder
 
-#### 5. Orchestration Engine ([https://github.com/eclipse-xfsc/orchestration-engine](https://github.com/eclipse-xfsc/orchestration-engine))
-This repository manages service flows and monitor performance.
-- core orchestration engine
-- Additional Folder
-  - scenarios/aw40-demonstrator [https://github.com/eclipse-xfsc/aw40-demonstrator](https://github.com/eclipse-xfsc/aw40-demonstrator)
+##### 4.1 Orchestration Engine 
+| Component | Description | Repository Link |
+|-----------|-------------|-----------------|
+| Orchestration Engine | Core Orchestration Engine- Manages federated service flows and monitors performance. | [https://github.com/eclipse-xfsc/orchestration-engine](https://github.com/eclipse-xfsc/orchestration-engine) |
+| scenarios/aw40-demonstrator | | [https://github.com/eclipse-xfsc/aw40-demonstrator](https://github.com/eclipse-xfsc/aw40-demonstrator) |
+
+##### 4.2 ESB: Easy Stack Builder 
+A Modular Deployment Service integrated with the visual orchestration Engine that enables users to create and execute backend deployment and policy logic through drag and drop nodes.
+| Tool | Description | Repository Link |
+|------|--------------|-----------------|
+| ESB | The reference repository for the Easy Stack Builder | [https://github.com/eclipse-xfsc/easy-stack-builder](https://github.com/eclipse-xfsc/easy-stack-builder) |
+| ESB ORCE (Orchestration Engine) | Streamlined orchestration workspace simplifies the kubernetes deployment for federation services. | [https://github.com/eclipse-xfsc/easy-stack-builder-orce](https://github.com/eclipse-xfsc/easy-stack-builder-orce) |
+| ESB Catalogue | Federated Catalogue - core component of XFSC for resource discovery, allow visual query self-descriptions within ORCE environments.  | [https://github.com/eclipse-xfsc/easy-stack-builder-catalogue](https://github.com/eclipse-xfsc/easy-stack-builder-catalogue) |
+| ESB OCM-Wstack | - | *Coming Soon.* |
+| ESB PCM | - | *Coming Soon.* |
+| ESB AA | - | *Coming Soon.* |
+| AI Flow Builder | - | *Coming Soon.* |
+
+
 
 ## Key Objectives and Features  
 
