@@ -7,6 +7,8 @@ FACIS combines innovative technologies such as **Federation Architecture Pattern
 
  FACIS is an **open-source and collaborative project** that promotes transparency, inclusiveness, and innovation across the European digital ecosystem. 
 
+Code-related deliverables are published via GitHub, while non-code results- such as frameworks, rulebooks and other supporting materials are and will be made available on the FACIS website : [eclipse-xfsc/facis](https://github.com/eclipse-xfsc/facis)
+
 ---
 
 ## FACIS Key Deliverables Repository
@@ -53,7 +55,7 @@ A Modular Deployment Service integrated with the visual orchestration Engine tha
 | *ESB Catalogue* | Federated Catalogue - core component of XFSC for resource discovery, allow visual query self-descriptions within ORCE environments.  | [`eclipse-xfsc/easy-stack-builder-catalogue`](https://github.com/eclipse-xfsc/easy-stack-builder-catalogue) |
 | *ESB OCM-Wstack* | Enhances the participant’s interaction with the SSI-based ecosystem in a trustful and secure fashion. | *Coming Soon.* |
 | *ESB PCM* | The user manages their credentials themselves, which supports decentralized architecture. | *Coming Soon.* |
-| *ESB AA* | Authenticate the users and systems in a decentralized manner without the need for a central source of authority as well as to assure authorization of access and data usage based on such identity data and decentrally managed credentials. | *Coming Soon.* |
+| *ESB TSA* | - | *Coming Soon.* |
 | *AI Flow Builder* | - | *Coming Soon.* |
 
 
