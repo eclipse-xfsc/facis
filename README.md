@@ -7,7 +7,7 @@ FACIS combines innovative technologies such as **Federation Architecture Pattern
 
  FACIS is an **open-source and collaborative project** that promotes transparency, inclusiveness, and innovation across the European digital ecosystem. 
 
-Code-related deliverables are published via GitHub, while non-code results- such as frameworks, rulebooks and other supporting materials are and will be made available on the FACIS website : [eclipse-xfsc/facis](https://github.com/eclipse-xfsc/facis)
+Code-related deliverables are published via GitHub, while non-code results- such as frameworks, rulebooks and other supporting materials are and will be made available on the FACIS website : [https://www.facis.eu/results/](https://www.facis.eu/results/)
 
 ---
 
