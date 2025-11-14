@@ -1,0 +1,283 @@
+[
+    {
+        "id": "f9661480f5886f56",
+        "type": "tab",
+        "label": "✅ 6-generate VC ids(step4)",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f4e14a4eb0c887b5",
+        "type": "function",
+        "z": "f9661480f5886f56",
+        "name": "Build VC IDs + log",
+        "func": "let domain=msg.dbRecord.domain\n\nfunction getBaseDomain(input) {\n  if (!input) return \"\";\n  let s = String(input).trim().toLowerCase();\n\n\n  s = s.replace(/^[a-z][\\w+.-]*:\\/\\//, \"\")\n    .replace(/^[^@\\/?#]+@/, \"\")\n    .split(/[\\/?#]/)[0]\n    .replace(/:\\d+$/, \"\")\n    .replace(/^www\\./, \"\"); \n\n  const parts = s.split(\".\");\n  return parts.length > 1 ? parts.slice(0, -1).join(\".\") : s;\n}\n\nconst raw = (domain || \"\").toString().trim();\nif (!raw) {\n  node.error(\"webDomain is empty\", msg); \n  return; \n}\n\nlet lrnVCid = `https://${domain}/.well-known/lrn.json`;\nlet lrnSid  = `${ lrnVCid}#subject`;\n\nlet tcVCid  = `https://${domain}/.well-known/gx-terms.json`;\nlet tcSid   = `${ tcVCid}#subject`; \n\nlet pVCid   = `did:web:${domain}#key-1`;\nlet pSid    = `https://${domain}/.well-known/participant.json#subject`;\n\n\nmsg.data.recordDetails.ids={\n  lrnVCid: lrnVCid, \n  lrnSid: lrnSid, \n\n  tcVCid: tcVCid , \n  tcSid: tcSid , \n\n  pVCid: pVCid, \n  pSid: pSid, \n}\n  \n  return msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 817.5,
+        "y": 380,
+        "wires": [
+            [
+                "7db55e7028bb786e"
+            ]
+        ]
+    },
+    {
+        "id": "7db55e7028bb786e",
+        "type": "function",
+        "z": "f9661480f5886f56",
+        "name": "send ids",
+        "func": "msg.data.session.stage='pg3'\nmsg.data.session.step=4\nmsg.isExpanded=true\nmsg.clientId=msg.data.session.clientId\nmsg._socketId=msg.data.session._socketId\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1152.5,
+        "y": 380,
+        "wires": [
+            [
+                "6a21c1bc9e7abcc1",
+                "22e1fb4b2217c3c3"
+            ]
+        ]
+    },
+    {
+        "id": "6a21c1bc9e7abcc1",
+        "type": "link out",
+        "z": "f9661480f5886f56",
+        "name": "link out 26",
+        "mode": "link",
+        "links": [
+            "ea917288d5d06d2a"
+        ],
+        "x": 1380,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "f7ca772ba1f5a2ce",
+        "type": "switch",
+        "z": "f9661480f5886f56",
+        "name": "check ids empty",
+        "property": "data.recordDetails.ids",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "empty"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 462.5,
+        "y": 460,
+        "wires": [
+            [
+                "f4e14a4eb0c887b5"
+            ],
+            [
+                "3a1d8a5a2b46b60b"
+            ]
+        ]
+    },
+    {
+        "id": "3a1d8a5a2b46b60b",
+        "type": "function",
+        "z": "f9661480f5886f56",
+        "name": "update record(add ids)",
+        "func": "msg.collection = \"records\";\nmsg.operation = \"updateOne\";\n\nconst query = { recordId: msg.dbRecord.recordId };\n\nconst set = {\n  updatedAt: new Date(),\n  expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),\n};\n\nif (msg.data?.session?.stage != null) {\n  set.stage = msg.data.session.stage;\n}\n\nif (msg.data?.recordDetails?.ids != null) {\n  set[\"recordDetails.ids\"] = msg.data.recordDetails.ids\n}\n\n\nconst update = { $set: set };\nconst options = { upsert: false };\n\nmsg.payload = [query, update, options];\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 822.5,
+        "y": 560,
+        "wires": [
+            [
+                "b7d9e91fc6b12f1f"
+            ]
+        ]
+    },
+    {
+        "id": "b7d9e91fc6b12f1f",
+        "type": "mongodb4",
+        "z": "f9661480f5886f56",
+        "clientNode": "5656a62ddc286a04",
+        "mode": "collection",
+        "collection": "",
+        "operation": "",
+        "output": "toArray",
+        "maxTimeMS": "0",
+        "handleDocId": false,
+        "name": "",
+        "x": 1157.5,
+        "y": 560,
+        "wires": [
+            [
+                "ba8a005a6f8301fa"
+            ]
+        ]
+    },
+    {
+        "id": "ba8a005a6f8301fa",
+        "type": "switch",
+        "z": "f9661480f5886f56",
+        "name": "check db awnser",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            },
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1492.5,
+        "y": 560,
+        "wires": [
+            [
+                "1a3365ec5c198471"
+            ],
+            [
+                "ae31477fa60c2728"
+            ]
+        ]
+    },
+    {
+        "id": "ae31477fa60c2728",
+        "type": "link out",
+        "z": "f9661480f5886f56",
+        "name": "link out 15",
+        "mode": "link",
+        "links": [
+            "77281f92096decab"
+        ],
+        "x": 1697.5,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "1a3365ec5c198471",
+        "type": "function",
+        "z": "f9661480f5886f56",
+        "name": "go next pg",
+        "func": "msg.data.session.stage='pg3'\nmsg.data.session.step=4\nmsg.isExpanded=true\nmsg.clientId=msg.data.session.clientId\nmsg._socketId=msg.data.session._socketId\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1800,
+        "y": 480,
+        "wires": [
+            [
+                "94667c3f31f40db2",
+                "e3f6ec52a226821c"
+            ]
+        ]
+    },
+    {
+        "id": "94667c3f31f40db2",
+        "type": "link out",
+        "z": "f9661480f5886f56",
+        "name": "link out 27",
+        "mode": "link",
+        "links": [
+            "ea917288d5d06d2a"
+        ],
+        "x": 2027.5,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "e3f6ec52a226821c",
+        "type": "debug",
+        "z": "f9661480f5886f56",
+        "name": "save ids",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1797.5,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "22e1fb4b2217c3c3",
+        "type": "debug",
+        "z": "f9661480f5886f56",
+        "name": "send ids",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1140,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "dedb2ac214a6bf13",
+        "type": "link in",
+        "z": "f9661480f5886f56",
+        "name": "input=step 4(ids)",
+        "links": [
+            "763147c7fffd09e3"
+        ],
+        "x": 255,
+        "y": 460,
+        "wires": [
+            [
+                "f7ca772ba1f5a2ce"
+            ]
+        ]
+    },
+    {
+        "id": "5656a62ddc286a04",
+        "type": "mongodb4-client",
+        "name": "",
+        "protocol": "mongodb",
+        "hostname": "db.facis.cloud",
+        "port": "443",
+        "dbName": "onboarding",
+        "appName": "",
+        "authSource": "",
+        "authMechanism": "DEFAULT",
+        "tls": true,
+        "tlsCAFile": "",
+        "tlsCertificateKeyFile": "",
+        "tlsInsecure": true,
+        "connectTimeoutMS": "30000",
+        "socketTimeoutMS": "0",
+        "minPoolSize": "0",
+        "maxPoolSize": "100",
+        "maxIdleTimeMS": "0",
+        "uri": "",
+        "advanced": "{}",
+        "uriTabActive": "tab-uri-simple"
+    }
+]

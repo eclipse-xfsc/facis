@@ -1,0 +1,1170 @@
+[
+    {
+        "id": "0821fd41e4392204",
+        "type": "tab",
+        "label": "✅7- check clearinghouses(step4)",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "d4c44d0be9fb2ae7",
+        "type": "group",
+        "z": "0821fd41e4392204",
+        "name": "check clearing hoses",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "e4e6e4d90ca19075",
+            "a31898de4bd35ce3",
+            "17fd2ec27fbd9cff",
+            "f1cd2d4ce116c451",
+            "7777dfdeb14ef10e",
+            "eac9739e9cd2b2e0",
+            "ab829baf84f7e196",
+            "66ed579446f3e255",
+            "9f5a914759886a33",
+            "b7876539ed4c0e2c",
+            "dbe7e5facae4ff32",
+            "589e732699426139",
+            "e9bc41236656e8b7",
+            "8f3464e1ce364936",
+            "e340c9ac92ba912f",
+            "c453c497bc42919f",
+            "dccfa5b93df7f9a3",
+            "2b9d8bd3dcecd893",
+            "e4c5060ac5524145",
+            "6d5d3bd045f6f3ee",
+            "06cdaaef3a8892e5",
+            "251149d25c323222",
+            "4851225338bc4cb5",
+            "3fc24a53de69e16c",
+            "18e49369390fdebc",
+            "229f4aa24fe8828e"
+        ],
+        "x": 839,
+        "y": 514,
+        "w": 2449.5,
+        "h": 1032
+    },
+    {
+        "id": "4a08ad1ddd4e9edb",
+        "type": "group",
+        "z": "0821fd41e4392204",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "098b694031f877f0",
+            "6b48719d5caac529",
+            "7c85d10ce816c1e4",
+            "58ca5212b5c879b1",
+            "b1c9a8b3917dff3e",
+            "723c8627f731572d",
+            "e7786a524adacedb",
+            "2ec469e2441a02f5",
+            "228d501b82a1464f",
+            "62048461bdea7f86",
+            "13bea7997a4c4d7f",
+            "b9380dae854635ba",
+            "d1a137c67df7f121",
+            "6234c36ec072ab33",
+            "05a1e31f16102609",
+            "6158afd2843e5633",
+            "5f624756b460775d",
+            "42d2de6830c823f5",
+            "1cca00f624e536f2",
+            "c09498f99174d3c9"
+        ],
+        "x": 844,
+        "y": 1654,
+        "w": 2139.5,
+        "h": 992
+    },
+    {
+        "id": "229f4aa24fe8828e",
+        "type": "function",
+        "z": "0821fd41e4392204",
+        "g": "d4c44d0be9fb2ae7",
+        "name": "set clearingHousList",
+        "func": "msg.data.recordDetails.clearingHouseList={\n    gaiax:false,\n    arsys:false,\n    aruba:false,\n    tsystem:false,\n    deltaDao:false,\n    neustaAerospace:false,\n    proximus:false,\n    ovhCloud:false,\n    aireNetwork:false,\n    cispe:false,\n    pfalzkom:false\n\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1002.5,
+        "y": 600,
+        "wires": [
+            [
+                "251149d25c323222"
+            ]
+        ]
+    },
+    {
+        "id": "22d689c67785108a",
+        "type": "switch",
+        "z": "0821fd41e4392204",
+        "name": "check versionComplaince",
+        "property": "data.recordDetails.versionCompliance",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "V1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "V2",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "V3",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 530,
+        "y": 600,
+        "wires": [
+            [
+                "229f4aa24fe8828e"
+            ],
+            [
+                "c09498f99174d3c9"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "c09498f99174d3c9",
+        "type": "function",
+        "z": "0821fd41e4392204",
+        "g": "4a08ad1ddd4e9edb",
+        "name": "clearingHouseList(V2)",
+        "func": "// msg.data.recordDetails.clearingHouseList={\n//     \"gaiax\":false,\n//     \"arsys\":true,\n//     \"aruba\":false,\n//     \"tsystem\":true,\n//     \"deltaDao\":true,\n//     \"neustaAerospace\":true,\n//     \"proximus\":false,\n//     \"ovhCloud\":false,\n//     \"aireNetwork\":true,\n//     \"cispe\":true,\n//     \"pfalzkom\":true\n// }\nmsg.data.recordDetails.clearingHouseList={\n    \"gaiax\":false,\n    \"arsys\":false,\n    \"aruba\":false,\n    \"tsystem\":false,\n    \"deltaDao\":false,\n    \"neustaAerospace\":false,\n    \"proximus\":false,\n    \"ovhCloud\":false,\n    \"aireNetwork\":false,\n    \"cispe\":false,\n    \"pfalzkom\":false\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1007.5,
+        "y": 1740,
+        "wires": [
+            [
+                "098b694031f877f0"
+            ]
+        ]
+    },
+    {
+        "id": "098b694031f877f0",
+        "type": "http request",
+        "z": "0821fd41e4392204",
+        "g": "4a08ad1ddd4e9edb",
+        "name": "Arsys-Get T&C text",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://gx-notary.arsys.es/v2",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1342.5,
+        "y": 1740,
+        "wires": [
+            [
+                "6b48719d5caac529"
+            ]
+        ]
+    },
+    {
+        "id": "6b48719d5caac529",
+        "type": "function",
+        "z": "0821fd41e4392204",
+        "g": "4a08ad1ddd4e9edb",
+        "name": "set arsys=true",
+        "func": "if(msg.statusCode==200){\n    msg.data.recordDetails.clearingHouseList.arsys=true\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1662.5,
+        "y": 1740,
+        "wires": [
+            [
+                "7c85d10ce816c1e4"
+            ]
+        ]
+    },
+    {
+        "id": "7c85d10ce816c1e4",
+        "type": "http request",
+        "z": "0821fd41e4392204",
+        "g": "4a08ad1ddd4e9edb",
+        "name": "T system-Get T&C text",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://gx-notary.gxdch.dih.telekom.com/v2",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 2022.5,
+        "y": 1740,
+        "wires": [
+            [
+                "58ca5212b5c879b1"
+            ]
+        ]
+    },
+    {
+        "id": "58ca5212b5c879b1",
+        "type": "function",
+        "z": "0821fd41e4392204",
+        "g": "4a08ad1ddd4e9edb",
+        "name": "set tsystem=true",
+        "func": "if(msg.statusCode==200){\n    msg.data.recordDetails.clearingHouseList.tsystem=true\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2362.5,
+        "y": 1740,
+        "wires": [
+            [
+                "b1c9a8b3917dff3e"
+            ]
+        ]
+    },
+    {
+        "id": "b1c9a8b3917dff3e",
+        "type": "http request",
+        "z": "0821fd41e4392204",
+        "g": "4a08ad1ddd4e9edb",
+        "name": "DeltaDao-Get T&C text",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://www.delta-dao.com/notary/v2",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1390,
+        "y": 1940,
+        "wires": [
+            [
+                "723c8627f731572d"
+            ]
+        ]
+    },
+    {
+        "id": "723c8627f731572d",
+        "type": "function",
+        "z": "0821fd41e4392204",
+        "g": "4a08ad1ddd4e9edb",
+        "name": "set deltaDao=true",
+        "func": "if(msg.statusCode==200){\n    msg.data.recordDetails.clearingHouseList.deltaDao=true\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1737.5,
+        "y": 1940,
+        "wires": [
+            [
+                "e7786a524adacedb"
+            ]
+        ]
+    },
+    {
+        "id": "e7786a524adacedb",
+        "type": "http request",
+        "z": "0821fd41e4392204",
+        "g": "4a08ad1ddd4e9edb",
+        "name": "Neusta Aerospace-Get T&C text",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://aerospace-digital-exchange.eu/notary/v2",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 2130,
+        "y": 1940,
+        "wires": [
+            [
+                "2ec469e2441a02f5"
+            ]
+        ]
+    },
+    {
+        "id": "2ec469e2441a02f5",
+        "type": "function",
+        "z": "0821fd41e4392204",
+        "g": "4a08ad1ddd4e9edb",
+        "name": "set neustaAerospace=true",
+        "func": "if(msg.statusCode==200){\n    msg.data.recordDetails.clearingHouseList.neustaAerospace=true\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2562.5,
+        "y": 1940,
+        "wires": [
+            [
+                "228d501b82a1464f"
+            ]
+        ]
+    },
+    {
+        "id": "228d501b82a1464f",
+        "type": "http request",
+        "z": "0821fd41e4392204",
+        "g": "4a08ad1ddd4e9edb",
+        "name": "Aire Network-Get T&C text",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://gx-notary.airenetworks.es/v2",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1360,
+        "y": 2160,
+        "wires": [
+            [
+                "62048461bdea7f86"
+            ]
+        ]
+    },
+    {
+        "id": "62048461bdea7f86",
+        "type": "function",
+        "z": "0821fd41e4392204",
+        "g": "4a08ad1ddd4e9edb",
+        "name": "set arsys=true",
+        "func": "if(msg.statusCode==200){\n    msg.data.recordDetails.clearingHouseList.aireNetwork=true\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1697.5,
+        "y": 2160,
+        "wires": [
+            [
+                "13bea7997a4c4d7f"
+            ]
+        ]
+    },
+    {
+        "id": "13bea7997a4c4d7f",
+        "type": "http request",
+        "z": "0821fd41e4392204",
+        "g": "4a08ad1ddd4e9edb",
+        "name": "CISPE-Get T&C text",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://notary.cispe.gxdch.clouddataengine.io/v2",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 2062.5,
+        "y": 2160,
+        "wires": [
+            [
+                "b9380dae854635ba"
+            ]
+        ]
+    },
+    {
+        "id": "b9380dae854635ba",
+        "type": "function",
+        "z": "0821fd41e4392204",
+        "g": "4a08ad1ddd4e9edb",
+        "name": "set cispe=true",
+        "func": "if(msg.statusCode==200){\n    msg.data.recordDetails.clearingHouseList.cispe=true\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2402.5,
+        "y": 2160,
+        "wires": [
+            [
+                "d1a137c67df7f121"
+            ]
+        ]
+    },
+    {
+        "id": "d1a137c67df7f121",
+        "type": "http request",
+        "z": "0821fd41e4392204",
+        "g": "4a08ad1ddd4e9edb",
+        "name": "pfalzkom-Get T&C text",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://trust-anker.pfalzkom-gxdch.de/v2",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1302.5,
+        "y": 2380,
+        "wires": [
+            [
+                "6234c36ec072ab33"
+            ]
+        ]
+    },
+    {
+        "id": "6234c36ec072ab33",
+        "type": "function",
+        "z": "0821fd41e4392204",
+        "g": "4a08ad1ddd4e9edb",
+        "name": "set pfalzkom=true",
+        "func": "if(msg.statusCode==200){\n    msg.data.recordDetails.clearingHouseList.pfalzkom=true\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1642.5,
+        "y": 2380,
+        "wires": [
+            [
+                "1cca00f624e536f2"
+            ]
+        ]
+    },
+    {
+        "id": "05a1e31f16102609",
+        "type": "function",
+        "z": "0821fd41e4392204",
+        "g": "4a08ad1ddd4e9edb",
+        "name": "send active clearingHouses",
+        "func": "msg.data.session.stage='pg3'\nmsg.data.session.step=4\nmsg.isExpanded=true\nmsg.clientId=msg.data.session.clientId\nmsg._socketId=msg.data.session._socketId\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2680,
+        "y": 2380,
+        "wires": [
+            [
+                "6158afd2843e5633",
+                "5f624756b460775d"
+            ]
+        ]
+    },
+    {
+        "id": "6158afd2843e5633",
+        "type": "link out",
+        "z": "0821fd41e4392204",
+        "g": "4a08ad1ddd4e9edb",
+        "name": "link out 34",
+        "mode": "link",
+        "links": [
+            "ea917288d5d06d2a"
+        ],
+        "x": 2905,
+        "y": 2380,
+        "wires": []
+    },
+    {
+        "id": "5f624756b460775d",
+        "type": "debug",
+        "z": "0821fd41e4392204",
+        "g": "4a08ad1ddd4e9edb",
+        "name": "set clearingHousList",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2800,
+        "y": 2560,
+        "wires": []
+    },
+    {
+        "id": "42d2de6830c823f5",
+        "type": "function",
+        "z": "0821fd41e4392204",
+        "g": "4a08ad1ddd4e9edb",
+        "name": "set gaiax=true",
+        "func": "if(msg.statusCode==200){\n    msg.data.recordDetails.clearingHouseList.gaiax=true\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2317.5,
+        "y": 2380,
+        "wires": [
+            [
+                "05a1e31f16102609"
+            ]
+        ]
+    },
+    {
+        "id": "1cca00f624e536f2",
+        "type": "http request",
+        "z": "0821fd41e4392204",
+        "g": "4a08ad1ddd4e9edb",
+        "name": "gaiax-Get T&C text",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://registrationnumber.notary.gaia-x.eu/v2",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1997.5,
+        "y": 2380,
+        "wires": [
+            [
+                "42d2de6830c823f5"
+            ]
+        ]
+    },
+    {
+        "id": "ff4db6174b5a04d5",
+        "type": "link in",
+        "z": "0821fd41e4392204",
+        "name": "input=step4(clearingHouseList)",
+        "links": [
+            "5eaa1f8e9233bf0a"
+        ],
+        "x": 240,
+        "y": 600,
+        "wires": [
+            [
+                "22d689c67785108a"
+            ]
+        ]
+    },
+    {
+        "id": "e4e6e4d90ca19075",
+        "type": "http request",
+        "z": "0821fd41e4392204",
+        "g": "d4c44d0be9fb2ae7",
+        "name": "Arsys-Get T&C text",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://gx-registry.arsys.es/v1/api/termsAndConditions",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 2007.5,
+        "y": 600,
+        "wires": [
+            [
+                "dbe7e5facae4ff32"
+            ]
+        ]
+    },
+    {
+        "id": "a31898de4bd35ce3",
+        "type": "http request",
+        "z": "0821fd41e4392204",
+        "g": "d4c44d0be9fb2ae7",
+        "name": "Aruba-Get T&C text",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://gx-registry.aruba.it/v1/api/termsAndConditions",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 2692.5,
+        "y": 600,
+        "wires": [
+            [
+                "589e732699426139"
+            ]
+        ]
+    },
+    {
+        "id": "17fd2ec27fbd9cff",
+        "type": "http request",
+        "z": "0821fd41e4392204",
+        "g": "d4c44d0be9fb2ae7",
+        "name": "T system-Get T&C text",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://gx-registry.gxdch.dih.telekom.com/v1/api/termsAndConditions",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1332.5,
+        "y": 820,
+        "wires": [
+            [
+                "e9bc41236656e8b7"
+            ]
+        ]
+    },
+    {
+        "id": "f1cd2d4ce116c451",
+        "type": "http request",
+        "z": "0821fd41e4392204",
+        "g": "d4c44d0be9fb2ae7",
+        "name": "DeltaDao-Get T&C text",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://www.delta-dao.com/registry/v1/api/termsAndConditions",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 2032.5,
+        "y": 820,
+        "wires": [
+            [
+                "8f3464e1ce364936"
+            ]
+        ]
+    },
+    {
+        "id": "7777dfdeb14ef10e",
+        "type": "http request",
+        "z": "0821fd41e4392204",
+        "g": "d4c44d0be9fb2ae7",
+        "name": "Neusta Aerospace-Get T&C text",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://aerospace-digital-exchange.eu/registry/v1/api/termsAndConditions",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 2740,
+        "y": 820,
+        "wires": [
+            [
+                "e340c9ac92ba912f"
+            ]
+        ]
+    },
+    {
+        "id": "eac9739e9cd2b2e0",
+        "type": "http request",
+        "z": "0821fd41e4392204",
+        "g": "d4c44d0be9fb2ae7",
+        "name": "Proximus-Get T&C text",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://gx-registry.gxdch.proximus.eu/v1/api/termsAndConditions",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1352.5,
+        "y": 1080,
+        "wires": [
+            [
+                "c453c497bc42919f"
+            ]
+        ]
+    },
+    {
+        "id": "ab829baf84f7e196",
+        "type": "http request",
+        "z": "0821fd41e4392204",
+        "g": "d4c44d0be9fb2ae7",
+        "name": "Aire Network-Get T&C text",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://gx-registry.airenetworks.es/v1/api/termsAndConditions",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 2730,
+        "y": 1080,
+        "wires": [
+            [
+                "2b9d8bd3dcecd893"
+            ]
+        ]
+    },
+    {
+        "id": "66ed579446f3e255",
+        "type": "http request",
+        "z": "0821fd41e4392204",
+        "g": "d4c44d0be9fb2ae7",
+        "name": "OVH Cloud-Get T&C text",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://registry.gxdch.gaiax.ovh/v1/api/termsAndConditions",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 2030,
+        "y": 1080,
+        "wires": [
+            [
+                "dccfa5b93df7f9a3"
+            ]
+        ]
+    },
+    {
+        "id": "9f5a914759886a33",
+        "type": "http request",
+        "z": "0821fd41e4392204",
+        "g": "d4c44d0be9fb2ae7",
+        "name": "pfalzkom-Get T&C text",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://portal.pfalzkom-gxdch.de/v1/api/termsAndConditions",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 2032.5,
+        "y": 1320,
+        "wires": [
+            [
+                "3fc24a53de69e16c"
+            ]
+        ]
+    },
+    {
+        "id": "b7876539ed4c0e2c",
+        "type": "http request",
+        "z": "0821fd41e4392204",
+        "g": "d4c44d0be9fb2ae7",
+        "name": "CISPE-Get T&C text",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://registry.cispe.gxdch.clouddataengine.io/v1/api/termsAndConditions",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1352.5,
+        "y": 1320,
+        "wires": [
+            [
+                "e4c5060ac5524145"
+            ]
+        ]
+    },
+    {
+        "id": "dbe7e5facae4ff32",
+        "type": "function",
+        "z": "0821fd41e4392204",
+        "g": "d4c44d0be9fb2ae7",
+        "name": "set arsys=true",
+        "func": "if(msg.statusCode==200){\n    msg.data.recordDetails.clearingHouseList.arsys=true\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2367.5,
+        "y": 600,
+        "wires": [
+            [
+                "a31898de4bd35ce3"
+            ]
+        ]
+    },
+    {
+        "id": "589e732699426139",
+        "type": "function",
+        "z": "0821fd41e4392204",
+        "g": "d4c44d0be9fb2ae7",
+        "name": "set aruba=true",
+        "func": "if(msg.statusCode==200){\n    msg.data.recordDetails.clearingHouseList.aruba=true\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3067.5,
+        "y": 600,
+        "wires": [
+            [
+                "17fd2ec27fbd9cff"
+            ]
+        ]
+    },
+    {
+        "id": "e9bc41236656e8b7",
+        "type": "function",
+        "z": "0821fd41e4392204",
+        "g": "d4c44d0be9fb2ae7",
+        "name": "set tsystem=true",
+        "func": "if(msg.statusCode==200){\n    msg.data.recordDetails.clearingHouseList.tsystem=true\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1672.5,
+        "y": 820,
+        "wires": [
+            [
+                "f1cd2d4ce116c451"
+            ]
+        ]
+    },
+    {
+        "id": "8f3464e1ce364936",
+        "type": "function",
+        "z": "0821fd41e4392204",
+        "g": "d4c44d0be9fb2ae7",
+        "name": "set deltaDao=true",
+        "func": "if(msg.statusCode==200){\n    msg.data.recordDetails.clearingHouseList.deltaDao=true\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2367.5,
+        "y": 820,
+        "wires": [
+            [
+                "7777dfdeb14ef10e"
+            ]
+        ]
+    },
+    {
+        "id": "e340c9ac92ba912f",
+        "type": "function",
+        "z": "0821fd41e4392204",
+        "g": "d4c44d0be9fb2ae7",
+        "name": "set neustaAerospace=true",
+        "func": "if(msg.statusCode==200){\n    msg.data.recordDetails.clearingHouseList.neustaAerospace=true\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3112.5,
+        "y": 820,
+        "wires": [
+            [
+                "eac9739e9cd2b2e0"
+            ]
+        ]
+    },
+    {
+        "id": "c453c497bc42919f",
+        "type": "function",
+        "z": "0821fd41e4392204",
+        "g": "d4c44d0be9fb2ae7",
+        "name": "set proximus=true",
+        "func": "if(msg.statusCode==200){\n    msg.data.recordDetails.clearingHouseList.proximus=true\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1692.5,
+        "y": 1080,
+        "wires": [
+            [
+                "66ed579446f3e255"
+            ]
+        ]
+    },
+    {
+        "id": "dccfa5b93df7f9a3",
+        "type": "function",
+        "z": "0821fd41e4392204",
+        "g": "d4c44d0be9fb2ae7",
+        "name": "set ovhCloud=true",
+        "func": "if(msg.statusCode==200){\n    msg.data.recordDetails.clearingHouseList.ovhCloud=true\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2367.5,
+        "y": 1080,
+        "wires": [
+            [
+                "ab829baf84f7e196"
+            ]
+        ]
+    },
+    {
+        "id": "2b9d8bd3dcecd893",
+        "type": "function",
+        "z": "0821fd41e4392204",
+        "g": "d4c44d0be9fb2ae7",
+        "name": "set arsys=true",
+        "func": "if(msg.statusCode==200){\n    msg.data.recordDetails.clearingHouseList.aireNetwork=true\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3067.5,
+        "y": 1080,
+        "wires": [
+            [
+                "b7876539ed4c0e2c"
+            ]
+        ]
+    },
+    {
+        "id": "e4c5060ac5524145",
+        "type": "function",
+        "z": "0821fd41e4392204",
+        "g": "d4c44d0be9fb2ae7",
+        "name": "set cispe=true",
+        "func": "if(msg.statusCode==200){\n    msg.data.recordDetails.clearingHouseList.cispe=true\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1687.5,
+        "y": 1320,
+        "wires": [
+            [
+                "9f5a914759886a33"
+            ]
+        ]
+    },
+    {
+        "id": "6d5d3bd045f6f3ee",
+        "type": "debug",
+        "z": "0821fd41e4392204",
+        "g": "d4c44d0be9fb2ae7",
+        "name": "set clearingHousList",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2407.5,
+        "y": 1460,
+        "wires": []
+    },
+    {
+        "id": "06cdaaef3a8892e5",
+        "type": "function",
+        "z": "0821fd41e4392204",
+        "g": "d4c44d0be9fb2ae7",
+        "name": "send active clearingHouses",
+        "func": "msg.data.session.stage='pg3'\nmsg.data.session.step=4\nmsg.isExpanded=true\nmsg.clientId=msg.data.session.clientId\nmsg._socketId=msg.data.session._socketId\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2745,
+        "y": 1320,
+        "wires": [
+            [
+                "18e49369390fdebc"
+            ]
+        ]
+    },
+    {
+        "id": "251149d25c323222",
+        "type": "http request",
+        "z": "0821fd41e4392204",
+        "g": "d4c44d0be9fb2ae7",
+        "name": "gaiax-Get T&C text",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://registry.lab.gaia-x.eu/v1/api/termsAndConditions",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1347.5,
+        "y": 600,
+        "wires": [
+            [
+                "4851225338bc4cb5"
+            ]
+        ]
+    },
+    {
+        "id": "4851225338bc4cb5",
+        "type": "function",
+        "z": "0821fd41e4392204",
+        "g": "d4c44d0be9fb2ae7",
+        "name": "set gaiax=true",
+        "func": "if(msg.statusCode==200){\n    msg.data.recordDetails.clearingHouseList.gaiax=true\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1672.5,
+        "y": 600,
+        "wires": [
+            [
+                "e4e6e4d90ca19075"
+            ]
+        ]
+    },
+    {
+        "id": "3fc24a53de69e16c",
+        "type": "function",
+        "z": "0821fd41e4392204",
+        "g": "d4c44d0be9fb2ae7",
+        "name": "set pfalzkom=true",
+        "func": "if(msg.statusCode==200){\n    msg.data.recordDetails.clearingHouseList.pfalzkom=true\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2367.5,
+        "y": 1320,
+        "wires": [
+            [
+                "06cdaaef3a8892e5",
+                "6d5d3bd045f6f3ee"
+            ]
+        ]
+    },
+    {
+        "id": "18e49369390fdebc",
+        "type": "link out",
+        "z": "0821fd41e4392204",
+        "g": "d4c44d0be9fb2ae7",
+        "name": "link out 16",
+        "mode": "link",
+        "links": [
+            "ea917288d5d06d2a"
+        ],
+        "x": 2960,
+        "y": 1320,
+        "wires": []
+    }
+]

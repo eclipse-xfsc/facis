@@ -1,0 +1,446 @@
+[
+    {
+        "id": "59bf7cea2d24c618",
+        "type": "tab",
+        "label": "✅4-create did/chain files(create private/public jwk)(step3) ",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "8366e94b7d43f057",
+        "type": "group",
+        "z": "59bf7cea2d24c618",
+        "name": "WF5(create private/public JWK)",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "40e3dea0bc842595",
+            "7f64dc4093642011",
+            "ac1f6f525270b3a0",
+            "9911b85bb6cafbc4",
+            "36cf8e81ac812a22",
+            "07817ff9ab95c324",
+            "cf6fa8ed568dee0a",
+            "1af2bb2509c14866"
+        ],
+        "x": 184,
+        "y": 94,
+        "w": 1422,
+        "h": 472
+    },
+    {
+        "id": "72cefa657da877b3",
+        "type": "group",
+        "z": "59bf7cea2d24c618",
+        "name": "create chain and save in db",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "70ce6bd0be83ddf2",
+            "21032f12e6323d4c",
+            "4d399bd92818e44c",
+            "1eb607abdaf10490",
+            "345e02325fe7c6ac",
+            "7f258e8fe024c70e",
+            "7270033c3b3b6b10",
+            "857f63e08c407fbb",
+            "aeec5c7d4cb7138a"
+        ],
+        "x": 184,
+        "y": 674,
+        "w": 1602,
+        "h": 532
+    },
+    {
+        "id": "40e3dea0bc842595",
+        "type": "debug",
+        "z": "59bf7cea2d24c618",
+        "g": "8366e94b7d43f057",
+        "name": "DID Document (preview)",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1320,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "7f64dc4093642011",
+        "type": "function",
+        "z": "59bf7cea2d24c618",
+        "g": "8366e94b7d43f057",
+        "name": "check user want chain or did-chain",
+        "func": "if(msg.data.recordDetails.downloadFiles.chain == '' && msg.data.recordDetails.downloadFiles.did == '')\n    return[msg,null,null]\nif (msg.data.recordDetails.downloadFiles.chain == '' && !msg.data.recordDetails.downloadFiles.did)\n    return[null,msg,null]\nreturn [null,null,msg]",
+        "outputs": 3,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 380,
+        "wires": [
+            [
+                "1af2bb2509c14866"
+            ],
+            [
+                "1af2bb2509c14866"
+            ],
+            [
+                "36cf8e81ac812a22"
+            ]
+        ]
+    },
+    {
+        "id": "ac1f6f525270b3a0",
+        "type": "link in",
+        "z": "59bf7cea2d24c618",
+        "g": "8366e94b7d43f057",
+        "name": "input step 3 (downloadFiles)",
+        "links": [
+            "9cb9a56336293b48"
+        ],
+        "x": 235,
+        "y": 380,
+        "wires": [
+            [
+                "7f64dc4093642011"
+            ]
+        ]
+    },
+    {
+        "id": "9911b85bb6cafbc4",
+        "type": "link out",
+        "z": "59bf7cea2d24c618",
+        "g": "8366e94b7d43f057",
+        "name": "link out 32",
+        "mode": "link",
+        "links": [
+            "7f258e8fe024c70e"
+        ],
+        "x": 1555,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "70ce6bd0be83ddf2",
+        "type": "mongodb4",
+        "z": "59bf7cea2d24c618",
+        "g": "72cefa657da877b3",
+        "clientNode": "5656a62ddc286a04",
+        "mode": "collection",
+        "collection": "",
+        "operation": "",
+        "output": "toArray",
+        "maxTimeMS": "0",
+        "handleDocId": false,
+        "name": "",
+        "x": 1177.5,
+        "y": 760,
+        "wires": [
+            [
+                "21032f12e6323d4c"
+            ]
+        ]
+    },
+    {
+        "id": "21032f12e6323d4c",
+        "type": "switch",
+        "z": "59bf7cea2d24c618",
+        "g": "72cefa657da877b3",
+        "name": "check db awnser",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            },
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 477.5,
+        "y": 1060,
+        "wires": [
+            [
+                "4d399bd92818e44c"
+            ],
+            [
+                "1eb607abdaf10490"
+            ]
+        ]
+    },
+    {
+        "id": "4d399bd92818e44c",
+        "type": "function",
+        "z": "59bf7cea2d24c618",
+        "g": "72cefa657da877b3",
+        "name": "go to pg3.1",
+        "func": "//go to pg3.1\nmsg.data.session.stage='pg3'\nmsg.isExpanded=true\nmsg.clientId=msg.data.session.clientId\nmsg._socketId=msg.data.session._socketId\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 802.5,
+        "y": 1000,
+        "wires": [
+            [
+                "d323e9f4b8c2c8e2"
+            ]
+        ]
+    },
+    {
+        "id": "1eb607abdaf10490",
+        "type": "function",
+        "z": "59bf7cea2d24c618",
+        "g": "72cefa657da877b3",
+        "name": "set error",
+        "func": "if(!msg.data.error) msg.data.error={}\nmsg.data.error={\n    errorType:'dbError',\n    errorMessage:'we cant save your files'\n}\n\n// msg.isExpanded=true\n// msg.data.session.stage = 'pg1'\nmsg.clientId=msg.data.session.clientId\nmsg._socketId=msg.data.session._socketId\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 802.5,
+        "y": 1120,
+        "wires": [
+            [
+                "345e02325fe7c6ac"
+            ]
+        ]
+    },
+    {
+        "id": "345e02325fe7c6ac",
+        "type": "link out",
+        "z": "59bf7cea2d24c618",
+        "g": "72cefa657da877b3",
+        "name": "link out 24",
+        "mode": "link",
+        "links": [
+            "ea917288d5d06d2a"
+        ],
+        "x": 1445,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "7f258e8fe024c70e",
+        "type": "link in",
+        "z": "59bf7cea2d24c618",
+        "g": "72cefa657da877b3",
+        "name": "",
+        "links": [
+            "9911b85bb6cafbc4"
+        ],
+        "x": 235,
+        "y": 760,
+        "wires": [
+            [
+                "857f63e08c407fbb"
+            ]
+        ]
+    },
+    {
+        "id": "36cf8e81ac812a22",
+        "type": "function",
+        "z": "59bf7cea2d24c618",
+        "g": "8366e94b7d43f057",
+        "name": "set error",
+        "func": "if(!msg.data.error) msg.data.error={}\nmsg.data.error={\n    errorType:'dbError',\n    errorMessage:'----------'\n}\n\n// msg.isExpanded=true\n// msg.data.session.stage = 'pg1'\nmsg.clientId=msg.data.session.clientId\nmsg._socketId=msg.data.session._socketId\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 857.5,
+        "y": 480,
+        "wires": [
+            [
+                "07817ff9ab95c324"
+            ]
+        ]
+    },
+    {
+        "id": "07817ff9ab95c324",
+        "type": "link out",
+        "z": "59bf7cea2d24c618",
+        "g": "8366e94b7d43f057",
+        "name": "link out 28",
+        "mode": "link",
+        "links": [
+            "ea917288d5d06d2a"
+        ],
+        "x": 1075,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "7270033c3b3b6b10",
+        "type": "function",
+        "z": "59bf7cea2d24c618",
+        "g": "72cefa657da877b3",
+        "name": "update record(add files)",
+        "func": "msg.collection = \"records\";\nmsg.operation  = \"updateOne\";\n\nconst query = { recordId: msg.dbRecord.recordId };\n\nconst set = {\n  stage: msg.data.session.stage,\n  updatedAt: new Date(),\n  expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)\n};\n\nif (msg.data?.recordDetails?.downloadFiles?.chain !== undefined) {\n  set[\"recordDetails.files.chain\"] = msg.data.recordDetails.downloadFiles.chain;\n}\n\nconst files = msg.data?.recordDetails?.downloadFiles || {};\nif (files.did !== undefined)        set[\"recordDetails.files.did\"] = files.did;\nif (files.privateJwk !== undefined) set[\"recordDetails.files.privateJwk\"] = files.privateJwk;\nif (files.publicJwk !== undefined)  set[\"recordDetails.files.publicJwk\"]  = files.publicJwk;\n\nif (Object.keys(set).length === 0) {\n  node.error(\"Nothing to update\");\n  return null;\n}\n\nconst update = { $set: set };\nconst options = { upsert: false };\n\nmsg.payload = [query, update, options];\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 760,
+        "wires": [
+            [
+                "70ce6bd0be83ddf2"
+            ]
+        ]
+    },
+    {
+        "id": "cf6fa8ed568dee0a",
+        "type": "function",
+        "z": "59bf7cea2d24c618",
+        "g": "8366e94b7d43f057",
+        "name": "Build DID Document (did:web, strict)",
+        "func": "let payload = {\n  domain: msg.dbRecord.domain,\n  algorithm: \"RS256\",\n  publicKeyJwk: msg.data.recordDetails.downloadFiles.publicJwk.fileContent\n}\n\n\n\nconst cfg = payload || {};\nconst domain = String(cfg.domain || '').trim();\nif (!domain) { node.error('domain is required (e.g., example.com)'); return null; }\n\nconst alg = (cfg.algorithm || cfg.algoritm || cfg.alg || '').toString().trim();\n\nconst inputJwk = cfg.publicKeyJwk || cfg.jwk_public || cfg.jwk;\nif (!inputJwk || typeof inputJwk !== 'object') { node.error('publicKeyJwk (JWK) is required'); return null; }\n\nconst did = `did:web:${domain}`;\nconst keyId = `${did}#key-1`;\n\nconst jwk = JSON.parse(JSON.stringify(inputJwk));\nif (alg) jwk.alg = alg;\njwk.kid = keyId;\n\nif (jwk.x5u) {\n  jwk.x5u = `https://${payload.domain}/.well-known/chain.pem`;\n}\n\nconst didDoc = {\n  \"@context\": [\n    \"https://www.w3.org/ns/did/v1\",\n    \"https://w3id.org/security/suites/jws-2020/v1\"\n  ],\n  id: did,\n  verificationMethod: [\n    {\n      id: keyId,\n      type: \"JsonWebKey2020\",\n      controller: did,\n      publicKeyJwk: jwk\n    }\n  ],\n  assertionMethod: [ keyId ],\n  authentication: [ keyId ]\n};\n\nmsg.did = did;\nmsg.keyId = keyId;\npayload = JSON.stringify(didDoc, null, 2);\n\nmsg.data.recordDetails.downloadFiles.did = {\n  fileContent: didDoc,\n  fileType: 'did',\n  fileName: 'did.json'\n}\nmsg.payload=didDoc\nmsg.filename = \"/data/certs/didA.json\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1280,
+        "y": 280,
+        "wires": [
+            [
+                "9911b85bb6cafbc4",
+                "40e3dea0bc842595"
+            ]
+        ]
+    },
+    {
+        "id": "1af2bb2509c14866",
+        "type": "function",
+        "z": "59bf7cea2d24c618",
+        "g": "8366e94b7d43f057",
+        "name": "KEY → JWK private+public",
+        "func": "const { importPKCS8, importPKCS1, exportJWK } = jose;\n\n(async () => {\n  try {\n    const raw = msg.dbRecord.recordDetails.files.privateKey.fileContent;\n    const pem = typeof raw === \"string\"\n      ? raw\n      : (raw && Buffer.isBuffer(raw) ? raw.toString(\"utf8\") : \"\");\n\n    const domain = String(msg.dbRecord.domain || \"\").trim();\n    const alg = msg.alg || \"RS256\";\n\n    if (!pem || !pem.includes(\"PRIVATE KEY\")) {\n      node.error(\"PEM private key not found in msg..fileContent\", msg);\n      return;\n    }\n\n    let key;\n    if (/-----BEGIN PRIVATE KEY-----/.test(pem)) {\n      key = await importPKCS8(pem, alg, { extractable: true });\n    } else if (/-----BEGIN RSA PRIVATE KEY-----/.test(pem)) {\n      key = await importPKCS1(pem, alg, { extractable: true });\n    } else {\n      throw new Error(\"Unsupported PEM format\");\n    }\n\n    const privateJwk = await exportJWK(key);\n    privateJwk.alg = alg;\n    privateJwk.use = \"sig\";\n    privateJwk.key_ops = [\"sign\"];\n\n    const publicJwk = { ...privateJwk };\n    delete publicJwk.d; delete publicJwk.p; delete publicJwk.q;\n    delete publicJwk.dp; delete publicJwk.dq; delete publicJwk.qi;\n    publicJwk.key_ops = [\"verify\"];\n\n\n    function getBaseDomain(domain) {\n      const parts = domain.split(\".\");\n      if (parts.length > 2) {\n        return parts[parts.length - 2];\n      } else {\n        return parts[0];\n      }\n    }\n    const kid = `did:web:${domain}#key-1`;\n    const x5u = `https://${domain}/.well-known/chain.pem`;\n    privateJwk.kid = kid;\n    publicJwk.kid = kid;\n    publicJwk.x5u = x5u;\n\n    msg.payload = { privateJwk, publicJwk };\n\n    msg.data.recordDetails.downloadFiles.privateJwk = {\n      fileType: 'privateJwk',\n      fileName: 'privateJwk',\n      fileContent: privateJwk\n    };\n    msg.data.recordDetails.downloadFiles.publicJwk = {\n      fileType: 'publicJwk',\n      fileName: 'publicJwk',\n      fileContent: publicJwk\n    };\n\n    node.send(msg);\n  } catch (err) {\n    node.error(`KEY→JWK failed: ${err.message}`, msg);\n  }\n})();\nreturn null;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "jose",
+                "module": "jose"
+            }
+        ],
+        "x": 870,
+        "y": 280,
+        "wires": [
+            [
+                "cf6fa8ed568dee0a"
+            ]
+        ]
+    },
+    {
+        "id": "857f63e08c407fbb",
+        "type": "function",
+        "z": "59bf7cea2d24c618",
+        "g": "72cefa657da877b3",
+        "name": "concat and add EXTRA PEM",
+        "func": "function ensureLF(s) {\n  s = String(s || \"\");\n  s = s.replace(/\\r\\n/g, \"\\n\");\n  if (s.charCodeAt(0) === 0xFEFF) s = s.slice(1);\n  return s.endsWith(\"\\n\") ? s : s + \"\\n\";\n}\n\nfunction extractBase64(certLike) {\n  let s = String(certLike || \"\");\n  s = s.replace(/\\r\\n/g, \"\\n\");\n\n  const m = s.match(/-----BEGIN\\s+CERTIFICATE-----([\\s\\S]*?)-----END\\s+CERTIFICATE-----/i);\n  if (m) s = m[1];\n\n  s = s.replace(/-----BEGIN[^-]+-----/gi, \"\");\n  s = s.replace(/-----END[^-]+-----/gi, \"\");\n\n  s = s.replace(/[^A-Za-z0-9+/=]/g, \"\");\n\n  return s;\n}\n\nfunction formatPEM(certLike) {\n  const b64 = extractBase64(certLike);\n  if (!b64) return \"\";\n  const lines = b64.match(/.{1,64}/g).join(\"\\n\");\n  return `-----BEGIN CERTIFICATE-----\\n${lines}\\n-----END CERTIFICATE-----\\n`;\n}\n\nlet crt = msg.dbRecord.recordDetails.files.certificate.fileContent\nlet bundle = msg.dbRecord.recordDetails.files.bundle.fileContent\ncrt = ensureLF(crt);\nbundle = ensureLF(bundle);\n\nconst extraRaw = `-----BEGIN CERTIFICATE----- MIIF3jCCA8agAwIBAgIQAf1tMPyjylGoG7xkDjUDLTANBgkqhkiG9w0BAQwFADCB iDELMAkGA1UEBhMCVVMxEzARBgNVBAgTCk5ldyBKZXJzZXkxFDASBgNVBAcTC0pl cnNleSBDaXR5MR4wHAYDVQQKExVUaGUgVVNFUlRSVVNUIE5ldHdvcmsxLjAsBgNV BAMTJVVTRVJUcnVzdCBSU0EgQ2VydGlmaWNhdGlvbiBBdXRob3JpdHkwHhcNMTAw MjAxMDAwMDAwWhcNMzgwMTE4MjM1OTU5WjCBiDELMAkGA1UEBhMCVVMxEzARBgNV BAgTCk5ldyBKZXJzZXkxFDASBgNVBAcTC0plcnNleSBDaXR5MR4wHAYDVQQKExVU aGUgVVNFUlRSVVNUIE5ldHdvcmsxLjAsBgNVBAMTJVVTRVJUcnVzdCBSU0EgQ2Vy dGlmaWNhdGlvbiBBdXRob3JpdHkwggIiMA0GCSqGSIb3DQEBAQUAA4ICDwAwggIK AoICAQCAEmUXNg7D2wiz0KxXDXbtzSfTTK1Qg2HiqiBNCS1kCdzOiZ/MPans9s/B 3PHTsdZ7NygRK0faOca8Ohm0X6a9fZ2jY0K2dvKpOyuR+OJv0OwWIJAJPuLodMkY tJHUYmTbf6MG8YgYapAiPLz+E/CHFHv25B+O1ORRxhFnRghRy4YUVD+8M/5+bJz/ Fp0YvVGONaanZshyZ9shZrHUm3gDwFA66Mzw3LyeTP6vBZY1H1dat//O+T23LLb2 VN3I5xI6Ta5MirdcmrS3ID3KfyI0rn47aGYBROcBTkZTmzNg95S+UzeQc0PzMsNT 79uq/nROacdrjGCT3sTHDN/hMq7MkztReJVni+49Vv4M0GkPGw/zJSZrM233bkf6 c0Plfg6lZrEpfDKEY1WJxA3Bk1QwGROs0303p+tdOmw1XNtB1xLaqUkL39iAigmT Yo61Zs8liM2EuLE/pDkP2QKe6xJMlXzzawWpXhaDzLhn4ugTncxbgtNMs+1b/97l c6wjOy0AvzVVdAlJ2ElYGn+SNuZRkg7zJn0cTRe8yexDJtC/QV9AqURE9JnnV4ee UB9XVKg+/XRjL7FQZQnmWEIuQxpMtPAlR1n6BB6T1CZGSlCBst6+eLf8ZxXhyVeE Hg9j1uliutZfVS7qXMYoCAQlObgOK6nyTJccBz8NUvXt7y+CDwIDAQABo0IwQDAd BgNVHQ4EFgQUU3m/WqorSs9UgOHYm8Cd8rIDZsswDgYDVR0PAQH/BAQDAgEGMA8G A1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQEMBQADggIBAFzUfA3P9wF9QZllDHPF Up/L+M+ZBn8b2kMVn54CVVeWFPFSPCeHlCjtHzoBN6J2/FNQwISbxmtOuowhT6KO VWKR82kV2LyI48SqC/3vqOlLVSoGIG1VeCkZ7l8wXEskEVX/JJpuXior7gtNn3/3 ATiUFJVDBwn7YKnuHKsSjKCaXqeYalltiz8I+8jRRa8YFWSQEg9zKC7F4iRO/Fjs 8PRF/iKz6y+O0tlFYQXBl2+odnKPi4w2r78NBc5xjeambx9spnFixdjQg3IM8WcR iQycE0xyNN+81XHfqnHd4blsjDwSXWXavVcStkNr/+XeTWYRUc+ZruwXtuhxkYze Sf7dNXGiFSeUHM9h4ya7b6NnJSFd5t0dCy5oGzuCr+yDZ4XUmFF0sbmZgIn/f3gZ XHlKYC6SQK5MNyosycdiyA5d9zZbyuAlJQG03RoHnHcAP9Dc1ew91Pq7P8yF1m9/ qS3fuQL39ZeatTXaw2ewh0qpKJ4jjv9cJ2vhsE/zB+4ALtRZh8tSQZXq9EfX7mRB VXyNWQKV3WKdwrnuWih0hKWbt5DHDAff9Yk2dDLWKMGwsAvgnEzDHNb842m1R0aB L6KCq9NjRHDEjf8tM7qtj3u1cIiuPhnPQCjY/MiQu12ZIvVS5ljFH4gxQ+6IHdfG jjxDah2nGN59PRbxYvnKkKj9 -----END CERTIFICATE-----`;\n\nconst extra = formatPEM(extraRaw);\n\nlet chain= ensureLF(crt) + ensureLF(bundle) + ensureLF(extra);\n\n\n\n\nfunction getBaseDomain(domain) {\n  const parts = domain.split(\".\");\n  if (parts.length > 2) {\n    return parts[parts.length - 2];\n  } else {\n    return parts[0];\n  }\n}\n\nmsg.data.recordDetails.downloadFiles.chain = {\n  fileContent: chain,\n  fileType: 'chain',\n  fileName: `chain.pem`\n}\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 760,
+        "wires": [
+            [
+                "7270033c3b3b6b10"
+            ]
+        ]
+    },
+    {
+        "id": "d323e9f4b8c2c8e2",
+        "type": "function",
+        "z": "59bf7cea2d24c618",
+        "g": "72cefa657da877b3",
+        "name": "convert to base64 for download",
+        "func": "function toBase64(input, { urlSafe = false } = {}) {\n    const str = typeof input === \"string\" ? input : JSON.stringify(input);\n    let b64 = (typeof Buffer !== \"undefined\")\n        ? Buffer.from(str, \"utf8\").toString(\"base64\")\n        : btoa(unescape(encodeURIComponent(str)));\n\n    if (urlSafe) {\n        b64 = b64.replace(/\\+/g, \"-\").replace(/\\//g, \"_\").replace(/=+$/g, \"\");\n    }\n    return b64;\n}\n\nmsg.data.recordDetails.downloadFiles.chain.fileContent = toBase64(msg.data.recordDetails.downloadFiles.chain.fileContent)\nmsg.data.recordDetails.downloadFiles.did.fileContent = toBase64(msg.data.recordDetails.downloadFiles.did.fileContent)\nmsg.data.recordDetails.downloadFiles.privateJwk.fileContent = toBase64(msg.data.recordDetails.downloadFiles.privateJwk.fileContent)\nmsg.data.recordDetails.downloadFiles.publicJwk.fileContent = toBase64(msg.data.recordDetails.downloadFiles.publicJwk.fileContent)\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1170,
+        "y": 1000,
+        "wires": [
+            [
+                "345e02325fe7c6ac",
+                "aeec5c7d4cb7138a"
+            ]
+        ]
+    },
+    {
+        "id": "aeec5c7d4cb7138a",
+        "type": "debug",
+        "z": "59bf7cea2d24c618",
+        "g": "72cefa657da877b3",
+        "name": "chain-did-private/public jwk saved",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1560,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "5656a62ddc286a04",
+        "type": "mongodb4-client",
+        "name": "",
+        "protocol": "mongodb",
+        "hostname": "db.facis.cloud",
+        "port": "443",
+        "dbName": "onboarding",
+        "appName": "",
+        "authSource": "",
+        "authMechanism": "DEFAULT",
+        "tls": true,
+        "tlsCAFile": "",
+        "tlsCertificateKeyFile": "",
+        "tlsInsecure": true,
+        "connectTimeoutMS": "30000",
+        "socketTimeoutMS": "0",
+        "minPoolSize": "0",
+        "maxPoolSize": "100",
+        "maxIdleTimeMS": "0",
+        "uri": "",
+        "advanced": "{}",
+        "uriTabActive": "tab-uri-simple"
+    }
+]

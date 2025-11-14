@@ -1,0 +1,672 @@
+[
+    {
+        "id": "ab46c210d22d6d5d",
+        "type": "tab",
+        "label": "✅ 2-insert/update companyProfile in db",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "cff32505cde6583a",
+        "type": "group",
+        "z": "ab46c210d22d6d5d",
+        "name": "pg2-update record",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "b7c9cfbf47c89e4f",
+            "b63dde657d368cd7",
+            "d351480f6f7844ab",
+            "681dac76f04599cd",
+            "0aa66abfdee46bb9",
+            "e07ba080bf6235bd",
+            "c1863b03e474c050",
+            "0c73757bc8263f56",
+            "0835e0e36b6dd851"
+        ],
+        "x": 299,
+        "y": 834,
+        "w": 1937,
+        "h": 432
+    },
+    {
+        "id": "d4224c8d56e79a19",
+        "type": "group",
+        "z": "ab46c210d22d6d5d",
+        "name": "pg2-insert record",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "87522aa430354d49",
+            "24680cd851ce0712",
+            "4b5d1378616918ca",
+            "9ec19079898bf722",
+            "57d11430f2ee5662",
+            "84d99c96d2f760d5",
+            "a9534ed7c17e543f",
+            "28ec6e44deea896a",
+            "23cf436f71c8fd05",
+            "e07eeb39977c4c95",
+            "e67c620bb7a9111a",
+            "b3e63ca2c050c9b1",
+            "c97a09aa99dfe262",
+            "114821ee08281449",
+            "4cce175b83156eb5",
+            "7a6c75f5d0c63e47",
+            "90723567b55e0b9a"
+        ],
+        "x": 279,
+        "y": 254,
+        "w": 2712,
+        "h": 452
+    },
+    {
+        "id": "b7c9cfbf47c89e4f",
+        "type": "function",
+        "z": "ab46c210d22d6d5d",
+        "g": "cff32505cde6583a",
+        "name": "update record",
+        "func": "msg.collection = \"records\";\nmsg.operation  = \"updateOne\";\nconst query= {recordId: msg.dbRecord.recordId}\n\nconst update={\n    $set:{\n        domain : msg.data.recordDetails.companyProfile.companyDetails.onboardingDomain,\n        recordDetails: msg.data.recordDetails,\n        updateAt : Date.now(),\n        expiersAt: Date.now() + 7 * 24 * 60 * 60 * 1000 \n    }\n}\n\nconst options = { upsert: false }  \nmsg.payload = [query, update, options]\nmsg.data.recordId= msg.payload.recordId\nreturn msg\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 562.5,
+        "y": 1100,
+        "wires": [
+            [
+                "b63dde657d368cd7"
+            ]
+        ]
+    },
+    {
+        "id": "b63dde657d368cd7",
+        "type": "mongodb4",
+        "z": "ab46c210d22d6d5d",
+        "g": "cff32505cde6583a",
+        "clientNode": "5656a62ddc286a04",
+        "mode": "collection",
+        "collection": "",
+        "operation": "",
+        "output": "toArray",
+        "maxTimeMS": "0",
+        "handleDocId": false,
+        "name": "",
+        "x": 897.5,
+        "y": 1100,
+        "wires": [
+            [
+                "d351480f6f7844ab"
+            ]
+        ]
+    },
+    {
+        "id": "d351480f6f7844ab",
+        "type": "switch",
+        "z": "ab46c210d22d6d5d",
+        "g": "cff32505cde6583a",
+        "name": "check db awnser",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            },
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1242.5,
+        "y": 1100,
+        "wires": [
+            [
+                "681dac76f04599cd"
+            ],
+            [
+                "c1863b03e474c050"
+            ]
+        ]
+    },
+    {
+        "id": "681dac76f04599cd",
+        "type": "function",
+        "z": "ab46c210d22d6d5d",
+        "g": "cff32505cde6583a",
+        "name": "go pg3",
+        "func": "function nextStage(stage) {\n    const s = String(stage ?? '');\n    const m = s.match(/pg\\s*(\\d+)/i);\n    if (!m) {\n        return s;\n    }\n    return `pg${parseInt(m[1], 10) + 1}`;\n}\nconst nextstage = nextStage(msg.data.session.stage)\n\n\n//go pg3\nmsg.data.session.stage=nextstage\nmsg.isExpanded=true\nmsg.clientId=msg.data.session.clientId\nmsg._socketId=msg.data.session._socketId\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1577.5,
+        "y": 1020,
+        "wires": [
+            [
+                "0aa66abfdee46bb9",
+                "0c73757bc8263f56"
+            ]
+        ]
+    },
+    {
+        "id": "0aa66abfdee46bb9",
+        "type": "delay",
+        "z": "ab46c210d22d6d5d",
+        "g": "cff32505cde6583a",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "3",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1937.5,
+        "y": 1020,
+        "wires": [
+            [
+                "e07ba080bf6235bd"
+            ]
+        ]
+    },
+    {
+        "id": "e07ba080bf6235bd",
+        "type": "link out",
+        "z": "ab46c210d22d6d5d",
+        "g": "cff32505cde6583a",
+        "name": "link out 42",
+        "mode": "link",
+        "links": [
+            "ea917288d5d06d2a"
+        ],
+        "x": 2185,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "c1863b03e474c050",
+        "type": "function",
+        "z": "ab46c210d22d6d5d",
+        "g": "cff32505cde6583a",
+        "name": "set error",
+        "func": "if(!msg.data.error) msg.data.error={}\nmsg.data.error={\n    errorType:'sessionId',\n    errorMessage:'Cant make sessionId by db'\n}\n\n// msg.isExpanded=true\nmsg.data.session.stage = 'pg1'\nmsg.clientId=msg.data.session.clientId\nmsg._socketId=msg.data.session._socketId\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1582.5,
+        "y": 1180,
+        "wires": [
+            [
+                "e07ba080bf6235bd"
+            ]
+        ]
+    },
+    {
+        "id": "0c73757bc8263f56",
+        "type": "debug",
+        "z": "ab46c210d22d6d5d",
+        "g": "cff32505cde6583a",
+        "name": "updated-go pg3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1577.5,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "0835e0e36b6dd851",
+        "type": "link in",
+        "z": "ab46c210d22d6d5d",
+        "g": "cff32505cde6583a",
+        "name": "input update record",
+        "links": [
+            "d67bfb4c76e8170c"
+        ],
+        "x": 350,
+        "y": 1100,
+        "wires": [
+            [
+                "b7c9cfbf47c89e4f"
+            ]
+        ]
+    },
+    {
+        "id": "87522aa430354d49",
+        "type": "switch",
+        "z": "ab46c210d22d6d5d",
+        "g": "d4224c8d56e79a19",
+        "name": "check stage",
+        "property": "data.session.stage",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "pg2",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "pg3",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 522.5,
+        "y": 500,
+        "wires": [
+            [
+                "24680cd851ce0712"
+            ],
+            [
+                "114821ee08281449"
+            ],
+            [
+                "90723567b55e0b9a"
+            ]
+        ]
+    },
+    {
+        "id": "24680cd851ce0712",
+        "type": "function",
+        "z": "ab46c210d22d6d5d",
+        "g": "d4224c8d56e79a19",
+        "name": "get last recordId",
+        "func": "msg.collection = \"records\"\nmsg.operation  = \"findOne\"\n\nconst query   = {}\nconst options = {\n  projection: { _id: 0, recordId: 1 }, \n  sort: { _id: -1 }\n}\n\nmsg.payload = [query, options]\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 882.5,
+        "y": 340,
+        "wires": [
+            [
+                "4b5d1378616918ca"
+            ]
+        ]
+    },
+    {
+        "id": "4b5d1378616918ca",
+        "type": "mongodb4",
+        "z": "ab46c210d22d6d5d",
+        "g": "d4224c8d56e79a19",
+        "clientNode": "5656a62ddc286a04",
+        "mode": "collection",
+        "collection": "",
+        "operation": "",
+        "output": "toArray",
+        "maxTimeMS": "0",
+        "handleDocId": false,
+        "name": "",
+        "x": 1247.5,
+        "y": 340,
+        "wires": [
+            [
+                "9ec19079898bf722",
+                "3438643c07d24411"
+            ]
+        ]
+    },
+    {
+        "id": "9ec19079898bf722",
+        "type": "switch",
+        "z": "ab46c210d22d6d5d",
+        "g": "d4224c8d56e79a19",
+        "name": "check db awnser(just return recordId)",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            },
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1655,
+        "y": 340,
+        "wires": [
+            [
+                "57d11430f2ee5662"
+            ],
+            [
+                "57d11430f2ee5662"
+            ]
+        ]
+    },
+    {
+        "id": "57d11430f2ee5662",
+        "type": "function",
+        "z": "ab46c210d22d6d5d",
+        "g": "d4224c8d56e79a19",
+        "name": "make sessionId",
+        "func": "function BKDRHash(str) {\n    const seed = 13131;\n    let hash = 0;\n\n    for (let i = 0; i < str.length; i++) {\n        hash = ((hash * seed) + str.charCodeAt(i)) & 0x7FFFFFFF;\n    }\n\n    return hash.toString();\n}\n\nlet domainName = msg.data.recordDetails.companyProfile.companyDetails.onboardingDomain\nmsg.data.session.sessionId = BKDRHash(domainName+msg.data.session.clientId)\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2042.5,
+        "y": 340,
+        "wires": [
+            [
+                "84d99c96d2f760d5"
+            ]
+        ]
+    },
+    {
+        "id": "84d99c96d2f760d5",
+        "type": "function",
+        "z": "ab46c210d22d6d5d",
+        "g": "d4224c8d56e79a19",
+        "name": "insert new session",
+        "func": "msg.db={}\n\n\nmsg.db.record={\n    sessionId: msg.data.session.sessionId,\n    domain: msg.data.recordDetails.companyProfile.companyDetails.onboardingDomain,\n    recordDetails:msg.data.recordDetails,\n    stage:msg.data.session.stage,\n    createdAt : Date.now(),\n    expiersAt: Date.now() + 7 * 24 * 60 * 60 * 1000 \n}\n\nif(msg.payload == null )  {\n    msg.db.record.recordId = 1\n}else {\n    msg.db.record.recordId= msg.payload.recordId+1\n    \n}\n\nmsg.collection = \"records\";\nmsg.operation  = \"insertOne\";\nmsg.payload    = [ msg.db.record ];   \n \n\nreturn msg\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1402.5,
+        "y": 540,
+        "wires": [
+            [
+                "a9534ed7c17e543f"
+            ]
+        ]
+    },
+    {
+        "id": "a9534ed7c17e543f",
+        "type": "mongodb4",
+        "z": "ab46c210d22d6d5d",
+        "g": "d4224c8d56e79a19",
+        "clientNode": "5656a62ddc286a04",
+        "mode": "collection",
+        "collection": "",
+        "operation": "",
+        "output": "toArray",
+        "maxTimeMS": "0",
+        "handleDocId": false,
+        "name": "",
+        "x": 1707.5,
+        "y": 540,
+        "wires": [
+            [
+                "28ec6e44deea896a"
+            ]
+        ]
+    },
+    {
+        "id": "28ec6e44deea896a",
+        "type": "switch",
+        "z": "ab46c210d22d6d5d",
+        "g": "d4224c8d56e79a19",
+        "name": "check db awnser",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            },
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 2027.5,
+        "y": 540,
+        "wires": [
+            [
+                "23cf436f71c8fd05"
+            ],
+            [
+                "e07eeb39977c4c95"
+            ]
+        ]
+    },
+    {
+        "id": "23cf436f71c8fd05",
+        "type": "function",
+        "z": "ab46c210d22d6d5d",
+        "g": "d4224c8d56e79a19",
+        "name": "go to pg3",
+        "func": "function nextStage(stage) {\n    const s = String(stage ?? '');\n    const m = s.match(/pg\\s*(\\d+)/i);\n    if (!m) {\n        return s;\n    }\n    return `pg${parseInt(m[1], 10) + 1}`;\n}\nconst nextstage = nextStage(msg.data.session.stage)\n\n//go to pg3\nmsg.data.session.stage=nextstage\nmsg.stage=nextstage\nmsg.isExpanded=true\nmsg.clientId=msg.data.session.clientId\nmsg._socketId=msg.data.session._socketId\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2347.5,
+        "y": 480,
+        "wires": [
+            [
+                "e67c620bb7a9111a",
+                "7a6c75f5d0c63e47"
+            ]
+        ]
+    },
+    {
+        "id": "e07eeb39977c4c95",
+        "type": "function",
+        "z": "ab46c210d22d6d5d",
+        "g": "d4224c8d56e79a19",
+        "name": "set error",
+        "func": "if(!msg.data.error) msg.data.error={}\nmsg.data.error={\n    errorType:'session',\n    errorMessage: 'cant save session  in db'\n}\n\n// msg.isExpanded=true\nmsg.data.session.stage = 'pg1'\nmsg.clientId=msg.data.session.clientId\nmsg._socketId=msg.data.session._socketId\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2347.5,
+        "y": 620,
+        "wires": [
+            [
+                "b3e63ca2c050c9b1"
+            ]
+        ]
+    },
+    {
+        "id": "e67c620bb7a9111a",
+        "type": "delay",
+        "z": "ab46c210d22d6d5d",
+        "g": "d4224c8d56e79a19",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "3",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 2702.5,
+        "y": 480,
+        "wires": [
+            [
+                "b3e63ca2c050c9b1"
+            ]
+        ]
+    },
+    {
+        "id": "b3e63ca2c050c9b1",
+        "type": "link out",
+        "z": "ab46c210d22d6d5d",
+        "g": "d4224c8d56e79a19",
+        "name": "link out 40",
+        "mode": "link",
+        "links": [
+            "ea917288d5d06d2a"
+        ],
+        "x": 2940,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "c97a09aa99dfe262",
+        "type": "link in",
+        "z": "ab46c210d22d6d5d",
+        "g": "d4224c8d56e79a19",
+        "name": "input insert new record",
+        "links": [
+            "0d7cbc856a90a260",
+            "908e072a9b71905e",
+            "988c29c229fb30f8"
+        ],
+        "x": 330,
+        "y": 500,
+        "wires": [
+            [
+                "87522aa430354d49"
+            ]
+        ]
+    },
+    {
+        "id": "114821ee08281449",
+        "type": "function",
+        "z": "ab46c210d22d6d5d",
+        "g": "d4224c8d56e79a19",
+        "name": "set error",
+        "func": "if(!msg.data.error) msg.data.error={}\nmsg.data.error={\n    errorType:'domainNoteExist',\n    errorMessage: 'there is no any record for your domain'\n}\n\n// msg.isExpanded=true\nmsg.data.session.stage = 'pg1'\nmsg.clientId=msg.data.session.clientId\nmsg._socketId=msg.data.session._socketId\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 882.5,
+        "y": 500,
+        "wires": [
+            [
+                "4cce175b83156eb5"
+            ]
+        ]
+    },
+    {
+        "id": "4cce175b83156eb5",
+        "type": "link out",
+        "z": "ab46c210d22d6d5d",
+        "g": "d4224c8d56e79a19",
+        "name": "link out 41",
+        "mode": "link",
+        "links": [
+            "ea917288d5d06d2a"
+        ],
+        "x": 1100,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "7a6c75f5d0c63e47",
+        "type": "debug",
+        "z": "ab46c210d22d6d5d",
+        "g": "d4224c8d56e79a19",
+        "name": "insert new record-go pg3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2467.5,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "90723567b55e0b9a",
+        "type": "link out",
+        "z": "ab46c210d22d6d5d",
+        "g": "d4224c8d56e79a19",
+        "name": "link out 3",
+        "mode": "link",
+        "links": [
+            "77281f92096decab"
+        ],
+        "x": 710,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "3438643c07d24411",
+        "type": "debug",
+        "z": "ab46c210d22d6d5d",
+        "name": "db",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1397.5,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "5656a62ddc286a04",
+        "type": "mongodb4-client",
+        "name": "",
+        "protocol": "mongodb",
+        "hostname": "db.facis.cloud",
+        "port": "443",
+        "dbName": "onboarding",
+        "appName": "",
+        "authSource": "",
+        "authMechanism": "DEFAULT",
+        "tls": true,
+        "tlsCAFile": "",
+        "tlsCertificateKeyFile": "",
+        "tlsInsecure": true,
+        "connectTimeoutMS": "30000",
+        "socketTimeoutMS": "0",
+        "minPoolSize": "0",
+        "maxPoolSize": "100",
+        "maxIdleTimeMS": "0",
+        "uri": "",
+        "advanced": "{}",
+        "uriTabActive": "tab-uri-simple"
+    }
+]
