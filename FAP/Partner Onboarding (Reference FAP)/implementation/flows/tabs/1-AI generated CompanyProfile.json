@@ -1,0 +1,499 @@
+[
+    {
+        "id": "6487b882576bd87d",
+        "type": "tab",
+        "label": "✅1 -AI generated CompanyProfile(pg1)",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "df372183c1996083",
+        "type": "group",
+        "z": "6487b882576bd87d",
+        "name": "pg1-gpt searching",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "4bdb646c115fc765",
+            "dfb4b9769c5f47ad",
+            "1c99cba68693f9b9",
+            "c660681dab30ec83",
+            "a93483200cca2abb",
+            "985440ed60f36842",
+            "880ec1368fdcb23a",
+            "44dc7dd8fd6c74b0",
+            "260a439c19a3c730",
+            "5a256d477b4a2805",
+            "ee7569805605e77f",
+            "015f8b84b2c13e49",
+            "3f287da5f32df3b6",
+            "8c2ab7aff63b4683",
+            "1fdf58aa0d4d13ad",
+            "0b16964777f8510c",
+            "8208076ab967ee7a",
+            "4895a319769d4040",
+            "8dd07783c740b6e4",
+            "d05660e0f71e39bd",
+            "758917f17ea22946"
+        ],
+        "x": 119,
+        "y": 74,
+        "w": 3242,
+        "h": 752
+    },
+    {
+        "id": "4bdb646c115fc765",
+        "type": "function",
+        "z": "6487b882576bd87d",
+        "g": "df372183c1996083",
+        "name": "set companyProfile json",
+        "func": "let o = msg.payload\n    \nmsg.data.recordDetails.companyProfile = {\n    \"companyDetails\": {\n        \"legalCompanyName\": o.legal_name ,\n        \"websiteDomain\": o.domain,\n        \"descripton\": o.description\n    },\n    \"legalRegistration\": {\n        \"legalForm\": o.registration.type || '',\n        \"registrationNumber\": o.registration.register_number|| '',\n        \"registeringAuthorityOrCourt\": o.registration.register_court|| '',\n        \"previousRegistrationNumber\": o.registration.former_register.register_number || '',\n        \"previousRegisteringAuthorityOrCourt\": o.registration.former_register.register_court || '',\n        \"registrationNotes\": o.registration.former_register.note || ''\n        \n    },\n    \"legalIdentifiers\": {\n        \"euVatId\": o.vat_id || '',\n        \"taxId\": o.lrn.tax_id || '',\n        \"euid\": o.lrn.euid || '',\n        \"eoriNumber\": o.lrn.eori || '',\n        \"leiCode\": o.lrn.lei_code || ''\n    },\n    \"management\": {\n        \"managingDirectors\": o.managing_directors || '',\n        \"boardChair\": o.board.chairman || '',\n        \"viceChair\": o.board.vice_chairman || '',\n        \"boardMembers\": o.board.members || ''\n    },\n    \"headquartersAddress\": {\n        \"streetAddress\": o.headquarter_address.street_address || '',\n        \"postalCode\": o.headquarter_address.postal_code || '',\n        \"city\": o.headquarter_address.city || '',\n        \"stateOrRegion\": o.headquarter_address.subdivision.name || '',\n        \"stateOrRegionCode\": o.headquarter_address.subdivision.iso_3166_2 || '',\n        \"country\": o.headquarter_address.country.name || '',\n        \"countryCode\": o.headquarter_address.country.iso_3166_1 || '',\n        \"legalAddressIso\": o.headquarter_address.subdivision.iso_3166_2 || '',\n        \"headquarterAddressIso\": o.headquarter_address.country.iso_3166_1 || ''\n\n    },\n    \"contact\": {\n        \"phone\": o.contact.phone || '',\n        \"email\": o.contact.email || '',\n        \"website\": o.contact.website || ''\n    },\n    \"sourcesAndVerification\": {\n        \"sourceLinks\": o.sources || '',\n        \"lastVerifiedDate\": o.last_verified || ''\n    },\n    \"requiredFields\": [\n        \"companyDetails.legalCompanyName\",\n        \"companyDetails.websiteDomain\",\n        \"legalRegistration.legalForm\",\n        \"legalRegistration.registrationNumber\",\n        \"legalRegistration.registeringAuthorityOrCourt\",\n        \"headquartersAddress.streetAddress\",\n        \"headquartersAddress.postalCode\",\n        \"headquartersAddress.city\",\n        \"headquartersAddress.stateOrRegion\",\n        \"headquartersAddress.country\"\n    ]\n}\n\n\nif(msg.data.recordDetails.companyInformation.onboardingDomain)\n{\n    msg.data.recordDetails.companyProfile.companyDetails.onboardingDomain = msg.data.recordDetails.companyInformation.onboardingDomain\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2200,
+        "y": 440,
+        "wires": [
+            [
+                "4895a319769d4040"
+            ]
+        ]
+    },
+    {
+        "id": "dfb4b9769c5f47ad",
+        "type": "function",
+        "z": "6487b882576bd87d",
+        "g": "df372183c1996083",
+        "name": "add logoUrl to copanyProfile-go pg2",
+        "func": "function nextStage(stage) {\n    const s = String(stage ?? '');\n    const m = s.match(/pg\\s*(\\d+)/i);\n    if (!m) {\n        return s;\n    }\n    return `pg${parseInt(m[1], 10) + 1}`;\n}\nconst nextstage = nextStage(msg.data.session.stage)\n\nif(msg.payload.directUrl)\n    msg.data.recordDetails.companyProfile.companyDetails.directUrl=msg.payload.directUrl\nmsg.data.session.stage=nextstage\n\n//go pg2\nmsg.data.session.stage=nextstage\nmsg.isExpanded=true\nmsg.clientId=msg.data.session.clientId\nmsg._socketId=msg.data.session._socketId\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3025,
+        "y": 600,
+        "wires": [
+            [
+                "c660681dab30ec83",
+                "1c99cba68693f9b9"
+            ]
+        ]
+    },
+    {
+        "id": "1c99cba68693f9b9",
+        "type": "debug",
+        "z": "6487b882576bd87d",
+        "g": "df372183c1996083",
+        "name": "GPT generated-go pg2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3175,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "c660681dab30ec83",
+        "type": "link out",
+        "z": "6487b882576bd87d",
+        "g": "df372183c1996083",
+        "name": "link out 37",
+        "mode": "link",
+        "links": [
+            "ea917288d5d06d2a"
+        ],
+        "x": 3270,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "a93483200cca2abb",
+        "type": "function",
+        "z": "6487b882576bd87d",
+        "g": "df372183c1996083",
+        "name": "Build OpenAI request(available)",
+        "func": "msg.prompt=`https://www.${msg.data.recordDetails.companyInformation.domain}/`\n\n// Read API key from environment (set OPENAI_API_KEY before running Node-RED)\nconst apiKey = global.get(`metaData.aiApiKey`);\nmsg. apiKey = global.get(`metaData.aiApiKey`);\n// const apiKey = env.get(\"OPENAI_API_KEY\");\nif (!apiKey) {\n    node.error(\"OPENAI_API_KEY env var not set.\");\n    return null;\n}\n\n// Allow overriding the prompt via msg.prompt\n// Build a robust userPrompt for the OpenAI call\n\n// Long instruction block kept as a clean template string:\nconst COMPANY_PROFILE_PROMPT = `\n\nCompany Profile (by Domain) → JSON\nGoal: Given a company domain (e.g., example.com), research authoritative sources and return a fully completed JSON with legal, registration, compliance identifiers, contacts, brand identity, executives, and provenance (sources, last_verified).\n\nInput: domain — a bare domain like eco.de (no protocol, no path).\n\nWhat to Do (Step-by-Step)\nResolve the official entity\nFind the legal entity name and type (e.g., GmbH, AG, Ltd) from the company site (About/Impressum/Contact/Legal). If German entity: check Impressum, Handelsregister entries.\n\nRegistration details\nCourt and number (e.g., Amtsgericht Düsseldorf, HRB 106352) from Handelsregister or equivalent national registry. If multiple entities, pick the one clearly tied to the given domain; otherwise, use the HQ entity.\n\nTax & compliance identifiers\nVAT ID (USt-IdNr / vat_id): find in site Impressum, BZSt/VIES, or reputable databases.\nEUID (lrn.euid): confirm via Handelsregister (format typically DE.HRB.[number].[court] or the official EUID format for that jurisdiction).\nTax ID (lrn.tax_id / Steuernummer): only if publicly disclosed; otherwise \"\".\nEORI (lrn.eori): EU Commission EORI checker if applicable; otherwise \"\".\nLEI (lrn.lei_code): search GLEIF; otherwise \"\".\n\nExecutives / directors\nManaging directors, board chair/vice chair from filings or the corporate site.\n\nHQ address & contact\nStreet, postal code, city, subdivision (name + ISO-3166-2), country (name + ISO-3166-1), phone, email, website.\n\nBrand identity\nPrimary/secondary color (hex), palette (array of hex), logo URL, tagline (verbatim from site).\n\nDescription\n1–3 concise sentences reflecting the product/service from the official site (no hype, no speculation).\n\nProvenance\nsources: list of the exact URLs used.\nlast_verified: today’s date in YYYY-MM-DD (use the user’s timezone).\n\nOutput Rules\nReturn only JSON, no extra text. Use the exact schema below. If an item is unknown/not public: use \"\" (empty string) or [] for arrays. Never invent identifiers. Validate VAT/EORI/LEI against official checkers when possible. Phone must be international format (e.g., +49 …). Colors must be hex (e.g., #066aab). sources must include the specific pages (e.g., /impressum, registry detail page, GLEIF record URL). Keep names and addresses exactly as written in the official source (preserve umlauts, capitalization).\n\nJSON Schema (required keys)\n{\n  \"legal_name\": \"\",\n  \"domain\": \"\",\n  \"description\": \"\",\n  \"registration\": {\n    \"type\": \"\",\n    \"register_number\": \"\",\n    \"register_court\": \"\",\n    \"former_register\": {\n      \"register_number\": \"\",\n      \"register_court\": \"\",\n      \"note\": \"\"\n    }\n  },\n  \"vat_id\": \"\",\n  \"lrn\": {\n    \"euid\": \"\",\n    \"tax_id\": \"\",\n    \"eori\": \"\",\n    \"lei_code\": \"\",\n    \"register_number\": {\n      \"type\": \"\",\n      \"number\": \"\",\n      \"court\": \"\"\n    }\n  },\n  \"board\": {\n    \"chairman\": \"\",\n    \"vice_chairman\": \"\",\n    \"members\": []\n  },\n  \"managing_directors\": [],\n  \"headquarter_address\": {\n    \"street_address\": \"\",\n    \"postal_code\": \"\",\n    \"city\": \"\",\n    \"subdivision\": {\n      \"name\": \"\",\n      \"iso_3166_2\": \"\"\n    },\n    \"country\": {\n      \"name\": \"\",\n      \"iso_3166_1\": \"\"\n    }\n  },\n  \"contact\": {\n    \"phone\": \"\",\n    \"email\": \"\",\n    \"website\": \"\"\n  },\n  \"brand_identity\": {\n    \"primary_color\": \"\",\n    \"secondary_color\": \"\",\n    \"palette\": [],\n    \"logo_url\": \"\",\n    \"tagline\": \"\"\n  },\n  \"executives\": {\n    \"ceo\": {\n      \"name\": \"\",\n      \"since\": \"\"\n    }\n  },\n  \"sources\": [],\n  \"last_verified\": \"\"\n}\n\nValidation Checklist (must pass)\n- legal_name includes the legal form (e.g., “GmbH”, “AG”, “Ltd”).\n- registration.register_number and registration.register_court are from an official registry.\n- vat_id matches the country pattern (e.g., DE + 9 digits) and is verifiable in VIES (for EU).\n- If lei_code present, it exists in GLEIF.\n- headquarter_address is complete and consistent with the registry/site.\n- contact.website is HTTPS and under the provided domain.\n- sources contains at least 3 URLs, including (1) company site legal page, (2) registry page, (3) identifier checker page(s) if used.\n\n\n`;\n\n// If msg.prompt exists, we’ll prepend it (e.g., a domain like \"eco.de\")\n// Otherwise, fall back to the news demo question.\nconst fallback = \"Companies\";\nconst hasPrompt = typeof msg.prompt === \"string\" && msg.prompt.trim().length > 0;\n\n// Build final userPrompt:\nconst userPrompt = hasPrompt\n    ? `${msg.prompt.trim()}\\n\\n${COMPANY_PROFILE_PROMPT}`\n    : fallback;\n\nmsg.prompt = userPrompt;\n\n\nmsg.method = \"POST\";\nmsg.url = \"https://api.openai.com/v1/responses\";\nmsg.headers = {\n    \"Authorization\": `Bearer ${apiKey}`,\n    \"Content-Type\": \"application/json\"\n};\n\nmsg.payload = {\n    model: \"gpt-4.1\",\n    tools: [{ type: \"web_search_preview\" }],\n    input: userPrompt\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 220,
+        "wires": [
+            [
+                "985440ed60f36842"
+            ]
+        ]
+    },
+    {
+        "id": "985440ed60f36842",
+        "type": "http request",
+        "z": "6487b882576bd87d",
+        "g": "df372183c1996083",
+        "name": "POST /v1/responses",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1147.5,
+        "y": 220,
+        "wires": [
+            [
+                "880ec1368fdcb23a"
+            ]
+        ]
+    },
+    {
+        "id": "880ec1368fdcb23a",
+        "type": "function",
+        "z": "6487b882576bd87d",
+        "g": "df372183c1996083",
+        "name": "normalize gpt output",
+        "func": "// Robust JSON extractor + normalizer for your schema\n\nfunction getAllTextFromMessage(msg) {\n    if (!msg || !msg.payload || !Array.isArray(msg.payload.output)) return null;\n    const message = msg.payload.output.find(o => o.type === \"message\");\n    if (!message || !Array.isArray(message.content)) return null;\n    // Concatenate all text chunks in order\n    const text = message.content\n        .filter(c => c.type === \"output_text\" || c.type === \"text\") // cover both shapes\n        .map(c => c.text || \"\")\n        .join(\"\");\n    return text || null;\n}\n\nfunction stripMarkdownFences(s) {\n    if (!s) return s;\n    // remove leading and trailing code fences like ```json ... ```\n    return s.replace(/^```(?:json)?\\s*/i, \"\").replace(/```$/i, \"\").trim();\n}\n\n// Finds the first balanced {...} block and tries to JSON.parse it.\nfunction extractBalancedJSON(s) {\n    if (!s) return null;\n    // Some models prepend prose; locate the first '{' and then walk to the matching '}'.\n    const start = s.indexOf(\"{\");\n    if (start === -1) return null;\n\n    let depth = 0;\n    let inString = false;\n    let escapeNext = false;\n\n    for (let i = start; i < s.length; i++) {\n        const ch = s[i];\n\n        if (escapeNext) {\n            escapeNext = false;\n            continue;\n        }\n\n        if (inString) {\n            if (ch === \"\\\\\") escapeNext = true;\n            else if (ch === \"\\\"\") inString = false;\n            continue;\n        }\n\n        if (ch === \"\\\"\") {\n            inString = true;\n        } else if (ch === \"{\") {\n            depth++;\n        } else if (ch === \"}\") {\n            depth--;\n            if (depth === 0) {\n                const candidate = s.slice(start, i + 1);\n                try {\n                    return JSON.parse(candidate);\n                } catch (e) {\n                    // keep scanning in case there is another balanced block later\n                }\n            }\n        }\n    }\n    return null; // no parsable balanced object found\n}\n\n// Ensure the object matches your required schema, filling missing fields.\nfunction normalizeToSchema(obj) {\n    const empty = \"\";\n    const arr = [];\n\n    const normalized = {\n        legal_name: obj?.legal_name ?? empty,\n        domain: obj?.domain ?? empty,\n        description: obj?.description ?? empty,\n        registration: {\n            type: obj?.registration?.type ?? empty,\n            register_number: obj?.registration?.register_number ?? empty,\n            register_court: obj?.registration?.register_court ?? empty,\n            former_register: {\n                register_number: obj?.registration?.former_register?.register_number ?? empty,\n                register_court: obj?.registration?.former_register?.register_court ?? empty,\n                note: obj?.registration?.former_register?.note ?? empty\n            }\n        },\n        vat_id: obj?.vat_id ?? empty,\n        lrn: {\n            euid: obj?.lrn?.euid ?? empty,\n            tax_id: obj?.lrn?.tax_id ?? empty,\n            eori: obj?.lrn?.eori ?? empty,\n            lei_code: obj?.lrn?.lei_code ?? empty,\n            register_number: {\n                type: obj?.lrn?.register_number?.type ?? empty,\n                number: obj?.lrn?.register_number?.number ?? empty,\n                court: obj?.lrn?.register_number?.court ?? empty\n            }\n        },\n        board: {\n            chairman: obj?.board?.chairman ?? empty,\n            vice_chairman: obj?.board?.vice_chairman ?? empty,\n            members: Array.isArray(obj?.board?.members) ? obj.board.members : arr\n        },\n        managing_directors: Array.isArray(obj?.managing_directors) ? obj.managing_directors : arr,\n        headquarter_address: {\n            street_address: obj?.headquarter_address?.street_address ?? empty,\n            postal_code: obj?.headquarter_address?.postal_code ?? empty,\n            city: obj?.headquarter_address?.city ?? empty,\n            subdivision: {\n                name: obj?.headquarter_address?.subdivision?.name ?? empty,\n                iso_3166_2: obj?.headquarter_address?.subdivision?.iso_3166_2 ?? empty\n            },\n            country: {\n                name: obj?.headquarter_address?.country?.name ?? empty,\n                iso_3166_1: obj?.headquarter_address?.country?.iso_3166_1 ?? empty\n            }\n        },\n        contact: {\n            phone: obj?.contact?.phone ?? empty,\n            email: obj?.contact?.email ?? empty,\n            website: obj?.contact?.website ?? empty\n        },\n        brand_identity: {\n            primary_color: obj?.brand_identity?.primary_color ?? empty,\n            secondary_color: obj?.brand_identity?.secondary_color ?? empty,\n            palette: Array.isArray(obj?.brand_identity?.palette) ? obj.brand_identity.palette : arr,\n            logo_url: obj?.brand_identity?.logo_url ?? empty,\n            tagline: obj?.brand_identity?.tagline ?? empty\n        },\n        executives: {\n            ceo: {\n                name: obj?.executives?.ceo?.name ?? empty,\n                since: obj?.executives?.ceo?.since ?? empty\n            }\n        },\n        sources: Array.isArray(obj?.sources) ? obj.sources : arr,\n        last_verified: obj?.last_verified ?? empty\n    };\n\n    return normalized;\n}\n\n(function main() {\n    const rawText = getAllTextFromMessage(msg);\n    if (!rawText) {\n        msg.payload = { error: \"No text found in response.\" };\n        return;\n    }\n\n    // 1) strip code fences\n    const unfenced = stripMarkdownFences(rawText);\n\n    // 2) try to extract/parse JSON\n    let parsed = null;\n    try { parsed = JSON.parse(unfenced); } catch (e) { /* fallthrough */ }\n    if (!parsed) parsed = extractBalancedJSON(unfenced);\n\n    if (!parsed || typeof parsed !== \"object\") {\n        msg.payload = { error: \"Invalid JSON in model output\", raw: rawText.slice(0, 2000) };\n        return;\n    }\n\n    // 3) normalize to required schema\n    const normalized = normalizeToSchema(parsed);\n    msg.payload = normalized;\n})();\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1457.5,
+        "y": 220,
+        "wires": [
+            [
+                "015f8b84b2c13e49"
+            ]
+        ]
+    },
+    {
+        "id": "44dc7dd8fd6c74b0",
+        "type": "function",
+        "z": "6487b882576bd87d",
+        "g": "df372183c1996083",
+        "name": "Build OpenAI request(notAvailable)",
+        "func": "msg.prompt = msg.data.recordDetails.companyInformation.domain + ' ' + msg.data.recordDetails.companyInformation.legalName + ' ' + msg.data.recordDetails.companyInformation.engagedIn\n\n\n// Read API key from environment (set OPENAI_API_KEY before running Node-RED)\nconst apiKey = global.get(`metaData.aiApiKey`);\nif (!apiKey) {\n    node.error(\"OPENAI_API_KEY env var not set.\");\n    return null;\n}\n\n// Long instruction block tuned for *company name + optional description* input.\nconst COMPANY_PROFILE_PROMPT = `\n\nCompany Profile (by Company Name) → JSON\nGoal: Given a company name and optional description/context, find the official entity and its primary website domain, then research authoritative sources and return a fully completed JSON with legal, registration, compliance identifiers, contacts, brand identity, executives, and provenance (sources, last_verified).\n\nInput: first line of the user message contains:\ncompany_name [optionally followed by “|” separated hints like country, city, industry, brief description].\n\nExamples:\n\"Senseering GmbH\"\n\"Senseering GmbH | Germany | industrial IoT\"\n\"Acme Ltd | UK | fintech | London\"\n\nWhat to Do (Step-by-Step)\nResolve the official entity & domain\n- Use the name (and any hints) to disambiguate similarly named companies.\n- Identify the official primary website (prefer HQ/global site, not a reseller/partner).\n- From the official site and trusted registries, determine the legal entity name and type (e.g., GmbH, AG, Ltd). For German entities: check Impressum, Handelsregister.\n\nRegistration details\n- Court and number (e.g., Amtsgericht Düsseldorf, HRB 106352) from Handelsregister or the jurisdiction’s official registry. If multiple entities exist, pick the one clearly tied to the resolved domain; otherwise, use the HQ entity.\n\nTax & compliance identifiers\n- VAT ID (USt-IdNr / vat_id): find in site Impressum, BZSt/VIES, or reputable databases.\n- EUID (lrn.euid): confirm via official register format for that jurisdiction.\n- Tax ID (lrn.tax_id / Steuernummer): only if publicly disclosed; otherwise \"\".\n- EORI (lrn.eori): EU Commission EORI checker if applicable; otherwise \"\".\n- LEI (lrn.lei_code): search GLEIF; otherwise \"\".\n\nExecutives / directors\n- Managing directors, board chair/vice chair from filings or the corporate site.\n\nHQ address & contact\n- Street, postal code, city, subdivision (name + ISO-3166-2), country (name + ISO-3166-1), phone, email, website.\n\nBrand identity\n- Primary/secondary color (hex), palette (array of hex), logo URL, tagline (verbatim from site).\n\nDescription\n- 1–3 concise sentences reflecting the product/service from the official site (no hype, no speculation).\n\nProvenance\n- sources: list of the exact URLs used.\n- last_verified: today’s date in YYYY-MM-DD (use the user’s timezone).\n\nOutput Rules\n- Return only JSON, no extra text. Use the exact schema below. If an item is unknown/not public: use \"\" (empty string) or [] for arrays. Never invent identifiers.\n- Validate VAT/EORI/LEI against official checkers when possible.\n- Phone must be international format (e.g., +49 …).\n- Colors must be hex (e.g., #066aab).\n- sources must include the specific pages (e.g., /impressum, registry detail page, GLEIF record URL, VIES/EORI checker page).\n- Keep names and addresses exactly as written in the official source (preserve umlauts, capitalization).\n- The \"domain\" field must be the resolved primary domain (no protocol, no path) corresponding to the identified official entity.\n\nJSON Schema (required keys)\n{\n  \"legal_name\": \"\",\n  \"domain\": \"\",\n  \"description\": \"\",\n  \"registration\": {\n    \"type\": \"\",\n    \"register_number\": \"\",\n    \"register_court\": \"\",\n    \"former_register\": {\n      \"register_number\": \"\",\n      \"register_court\": \"\",\n      \"note\": \"\"\n    }\n  },\n  \"vat_id\": \"\",\n  \"lrn\": {\n    \"euid\": \"\",\n    \"tax_id\": \"\",\n    \"eori\": \"\",\n    \"lei_code\": \"\",\n    \"register_number\": {\n      \"type\": \"\",\n      \"number\": \"\",\n      \"court\": \"\"\n    }\n  },\n  \"board\": {\n    \"chairman\": \"\",\n    \"vice_chairman\": \"\",\n    \"members\": []\n  },\n  \"managing_directors\": [],\n  \"headquarter_address\": {\n    \"street_address\": \"\",\n    \"postal_code\": \"\",\n    \"city\": \"\",\n    \"subdivision\": {\n      \"name\": \"\",\n      \"iso_3166_2\": \"\"\n    },\n    \"country\": {\n      \"name\": \"\",\n      \"iso_3166_1\": \"\"\n    }\n  },\n  \"contact\": {\n    \"phone\": \"\",\n    \"email\": \"\",\n    \"website\": \"\"\n  },\n  \"brand_identity\": {\n    \"primary_color\": \"\",\n    \"secondary_color\": \"\",\n    \"palette\": [],\n    \"logo_url\": \"\",\n    \"tagline\": \"\"\n  },\n  \"executives\": {\n    \"ceo\": {\n      \"name\": \"\",\n      \"since\": \"\"\n    }\n  },\n  \"sources\": [],\n  \"last_verified\": \"\"\n}\n\nValidation Checklist (must pass)\n- legal_name includes the legal form (e.g., “GmbH”, “AG”, “Ltd”).\n- domain is the official primary domain for the identified entity.\n- registration.register_number and registration.register_court are from an official registry.\n- vat_id matches the country pattern and is verifiable in VIES (for EU).\n- If lei_code present, it exists in GLEIF.\n- headquarter_address is complete and consistent with the registry/site.\n- contact.website is HTTPS and under the resolved domain.\n- sources contains at least 3 URLs, including (1) company site legal page, (2) registry page, (3) identifier checker page(s) if used.\n\n`;\n\n// Allow overriding the input via msg.prompt (now: company name + optional hints)\nconst fallback = \"Acme Ltd | UK | example context\";\nconst hasPrompt = typeof msg.prompt === \"string\" && msg.prompt.trim().length > 0;\n\n// Build final userPrompt: first line = user input; then instructions.\nconst userPrompt = (hasPrompt ? msg.prompt.trim() : fallback) + \"\\n\\n\" + COMPANY_PROFILE_PROMPT;\nmsg.prompt = userPrompt;\n\nmsg.method = \"POST\";\nmsg.url = \"https://api.openai.com/v1/responses\";\nmsg.headers = {\n    \"Authorization\": `Bearer ${apiKey}`,\n    \"Content-Type\": \"application/json\"\n};\n\nmsg.payload = {\n    model: \"gpt-4.1\",\n    tools: [{ type: \"web_search_preview\" }],\n    input: userPrompt\n};\n\nreturn msg;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 420,
+        "wires": [
+            [
+                "260a439c19a3c730"
+            ]
+        ]
+    },
+    {
+        "id": "260a439c19a3c730",
+        "type": "http request",
+        "z": "6487b882576bd87d",
+        "g": "df372183c1996083",
+        "name": "POST /v1/responses",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1157.5,
+        "y": 420,
+        "wires": [
+            [
+                "5a256d477b4a2805"
+            ]
+        ]
+    },
+    {
+        "id": "5a256d477b4a2805",
+        "type": "function",
+        "z": "6487b882576bd87d",
+        "g": "df372183c1996083",
+        "name": "normalize gpt output",
+        "func": "// Robust JSON extractor + normalizer for your schema\n\nfunction getAllTextFromMessage(msg) {\n    if (!msg || !msg.payload || !Array.isArray(msg.payload.output)) return null;\n    const message = msg.payload.output.find(o => o.type === \"message\");\n    if (!message || !Array.isArray(message.content)) return null;\n    // Concatenate all text chunks in order\n    const text = message.content\n        .filter(c => c.type === \"output_text\" || c.type === \"text\") // cover both shapes\n        .map(c => c.text || \"\")\n        .join(\"\");\n    return text || null;\n}\n\nfunction stripMarkdownFences(s) {\n    if (!s) return s;\n    // remove leading and trailing code fences like ```json ... ```\n    return s.replace(/^```(?:json)?\\s*/i, \"\").replace(/```$/i, \"\").trim();\n}\n\n// Finds the first balanced {...} block and tries to JSON.parse it.\nfunction extractBalancedJSON(s) {\n    if (!s) return null;\n    // Some models prepend prose; locate the first '{' and then walk to the matching '}'.\n    const start = s.indexOf(\"{\");\n    if (start === -1) return null;\n\n    let depth = 0;\n    let inString = false;\n    let escapeNext = false;\n\n    for (let i = start; i < s.length; i++) {\n        const ch = s[i];\n\n        if (escapeNext) {\n            escapeNext = false;\n            continue;\n        }\n\n        if (inString) {\n            if (ch === \"\\\\\") escapeNext = true;\n            else if (ch === \"\\\"\") inString = false;\n            continue;\n        }\n\n        if (ch === \"\\\"\") {\n            inString = true;\n        } else if (ch === \"{\") {\n            depth++;\n        } else if (ch === \"}\") {\n            depth--;\n            if (depth === 0) {\n                const candidate = s.slice(start, i + 1);\n                try {\n                    return JSON.parse(candidate);\n                } catch (e) {\n                    // keep scanning in case there is another balanced block later\n                }\n            }\n        }\n    }\n    return null; // no parsable balanced object found\n}\n\n// Ensure the object matches your required schema, filling missing fields.\nfunction normalizeToSchema(obj) {\n    const empty = \"\";\n    const arr = [];\n\n    const normalized = {\n        legal_name: obj?.legal_name ?? empty,\n        domain: obj?.domain ?? empty,\n        description: obj?.description ?? empty,\n        registration: {\n            type: obj?.registration?.type ?? empty,\n            register_number: obj?.registration?.register_number ?? empty,\n            register_court: obj?.registration?.register_court ?? empty,\n            former_register: {\n                register_number: obj?.registration?.former_register?.register_number ?? empty,\n                register_court: obj?.registration?.former_register?.register_court ?? empty,\n                note: obj?.registration?.former_register?.note ?? empty\n            }\n        },\n        vat_id: obj?.vat_id ?? empty,\n        lrn: {\n            euid: obj?.lrn?.euid ?? empty,\n            tax_id: obj?.lrn?.tax_id ?? empty,\n            eori: obj?.lrn?.eori ?? empty,\n            lei_code: obj?.lrn?.lei_code ?? empty,\n            register_number: {\n                type: obj?.lrn?.register_number?.type ?? empty,\n                number: obj?.lrn?.register_number?.number ?? empty,\n                court: obj?.lrn?.register_number?.court ?? empty\n            }\n        },\n        board: {\n            chairman: obj?.board?.chairman ?? empty,\n            vice_chairman: obj?.board?.vice_chairman ?? empty,\n            members: Array.isArray(obj?.board?.members) ? obj.board.members : arr\n        },\n        managing_directors: Array.isArray(obj?.managing_directors) ? obj.managing_directors : arr,\n        headquarter_address: {\n            street_address: obj?.headquarter_address?.street_address ?? empty,\n            postal_code: obj?.headquarter_address?.postal_code ?? empty,\n            city: obj?.headquarter_address?.city ?? empty,\n            subdivision: {\n                name: obj?.headquarter_address?.subdivision?.name ?? empty,\n                iso_3166_2: obj?.headquarter_address?.subdivision?.iso_3166_2 ?? empty\n            },\n            country: {\n                name: obj?.headquarter_address?.country?.name ?? empty,\n                iso_3166_1: obj?.headquarter_address?.country?.iso_3166_1 ?? empty\n            }\n        },\n        contact: {\n            phone: obj?.contact?.phone ?? empty,\n            email: obj?.contact?.email ?? empty,\n            website: obj?.contact?.website ?? empty\n        },\n        brand_identity: {\n            primary_color: obj?.brand_identity?.primary_color ?? empty,\n            secondary_color: obj?.brand_identity?.secondary_color ?? empty,\n            palette: Array.isArray(obj?.brand_identity?.palette) ? obj.brand_identity.palette : arr,\n            logo_url: obj?.brand_identity?.logo_url ?? empty,\n            tagline: obj?.brand_identity?.tagline ?? empty\n        },\n        executives: {\n            ceo: {\n                name: obj?.executives?.ceo?.name ?? empty,\n                since: obj?.executives?.ceo?.since ?? empty\n            }\n        },\n        sources: Array.isArray(obj?.sources) ? obj.sources : arr,\n        last_verified: obj?.last_verified ?? empty\n    };\n\n    return normalized;\n}\n\n(function main() {\n    const rawText = getAllTextFromMessage(msg);\n    if (!rawText) {\n        msg.payload = { error: \"No text found in response.\" };\n        return;\n    }\n\n    // 1) strip code fences\n    const unfenced = stripMarkdownFences(rawText);\n\n    // 2) try to extract/parse JSON\n    let parsed = null;\n    try { parsed = JSON.parse(unfenced); } catch (e) { /* fallthrough */ }\n    if (!parsed) parsed = extractBalancedJSON(unfenced);\n\n    if (!parsed || typeof parsed !== \"object\") {\n        msg.payload = { error: \"Invalid JSON in model output\", raw: rawText.slice(0, 2000) };\n        return;\n    }\n\n    // 3) normalize to required schema\n    const normalized = normalizeToSchema(parsed);\n    msg.payload = normalized;\n})();\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1457.5,
+        "y": 420,
+        "wires": [
+            [
+                "015f8b84b2c13e49"
+            ]
+        ]
+    },
+    {
+        "id": "ee7569805605e77f",
+        "type": "switch",
+        "z": "6487b882576bd87d",
+        "g": "df372183c1996083",
+        "name": "check domain availability",
+        "property": "data.recordDetails.companyInformation.availability",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "available",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 412.5,
+        "y": 320,
+        "wires": [
+            [
+                "a93483200cca2abb"
+            ],
+            [
+                "44dc7dd8fd6c74b0"
+            ]
+        ]
+    },
+    {
+        "id": "015f8b84b2c13e49",
+        "type": "switch",
+        "z": "6487b882576bd87d",
+        "g": "df372183c1996083",
+        "name": "check gpt error",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "hask",
+                "v": "error",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1862.5,
+        "y": 320,
+        "wires": [
+            [
+                "3f287da5f32df3b6"
+            ],
+            [
+                "4bdb646c115fc765"
+            ]
+        ]
+    },
+    {
+        "id": "3f287da5f32df3b6",
+        "type": "function",
+        "z": "6487b882576bd87d",
+        "g": "df372183c1996083",
+        "name": "set gpt error",
+        "func": "msg.data.error={\n    errorType:'GPT research',\n    errorMessage:`did not find any thing for ${msg.data.recordDetails.companyInformation.domain} in the Internet`\n}\n\nmsg.clientId=msg.data.session.clientId\nmsg._socketId=msg.data.session._socketId\nreturn msg;\n ",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2170,
+        "y": 160,
+        "wires": [
+            [
+                "8c2ab7aff63b4683",
+                "758917f17ea22946"
+            ]
+        ]
+    },
+    {
+        "id": "8c2ab7aff63b4683",
+        "type": "link out",
+        "z": "6487b882576bd87d",
+        "g": "df372183c1996083",
+        "name": "link out 38",
+        "mode": "link",
+        "links": [
+            "ea917288d5d06d2a"
+        ],
+        "x": 2412.5,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "1fdf58aa0d4d13ad",
+        "type": "link in",
+        "z": "6487b882576bd87d",
+        "g": "df372183c1996083",
+        "name": "input stage=pg1",
+        "links": [
+            "1ade884b90d6ce92"
+        ],
+        "x": 170,
+        "y": 320,
+        "wires": [
+            [
+                "ee7569805605e77f"
+            ]
+        ]
+    },
+    {
+        "id": "0b16964777f8510c",
+        "type": "http request",
+        "z": "6487b882576bd87d",
+        "g": "df372183c1996083",
+        "name": "GET homepage HTML",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": true,
+        "headers": [],
+        "x": 3197.5,
+        "y": 440,
+        "wires": [
+            [
+                "d05660e0f71e39bd"
+            ]
+        ]
+    },
+    {
+        "id": "8208076ab967ee7a",
+        "type": "function",
+        "z": "6487b882576bd87d",
+        "g": "df372183c1996083",
+        "name": "timeout",
+        "func": "msg.httpRequestTimeout=5000\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2877.5,
+        "y": 440,
+        "wires": [
+            [
+                "0b16964777f8510c"
+            ]
+        ]
+    },
+    {
+        "id": "4895a319769d4040",
+        "type": "function",
+        "z": "6487b882576bd87d",
+        "g": "df372183c1996083",
+        "name": "Normalize domain → URL",
+        "func": "// Accept msg.domain (string) or msg.payload\nmsg.domain=msg.payload.domain\n\n// let domain = (msg.domain || msg.payload || '').toString().trim();\nlet domain = (msg.domain||'').toString().trim();\nif (!domain) {\n    node.error('No domain provided (set msg.domain)');\n    return null;\n}\n// If the user passed a full URL, keep it; otherwise make https://<domain>/\nlet url = domain;\nif (!/^https?:\\/\\//i.test(url)) {\n    url = 'https://' + url;\n}\n// Ensure it has a trailing slash after host when no path\nif (!/^[a-z]+:\\/\\/[^\\/]+\\//i.test(url)) {\n    url = url.replace(/^(https?:\\/\\/[^\\/]+)(?!\\/)/i, '$1/');\n}\n// Very light validation\nif (!/^https?:\\/\\/[^\\s]+$/i.test(url)) {\n    node.error('Invalid domain or URL: ' + domain);\n    return null;\n}\nmsg.url = url;\n//msg.headers = {\n//   'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127 Safari/537.36',\n//    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'\n//};\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2540,
+        "y": 440,
+        "wires": [
+            [
+                "8208076ab967ee7a"
+            ]
+        ]
+    },
+    {
+        "id": "8dd07783c740b6e4",
+        "type": "function",
+        "z": "6487b882576bd87d",
+        "g": "df372183c1996083",
+        "name": "Fallback: rel=icon / favicon",
+        "func": "/*\nIf msg.payload.directUrl is still null, scan <link rel~=\"icon\">\n( icon | shortcut icon | apple-touch-icon | mask-icon ), choose best candidate,\nelse default to origin + '/favicon.ico'.\n*/\nfunction originOf(u){\n  const m = (u||'').match(/^(https?:\\/\\/[^\\/]+)/i);\n  return m ? m[1] : null;\n}\nfunction resolveUrl(base, maybe){\n  if (!maybe) return null;\n  if (/^https?:\\/\\//i.test(maybe)) return maybe;\n  if (/^\\/\\//.test(maybe)) {\n    const scheme = (base.match(/^(https?):\\/\\//i) || ['','https'])[1];\n    return scheme + ':' + maybe;\n  }\n  if (/^\\//.test(maybe)) {\n    const o = originOf(base);\n    return o ? o + maybe : null;\n  }\n  // relative path\n  const baseDir = (function(u){\n    const m = (u||'').match(/^(https?:\\/\\/[^\\/]+\\/.+?)($|[#?])/i);\n    if (m) {\n      let s = m[1];\n      if (!/\\/\\/$/.test(s)) {\n        s = s.replace(/\\/[^\\/]*$/, '/');\n      }\n      return s;\n    }\n    const o = originOf(u);\n    return o ? o + '/' : '';\n  })(base);\n  return baseDir + maybe.replace(/^\\.\\//, '');\n}\nfunction parseSize(s){ if(!s) return 0; if(/any/i.test(s)) return 10000; const m=s.match(/(\\d+)x(\\d+)/i); if(!m) return 0; return Math.max(parseInt(m[1],10), parseInt(m[2],10)); }\nfunction extScore(url){ if(!url) return 0; const u=url.split('?')[0].toLowerCase(); if(u.endsWith('.svg')) return 50; if(u.endsWith('.png')||u.endsWith('.webp')) return 40; if(u.endsWith('.ico')) return 25; if(u.endsWith('.jpg')||u.endsWith('.jpeg')) return 20; return 10; }\n\nconst res = msg.payload || {};\nif (res.directUrl) return msg; // already found\n\nconst html = msg.html || '';\nconst baseUrl = res.url || msg.url || '';\n\n// collect <link ... rel=...icon...>\nconst links = [];\nconst re = /<link\\b[^>]*>/ig;\nlet m;\nwhile ((m = re.exec(html))){\n  const tag = m[0];\n  const relM = tag.match(/\\brel\\s*=\\s*([\\\"'])(.*?)\\1/i);\n  if(!relM) continue;\n  const rel = relM[2].toLowerCase();\n  if(!/(^|\\s)(icon|shortcut\\s+icon|apple-touch-icon|mask-icon)(\\s|$)/.test(rel)) continue;\n  const hrefM = tag.match(/\\bhref\\s*=\\s*([\\\"'])(.*?)\\1/i);\n  if(!hrefM) continue;\n  const sizesM = tag.match(/\\bsizes\\s*=\\s*([\\\"'])(.*?)\\1/i);\n  const typeM  = tag.match(/\\btype\\s*=\\s*([\\\"'])(.*?)\\1/i);\n  const hrefAbs = resolveUrl(baseUrl, hrefM[2]);\n  const sizeVal = parseSize(sizesM ? sizesM[2] : '');\n  const typeBonus = typeM && /svg|png|webp|ico|image\\//i.test(typeM[2]) ? 5 : 0;\n  const relBonus = /apple-touch-icon/.test(rel) ? 4 : /icon/.test(rel) ? 3 : 1;\n  const score = extScore(hrefAbs) + sizeVal + typeBonus + relBonus;\n  links.push({ href: hrefAbs, rel, sizes: sizesM ? sizesM[2] : null, score });\n}\n\nif (links.length){\n  links.sort((a,b)=>b.score-a.score);\n  const top = links[0];\n  msg.payload.method = 'icon-link';\n  msg.payload.directUrl = top.href;\n  msg.payload.iconCandidates = links.slice(0,5); // optional debug\n  msg.payload.notes = (msg.payload.notes ? msg.payload.notes + ' ' : '') + 'Used <link rel~=\"icon\"> fallback.';\n  return msg;\n}\n\n// default to /favicon.ico\nconst origin = originOf(baseUrl);\nif (origin){\n  msg.payload.method = 'favicon-default';\n  msg.payload.directUrl = origin + '/favicon.ico';\n  msg.payload.notes = (msg.payload.notes ? msg.payload.notes + ' ' : '') + 'No <link rel=\"icon\"> found; defaulted to /favicon.ico.';\n  return msg;\n}\n\n// give up gracefully\nmsg.payload.method = 'not-found-any';\nmsg.payload.notes = (msg.payload.notes ? msg.payload.notes + ' ' : '') + 'No icon link and no origin to build /favicon.ico.';\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2605,
+        "y": 600,
+        "wires": [
+            [
+                "dfb4b9769c5f47ad"
+            ]
+        ]
+    },
+    {
+        "id": "d05660e0f71e39bd",
+        "type": "function",
+        "z": "6487b882576bd87d",
+        "g": "df372183c1996083",
+        "name": "Extract logo <img> / URL",
+        "func": "/*\nLegacy-first extractor with a guarded fix for the fragile \"filename-logo\" case.\n— Keeps your original behavior for class/logo wrapper, header-first, root-link.\n— ONLY intervenes when the chosen method would be filename-based and looks suspicious.\n\nOutputs msg.payload = { domain, url, method, imgTag, directUrl, srcset, notes }\nAlso keeps msg.html for the favicon fallback node.\n*/\n\nfunction originOf(u) { const m = (u || '').match(/^(https?:\\/\\/[^/]+)/i); return m ? m[1] : null; }\nfunction baseDir(u) {\n  const m = (u || '').match(/^(https?:\\/\\/[^/]+\\/.+?)($|[#?])/i);\n  if (m) { let s = m[1]; if (!/\\/$/.test(s)) s = s.replace(/\\/[^/]*$/, '/'); return s; }\n  const o = originOf(u); return o ? o + '/' : '';\n}\nfunction resolveUrl(base, maybe) {\n  if (!maybe) return null;\n  if (/^https?:\\/\\//i.test(maybe)) return maybe;\n  if (/^\\/\\//.test(maybe)) { const scheme = (base.match(/^(https?):\\/\\//i) || ['', 'https'])[1]; return scheme + ':' + maybe; }\n  if (/^\\//.test(maybe)) { const o = originOf(base); return o ? o + maybe : null; }\n  return baseDir(base) + maybe.replace(/^\\.\\//, '');\n}\nfunction parseAttrs(tag) {\n  const get = (n) => { const m = tag.match(new RegExp(\"\\\\b\" + n + \"\\\\s*=\\\\s*([\\\"'])(.*?)\\\\1\", \"i\")); return m ? m[2] : null; };\n  return {\n    src: get('src'),\n    srcset: get('srcset'),\n    alt: get('alt') || '',\n    cls: get('class') || '',\n    id: get('id') || '',\n    aria: (get('aria-label') || '') + ' ' + (get('aria-labelledby') || '')\n  };\n}\nfunction chooseFromSrcset(base, srcset) {\n  const c = (srcset || '').split(',').map(s => s.trim()).filter(Boolean).map(s => {\n    const m = s.match(/^(\\S+)(?:\\s+(\\d+)w|\\s+(\\d+(?:\\.\\d+)?)x)?$/);\n    return { url: resolveUrl(base, m ? m[1] : s.split(/\\s+/)[0]), w: m && m[2] ? +m[2] : 0, x: m && m[3] ? +m[3] : 1 };\n  });\n  if (!c.length) return null;\n  return c.reduce((a, b) => (b.w > (a.w || 0) || (!b.w && b.x > (a.x || 1))) ? b : a).url;\n}\nfunction extScore(u) {\n  if (!u) return 0; const s = u.split('?')[0].toLowerCase();\n  if (s.endsWith('.svg')) return 30;\n  if (s.endsWith('.png') || s.endsWith('.webp')) return 20;\n  if (s.endsWith('.ico')) return 5;\n  return 10;\n}\nfunction looksSuspicious(u) {\n  const p = (u || '').toLowerCase();\n  if (/domain-logo|tld/.test(p)) return true;         // e.g. com-domain-logo\n  if (/payment|visa|mastercard|amex|paypal/.test(p)) return true;\n  if (/social|facebook|twitter|linkedin|youtube|instagram/.test(p)) return true;\n  if (/badge|award|trust|security|dmca/.test(p)) return true;\n  if (/favicon/.test(p)) return true;\n  return false;\n}\nfunction containsBrand(text, brand) {\n  if (!brand) return false;\n  const b = brand.toLowerCase().trim();\n  const t = (text || '').toLowerCase();\n  return new RegExp(`(^|\\\\W)${b}(\\\\W|$)`).test(t);\n}\n\n// ---- main ----\nconst html = (msg.payload || '').toString();\nif (!html) { node.error('Empty HTML payload'); return null; }\nconst baseUrl = msg.url || '';\nconst brand = (msg.brand || '').trim();\nmsg.html = html; // keep for favicon fallback\n\nfunction pickFromImgTag(tag) {\n  const a = parseAttrs(tag);\n  const chosen = a.srcset ? chooseFromSrcset(baseUrl, a.srcset) : resolveUrl(baseUrl, a.src);\n  return { chosen, a, tag };\n}\n\n// 1) <img class*=\"logo\">\nlet m = html.match(/<img[^>]*class\\s*=\\s*[\"'][^\"']*\\blogo\\b[^\"']*[\"'][^>]*>/i);\nif (m) {\n  const { chosen, a, tag } = pickFromImgTag(m[0]);\n  if (chosen) {\n    msg.payload = { domain: msg.domain || null, url: baseUrl, method: 'logo-class-img', imgTag: tag, directUrl: chosen, srcset: a.srcset, notes: 'Legacy: <img class~logo> (kept).' };\n    return msg;\n  }\n}\n\n// 1b) wrapper with class*=\"logo\" containing <img>\nlet wrapMatch = html.match(/<([a-z0-9:-]+)([^>]*class\\s*=\\s*[\"'][^\"']*\\blogo\\b[^\"']*[\"'][^>]*)>([\\s\\S]*?)<\\/\\1>/i);\nif (wrapMatch) {\n  const inner = wrapMatch[3];\n  const imgIn = inner.match(/<img[^>]*>/i);\n  if (imgIn) {\n    const { chosen, a, tag } = pickFromImgTag(imgIn[0]);\n    if (chosen) {\n      msg.payload = { domain: msg.domain || null, url: baseUrl, method: 'logo-class-wrapper', imgTag: tag, directUrl: chosen, srcset: a.srcset, notes: 'Legacy: wrapper class~logo (kept).' };\n      return msg;\n    }\n  }\n}\n\n// 2) filename indicates logo  (GUARDED)\nlet fileLogo = html.match(/<img[^>]+(?:src|data-src|data-original|srcset)\\s*=\\s*[\"'][^\"']*(?:\\blogo\\b|brand[-_]?logo|site[-_]?logo)[^\"']*\\.(?:svg|png|webp|jpe?g|gif)[^\"']*[\"'][^>]*>/i);\nif (fileLogo) {\n  const { chosen, a, tag } = pickFromImgTag(fileLogo[0]);\n  if (chosen) {\n    const abs = chosen;\n    // If it looks clean, keep legacy behavior.\n    if (!looksSuspicious(abs)) {\n      msg.payload = { domain: msg.domain || null, url: baseUrl, method: 'filename-logo', imgTag: tag, directUrl: abs, srcset: a.srcset, notes: 'Legacy: filename suggests logo (kept).' };\n      return msg;\n    }\n    // Otherwise, attempt a safer disambiguation LIMITED to header/home/brand.\n    // (We DO NOT touch other legacy cases.)\n    const headerM = html.match(/<header\\b[\\s\\S]*?<\\/header>/i);\n    const headerHtml = headerM ? headerM[0] : '';\n    const candidates = [];\n    const imgRe = /<img\\b[^>]*>/ig;\n    let mm;\n    while ((mm = imgRe.exec(headerHtml))) candidates.push(mm[0]);\n    // also: <a href=\"/\"> ... <img ...>\n    let rootLink = html.match(/<a[^>]*href\\s*=\\s*[\"']\\/[\"'][^>]*>([\\s\\S]*?)<\\/a>/i);\n    if (rootLink) {\n      const inner = rootLink[1];\n      const imgIn = inner.match(/<img[^>]*>/ig);\n      if (imgIn) candidates.push(...imgIn);\n    }\n    // optional: any <img> with alt containing brand\n    if (brand) {\n      const brandImgs = html.match(/<img\\b[^>]*>/ig) || [];\n      for (const t of brandImgs) {\n        const a2 = parseAttrs(t);\n        if (containsBrand(a2.alt, brand)) candidates.push(t);\n      }\n    }\n    // Score these limited candidates lightly (location + brand + extension)\n    let best = null, bestScore = -1, bestA = null, bestTag = null, seen = new Set();\n    for (const t of candidates) {\n      if (seen.has(t)) continue; seen.add(t);\n      const a2 = parseAttrs(t);\n      const cur = a2.srcset ? chooseFromSrcset(baseUrl, a2.srcset) : resolveUrl(baseUrl, a2.src);\n      if (!cur) continue;\n      let s = 0;\n      if (containsBrand(a2.alt, brand)) s += 60;\n      if (/\\blogo\\b/i.test(a2.cls) || /\\blogo\\b/i.test(a2.id) || /\\blogo\\b/i.test(a2.aria)) s += 40;\n      s += extScore(cur);\n      if (s > bestScore) { bestScore = s; best = cur; bestA = a2; bestTag = t; }\n    }\n    if (best && !looksSuspicious(best)) {\n      msg.payload = { domain: msg.domain || null, url: baseUrl, method: 'guarded-filename-fix', imgTag: bestTag, directUrl: best, srcset: bestA.srcset, notes: 'Filename looked suspicious; chose safer header/home/brand candidate.' };\n      return msg;\n    }\n    // If we couldn’t find a safer one, keep legacy anyway (don’t break working sites).\n    msg.payload = { domain: msg.domain || null, url: baseUrl, method: 'filename-logo', imgTag: tag, directUrl: abs, srcset: a.srcset, notes: 'Suspicious filename, but no better candidate; legacy kept.' };\n    return msg;\n  }\n}\n\n// 3) first <img> in <header>\nlet headerMatch = html.match(/<header\\b[\\s\\S]*?<\\/header>/i);\nif (headerMatch) {\n  const hdr = headerMatch[0];\n  const imgInHeader = hdr.match(/<img[^>]*>/i);\n  if (imgInHeader) {\n    const { chosen, a, tag } = pickFromImgTag(imgInHeader[0]);\n    if (chosen) {\n      msg.payload = { domain: msg.domain || null, url: baseUrl, method: 'header-first-img', imgTag: tag, directUrl: chosen, srcset: a.srcset, notes: 'Legacy: first <img> in <header> (kept).' };\n      return msg;\n    }\n  }\n}\n\n// 3b) <a href=\"/\"> … <img …>\nlet rootLink = html.match(/<a[^>]*href\\s*=\\s*[\"']\\/[\"'][^>]*>([\\s\\S]*?)<\\/a>/i);\nif (rootLink) {\n  const inner = rootLink[1];\n  const imgIn = inner.match(/<img[^>]*>/i);\n  if (imgIn) {\n    const { chosen, a, tag } = pickFromImgTag(imgIn[0]);\n    if (chosen) {\n      msg.payload = { domain: msg.domain || null, url: baseUrl, method: 'root-link-img', imgTag: tag, directUrl: chosen, srcset: a.srcset, notes: 'Legacy: <img> within home link (kept).' };\n      return msg;\n    }\n  }\n}\n\n// None matched → let favicon node handle it\nmsg.payload = { domain: msg.domain || null, url: baseUrl, method: 'not-found', imgTag: null, directUrl: null, srcset: null, notes: 'No <img> logo; defer to icon fallback.' };\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2275,
+        "y": 600,
+        "wires": [
+            [
+                "8dd07783c740b6e4"
+            ]
+        ]
+    },
+    {
+        "id": "758917f17ea22946",
+        "type": "debug",
+        "z": "6487b882576bd87d",
+        "g": "df372183c1996083",
+        "name": "gpt error",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2217.5,
+        "y": 280,
+        "wires": []
+    }
+]

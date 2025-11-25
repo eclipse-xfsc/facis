@@ -9,4 +9,8 @@ Future enhancements and extensions include:
 - SLA Governance (latency, uptime tracking, SLA violation detection)  
 - Analytics & AI integration for anomaly detection and dashboards  
 - Multi-region and edge deployments for compliance and data residency  
-- Open-source release of Micro-FAPs with Docker images and adapters  
+- Open-source release of Micro-FAPs with Docker images and adapters
+
+The SLA documents are available on the FACIS website:
+- Playbook : [SLA playbook](https://www.facis.eu/wp-content/uploads/2025/10/Summary-FACIS-SLA-Governance-Framework-Playbook.pdf)
+- Taxonomy : [SLA Taxonomy](https://www.facis.eu/wp-content/uploads/2025/11/Summary-FACIS-SLA-Governance-Taxonomy.pdf)

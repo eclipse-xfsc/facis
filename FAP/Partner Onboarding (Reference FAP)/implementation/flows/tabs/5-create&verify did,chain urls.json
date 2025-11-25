@@ -1,0 +1,707 @@
+[
+    {
+        "id": "3ebc053a2b0df58e",
+        "type": "tab",
+        "label": "✅5- create&verify did/chain urls(step3)",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "779fa06928a5641e",
+        "type": "group",
+        "z": "3ebc053a2b0df58e",
+        "name": "create URLs",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "8f159d6153f4ec3b",
+            "f2456c0e98c9d143",
+            "ab5dc2ae1db32092",
+            "4b750d8cb18f40b0",
+            "42478847799149f2",
+            "17b261c4ddfdece7"
+        ],
+        "x": 714,
+        "y": 154,
+        "w": 1422,
+        "h": 292
+    },
+    {
+        "id": "88b18eca5092dc84",
+        "type": "group",
+        "z": "3ebc053a2b0df58e",
+        "name": "validate urls",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "d45fbed523528914",
+            "6aaa6bde5a4a5ae1",
+            "a44cbfef2c489fab",
+            "5640e5412956264a",
+            "4a7ab198fbf7d474",
+            "52d070dc897fc099",
+            "6c0a08d30e7455c9",
+            "9f897c38a5789573",
+            "28e7f851fc50b20c",
+            "d693d4cd98b9d9f5",
+            "71366b104305049f",
+            "e7abdba30e411262",
+            "fa9383b07cea9b3f",
+            "2b54ecc9ee1571fa",
+            "e213d551bfe4bbf2",
+            "c4217e6ed168c925",
+            "a25a8faf64a3e159",
+            "5e481ec7f7db102a"
+        ],
+        "x": 734,
+        "y": 614,
+        "w": 3132,
+        "h": 672
+    },
+    {
+        "id": "8f159d6153f4ec3b",
+        "type": "function",
+        "z": "3ebc053a2b0df58e",
+        "g": "779fa06928a5641e",
+        "name": "create did url",
+        "func": "let webDomain=msg.dbRecord.domain\n\nconst domainRaw = (webDomain || \"\").trim();\nif (!domainRaw) {\n    node.error(\"webDomain is required\", msg);\n    return null;\n}\nlet domain = domainRaw.replace(/^https?:\\/\\//i, \"\").replace(/\\/+$/, \"\");\nif (!domain) {\n    node.error(\"Invalid domain\", msg);\n    return null;\n}\nwebDomain = domain;\nmsg.data.recordDetails.urls.didUrl = `https://${domain}/.well-known/did.json`;\n\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1202.5,
+        "y": 360,
+        "wires": [
+            [
+                "f2456c0e98c9d143"
+            ]
+        ]
+    },
+    {
+        "id": "d45fbed523528914",
+        "type": "http request",
+        "z": "3ebc053a2b0df58e",
+        "g": "88b18eca5092dc84",
+        "name": "GET /.well-known/did.json",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1630,
+        "y": 700,
+        "wires": [
+            [
+                "71366b104305049f"
+            ]
+        ]
+    },
+    {
+        "id": "6aaa6bde5a4a5ae1",
+        "type": "json",
+        "z": "3ebc053a2b0df58e",
+        "g": "88b18eca5092dc84",
+        "name": "Parse JSON",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 2662.5,
+        "y": 840,
+        "wires": [
+            [
+                "28e7f851fc50b20c"
+            ]
+        ]
+    },
+    {
+        "id": "f2456c0e98c9d143",
+        "type": "function",
+        "z": "3ebc053a2b0df58e",
+        "g": "779fa06928a5641e",
+        "name": "create chainUrl",
+        "func": "let webDomain = msg.dbRecord.domain\n\nconst domainRaw = (webDomain || \"\").trim();\nif (!domainRaw) { node.error(\"webDomain is required\", msg); return null; }\n\nconst cleaned = domainRaw.replace(/^https?:\\/\\//i, '').replace(/\\/+$/,'').toLowerCase();\nconst withoutTld = cleaned.replace(/\\.[^.]+$/,'');\nconst name = withoutTld.split('.').pop();\n\nwebDomain = cleaned;\nmsg.data.recordDetails.urls.chainUrl = `https://${cleaned}/.well-known/chain.pem`;\n\nmsg.headers = Object.assign({}, msg.headers, { 'Accept': '*/*' });\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1542.5,
+        "y": 360,
+        "wires": [
+            [
+                "ab5dc2ae1db32092"
+            ]
+        ]
+    },
+    {
+        "id": "a44cbfef2c489fab",
+        "type": "http request",
+        "z": "3ebc053a2b0df58e",
+        "g": "88b18eca5092dc84",
+        "name": "GET .../.well-known/<name>-chain",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1660,
+        "y": 1040,
+        "wires": [
+            [
+                "2b54ecc9ee1571fa"
+            ]
+        ]
+    },
+    {
+        "id": "5640e5412956264a",
+        "type": "function",
+        "z": "3ebc053a2b0df58e",
+        "g": "88b18eca5092dc84",
+        "name": "Normalize & Compare PEM chains",
+        "func": "// Normalize PEM chains and compare\nfunction extractBlocks(pem){\n  if (typeof pem !== 'string') return [];\n  const txt = pem.replace(/\\r\\n/g,'\\n');\n  const re = /-----BEGIN CERTIFICATE-----[\\s\\S]*?-----END CERTIFICATE-----/g;\n  return txt.match(re) || [];\n}\nfunction toCanonicalBlock(block){\n  const b64 = block\n    .replace(/-----BEGIN CERTIFICATE-----/g,'')\n    .replace(/-----END CERTIFICATE-----/g,'')\n    .replace(/[^A-Za-z0-9+/=]/g,'');\n  let canonB64;\n  try { canonB64 = Buffer.from(b64, 'base64').toString('base64'); }\n  catch(e){ canonB64 = b64; }\n  const lines = [];\n  for (let i=0;i<canonB64.length;i+=64) lines.push(canonB64.slice(i,i+64));\n  return '-----BEGIN CERTIFICATE-----\\n' + lines.join('\\n') + '\\n-----END CERTIFICATE-----';\n}\nfunction canonicalizeChain(pem){\n  return extractBlocks(pem).map(toCanonicalBlock).join('\\n');\n}\n\nconst localCanon  = canonicalizeChain(String(msg.dbRecord.recordDetails.files.chain.fileContent||''));\nconst remoteCanon = canonicalizeChain(String(msg.payload||''));\n\nconst localCount  = (localCanon.match(/BEGIN CERTIFICATE/g)||[]).length;\nconst remoteCount = (remoteCanon.match(/BEGIN CERTIFICATE/g)||[]).length;\n\nconst looksPemRemote = /-----BEGIN CERTIFICATE-----/.test(String(msg.payload||''));\nlet equal = false;\nlet reason = '';\n\nif (!looksPemRemote) {\n  reason = 'Remote content is not PEM (no certificate blocks)';\n} else {\n  equal = (localCanon === remoteCanon);\n  if (!equal){\n    if (localCount !== remoteCount) reason = `Different number of certs (local=${localCount}, remote=${remoteCount})`;\n    else reason = 'Canonical PEM content differs';\n  }\n}\n\n// msg.isValid = equal;\n\n\n// msg.data.recordDetails.urls.chainUrlValidation = equal\n\nif (equal)\n  msg.data.recordDetails.urls.state = 'success';\nelse\n  msg.data.recordDetails.urls.state = 'failed';\n\n//for test\n// msg.data.recordDetails.urls.state = 'success'\n\n// msg.payload = {\n//   domain: msg.domain,\n//   url: msg.url,\n//   statusCode: msg.statusCode,\n//   localCerts: localCount,\n//   remoteCerts: remoteCount,\n//   isValid: equal,\n//   reason\n// };\n\n\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2760,
+        "y": 1200,
+        "wires": [
+            [
+                "4a7ab198fbf7d474"
+            ]
+        ]
+    },
+    {
+        "id": "89d893bf94ee693f",
+        "type": "switch",
+        "z": "3ebc053a2b0df58e",
+        "name": "check exist url",
+        "property": "data.recordDetails",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "hask",
+                "v": "urls",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 442.5,
+        "y": 520,
+        "wires": [
+            [
+                "f81174ca84182a58"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "f9356415d4e155ab",
+        "type": "link in",
+        "z": "3ebc053a2b0df58e",
+        "name": "input step3 (urls)",
+        "links": [
+            "2c3a87bf6f6b197b"
+        ],
+        "x": 235,
+        "y": 520,
+        "wires": [
+            [
+                "89d893bf94ee693f"
+            ]
+        ]
+    },
+    {
+        "id": "4a7ab198fbf7d474",
+        "type": "function",
+        "z": "3ebc053a2b0df58e",
+        "g": "88b18eca5092dc84",
+        "name": "verified urls",
+        "func": "msg.data.session.stage='pg3'\nmsg.data.session.step=4\nmsg.isExpanded=true\nmsg.clientId=msg.data.session.clientId\nmsg._socketId=msg.data.session._socketId\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3157.5,
+        "y": 1040,
+        "wires": [
+            [
+                "6c0a08d30e7455c9",
+                "5e481ec7f7db102a"
+            ]
+        ]
+    },
+    {
+        "id": "f81174ca84182a58",
+        "type": "switch",
+        "z": "3ebc053a2b0df58e",
+        "name": "urls={}",
+        "property": "data.recordDetails.urls",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "empty"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 442.5,
+        "y": 620,
+        "wires": [
+            [
+                "42478847799149f2"
+            ],
+            [
+                "52d070dc897fc099"
+            ]
+        ]
+    },
+    {
+        "id": "ab5dc2ae1db32092",
+        "type": "function",
+        "z": "3ebc053a2b0df58e",
+        "g": "779fa06928a5641e",
+        "name": "send did-chain urls",
+        "func": "msg.data.session.stage='pg3'\nmsg.data.session.step=3\nmsg.isExpanded=true\nmsg.clientId=msg.data.session.clientId\nmsg._socketId=msg.data.session._socketId\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1877.5,
+        "y": 360,
+        "wires": [
+            [
+                "4b750d8cb18f40b0",
+                "17b261c4ddfdece7"
+            ]
+        ]
+    },
+    {
+        "id": "4b750d8cb18f40b0",
+        "type": "link out",
+        "z": "3ebc053a2b0df58e",
+        "g": "779fa06928a5641e",
+        "name": "link out 23",
+        "mode": "link",
+        "links": [
+            "ea917288d5d06d2a"
+        ],
+        "x": 2085,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "42478847799149f2",
+        "type": "change",
+        "z": "3ebc053a2b0df58e",
+        "g": "779fa06928a5641e",
+        "name": "set url obj",
+        "rules": [
+            {
+                "t": "set",
+                "p": "msg.data.recordDetails.urls",
+                "pt": "msg",
+                "to": "{}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "msg.data.recordDetails.urls.didUrl",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "msg.data.recordDetails.urls.chainUrl",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 877.5,
+        "y": 360,
+        "wires": [
+            [
+                "8f159d6153f4ec3b"
+            ]
+        ]
+    },
+    {
+        "id": "52d070dc897fc099",
+        "type": "switch",
+        "z": "3ebc053a2b0df58e",
+        "g": "88b18eca5092dc84",
+        "name": "check did or chain url",
+        "property": "data.recordDetails.urls",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "hask",
+                "v": "didUrl",
+                "vt": "str"
+            },
+            {
+                "t": "hask",
+                "v": "chainUrl",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 897.5,
+        "y": 860,
+        "wires": [
+            [
+                "d693d4cd98b9d9f5"
+            ],
+            [
+                "fa9383b07cea9b3f"
+            ]
+        ]
+    },
+    {
+        "id": "6c0a08d30e7455c9",
+        "type": "link out",
+        "z": "3ebc053a2b0df58e",
+        "g": "88b18eca5092dc84",
+        "name": "link out 25",
+        "mode": "link",
+        "links": [
+            "ea917288d5d06d2a"
+        ],
+        "x": 3515,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "9f897c38a5789573",
+        "type": "function",
+        "z": "3ebc053a2b0df58e",
+        "g": "88b18eca5092dc84",
+        "name": "verified urls",
+        "func": "msg.data.session.stage='pg3'\nmsg.data.session.step=4\nmsg.isExpanded=true\nmsg.clientId=msg.data.session.clientId\nmsg._socketId=msg.data.session._socketId\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3317.5,
+        "y": 700,
+        "wires": [
+            [
+                "6c0a08d30e7455c9",
+                "5e481ec7f7db102a"
+            ]
+        ]
+    },
+    {
+        "id": "28e7f851fc50b20c",
+        "type": "function",
+        "z": "3ebc053a2b0df58e",
+        "g": "88b18eca5092dc84",
+        "name": "Validate (canonical compare)",
+        "func": "function deepEqual(a, b) {\n    if (Object.is(a, b)) return true;\n    if (typeof a !== 'object' || a === null || typeof b !== 'object' || b === null) return false;\n    if (Object.getPrototypeOf(a) !== Object.getPrototypeOf(b)) return false;\n\n    const keysA = Reflect.ownKeys(a);\n    const keysB = Reflect.ownKeys(b);\n    if (keysA.length !== keysB.length) return false;\n\n    for (const k of keysA) {\n        if (!keysB.includes(k)) return false;\n        if (!deepEqual(a[k], b[k])) return false;\n    }\n    return true;\n}\nlet a= msg.dbRecord.recordDetails.files.did.fileContent;\nlet b= msg.payload\nlet isValid = deepEqual(a, b)\n\nif (isValid)\n    msg.data.recordDetails.urls.state = 'success';\nelse\n    msg.data.recordDetails.urls.state = 'failed';\n\nreturn msg",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3000,
+        "y": 840,
+        "wires": [
+            [
+                "9f897c38a5789573"
+            ]
+        ]
+    },
+    {
+        "id": "d693d4cd98b9d9f5",
+        "type": "function",
+        "z": "3ebc053a2b0df58e",
+        "g": "88b18eca5092dc84",
+        "name": "set timeout/header/url",
+        "func": "msg.headers = Object.assign({}, msg.headers, { \"Accept\": \"application/json\" });\nmsg.url=msg.data.recordDetails.urls.didUrl\nmsg.httpRequestTimeout=2000\ndelete msg.statusCode\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1285,
+        "y": 700,
+        "wires": [
+            [
+                "d45fbed523528914"
+            ]
+        ]
+    },
+    {
+        "id": "71366b104305049f",
+        "type": "switch",
+        "z": "3ebc053a2b0df58e",
+        "g": "88b18eca5092dc84",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "RequestError",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1977.5,
+        "y": 700,
+        "wires": [
+            [
+                "e7abdba30e411262"
+            ],
+            [
+                "a25a8faf64a3e159"
+            ]
+        ]
+    },
+    {
+        "id": "e7abdba30e411262",
+        "type": "function",
+        "z": "3ebc053a2b0df58e",
+        "g": "88b18eca5092dc84",
+        "name": "invalid",
+        "func": "msg.data.recordDetails.urls.state = 'failed';\n\nreturn msg",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2662.5,
+        "y": 700,
+        "wires": [
+            [
+                "9f897c38a5789573"
+            ]
+        ]
+    },
+    {
+        "id": "fa9383b07cea9b3f",
+        "type": "function",
+        "z": "3ebc053a2b0df58e",
+        "g": "88b18eca5092dc84",
+        "name": "set timeout/header/url",
+        "func": "msg.headers = Object.assign({}, msg.headers, { 'Accept': '*/*' });\nmsg.url=msg.data.recordDetails.urls.chainUrl\nmsg.httpRequestTimeout=2000\ndelete msg.statusCode\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1300,
+        "y": 1040,
+        "wires": [
+            [
+                "a44cbfef2c489fab"
+            ]
+        ]
+    },
+    {
+        "id": "2b54ecc9ee1571fa",
+        "type": "switch",
+        "z": "3ebc053a2b0df58e",
+        "g": "88b18eca5092dc84",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "RequestError",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 2057.5,
+        "y": 1040,
+        "wires": [
+            [
+                "e213d551bfe4bbf2"
+            ],
+            [
+                "c4217e6ed168c925"
+            ]
+        ]
+    },
+    {
+        "id": "e213d551bfe4bbf2",
+        "type": "function",
+        "z": "3ebc053a2b0df58e",
+        "g": "88b18eca5092dc84",
+        "name": "invalid",
+        "func": "msg.data.recordDetails.urls.state = 'failed';\n\nreturn msg",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2722.5,
+        "y": 1040,
+        "wires": [
+            [
+                "4a7ab198fbf7d474"
+            ]
+        ]
+    },
+    {
+        "id": "c4217e6ed168c925",
+        "type": "switch",
+        "z": "3ebc053a2b0df58e",
+        "g": "88b18eca5092dc84",
+        "name": "",
+        "property": "statusCode",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "200",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 2377.5,
+        "y": 1180,
+        "wires": [
+            [
+                "5640e5412956264a"
+            ],
+            [
+                "e213d551bfe4bbf2"
+            ]
+        ]
+    },
+    {
+        "id": "a25a8faf64a3e159",
+        "type": "switch",
+        "z": "3ebc053a2b0df58e",
+        "g": "88b18eca5092dc84",
+        "name": "",
+        "property": "statusCode",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "200",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 2297.5,
+        "y": 820,
+        "wires": [
+            [
+                "6aaa6bde5a4a5ae1"
+            ],
+            [
+                "e7abdba30e411262"
+            ]
+        ]
+    },
+    {
+        "id": "5e481ec7f7db102a",
+        "type": "debug",
+        "z": "3ebc053a2b0df58e",
+        "g": "88b18eca5092dc84",
+        "name": "send validation result",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3682.5,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "17b261c4ddfdece7",
+        "type": "debug",
+        "z": "3ebc053a2b0df58e",
+        "g": "779fa06928a5641e",
+        "name": "send did/chain urls",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1877.5,
+        "y": 240,
+        "wires": []
+    }
+]

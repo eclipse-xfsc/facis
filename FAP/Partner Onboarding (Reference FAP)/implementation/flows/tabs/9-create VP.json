@@ -1,0 +1,799 @@
+[
+    {
+        "id": "86fca2237fbf3f2f",
+        "type": "tab",
+        "label": "✅ 9-create VP(step5)",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "8fb9aca22d2027ce",
+        "type": "group",
+        "z": "86fca2237fbf3f2f",
+        "name": "call compliance(v1)",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "140339a7be9c0173",
+            "dc19a9d8e661ef63",
+            "8ec77fa4ad903317",
+            "76421c82d79fbaf5",
+            "af64b84eaeed7944",
+            "1d2c2098925fa216",
+            "e253f7b42dcaa4de",
+            "201459ecab8910cc"
+        ],
+        "x": 1059,
+        "y": 374,
+        "w": 1847,
+        "h": 492
+    },
+    {
+        "id": "0a42430caeb851f7",
+        "type": "group",
+        "z": "86fca2237fbf3f2f",
+        "name": "call compliance(v2)",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "4b9a47e0f9546362",
+            "e9fd951f3aa40f7f",
+            "a925e025f3c7591f",
+            "2f0ab50b65e663b3",
+            "e77785cc5709193a",
+            "684cb114431fb118",
+            "e72d3592c6645144",
+            "0b4215934580fa31",
+            "d85ce1226ee4e701"
+        ],
+        "x": 1054,
+        "y": 934,
+        "w": 2307,
+        "h": 472
+    },
+    {
+        "id": "64c4f09dc99f042e",
+        "type": "group",
+        "z": "86fca2237fbf3f2f",
+        "name": "save vp",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "f12bef2f82c99d50",
+            "62f2e0368de14f5c",
+            "5fa63990b9a3f8c0",
+            "2e2dd01053bdb24c",
+            "2a94f8377eb74fea",
+            "3e77827a0a69c901",
+            "5931424f83a509ca",
+            "e65e94a98ed516d7"
+        ],
+        "x": 3434,
+        "y": 294,
+        "w": 1967,
+        "h": 357
+    },
+    {
+        "id": "a0d1f8093589d6c4",
+        "type": "link in",
+        "z": "86fca2237fbf3f2f",
+        "name": "input step=5 vp",
+        "links": [
+            "a5f5a2bae5dfe390"
+        ],
+        "x": 215,
+        "y": 700,
+        "wires": [
+            [
+                "fc805626f6535f5d"
+            ]
+        ]
+    },
+    {
+        "id": "4f99e4bdac8e8f4e",
+        "type": "switch",
+        "z": "86fca2237fbf3f2f",
+        "name": "check exist vp",
+        "property": "data.recordDetails.vp",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "empty"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 412.5,
+        "y": 840,
+        "wires": [
+            [
+                "b925b939ec7fabbf"
+            ],
+            [
+                "70222685439bd7f2"
+            ]
+        ]
+    },
+    {
+        "id": "140339a7be9c0173",
+        "type": "function",
+        "z": "86fca2237fbf3f2f",
+        "g": "8fb9aca22d2027ce",
+        "name": "Build VP & request",
+        "func": "const lrn = msg.dbRecord.recordDetails.vcs.legalVC\nconst tc = msg.dbRecord.recordDetails.vcs.termsAndConditionsVC\nconst participant = msg.dbRecord.recordDetails.vcs.participantVC\n\n\nif (!participant || !tc || !lrn) {\n  node.error('Missing VC(s): need participant, tc, lrn', msg);\n  return null;\n}\n\nconst vp = {\n  \"@context\": \"https://www.w3.org/2018/credentials/v1\",\n  \"type\": \"VerifiablePresentation\", \n  \"verifiableCredential\": [\n    participant,\n    tc,          \n    lrn          \n  ]\n};\n\nmsg.method = \"POST\";\nmsg.url = `https://${msg.dbRecord.recordDetails.complianceDomain}/v1/api/credential-offers`;\nmsg.headers = { \"Content-Type\": \"application/json\" };\nmsg.payload = vp;\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "jose",
+                "module": "jose"
+            },
+            {
+                "var": "jsonld",
+                "module": "jsonld"
+            }
+        ],
+        "x": 1222.5,
+        "y": 580,
+        "wires": [
+            [
+                "1d2c2098925fa216",
+                "af64b84eaeed7944"
+            ]
+        ]
+    },
+    {
+        "id": "dc19a9d8e661ef63",
+        "type": "http request",
+        "z": "86fca2237fbf3f2f",
+        "g": "8fb9aca22d2027ce",
+        "name": "Compliance API",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1942.5,
+        "y": 580,
+        "wires": [
+            [
+                "e253f7b42dcaa4de"
+            ]
+        ]
+    },
+    {
+        "id": "f12bef2f82c99d50",
+        "type": "function",
+        "z": "86fca2237fbf3f2f",
+        "g": "64c4f09dc99f042e",
+        "name": "finish onboarding",
+        "func": "function toBase64(input, { urlSafe = false } = {}) {\n    const str = typeof input === \"string\" ? input : JSON.stringify(input);\n\n    let b64 = (typeof Buffer !== \"undefined\")\n        ? Buffer.from(str, \"utf8\").toString(\"base64\")\n\n        : btoa(unescape(encodeURIComponent(str)));\n\n    if (urlSafe) {\n\n        b64 = b64.replace(/\\+/g, \"-\").replace(/\\//g, \"_\").replace(/=+$/g, \"\");\n    }\n    return b64;\n}\nmsg.data.recordDetails.vp={\n    json:msg.payload,\n    base64: toBase64(msg.payload)\n}\n\nmsg.data.session.stage = 'pg3'\nmsg.data.session.step = 5\nmsg.isExpanded = true\nmsg.clientId = msg.data.session.clientId\nmsg._socketId = msg.data.session._socketId\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3597.5,
+        "y": 560,
+        "wires": [
+            [
+                "62f2e0368de14f5c"
+            ]
+        ]
+    },
+    {
+        "id": "f8a534d1fcaab952",
+        "type": "link out",
+        "z": "86fca2237fbf3f2f",
+        "name": "link out 29",
+        "mode": "link",
+        "links": [
+            "ea917288d5d06d2a"
+        ],
+        "x": 5435,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "8ec77fa4ad903317",
+        "type": "function",
+        "z": "86fca2237fbf3f2f",
+        "g": "8fb9aca22d2027ce",
+        "name": "set error",
+        "func": "if(!msg.data.errorComplience) msg.data.errorComplience={}\nmsg.data.errorComplience={\n    errorType:'clearing house',\n    // errorMessage:msg.payload\n    errorMessage:`sorry,your clearing house did not awnsered ${msg.statuseCode}`\n}\n\nmsg.isExpanded=true\nmsg.data.session.stage = 'pg3'\nmsg.clientId=msg.data.session.clientId\nmsg._socketId=msg.data.session._socketId\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2307.5,
+        "y": 780,
+        "wires": [
+            [
+                "76421c82d79fbaf5"
+            ]
+        ]
+    },
+    {
+        "id": "76421c82d79fbaf5",
+        "type": "link out",
+        "z": "86fca2237fbf3f2f",
+        "g": "8fb9aca22d2027ce",
+        "name": "link out 30",
+        "mode": "link",
+        "links": [
+            "ea917288d5d06d2a"
+        ],
+        "x": 2500,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "62f2e0368de14f5c",
+        "type": "function",
+        "z": "86fca2237fbf3f2f",
+        "g": "64c4f09dc99f042e",
+        "name": "update record(add vcs)",
+        "func": "msg.collection = \"records\";\nmsg.operation = \"updateOne\";\n\nconst query = { recordId: msg.dbRecord.recordId };\n\nconst set = {\n  updatedAt: new Date(),\n  expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),\n};\n\nif (msg.data?.session?.stage != null) {\n  set.stage = msg.data.session.stage;\n}\n\nif (msg.data?.recordDetails?.vp != null) {\n  set[\"recordDetails.vp\"] = msg.data.recordDetails.vp\n}\n\n\nconst update = { $set: set };\nconst options = { upsert: false };\n\n\nmsg.payload = [query, update, options];\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3940,
+        "y": 560,
+        "wires": [
+            [
+                "5fa63990b9a3f8c0"
+            ]
+        ]
+    },
+    {
+        "id": "5fa63990b9a3f8c0",
+        "type": "mongodb4",
+        "z": "86fca2237fbf3f2f",
+        "g": "64c4f09dc99f042e",
+        "clientNode": "5656a62ddc286a04",
+        "mode": "collection",
+        "collection": "",
+        "operation": "",
+        "output": "toArray",
+        "maxTimeMS": "0",
+        "handleDocId": false,
+        "name": "",
+        "x": 4255,
+        "y": 560,
+        "wires": [
+            [
+                "2a94f8377eb74fea"
+            ]
+        ]
+    },
+    {
+        "id": "2e2dd01053bdb24c",
+        "type": "function",
+        "z": "86fca2237fbf3f2f",
+        "g": "64c4f09dc99f042e",
+        "name": "insert vp",
+        "func": "msg.data.session.stage='pg3'\nmsg.data.session.step=4\nmsg.isExpanded=true\nmsg.clientId=msg.data.session.clientId\nmsg._socketId=msg.data.session._socketId\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 4922.5,
+        "y": 500,
+        "wires": [
+            [
+                "3e77827a0a69c901",
+                "5931424f83a509ca"
+            ]
+        ]
+    },
+    {
+        "id": "2a94f8377eb74fea",
+        "type": "switch",
+        "z": "86fca2237fbf3f2f",
+        "g": "64c4f09dc99f042e",
+        "name": "check db awnser",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            },
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 4597.5,
+        "y": 560,
+        "wires": [
+            [
+                "2e2dd01053bdb24c"
+            ],
+            [
+                "e65e94a98ed516d7"
+            ]
+        ]
+    },
+    {
+        "id": "3e77827a0a69c901",
+        "type": "delay",
+        "z": "86fca2237fbf3f2f",
+        "g": "64c4f09dc99f042e",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 5237.5,
+        "y": 500,
+        "wires": [
+            [
+                "f8a534d1fcaab952"
+            ]
+        ]
+    },
+    {
+        "id": "fc805626f6535f5d",
+        "type": "switch",
+        "z": "86fca2237fbf3f2f",
+        "name": "check exist vp",
+        "property": "data.recordDetails",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "hask",
+                "v": "vp",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 427.5,
+        "y": 700,
+        "wires": [
+            [
+                "4f99e4bdac8e8f4e"
+            ]
+        ]
+    },
+    {
+        "id": "af64b84eaeed7944",
+        "type": "function",
+        "z": "86fca2237fbf3f2f",
+        "g": "8fb9aca22d2027ce",
+        "name": "timeout",
+        "func": "msg.httpRequestTimeout=10000\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1562.5,
+        "y": 580,
+        "wires": [
+            [
+                "dc19a9d8e661ef63"
+            ]
+        ]
+    },
+    {
+        "id": "5931424f83a509ca",
+        "type": "debug",
+        "z": "86fca2237fbf3f2f",
+        "g": "64c4f09dc99f042e",
+        "name": "send vp",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 4922.5,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "1d2c2098925fa216",
+        "type": "debug",
+        "z": "86fca2237fbf3f2f",
+        "g": "8fb9aca22d2027ce",
+        "name": "build vp(v1)",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1222.5,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "e253f7b42dcaa4de",
+        "type": "function",
+        "z": "86fca2237fbf3f2f",
+        "g": "8fb9aca22d2027ce",
+        "name": "repetition func",
+        "func": "const MAX_RETRIES = 3;\nconst OK = (msg.statusCode === 201);\n\nif (OK) {\n    delete msg._retryCount;\n    return [msg, null, null];\n}\n\nlet attempt = Number(msg._retryCount || 0) + 1;\nmsg._retryCount = attempt;\n\nif (attempt < MAX_RETRIES) {\n    msg._lastStatus = msg.statusCode || 'no status';\n    return [null, msg, null]; \n}\n\nmsg.error = {\n    message: `HTTP call failed after ${attempt} attempts`,\n    lastStatus: msg.statusCode || 'no status',\n    lastPayloadPreview: (typeof msg.payload === 'string' ? msg.payload.slice(0,200) : msg.payload)\n};\n\ndelete msg._retryCount;\nreturn [null, null, msg];\n\nreturn msg;",
+        "outputs": 3,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2347.5,
+        "y": 580,
+        "wires": [
+            [
+                "f12bef2f82c99d50"
+            ],
+            [
+                "201459ecab8910cc"
+            ],
+            [
+                "8ec77fa4ad903317"
+            ]
+        ]
+    },
+    {
+        "id": "70222685439bd7f2",
+        "type": "link out",
+        "z": "86fca2237fbf3f2f",
+        "name": "link out 19",
+        "mode": "link",
+        "links": [
+            "77281f92096decab"
+        ],
+        "x": 635,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "e65e94a98ed516d7",
+        "type": "link out",
+        "z": "86fca2237fbf3f2f",
+        "g": "64c4f09dc99f042e",
+        "name": "link out 22",
+        "mode": "link",
+        "links": [
+            "77281f92096decab"
+        ],
+        "x": 4845,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "201459ecab8910cc",
+        "type": "delay",
+        "z": "86fca2237fbf3f2f",
+        "g": "8fb9aca22d2027ce",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "3",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 2742.5,
+        "y": 580,
+        "wires": [
+            [
+                "af64b84eaeed7944"
+            ]
+        ]
+    },
+    {
+        "id": "b925b939ec7fabbf",
+        "type": "switch",
+        "z": "86fca2237fbf3f2f",
+        "name": "check versionComplaince",
+        "property": "data.recordDetails.versionCompliance",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "V1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "V2",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "V3",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 812.5,
+        "y": 840,
+        "wires": [
+            [
+                "140339a7be9c0173"
+            ],
+            [
+                "4b9a47e0f9546362"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "4b9a47e0f9546362",
+        "type": "function",
+        "z": "86fca2237fbf3f2f",
+        "g": "0a42430caeb851f7",
+        "name": "Build VP (Enveloped VCs) → POST Compliance v2",
+        "func": "const { importJWK, SignJWT } = jose;\nconst { GaiaXSignatureSigner } = JWS2020;\nmsg.vcDetails = {\n    \"companyName\": msg.dbRecord.recordDetails.companyProfile.companyDetails.legalCompanyName,\n    \"vatID\": msg.dbRecord.recordDetails.companyProfile.legalIdentifiers.euVatId ,\n    \"domain\": msg.dbRecord.domain,\n    \"countryCode\": msg.dbRecord.recordDetails.companyProfile.headquartersAddress.legalAddressIso,\n    \"privJwk\": msg.dbRecord.recordDetails.files.privateJwk.fileContent\n}\n// const input = flow.get('input') || {};\nconst input = msg.vcDetails || {};\nconst { domain, privJwk } = input;\nconst did = `did:web:${domain}`;\n// const lrn_jwt = flow.get('lrn_jwt');\nconst lrn_jwt = msg.dbRecord.recordDetails.vcs.legalVCJwt \n// const issuer_jwt = flow.get('issuer_jwt');\nconst issuer_jwt = msg.dbRecord.recordDetails.vcs.termsAndConditionsVCJwt\n// const participant_jwt = flow.get('participant_jwt');\nconst participant_jwt = msg.dbRecord.recordDetails.vcs.participantVCJwt;\nif (!participant_jwt || !issuer_jwt || !lrn_jwt) { node.error('Missing one of VC JWTs (participant/issuer/lrn)'); return null; }\n\nconst vp = {\n  \"@context\": [\"https://www.w3.org/ns/credentials/v2\", \"https://w3id.org/gaia-x/development#\"],\n  \"type\": \"VerifiablePresentation\",\n  \"verifiableCredential\": [\n    { \"@context\": [\"https://www.w3.org/ns/credentials/v2\"], \"type\": [\"EnvelopedVerifiableCredential\"], \"id\": `data:application/vc+jwt,${participant_jwt}` },\n    { \"@context\": [\"https://www.w3.org/ns/credentials/v2\"], \"type\": [\"EnvelopedVerifiableCredential\"], \"id\": `data:application/vc+jwt,${issuer_jwt}` },\n    { \"@context\": [\"https://www.w3.org/ns/credentials/v2\"], \"type\": [\"EnvelopedVerifiableCredential\"], \"id\": `data:application/vc+jwt,${lrn_jwt}` }\n  ]\n};\n\nconst comp=async () => {\n  try {\n    const jwk = (({ kty, n, e, d, p, q, dp, dq, qi, kid }) => ({ kty, n, e, d, p, q, dp, dq, qi, kid }))(privJwk);\n    const key = await importJWK(jwk, 'RS256');\n\n    try {\n      const vm = `${did}#key-1`;\n      const ldSigner = new GaiaXSignatureSigner({\n        privateKey: key,\n        privateKeyAlgorithm: \"RS256\",\n        privateKeyAlg: \"RS256\",\n        verificationMethod: vm,\n        safe: false\n      });\n\n      const vpForLdSign = {\n        \"@context\": [...vp[\"@context\"], \"https://w3id.org/security/suites/jws-2020/v1\"],\n        ...vp\n      };\n      const vp_ld = await ldSigner.sign(vpForLdSign);\n      flow.set('vp_ld', vp_ld); \n    } catch (e) {\n      node.warn('VP LD-sign warning: ' + (e?.message || e));\n    }\n\n    const vpJwt = await new SignJWT(vp)\n      .setProtectedHeader({ alg: 'RS256', typ: 'vp+jwt', cty: 'vp', kid: jwk.kid || `${did}#key-1`, iss: did })\n      .setIssuer(did)\n      .setIssuedAt()\n      .sign(key);\n\n    // const vcid = `https://${domain}/.well-known/credential-offers/${Date.now().toString(36)}`;\n    // msg.method = 'POST';\n    // msg.url = `https://aerospace-digital-exchange.eu/compliance/v2/api/credential-offers/standard-compliance?vcid=${encodeURIComponent(vcid)}`;\n    // msg.headers = { 'Accept': 'application/vc+jwt', 'Content-Type': 'application/vp+jwt' };\n    msg.payload = vpJwt;\n    // node.send(msg);\n    return vpJwt;\n\n  } catch (e) {\n    node.error('VP-JWT sign/build failed: ' + (e?.message || e), msg);\n  }\n};\nconst vcid = `https://${domain}/.well-known/credential-offers/${Date.now().toString(36)}`;\nmsg.method = 'POST';\nmsg.url = `https://${msg.dbRecord.recordDetails.complianceDomain}/v2/api/credential-offers/standard-compliance?vcid=${encodeURIComponent(vcid)}`;\nmsg.headers = { 'Accept': 'application/vc+jwt', 'Content-Type': 'application/vp+jwt' };\nmsg.payload =await comp()\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "jose",
+                "module": "jose"
+            },
+            {
+                "var": "JWS2020",
+                "module": "@gaia-x/json-web-signature-2020"
+            }
+        ],
+        "x": 1310,
+        "y": 1160,
+        "wires": [
+            [
+                "0b4215934580fa31",
+                "a925e025f3c7591f"
+            ]
+        ]
+    },
+    {
+        "id": "e9fd951f3aa40f7f",
+        "type": "http request",
+        "z": "86fca2237fbf3f2f",
+        "g": "0a42430caeb851f7",
+        "name": "Compliance v2: POST VP (CT=application/vp+jwt)",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 2230,
+        "y": 1160,
+        "wires": [
+            [
+                "2f0ab50b65e663b3"
+            ]
+        ]
+    },
+    {
+        "id": "a925e025f3c7591f",
+        "type": "function",
+        "z": "86fca2237fbf3f2f",
+        "g": "0a42430caeb851f7",
+        "name": "timeout",
+        "func": "msg.httpRequestTimeout=10000\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1797.5,
+        "y": 1160,
+        "wires": [
+            [
+                "e9fd951f3aa40f7f"
+            ]
+        ]
+    },
+    {
+        "id": "2f0ab50b65e663b3",
+        "type": "function",
+        "z": "86fca2237fbf3f2f",
+        "g": "0a42430caeb851f7",
+        "name": "repetition func",
+        "func": "const MAX_RETRIES = 3;\nconst OK = (msg.statusCode === 201);\n\nif (OK) {\n    delete msg._retryCount;\n    return [msg, null, null];\n}\n\nlet attempt = Number(msg._retryCount || 0) + 1;\nmsg._retryCount = attempt;\n\nif (attempt < MAX_RETRIES) {\n    msg._lastStatus = msg.statusCode || 'no status';\n    return [null, msg, null]; \n}\n\nmsg.error = {\n    message: `HTTP call failed after ${attempt} attempts`,\n    lastStatus: msg.statusCode || 'no status',\n    lastPayloadPreview: (typeof msg.payload === 'string' ? msg.payload.slice(0,200) : msg.payload)\n};\n\ndelete msg._retryCount;\nreturn [null, null, msg];\n\nreturn msg;",
+        "outputs": 3,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2717.5,
+        "y": 1160,
+        "wires": [
+            [
+                "d85ce1226ee4e701"
+            ],
+            [
+                "e77785cc5709193a"
+            ],
+            [
+                "684cb114431fb118"
+            ]
+        ]
+    },
+    {
+        "id": "e77785cc5709193a",
+        "type": "delay",
+        "z": "86fca2237fbf3f2f",
+        "g": "0a42430caeb851f7",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "3",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 3117.5,
+        "y": 1160,
+        "wires": [
+            [
+                "a925e025f3c7591f"
+            ]
+        ]
+    },
+    {
+        "id": "684cb114431fb118",
+        "type": "function",
+        "z": "86fca2237fbf3f2f",
+        "g": "0a42430caeb851f7",
+        "name": "set error",
+        "func": "if(!msg.data.errorComplience) msg.data.errorComplience={}\nmsg.data.errorComplience={\n    errorType:'clearing house',\n    // errorMessage:msg.payload\n    errorMessage:`sorry,your clearing house did not awnsered ${msg.statuseCode}`\n}\n\nmsg.isExpanded=true\nmsg.data.session.stage = 'pg3'\nmsg.clientId=msg.data.session.clientId\nmsg._socketId=msg.data.session._socketId\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3117.5,
+        "y": 1320,
+        "wires": [
+            [
+                "e72d3592c6645144"
+            ]
+        ]
+    },
+    {
+        "id": "e72d3592c6645144",
+        "type": "link out",
+        "z": "86fca2237fbf3f2f",
+        "g": "0a42430caeb851f7",
+        "name": "link out 45",
+        "mode": "link",
+        "links": [
+            "ea917288d5d06d2a"
+        ],
+        "x": 3310,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "0b4215934580fa31",
+        "type": "debug",
+        "z": "86fca2237fbf3f2f",
+        "g": "0a42430caeb851f7",
+        "name": "build vp(v2)",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1317.5,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "d85ce1226ee4e701",
+        "type": "function",
+        "z": "86fca2237fbf3f2f",
+        "g": "0a42430caeb851f7",
+        "name": "Decode JWT → header/payload",
+        "func": "\nfunction b64urlToUtf8(b64url){\n    if (typeof b64url !== 'string') throw new Error('Expected string');\n    let s = b64url.replace(/-/g,'+').replace(/_/g,'/');\n    const pad = s.length % 4;\n    if (pad) s += '='.repeat(4 - pad);\n    return Buffer.from(s, 'base64').toString('utf8');\n}\n\nconst token = (msg.payload || '').toString().trim();\nconst parts = token.split('.');\nif (parts.length !== 3) {\n    node.error('Invalid JWT format: expected 3 parts');\n    return null;\n}\n\nlet header, payload;\ntry {\n    header = JSON.parse(b64urlToUtf8(parts[0]));\n} catch (e) {\n    node.error('Invalid JWT header (not JSON)');\n    return null;\n}\ntry {\n    payload = JSON.parse(b64urlToUtf8(parts[1]));\n} catch (e) {\n    node.error('Invalid JWT payload (not JSON)');\n    return null;\n}\n\nconst signature = parts[2];\nconst now = Math.floor(Date.now()/1000);\nconst exp = typeof payload.exp === 'number' ? payload.exp : undefined;\nconst iat = typeof payload.iat === 'number' ? payload.iat : undefined;\nconst nbf = typeof payload.nbf === 'number' ? payload.nbf : undefined;\n\nmsg.jwt = {\n    raw: token,\n    header,\n    payload,\n    signature,\n    signingInputB64: parts[0] + '.' + parts[1], // برای امضا/اعتبارسنجی در صورت داشتن کلید\n    exp,\n    iat,\n    nbf,\n    isExpired: exp !== undefined ? (now >= exp) : undefined,\n    isNotYetValid: nbf !== undefined ? (now < nbf) : undefined,\n    issuedAgoSec: iat !== undefined ? (now - iat) : undefined\n};\n\n// برای راحتی: خروجی اصلی رو بدیم خودِ payload\nmsg.payload = payload;\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3145,
+        "y": 1020,
+        "wires": [
+            [
+                "f12bef2f82c99d50"
+            ]
+        ]
+    },
+    {
+        "id": "5656a62ddc286a04",
+        "type": "mongodb4-client",
+        "name": "",
+        "protocol": "mongodb",
+        "hostname": "db.facis.cloud",
+        "port": "443",
+        "dbName": "onboarding",
+        "appName": "",
+        "authSource": "",
+        "authMechanism": "DEFAULT",
+        "tls": true,
+        "tlsCAFile": "",
+        "tlsCertificateKeyFile": "",
+        "tlsInsecure": true,
+        "connectTimeoutMS": "30000",
+        "socketTimeoutMS": "0",
+        "minPoolSize": "0",
+        "maxPoolSize": "100",
+        "maxIdleTimeMS": "0",
+        "uri": "",
+        "advanced": "{}",
+        "uriTabActive": "tab-uri-simple"
+    }
+]

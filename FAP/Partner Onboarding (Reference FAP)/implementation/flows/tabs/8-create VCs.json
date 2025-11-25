@@ -1,0 +1,1746 @@
+[
+    {
+        "id": "094a45cae4538377",
+        "type": "tab",
+        "label": "✅8-create VCs(step4) ",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "6da88930bd1726e5",
+        "type": "group",
+        "z": "094a45cae4538377",
+        "name": "set selected clearingHouse url",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "8b92e7f61438b269",
+            "3410335010021bb1",
+            "f230e2d8947b8705",
+            "c329aeecac04ce58",
+            "8aca04f8d93ddc20",
+            "f69e615146f704c4",
+            "39f10780c8392ff0",
+            "b98eb7899c6a4123",
+            "0491309cda7dd8b2",
+            "5805c73e57a15b86",
+            "555ca96dde43bbca"
+        ],
+        "x": 1054,
+        "y": 314,
+        "w": 332,
+        "h": 1752
+    },
+    {
+        "id": "3fd6fbc8f2e52d6f",
+        "type": "group",
+        "z": "094a45cae4538377",
+        "name": "create vcs(v1)",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "b98191be718d51f7",
+            "d87955e27cb5aea0",
+            "b003e4c06e7b15d2",
+            "992f64d0405fd71c",
+            "d7fbbd3ce7f52291",
+            "caa3a9d409847408",
+            "b306b9dbd0c34de8",
+            "e720bc9a0b83475e",
+            "20c0b9452caf4123",
+            "54fa1140c4d41fca",
+            "ccdd2122d53261db",
+            "95f71dfe2d425620",
+            "eef2d78b5edf4545",
+            "f7980856613a8749",
+            "894b374f662bd51b",
+            "5a934f6d5ff6de60",
+            "dccee80f59c4f1a4",
+            "1f5c3c4cbb081a59",
+            "3547b0ed57ddbbcb",
+            "a74716764f873169",
+            "b80b50ddc8406062",
+            "b4b17b2d98f51047",
+            "7a2c15c36756dcf7",
+            "f0938d8074f94e09",
+            "a6863289687ef10a"
+        ],
+        "x": 2494,
+        "y": 374,
+        "w": 3407,
+        "h": 637
+    },
+    {
+        "id": "64bc367326d47ede",
+        "type": "group",
+        "z": "094a45cae4538377",
+        "name": "create vcs(v2)",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "486d28862f30f865",
+            "32896ed7a46bb144",
+            "6b1e401ffb8b16e4",
+            "bdfc1bcf229a7b79",
+            "a89fee78b43d9671",
+            "57ce17fd6408ca09",
+            "2211edd823ac8bf3",
+            "5ba3b5d6aedf55ae",
+            "f35379a8e382d97c",
+            "12628cd3b125b11f",
+            "2559ad7870c8eaec",
+            "5ffdbe2d76373ef9",
+            "c3e1e5fc12749db6",
+            "d03e32f38436064e",
+            "ad2e140715b9e160",
+            "939a3a9bed118e7b",
+            "09f03a4a5ba1c647",
+            "d2a6fb7034776f68",
+            "2eb9f2281f980525",
+            "a0826ccbd29390d1",
+            "ece390eb3f1db0eb",
+            "3457258c350558be",
+            "7818db2ab47ac948",
+            "f8819205500bd8e7",
+            "e7325d787d41a892"
+        ],
+        "x": 2504,
+        "y": 1274,
+        "w": 4472,
+        "h": 1172
+    },
+    {
+        "id": "951152a75999b1f7",
+        "type": "link in",
+        "z": "094a45cae4538377",
+        "name": "input step=4 (vcs)",
+        "links": [
+            "ad7c68e6bb3b196f"
+        ],
+        "x": 145,
+        "y": 1020,
+        "wires": [
+            [
+                "8a3567508432a19a"
+            ]
+        ]
+    },
+    {
+        "id": "8a3567508432a19a",
+        "type": "switch",
+        "z": "094a45cae4538377",
+        "name": "",
+        "property": "data.recordDetails",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "hask",
+                "v": "vcs",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 337.5,
+        "y": 1020,
+        "wires": [
+            [
+                "79b60d86bded6a4f"
+            ]
+        ]
+    },
+    {
+        "id": "1963947d6a6c1e84",
+        "type": "switch",
+        "z": "094a45cae4538377",
+        "name": "check selectedClearingHouse",
+        "property": "data.recordDetails.selectedClearingHouse",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "gaiax",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "arsys",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "aruba",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "tsystem",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "deltaDao",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "neustaAerospace",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "proximus",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "ovhCloud",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "aireNetwork",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "cispe",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "pfalzkom",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 11,
+        "x": 760,
+        "y": 1180,
+        "wires": [
+            [
+                "8b92e7f61438b269"
+            ],
+            [
+                "555ca96dde43bbca"
+            ],
+            [
+                "5805c73e57a15b86"
+            ],
+            [
+                "0491309cda7dd8b2"
+            ],
+            [
+                "3410335010021bb1"
+            ],
+            [
+                "f230e2d8947b8705"
+            ],
+            [
+                "c329aeecac04ce58"
+            ],
+            [
+                "f69e615146f704c4"
+            ],
+            [
+                "8aca04f8d93ddc20"
+            ],
+            [
+                "b98eb7899c6a4123"
+            ],
+            [
+                "39f10780c8392ff0"
+            ]
+        ]
+    },
+    {
+        "id": "79b60d86bded6a4f",
+        "type": "switch",
+        "z": "094a45cae4538377",
+        "name": "check exist selectedClearingHouse",
+        "property": "data.recordDetails",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "hask",
+                "v": "selectedClearingHouse",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 340,
+        "y": 1180,
+        "wires": [
+            [
+                "1963947d6a6c1e84"
+            ]
+        ]
+    },
+    {
+        "id": "b98191be718d51f7",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "3fd6fbc8f2e52d6f",
+        "name": "timeout",
+        "func": "msg.httpRequestTimeout=5000\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3262.5,
+        "y": 860,
+        "wires": [
+            [
+                "b003e4c06e7b15d2"
+            ]
+        ]
+    },
+    {
+        "id": "d87955e27cb5aea0",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "3fd6fbc8f2e52d6f",
+        "name": "Prepare LRN request",
+        "func": "\nconst { domain, vatID } = msg.vcDetails;\nmsg.method = 'POST';\n// msg.url = `https://registrationnumber.notary.lab.gaia-x.eu/v1-staging/registrationNumberVC?vcid=https://${domain}/.well-known/lrn.json`\nmsg.url = `https://${msg.notaryDomain}/v1/registrationNumberVC?vcid=https://${domain}/.well-known/lrn.json`\nmsg.headers = { 'Content-Type': 'application/json' };\nmsg.payload = {\n    \"type\": \"gx:LegalRegistrationNumber\",\n    id: \"https://\" + msg.vcDetails.domain + \"/.well-known/lrn.json#subject\",\n    \"gx:vatID\": msg.vcDetails.vatID\n};\nreturn msg;\n\n\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2927.5,
+        "y": 860,
+        "wires": [
+            [
+                "b98191be718d51f7"
+            ]
+        ]
+    },
+    {
+        "id": "bc259dc2952137e0",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "name": "set vcDetails",
+        "func": "msg.vcDetails = {\n    \"companyName\": msg.dbRecord.recordDetails.companyProfile.companyDetails.legalCompanyName,\n    \"vatID\": msg.dbRecord.recordDetails.companyProfile.legalIdentifiers.euVatId ,\n    \"domain\": msg.dbRecord.domain,\n    \"countryCode\": msg.dbRecord.recordDetails.companyProfile.headquartersAddress.legalAddressIso,\n    \"legalAddress\": {\n        \"street\": msg.dbRecord.recordDetails.companyProfile.headquartersAddress.streetAddress || '',\n        \"locality\": msg.dbRecord.recordDetails.companyProfile.headquartersAddress.city || '',\n        \"postal\": msg.dbRecord.recordDetails.companyProfile.headquartersAddress.postalCode || ''\n    },\n    \"headquartersAddress\": {\n        \"street\": msg.dbRecord.recordDetails.companyProfile.headquartersAddress.streetAddress || '',\n        \"locality\": msg.dbRecord.recordDetails.companyProfile.headquartersAddress.city || '',\n        \"postal\": msg.dbRecord.recordDetails.companyProfile.headquartersAddress.postalCode || ''\n    },\n    // \"legalAddress\": {\n    //     \"street\": \"Marktplatz 2\",\n    //     \"locality\": \"Langenfeld\",\n    //     \"postal\": \"40764\"\n    // },\n    // \"headquartersAddress\": {\n    //     \"street\": \"Marktplatz 2\",\n    //     \"locality\": \"Langenfeld\",\n    //     \"postal\": \"40764\"\n    // },\n    \"privJwk\": msg.dbRecord.recordDetails.files.privateJwk.fileContent\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1717.5,
+        "y": 1200,
+        "wires": [
+            [
+                "da273ba088ba7087"
+            ]
+        ]
+    },
+    {
+        "id": "b003e4c06e7b15d2",
+        "type": "http request",
+        "z": "094a45cae4538377",
+        "g": "3fd6fbc8f2e52d6f",
+        "name": "Notary API",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 3587.5,
+        "y": 860,
+        "wires": [
+            [
+                "dccee80f59c4f1a4",
+                "292fd258f9d8f207"
+            ]
+        ]
+    },
+    {
+        "id": "992f64d0405fd71c",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "3fd6fbc8f2e52d6f",
+        "name": "Save LRN & fetch T&C",
+        "func": "msg.data.recordDetails.vcs = {}\nmsg.data.recordDetails.vcs.legalVC = msg.payload\n\nmsg.method = 'GET';\n// msg.url = 'https://registry.lab.gaia-x.eu/v1-staging/api/termsAndConditions';\nmsg.url = `https://${msg.tAndCoDomain}/v1/api/termsAndConditions`;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2657.5,
+        "y": 600,
+        "wires": [
+            [
+                "d7fbbd3ce7f52291"
+            ]
+        ]
+    },
+    {
+        "id": "d7fbbd3ce7f52291",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "3fd6fbc8f2e52d6f",
+        "name": "timeout",
+        "func": "msg.httpRequestTimeout=5000\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2977.5,
+        "y": 600,
+        "wires": [
+            [
+                "caa3a9d409847408"
+            ]
+        ]
+    },
+    {
+        "id": "caa3a9d409847408",
+        "type": "http request",
+        "z": "094a45cae4538377",
+        "g": "3fd6fbc8f2e52d6f",
+        "name": "Get T&C text",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 3317.5,
+        "y": 600,
+        "wires": [
+            [
+                "1f5c3c4cbb081a59"
+            ]
+        ]
+    },
+    {
+        "id": "b306b9dbd0c34de8",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "3fd6fbc8f2e52d6f",
+        "name": "Create & sign T&C VC",
+        "func": " const { importJWK } = jose;\nconst { createHash } = crypto;\nconst { GaiaXSignatureSigner } = JWS2020;\n\nconst input = msg.vcDetails || {};\nconst { domain } = input;\n\nlet { privJwk } = input;\nprivJwk = (({ kty, n, e, d, p, q, dp, dq, qi, kid }) => ({ kty, n, e, d, p, q, dp, dq, qi, kid }))(privJwk);\n\nconst did = `did:web:${domain}`;\nconst vm = `${did}#key-1`;\nconst issuance = new Date().toISOString();\n\nlet tcText = String(msg.payload ?? \"\");\ntry { const o = JSON.parse(tcText); if (o && typeof o.text === \"string\") tcText = o.text; } catch (_) { }\n\nconst tcHash = createHash('sha256').update(tcText, 'utf8').digest('hex');\nmsg.tcHash = tcHash\n\n\nconst vc = {\n    \"@context\": [\n        \"https://www.w3.org/2018/credentials/v1\",\n        \"https://w3id.org/security/suites/jws-2020/v1\",\n        \"https://registry.lab.gaia-x.eu/development/api/trusted-shape-registry/v1/shapes/jsonld/trustframework#\"\n    ],\n    \"type\": [\"VerifiableCredential\"],\n    \"id\": `https://${domain}/.well-known/gx-terms.json`,\n    \"issuer\": did,\n    \"issuanceDate\": issuance,\n    \"credentialSubject\": {\n        \"id\": `https://${domain}/.well-known/gx-terms.json#subject`,\n        \"type\": \"gx:GaiaXTermsAndConditions\",\n        \"gx:termsAndConditions\": tcText\n    }\n};\n\n(async () => {\n    try {\n       \n        const key = await importJWK(privJwk, \"RS256\");\n\n        const signer = new GaiaXSignatureSigner({\n            privateKey: key,\n            privateKeyAlgorithm: \"RS256\",\n            privateKeyAlg: \"RS256\",    \n            verificationMethod: vm,\n            safe: false\n        });\n\n        const signed = await signer.sign(vc);\n\n        flow.set(\"tc\", signed);\n        msg.payload = signed;\n        msg.data.recordDetails.vcs.termsAndConditionsVC = signed\n        node.send(msg);\n    } catch (err) {\n        node.error(`GX sign failed: ${err?.message || err}`, msg);\n    }\n})();\nreturn null;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "jose",
+                "module": "jose"
+            },
+            {
+                "var": "crypto",
+                "module": "crypto"
+            },
+            {
+                "var": "jsonld",
+                "module": "jsonld"
+            },
+            {
+                "var": "JWS2020",
+                "module": "@gaia-x/json-web-signature-2020"
+            }
+        ],
+        "x": 4037.5,
+        "y": 460,
+        "wires": [
+            [
+                "e720bc9a0b83475e"
+            ]
+        ]
+    },
+    {
+        "id": "e720bc9a0b83475e",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "3fd6fbc8f2e52d6f",
+        "name": "Create & sign Participant VC",
+        "func": "const { importJWK } = jose;\nconst { createHash } = crypto;\nconst { GaiaXSignatureSigner, JsonWebSignature2020Signer } = JWS2020;\n\n\nconst input = msg.vcDetails || {};\nconst lrn = msg.data.recordDetails.vcs.legalVC;\nconst tcHash = msg.tcHash\nconst { companyName, domain, countryCode } = input;\n\nlet { privJwk } = input;\nprivJwk = (({ kty, n, e, d, p, q, dp, dq, qi, kid }) =>\n  ({ kty, n, e, d, p, q, dp, dq, qi, kid }))(privJwk);\n\nconst did = `did:web:${domain}`;\nconst vm = `${did}#key-1`;\nconst issuance = new Date().toISOString();\n\nconst vc = {\n  \"@context\": [\n    \"https://www.w3.org/2018/credentials/v1\",\n    \"https://w3id.org/security/suites/jws-2020/v1\",\n    \"https://registry.lab.gaia-x.eu/development/api/trusted-shape-registry/v1/shapes/jsonld/trustframework#\"\n  ],\n  \"type\": [\"VerifiableCredential\"],\n  \"id\": `${did}#key-1`,\n  \"issuer\": did,\n  \"issuanceDate\": issuance,\n  \"credentialSubject\": {\n    \"gx:legalName\": companyName,\n    \"gx:headquarterAddress\": { \"gx:countrySubdivisionCode\": countryCode },\n    \"gx:legalRegistrationNumber\": {\n      \"id\": lrn?.credentialSubject?.id || `${lrn?.id}#subject`\n    },\n    \"gx:legalAddress\": { \"gx:countrySubdivisionCode\": countryCode },\n    \"type\": \"gx:LegalParticipant\",\n    \"gx-terms-and-conditions:gaiaxTermsAndConditions\": tcHash,\n    \"id\": `https://${domain}/.well-known/participant.json#subject`\n  }\n};\n\n(async () => {\n  try {\n    const key = await importJWK(privJwk, \"RS256\");\n\n    const signer = new GaiaXSignatureSigner({\n      privateKey: key,\n      privateKeyAlgorithm: \"RS256\",\n      privateKeyAlg: \"RS256\",     \n      verificationMethod: vm,\n      safe: false\n    });\n\n    const signed = await signer.sign(vc);\n\n    // flow.set(\"participant\", signed);\n    msg.payload = signed;\n    msg.data.recordDetails.vcs.participantVC = signed;\n    node.send(msg);\n  } catch (err) {\n    node.error(`GX participant sign failed: ${err?.message || err}`, msg);\n  }\n})();\nreturn null;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "jose",
+                "module": "jose"
+            },
+            {
+                "var": "jsonld",
+                "module": "jsonld"
+            },
+            {
+                "var": "JWS2020",
+                "module": "@gaia-x/json-web-signature-2020"
+            },
+            {
+                "var": "crypto",
+                "module": "crypto"
+            }
+        ],
+        "x": 4400,
+        "y": 460,
+        "wires": [
+            [
+                "54fa1140c4d41fca"
+            ]
+        ]
+    },
+    {
+        "id": "20c0b9452caf4123",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "3fd6fbc8f2e52d6f",
+        "name": "set error",
+        "func": "if(!msg.data.errorVC) msg.data.errorVC={}\n// if(!msg.data.errorComplience) msg.data.errorComplience={}\nmsg.data.errorVC={\n// msg.data.errorComplience={\n    errorType:`didn't get vc`,\n    errorMessage:`An issue occurred during the notarization process call. Please return to the previous step and try again.`\n}\n\nmsg.isExpanded=true\nmsg.data.session.stage = 'pg3'\nmsg.clientId=msg.data.session.clientId\nmsg._socketId=msg.data.session._socketId\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 5597.5,
+        "y": 800,
+        "wires": [
+            [
+                "894b374f662bd51b"
+            ]
+        ]
+    },
+    {
+        "id": "8b92e7f61438b269",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "6da88930bd1726e5",
+        "name": "gaiax domain",
+        "func": "msg.notaryDomain='registrationnumber.notary.lab.gaia-x.eu'\nmsg.tAndCoDomain='registry.lab.gaia-x.eu'\nmsg.complianceDomain='compliance.lab.gaia-x.eu'\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1222.5,
+        "y": 400,
+        "wires": [
+            [
+                "bc259dc2952137e0"
+            ]
+        ]
+    },
+    {
+        "id": "3410335010021bb1",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "6da88930bd1726e5",
+        "name": "deltaDao domain",
+        "func": "msg.notaryDomain='www.delta-dao.com/notary'\nmsg.tAndCoDomain='www.delta-dao.com/registry'\nmsg.complianceDomain='www.delta-dao.com/compliance'\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1217.5,
+        "y": 1040,
+        "wires": [
+            [
+                "bc259dc2952137e0"
+            ]
+        ]
+    },
+    {
+        "id": "f230e2d8947b8705",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "6da88930bd1726e5",
+        "name": "aerospace domain",
+        "func": "msg.notaryDomain='aerospace-digital-exchange.eu/notary'\nmsg.tAndCoDomain='aerospace-digital-exchange.eu/registry'\nmsg.complianceDomain='aerospace-digital-exchange.eu/compliance'\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1217.5,
+        "y": 1180,
+        "wires": [
+            [
+                "bc259dc2952137e0"
+            ]
+        ]
+    },
+    {
+        "id": "c329aeecac04ce58",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "6da88930bd1726e5",
+        "name": "proximus domain",
+        "func": "msg.notaryDomain='gx-notary.gxdch.proximus.eu'\nmsg.tAndCoDomain='gx-registry.gxdch.proximus.eu'\nmsg.complianceDomain='gx-compliance.gxdch.proximus.eu'\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1217.5,
+        "y": 1340,
+        "wires": [
+            [
+                "bc259dc2952137e0"
+            ]
+        ]
+    },
+    {
+        "id": "8aca04f8d93ddc20",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "6da88930bd1726e5",
+        "name": "airenetworks domain",
+        "func": "msg.notaryDomain='gx-notary.airenetworks.es'\nmsg.tAndCoDomain='gx-registry.airenetworks.es'\nmsg.complianceDomain='gx-compliance.airenetworks.es'\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1217.5,
+        "y": 1660,
+        "wires": [
+            [
+                "bc259dc2952137e0"
+            ]
+        ]
+    },
+    {
+        "id": "f69e615146f704c4",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "6da88930bd1726e5",
+        "name": "ovhCloud domain",
+        "func": "msg.notaryDomain='notary.gxdch.gaiax.ovh'\nmsg.tAndCoDomain='registry.gxdch.gaiax.ovh'\nmsg.complianceDomain='compliance.gxdch.gaiax.ovh'\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1217.5,
+        "y": 1500,
+        "wires": [
+            [
+                "bc259dc2952137e0"
+            ]
+        ]
+    },
+    {
+        "id": "39f10780c8392ff0",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "6da88930bd1726e5",
+        "name": "pfalzkom domain",
+        "func": "msg.notaryDomain='trust-anker.pfalzkom-gxdch.de'\nmsg.tAndCoDomain='portal.pfalzkom-gxdch.de'\nmsg.complianceDomain='compliance.pfalzkom-gxdch.de'\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1217.5,
+        "y": 1980,
+        "wires": [
+            [
+                "bc259dc2952137e0"
+            ]
+        ]
+    },
+    {
+        "id": "b98eb7899c6a4123",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "6da88930bd1726e5",
+        "name": "cispe domain",
+        "func": "msg.notaryDomain='notary.cispe.gxdch.clouddataengine.io'\nmsg.tAndCoDomain='registry.cispe.gxdch.clouddataengine.io'\nmsg.complianceDomain='compliance.cispe.gxdch.clouddataengine.io'\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1217.5,
+        "y": 1820,
+        "wires": [
+            [
+                "bc259dc2952137e0"
+            ]
+        ]
+    },
+    {
+        "id": "0491309cda7dd8b2",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "6da88930bd1726e5",
+        "name": "tsystem domain",
+        "func": "msg.notaryDomain='gx-notary.gxdch.dih.telekom.com'\nmsg.tAndCoDomain='gx-registry.gxdch.dih.telekom.com'\nmsg.complianceDomain='gx-compliance.gxdch.dih.telekom.com'\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1217.5,
+        "y": 880,
+        "wires": [
+            [
+                "bc259dc2952137e0"
+            ]
+        ]
+    },
+    {
+        "id": "5805c73e57a15b86",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "6da88930bd1726e5",
+        "name": "aruba domain",
+        "func": "msg.notaryDomain='gx-notary.aruba.it'\nmsg.tAndCoDomain='gx-registry.aruba.it'\nmsg.complianceDomain='gx-compliance.aruba.it'\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1222.5,
+        "y": 720,
+        "wires": [
+            [
+                "bc259dc2952137e0"
+            ]
+        ]
+    },
+    {
+        "id": "555ca96dde43bbca",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "6da88930bd1726e5",
+        "name": "arsys domain",
+        "func": "msg.notaryDomain='gx-notary.arsys.es'\nmsg.tAndCoDomain='gx-registry.arsys.es'\nmsg.complianceDomain='gx-compliance.arsys.es'\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1222.5,
+        "y": 560,
+        "wires": [
+            [
+                "bc259dc2952137e0"
+            ]
+        ]
+    },
+    {
+        "id": "54fa1140c4d41fca",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "3fd6fbc8f2e52d6f",
+        "name": "update record(add vcs)",
+        "func": "msg.collection = \"records\";\nmsg.operation = \"updateOne\";\n\nconst query = { recordId: msg.dbRecord.recordId };\n\nconst set = {\n  updatedAt: new Date(),\n  expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),\n};\n\nif (msg.data?.session?.stage != null) {\n  set.stage = msg.data.session.stage;\n}\n\nif (msg.data?.recordDetails?.vcs != null) {\n  set[\"recordDetails.vcs\"] = msg.data.recordDetails.vcs\n}\nif (msg.data?.recordDetails?.selectedClearingHouse != null) {\n  set[\"recordDetails.complianceDomain\"] = msg.complianceDomain\n} \n \nconst update = { $set: set };\nconst options = { upsert: false };\n \nmsg.payload = [query, update, options];\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 4765,
+        "y": 460,
+        "wires": [
+            [
+                "ccdd2122d53261db"
+            ]
+        ]
+    },
+    {
+        "id": "ccdd2122d53261db",
+        "type": "mongodb4",
+        "z": "094a45cae4538377",
+        "g": "3fd6fbc8f2e52d6f",
+        "clientNode": "5656a62ddc286a04",
+        "mode": "collection",
+        "collection": "",
+        "operation": "",
+        "output": "toArray",
+        "maxTimeMS": "0",
+        "handleDocId": false,
+        "name": "",
+        "x": 5122.5,
+        "y": 460,
+        "wires": [
+            [
+                "95f71dfe2d425620"
+            ]
+        ]
+    },
+    {
+        "id": "95f71dfe2d425620",
+        "type": "switch",
+        "z": "094a45cae4538377",
+        "g": "3fd6fbc8f2e52d6f",
+        "name": "check db awnser",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            },
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 4837.5,
+        "y": 680,
+        "wires": [
+            [
+                "eef2d78b5edf4545"
+            ],
+            [
+                "f0938d8074f94e09"
+            ]
+        ]
+    },
+    {
+        "id": "eef2d78b5edf4545",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "3fd6fbc8f2e52d6f",
+        "name": "insert vcs & selectedClearingHouse",
+        "func": "msg.data.session.stage='loader3'\nmsg.data.session.step=5\nmsg.isExpanded=true\nmsg.clientId=msg.data.session.clientId\nmsg._socketId=msg.data.session._socketId\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 5255,
+        "y": 660,
+        "wires": [
+            [
+                "f7980856613a8749"
+            ]
+        ]
+    },
+    {
+        "id": "f7980856613a8749",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "3fd6fbc8f2e52d6f",
+        "name": "go ",
+        "func": "msg.data.session.stage='pg3'\nmsg.data.session.step=4\nmsg.isExpanded=true\nmsg.clientId=msg.data.session.clientId\nmsg._socketId=msg.data.session._socketId\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 5592.5,
+        "y": 660,
+        "wires": [
+            [
+                "894b374f662bd51b",
+                "5a934f6d5ff6de60"
+            ]
+        ]
+    },
+    {
+        "id": "894b374f662bd51b",
+        "type": "link out",
+        "z": "094a45cae4538377",
+        "g": "3fd6fbc8f2e52d6f",
+        "name": "link out 1",
+        "mode": "link",
+        "links": [
+            "ea917288d5d06d2a"
+        ],
+        "x": 5850,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "5a934f6d5ff6de60",
+        "type": "debug",
+        "z": "094a45cae4538377",
+        "g": "3fd6fbc8f2e52d6f",
+        "name": "send VCs(v1)",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 5597.5,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "dccee80f59c4f1a4",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "3fd6fbc8f2e52d6f",
+        "name": "repetition func",
+        "func": "const MAX_RETRIES = 3;    \nconst OK = (msg.statusCode === 200);\n\n\nif (OK) {\n    delete msg._retryCount;\n    return [msg, null, null];\n}\n\nlet attempt = Number(msg._retryCount || 0) + 1;\nmsg._retryCount = attempt;\n\nif (attempt < MAX_RETRIES) {\n\n    msg._lastStatus = msg.statusCode || 'no status';\n    return [null, msg, null]; \n}\n\nmsg.error = {\n    message: `HTTP call failed after ${attempt} attempts`,\n    lastStatus: msg.statusCode || 'no status',\n    lastPayloadPreview: (typeof msg.payload === 'string' ? msg.payload.slice(0,200) : msg.payload)\n};\n\ndelete msg._retryCount;\nreturn [null, null, msg];\n",
+        "outputs": 3,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3937.5,
+        "y": 860,
+        "wires": [
+            [
+                "992f64d0405fd71c"
+            ],
+            [
+                "7a2c15c36756dcf7"
+            ],
+            [
+                "b80b50ddc8406062"
+            ]
+        ]
+    },
+    {
+        "id": "1f5c3c4cbb081a59",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "3fd6fbc8f2e52d6f",
+        "name": "repetition func",
+        "func": "const MAX_RETRIES = 3;    \nconst OK = (msg.statusCode === 200);\n\n\nif (OK) {\n    delete msg._retryCount;\n    return [msg, null, null];\n}\n\nlet attempt = Number(msg._retryCount || 0) + 1;\nmsg._retryCount = attempt;\n\nif (attempt < MAX_RETRIES) {\n\n    msg._lastStatus = msg.statusCode || 'no status';\n    return [null, msg, null]; \n}\n\nmsg.error = {\n    message: `HTTP call failed after ${attempt} attempts`,\n    lastStatus: msg.statusCode || 'no status',\n    lastPayloadPreview: (typeof msg.payload === 'string' ? msg.payload.slice(0,200) : msg.payload)\n};\n\ndelete msg._retryCount;\nreturn [null, null, msg];\n",
+        "outputs": 3,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3682.5,
+        "y": 600,
+        "wires": [
+            [
+                "b306b9dbd0c34de8",
+                "a6863289687ef10a"
+            ],
+            [
+                "b4b17b2d98f51047"
+            ],
+            [
+                "a74716764f873169"
+            ]
+        ]
+    },
+    {
+        "id": "3547b0ed57ddbbcb",
+        "type": "link in",
+        "z": "094a45cae4538377",
+        "g": "3fd6fbc8f2e52d6f",
+        "name": "link in 8",
+        "links": [
+            "a74716764f873169",
+            "b80b50ddc8406062",
+            "f35379a8e382d97c"
+        ],
+        "x": 5390,
+        "y": 800,
+        "wires": [
+            [
+                "20c0b9452caf4123"
+            ]
+        ]
+    },
+    {
+        "id": "a74716764f873169",
+        "type": "link out",
+        "z": "094a45cae4538377",
+        "g": "3fd6fbc8f2e52d6f",
+        "name": "link out 17",
+        "mode": "link",
+        "links": [
+            "3547b0ed57ddbbcb"
+        ],
+        "x": 3925,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "b80b50ddc8406062",
+        "type": "link out",
+        "z": "094a45cae4538377",
+        "g": "3fd6fbc8f2e52d6f",
+        "name": "link out 18",
+        "mode": "link",
+        "links": [
+            "3547b0ed57ddbbcb"
+        ],
+        "x": 4195,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "b4b17b2d98f51047",
+        "type": "delay",
+        "z": "094a45cae4538377",
+        "g": "3fd6fbc8f2e52d6f",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "3",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 4042.5,
+        "y": 600,
+        "wires": [
+            [
+                "d7fbbd3ce7f52291"
+            ]
+        ]
+    },
+    {
+        "id": "7a2c15c36756dcf7",
+        "type": "delay",
+        "z": "094a45cae4538377",
+        "g": "3fd6fbc8f2e52d6f",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "3",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 4297.5,
+        "y": 860,
+        "wires": [
+            [
+                "b98191be718d51f7"
+            ]
+        ]
+    },
+    {
+        "id": "f0938d8074f94e09",
+        "type": "link out",
+        "z": "094a45cae4538377",
+        "g": "3fd6fbc8f2e52d6f",
+        "name": "link out 14",
+        "mode": "link",
+        "links": [
+            "77281f92096decab"
+        ],
+        "x": 5055,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "da273ba088ba7087",
+        "type": "switch",
+        "z": "094a45cae4538377",
+        "name": "check versionComplaince",
+        "property": "data.recordDetails.versionCompliance",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "V1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "V2",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "V3",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 2082.5,
+        "y": 1200,
+        "wires": [
+            [
+                "d87955e27cb5aea0"
+            ],
+            [
+                "486d28862f30f865"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "486d28862f30f865",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "64bc367326d47ede",
+        "name": "LRN v2: Build URL (VAT) → Accept vc+jwt",
+        "func": "const { domain, vatID } = msg.vcDetails || {};\nif (!vatID) { node.error('Missing vatID'); return null; }\nif (!domain) { node.error('Missing domain'); return null; }\nconst vcId = `https://${domain}/.well-known/lrn.json`;\nconst subjectId = `${vcId}#subject`;\nmsg.method = 'GET';\nmsg.url = `https://${msg.notaryDomain}/v2/registration-numbers/vat-id/${encodeURIComponent(vatID)}?vcId=${encodeURIComponent(vcId)}&subjectId=${encodeURIComponent(subjectId)}`;\nmsg.headers = { 'accept': 'application/vc+jwt' };\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2730,
+        "y": 1700,
+        "wires": [
+            [
+                "32896ed7a46bb144"
+            ]
+        ]
+    },
+    {
+        "id": "32896ed7a46bb144",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "64bc367326d47ede",
+        "name": "timeout",
+        "func": "msg.httpRequestTimeout=5000\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3067.5,
+        "y": 1700,
+        "wires": [
+            [
+                "6b1e401ffb8b16e4"
+            ]
+        ]
+    },
+    {
+        "id": "6b1e401ffb8b16e4",
+        "type": "http request",
+        "z": "094a45cae4538377",
+        "g": "64bc367326d47ede",
+        "name": "Notary API",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 3392.5,
+        "y": 1700,
+        "wires": [
+            [
+                "bdfc1bcf229a7b79",
+                "12628cd3b125b11f"
+            ]
+        ]
+    },
+    {
+        "id": "bdfc1bcf229a7b79",
+        "type": "debug",
+        "z": "094a45cae4538377",
+        "g": "64bc367326d47ede",
+        "name": "notary",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3447.5,
+        "y": 1580,
+        "wires": []
+    },
+    {
+        "id": "a89fee78b43d9671",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "64bc367326d47ede",
+        "name": "Save LRN VC (JWT) → flow.lrn_jwt",
+        "func": "msg.data.recordDetails.vcs = {}\n// msg.data.recordDetails.vcs.legalVC = msg.payload\nif (!msg.payload || typeof msg.payload !== 'string') { node.error('Empty LRN VC (JWT)'); return null; }\nmsg.data.recordDetails.vcs.legalVCJwt = msg.payload.trim()\n// msg.payload = { ok: true };\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 4080,
+        "y": 1520,
+        "wires": [
+            [
+                "57ce17fd6408ca09"
+            ]
+        ]
+    },
+    {
+        "id": "57ce17fd6408ca09",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "64bc367326d47ede",
+        "name": "Create & sign Issuer VC → VC-JWT (Gaia-X T&C checksum)",
+        "func": "const { importJWK, SignJWT } = jose;\nconst { GaiaXSignatureSigner } = JWS2020;\n\n// const input = flow.get('input') || {};\nconst input = msg.vcDetails || {};\nconst { domain, privJwk } = input;\nconst did = `did:web:${domain}`;\nconst issuance = new Date().toISOString();\n\nconst GX_TC_CHECKSUM = global.get(`metaData.GX_TC_CHECKSUM`);\n\nconst vc = {\n  \"@context\": [\"https://www.w3.org/ns/credentials/v2\", \"https://w3id.org/gaia-x/development#\"],\n  \"type\": [\"VerifiableCredential\", \"gx:Issuer\"],\n  \"issuer\": did,\n  \"validFrom\": issuance,\n  \"credentialSubject\": {\n    \"id\": `${did}#issuer`,\n    \"gx:gaiaxTermsAndConditions\": GX_TC_CHECKSUM\n  }\n};\n\nconst vcjwt=async ()  => {\n  try {\n    const jwk = (({ kty,n,e,d,p,q,dp,dq,qi,kid }) => ({ kty,n,e,d,p,q,dp,dq,qi,kid }))(privJwk);\n    const key = await importJWK(jwk, 'RS256');\n\n    try {\n      const vm = `${did}#key-1`;\n      const signer = new GaiaXSignatureSigner({\n        privateKey: key,\n        privateKeyAlgorithm: \"RS256\",\n        privateKeyAlg: \"RS256\",\n        verificationMethod: vm,\n        safe: false\n      });\n\n      const vcForLdSign = {\n        \"@context\": [...vc[\"@context\"], \"https://w3id.org/security/suites/jws-2020/v1\"],\n        ...vc\n      };\n\n      const ldSigned = await signer.sign(vcForLdSign);\n      flow.set('issuer_vc_ld', ldSigned); \n    } catch (e) {\n      node.warn('Issuer LD-sign warning: ' + (e?.message || e));\n    }\n\n    const jwt = await new SignJWT(vc)\n      .setProtectedHeader({ alg: 'RS256', typ: 'vc+jwt', cty: 'vc', kid: jwk.kid || `${did}#key-1`, iss: did })\n      .setIssuer(did)\n      .setIssuedAt()\n      .sign(key);\n\n    // flow.set('issuer_jwt', jwt);\n    // node.send({ payload: { ok:true } });\n    // msg.data.recordDetails.vcs.termsAndConditionsVC=jwt\n    return jwt\n    // node.send(msg);\n   \n\n  } catch (e) {\n    node.error('Issuer VC sign failed: ' + (e?.message || e), msg);\n  }\n};\n\nmsg.data.recordDetails.vcs.termsAndConditionsVCJwt=await vcjwt();\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "jose",
+                "module": "jose"
+            },
+            {
+                "var": "JWS2020",
+                "module": "@gaia-x/json-web-signature-2020"
+            }
+        ],
+        "x": 4640,
+        "y": 1520,
+        "wires": [
+            [
+                "2559ad7870c8eaec",
+                "e7325d787d41a892"
+            ]
+        ]
+    },
+    {
+        "id": "2211edd823ac8bf3",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "64bc367326d47ede",
+        "name": "(old) Create & sign Participant VC → VC-JWT (gx:LegalPerson)",
+        "func": "const { importJWK, SignJWT } = jose;\nconst { GaiaXSignatureSigner } = JWS2020;\n\n// const input = flow.get('input') || {};\nconst input = msg.vcDetails || {};\n// const lrn_jwt = flow.get('lrn_jwt');\nconst lrn_jwt = msg.data.recordDetails.vcs.legalVCJwt;\n// const issuer_jwt = flow.get('issuer_jwt');\nconst issuer_jwt = msg.data.recordDetails.vcs.termsAndConditionsVCJwt;\nconst { companyName, domain, countryCode, vatID, privJwk } = input;\n\nif (!lrn_jwt) { node.error('Missing LRN VC (JWT)'); return null; }\nif (!issuer_jwt) { node.error('Missing Issuer VC (JWT)'); return null; }\n\nconst did = `did:web:${domain}`;\nconst vm = `${did}#key-1`;\nconst issuance = new Date().toISOString();\nconst cc = (countryCode || '').split('-')[0] || countryCode || 'DE';\n\nconst vc = {\n  \"@context\": [\n    \"https://www.w3.org/ns/credentials/v2\",\n    \"https://w3id.org/gaia-x/development#\",\n    { \"schema\": \"https://schema.org/\" }\n  ],\n  \"type\": [\"VerifiableCredential\", \"gx:LegalPerson\"],\n  \"id\": `${did}#participant`,\n  \"issuer\": did,\n  \"validFrom\": issuance,\n  \"credentialSubject\": {\n    \"id\": `https://${domain}/.well-known/participant.json#subject`,\n    \"@type\": \"gx:LegalPerson\",\n    \"schema:name\": companyName,\n    \"gx:registrationNumber\": {\n      \"@id\": `https://${domain}/.well-known/lrn.json#subject`\n    },\n    \"gx:legalAddress\": { \"@type\": \"gx:Address\", \"gx:countryCode\": cc },\n    \"gx:headquartersAddress\": { \"@type\": \"gx:Address\", \"gx:countryCode\": cc }\n  }\n};\n\nconst vcjwt=async () => {\n  try {\n    const jwk = (({ kty, n, e, d, p, q, dp, dq, qi, kid }) => ({ kty, n, e, d, p, q, dp, dq, qi, kid }))(privJwk);\n    const key = await importJWK(jwk, 'RS256');\n\n    try {\n      const signer = new GaiaXSignatureSigner({\n        privateKey: key,\n        privateKeyAlgorithm: \"RS256\",\n        privateKeyAlg: \"RS256\",\n        verificationMethod: vm,\n        safe: false\n      });\n      const vcForLdSign = {\n        \"@context\": [...vc[\"@context\"], \"https://w3id.org/security/suites/jws-2020/v1\"],\n        ...vc\n      };\n      const vc_ld_signed = await signer.sign(vcForLdSign);\n      flow.set('participant_vc_ld', vc_ld_signed); \n    } catch (e) {\n      node.warn('Participant LD-sign warning: ' + (e?.message || e));\n    }\n\n    \n    const jwt = await new SignJWT(vc)\n      .setProtectedHeader({ alg: 'RS256', typ: 'vc+jwt', cty: 'vc', kid: jwk.kid || `${did}#key-1`, iss: did })\n      .setIssuer(did).setIssuedAt().sign(key);\n\n    // flow.set('participant_jwt', jwt);\n    // node.send({ payload: { ok: true } });\n    return jwt\n    \n\n  } catch (e) {\n    node.error('Participant VC-JWT sign failed: ' + (e?.message || e), msg);\n  }\n};\nmsg.data.recordDetails.vcs.participantVCJwt=await vcjwt ()\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "jose",
+                "module": "jose"
+            },
+            {
+                "var": "JWS2020",
+                "module": "@gaia-x/json-web-signature-2020"
+            }
+        ],
+        "x": 5330,
+        "y": 1460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5ba3b5d6aedf55ae",
+        "type": "delay",
+        "z": "094a45cae4538377",
+        "g": "64bc367326d47ede",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "3",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 4052.5,
+        "y": 1700,
+        "wires": [
+            [
+                "32896ed7a46bb144"
+            ]
+        ]
+    },
+    {
+        "id": "f35379a8e382d97c",
+        "type": "link out",
+        "z": "094a45cae4538377",
+        "g": "64bc367326d47ede",
+        "name": "link out 39",
+        "mode": "link",
+        "links": [
+            "3547b0ed57ddbbcb"
+        ],
+        "x": 3935,
+        "y": 1860,
+        "wires": []
+    },
+    {
+        "id": "12628cd3b125b11f",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "64bc367326d47ede",
+        "name": "repetition func",
+        "func": "const MAX_RETRIES = 3;    \nconst OK = (msg.statusCode === 200);\n\n\nif (OK) {\n    delete msg._retryCount;\n    return [msg, null, null];\n}\n\nlet attempt = Number(msg._retryCount || 0) + 1;\nmsg._retryCount = attempt;\n\nif (attempt < MAX_RETRIES) {\n\n    msg._lastStatus = msg.statusCode || 'no status';\n    return [null, msg, null]; \n}\n\nmsg.error = {\n    message: `HTTP call failed after ${attempt} attempts`,\n    lastStatus: msg.statusCode || 'no status',\n    lastPayloadPreview: (typeof msg.payload === 'string' ? msg.payload.slice(0,200) : msg.payload)\n};\n\ndelete msg._retryCount;\nreturn [null, null, msg];\n",
+        "outputs": 3,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3707.5,
+        "y": 1700,
+        "wires": [
+            [
+                "a89fee78b43d9671"
+            ],
+            [
+                "5ba3b5d6aedf55ae"
+            ],
+            [
+                "f35379a8e382d97c"
+            ]
+        ]
+    },
+    {
+        "id": "2559ad7870c8eaec",
+        "type": "debug",
+        "z": "094a45cae4538377",
+        "g": "64bc367326d47ede",
+        "name": "T & C",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 4767.5,
+        "y": 1400,
+        "wires": []
+    },
+    {
+        "id": "5ffdbe2d76373ef9",
+        "type": "debug",
+        "z": "094a45cae4538377",
+        "g": "64bc367326d47ede",
+        "name": "participant",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 5827.5,
+        "y": 1520,
+        "wires": []
+    },
+    {
+        "id": "c3e1e5fc12749db6",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "64bc367326d47ede",
+        "name": "(lrn)Decode JWT → header/payload",
+        "func": "\nfunction b64urlToUtf8(b64url){\n    if (typeof b64url !== 'string') throw new Error('Expected string');\n    let s = b64url.replace(/-/g,'+').replace(/_/g,'/');\n    const pad = s.length % 4;\n    if (pad) s += '='.repeat(4 - pad);\n    return Buffer.from(s, 'base64').toString('utf8');\n}\n\n// const token = (msg.payload || '').toString().trim();\nconst token = (msg.data.recordDetails.vcs.legalVCJwt || '').toString().trim();\nconst parts = token.split('.');\nif (parts.length !== 3) {\n    node.error('Invalid JWT format: expected 3 parts');\n    return null;\n}\n\nlet header, payload;\ntry {\n    header = JSON.parse(b64urlToUtf8(parts[0]));\n} catch (e) {\n    node.error('Invalid JWT header (not JSON)');\n    return null;\n}\ntry {\n    payload = JSON.parse(b64urlToUtf8(parts[1]));\n} catch (e) {\n    node.error('Invalid JWT payload (not JSON)');\n    return null;\n}\n\nconst signature = parts[2];\nconst now = Math.floor(Date.now()/1000);\nconst exp = typeof payload.exp === 'number' ? payload.exp : undefined;\nconst iat = typeof payload.iat === 'number' ? payload.iat : undefined;\nconst nbf = typeof payload.nbf === 'number' ? payload.nbf : undefined;\n\nmsg.jwt = {\n    raw: token,\n    header,\n    payload,\n    signature,\n    signingInputB64: parts[0] + '.' + parts[1], \n    exp,\n    iat,\n    nbf,\n    isExpired: exp !== undefined ? (now >= exp) : undefined,\n    isNotYetValid: nbf !== undefined ? (now < nbf) : undefined,\n    issuedAgoSec: iat !== undefined ? (now - iat) : undefined\n};\n\n\nmsg.data.recordDetails.vcs.legalVC = payload;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 5280,
+        "y": 1700,
+        "wires": [
+            [
+                "d03e32f38436064e"
+            ]
+        ]
+    },
+    {
+        "id": "d03e32f38436064e",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "64bc367326d47ede",
+        "name": "(T&C)Decode JWT → header/payload",
+        "func": "\nfunction b64urlToUtf8(b64url){\n    if (typeof b64url !== 'string') throw new Error('Expected string');\n    let s = b64url.replace(/-/g,'+').replace(/_/g,'/');\n    const pad = s.length % 4;\n    if (pad) s += '='.repeat(4 - pad);\n    return Buffer.from(s, 'base64').toString('utf8');\n}\n\n// const token = (msg.payload || '').toString().trim();\nconst token = (msg.data.recordDetails.vcs.termsAndConditionsVCJwt || '').toString().trim();\nconst parts = token.split('.');\nif (parts.length !== 3) {\n    node.error('Invalid JWT format: expected 3 parts');\n    return null;\n}\n\nlet header, payload;\ntry {\n    header = JSON.parse(b64urlToUtf8(parts[0]));\n} catch (e) {\n    node.error('Invalid JWT header (not JSON)');\n    return null;\n}\ntry {\n    payload = JSON.parse(b64urlToUtf8(parts[1]));\n} catch (e) {\n    node.error('Invalid JWT payload (not JSON)');\n    return null;\n}\n\nconst signature = parts[2];\nconst now = Math.floor(Date.now()/1000);\nconst exp = typeof payload.exp === 'number' ? payload.exp : undefined;\nconst iat = typeof payload.iat === 'number' ? payload.iat : undefined;\nconst nbf = typeof payload.nbf === 'number' ? payload.nbf : undefined;\n\nmsg.jwt = {\n    raw: token,\n    header,\n    payload,\n    signature,\n    signingInputB64: parts[0] + '.' + parts[1], \n    exp,\n    iat,\n    nbf,\n    isExpired: exp !== undefined ? (now >= exp) : undefined,\n    isNotYetValid: nbf !== undefined ? (now < nbf) : undefined,\n    issuedAgoSec: iat !== undefined ? (now - iat) : undefined\n};\n\n\nmsg.data.recordDetails.vcs.termsAndConditionsVC= payload;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 5280,
+        "y": 1860,
+        "wires": [
+            [
+                "ad2e140715b9e160"
+            ]
+        ]
+    },
+    {
+        "id": "ad2e140715b9e160",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "64bc367326d47ede",
+        "name": "(P)Decode JWT → header/payload",
+        "func": "\nfunction b64urlToUtf8(b64url){\n    if (typeof b64url !== 'string') throw new Error('Expected string');\n    let s = b64url.replace(/-/g,'+').replace(/_/g,'/');\n    const pad = s.length % 4;\n    if (pad) s += '='.repeat(4 - pad);\n    return Buffer.from(s, 'base64').toString('utf8');\n}\n\n// const token = (msg.payload || '').toString().trim();\nconst token = (msg.data.recordDetails.vcs.participantVCJwt || '').toString().trim();\nconst parts = token.split('.');\nif (parts.length !== 3) {\n    node.error('Invalid JWT format: expected 3 parts');\n    return null;\n}\n\nlet header, payload;\ntry {\n    header = JSON.parse(b64urlToUtf8(parts[0]));\n} catch (e) {\n    node.error('Invalid JWT header (not JSON)');\n    return null;\n}\ntry {\n    payload = JSON.parse(b64urlToUtf8(parts[1]));\n} catch (e) {\n    node.error('Invalid JWT payload (not JSON)');\n    return null;\n}\n\nconst signature = parts[2];\nconst now = Math.floor(Date.now()/1000);\nconst exp = typeof payload.exp === 'number' ? payload.exp : undefined;\nconst iat = typeof payload.iat === 'number' ? payload.iat : undefined;\nconst nbf = typeof payload.nbf === 'number' ? payload.nbf : undefined;\n\nmsg.jwt = {\n    raw: token,\n    header,\n    payload,\n    signature,\n    signingInputB64: parts[0] + '.' + parts[1], \n    exp,\n    iat,\n    nbf,\n    isExpired: exp !== undefined ? (now >= exp) : undefined,\n    isNotYetValid: nbf !== undefined ? (now < nbf) : undefined,\n    issuedAgoSec: iat !== undefined ? (now - iat) : undefined\n};\n\n\nmsg.data.recordDetails.vcs.participantVC = payload;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 5270,
+        "y": 2020,
+        "wires": [
+            [
+                "939a3a9bed118e7b"
+            ]
+        ]
+    },
+    {
+        "id": "939a3a9bed118e7b",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "64bc367326d47ede",
+        "name": "update record(add vcs)",
+        "func": "msg.collection = \"records\";\nmsg.operation = \"updateOne\";\n\nconst query = { recordId: msg.dbRecord.recordId };\n\nconst set = {\n  updatedAt: new Date(),\n  expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),\n};\n\nif (msg.data?.session?.stage != null) {\n  set.stage = msg.data.session.stage;\n}\n\nif (msg.data?.recordDetails?.vcs != null) {\n  set[\"recordDetails.vcs\"] = msg.data.recordDetails.vcs\n}\nif (msg.data?.recordDetails?.selectedClearingHouse != null) {\n  set[\"recordDetails.complianceDomain\"] = msg.complianceDomain\n} \n \nconst update = { $set: set };\nconst options = { upsert: false };\n \nmsg.payload = [query, update, options];\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 5672.5,
+        "y": 2020,
+        "wires": [
+            [
+                "09f03a4a5ba1c647"
+            ]
+        ]
+    },
+    {
+        "id": "09f03a4a5ba1c647",
+        "type": "mongodb4",
+        "z": "094a45cae4538377",
+        "g": "64bc367326d47ede",
+        "clientNode": "5656a62ddc286a04",
+        "mode": "collection",
+        "collection": "",
+        "operation": "",
+        "output": "toArray",
+        "maxTimeMS": "0",
+        "handleDocId": false,
+        "name": "",
+        "x": 6030,
+        "y": 2020,
+        "wires": [
+            [
+                "d2a6fb7034776f68"
+            ]
+        ]
+    },
+    {
+        "id": "d2a6fb7034776f68",
+        "type": "switch",
+        "z": "094a45cae4538377",
+        "g": "64bc367326d47ede",
+        "name": "check db awnser",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            },
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 5745,
+        "y": 2240,
+        "wires": [
+            [
+                "2eb9f2281f980525"
+            ],
+            [
+                "a0826ccbd29390d1"
+            ]
+        ]
+    },
+    {
+        "id": "2eb9f2281f980525",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "64bc367326d47ede",
+        "name": "insert vcs & selectedClearingHouse",
+        "func": "msg.data.session.stage='loader3'\nmsg.data.session.step=5\nmsg.isExpanded=true\nmsg.clientId=msg.data.session.clientId\nmsg._socketId=msg.data.session._socketId\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 6162.5,
+        "y": 2220,
+        "wires": [
+            [
+                "ece390eb3f1db0eb"
+            ]
+        ]
+    },
+    {
+        "id": "a0826ccbd29390d1",
+        "type": "link out",
+        "z": "094a45cae4538377",
+        "g": "64bc367326d47ede",
+        "name": "link out 43",
+        "mode": "link",
+        "links": [
+            "77281f92096decab"
+        ],
+        "x": 5962.5,
+        "y": 2320,
+        "wires": []
+    },
+    {
+        "id": "ece390eb3f1db0eb",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "64bc367326d47ede",
+        "name": "go ",
+        "func": "msg.data.session.stage='pg3'\nmsg.data.session.step=4\nmsg.isExpanded=true\nmsg.clientId=msg.data.session.clientId\nmsg._socketId=msg.data.session._socketId\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 6667.5,
+        "y": 2220,
+        "wires": [
+            [
+                "f8819205500bd8e7",
+                "7818db2ab47ac948"
+            ]
+        ]
+    },
+    {
+        "id": "3457258c350558be",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "64bc367326d47ede",
+        "name": "set error",
+        "func": "if(!msg.data.errorVC) msg.data.errorVC={}\nmsg.data.errorVC={\n    errorType:`didn't get vc`,\n    errorMessage:`An issue occurred during the notarization process call. Please return to the previous step and try again.`\n}\n\nmsg.isExpanded=true\nmsg.data.session.stage = 'pg3'\nmsg.clientId=msg.data.session.clientId\nmsg._socketId=msg.data.session._socketId\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 6672.5,
+        "y": 2360,
+        "wires": [
+            [
+                "f8819205500bd8e7"
+            ]
+        ]
+    },
+    {
+        "id": "7818db2ab47ac948",
+        "type": "debug",
+        "z": "094a45cae4538377",
+        "g": "64bc367326d47ede",
+        "name": "send VCs(v2)",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 6672.5,
+        "y": 2100,
+        "wires": []
+    },
+    {
+        "id": "f8819205500bd8e7",
+        "type": "link out",
+        "z": "094a45cae4538377",
+        "g": "64bc367326d47ede",
+        "name": "link out 44",
+        "mode": "link",
+        "links": [
+            "ea917288d5d06d2a"
+        ],
+        "x": 6925,
+        "y": 2280,
+        "wires": []
+    },
+    {
+        "id": "e7325d787d41a892",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "g": "64bc367326d47ede",
+        "name": "Create & sign Participant VC → VC-JWT (gx:LegalPerson)",
+        "func": "const { importJWK, SignJWT } = jose;\nconst { GaiaXSignatureSigner } = JWS2020;\n\nconst input = msg.vcDetails || {};\nconst lrn_jwt = msg.data.recordDetails.vcs.legalVCJwt;\nconst issuer_jwt = msg.data.recordDetails.vcs.termsAndConditionsVCJwt;\n\nconst {\n  companyName,\n  domain,\n  countryCode,\n  privJwk,\n\n  legalAddress = {},        \n  headquartersAddress = {}  \n} = input;\n\nif (!lrn_jwt) { node.error('Missing LRN VC (JWT)'); return null; }\nif (!issuer_jwt) { node.error('Missing Issuer VC (JWT)'); return null; }\n\nconst did = `did:web:${domain}`;\nconst vm = `${did}#key-1`;\nconst issuance = new Date().toISOString();\nconst validUntil = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString();\nconst cc = (countryCode || '').split('-')[0] || countryCode || 'DE';\n\nfunction buildAddress(addrObj) {\n  const out = { \"type\": \"gx:Address\", \"gx:countryCode\": cc };\n  if (addrObj && typeof addrObj === \"object\") {\n    const { street, locality, postal } = addrObj;\n    if (street) out[\"vcard:street-address\"] = street;\n    if (locality) out[\"vcard:locality\"] = locality;\n    if (postal) out[\"vcard:postal-code\"] = postal;\n  }\n  return out;\n}\n\nconst vc = {\n  \"@context\": [\n    \"https://www.w3.org/ns/credentials/v2\",\n    \"https://w3id.org/gaia-x/development#\",\n    { \"schema\": \"https://schema.org/\" },\n    { \"vcard\": \"http://www.w3.org/2006/vcard/ns#\" }\n  ],\n  \"type\": [\"VerifiableCredential\", \"gx:LegalPerson\"],\n  \"id\": `https://${domain}/.well-known/legal-person.json`,\n  \"issuer\": did,\n  \"validFrom\": issuance,\n  \"validUntil\": validUntil,\n  \"credentialSubject\": {\n    \"id\": `https://${domain}/.well-known/legal-person.json#cs`,\n    \"@type\": \"gx:LegalPerson\",\n    \"schema:name\": companyName,\n\n    \"gx:registrationNumber\": {\n      \"id\": `https://${domain}/.well-known/vatID.json#cs`\n    },\n\n    \"gx:headquartersAddress\": buildAddress(headquartersAddress),\n    \"gx:legalAddress\": buildAddress(legalAddress)\n  }\n};\n\nconst vcjwt=async () => {\n  try {\n    const jwk = (({ kty, n, e, d, p, q, dp, dq, qi, kid }) =>\n      ({ kty, n, e, d, p, q, dp, dq, qi, kid }))(privJwk);\n    const key = await importJWK(jwk, 'RS256');\n\n    try {\n      const signer = new GaiaXSignatureSigner({\n        privateKey: key,\n        privateKeyAlgorithm: \"RS256\",\n        privateKeyAlg: \"RS256\",\n        verificationMethod: vm,\n        safe: false\n      });\n      const vcForLdSign = {\n        \"@context\": [...vc[\"@context\"], \"https://w3id.org/security/suites/jws-2020/v1\"],\n        ...vc\n      };\n      const vc_ld_signed = await signer.sign(vcForLdSign);\n    //   flow.set('participant_vc_ld', vc_ld_signed); \n    } catch (e) {\n      node.warn('Participant LD-sign warning: ' + (e?.message || e));\n    }\n\n    const jwt = await new SignJWT(vc)\n      .setProtectedHeader({\n        alg: 'RS256',\n        typ: 'vc+jwt',\n        cty: 'vc',\n        kid: jwk.kid || vm,\n        iss: did\n      })\n      .setIssuer(did)\n      .setIssuedAt()\n      .sign(key);\n\n    // flow.set('participant_jwt', jwt);\n    // node.send({ payload: { ok: true } });\n    return jwt\n\n  } catch (e) {\n    node.error('Participant VC-JWT sign failed: ' + (e?.message || e), msg);\n  }\n}\n\nmsg.data.recordDetails.vcs.participantVCJwt=await vcjwt ()\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "jose",
+                "module": "jose"
+            },
+            {
+                "var": "JWS2020",
+                "module": "@gaia-x/json-web-signature-2020"
+            }
+        ],
+        "x": 5330,
+        "y": 1360,
+        "wires": [
+            [
+                "5ffdbe2d76373ef9",
+                "c3e1e5fc12749db6"
+            ]
+        ]
+    },
+    {
+        "id": "21cec489c4dc8032",
+        "type": "function",
+        "z": "094a45cae4538377",
+        "name": "(old) set vcDetails",
+        "func": "msg.vcDetails = {\n    \"companyName\": msg.dbRecord.recordDetails.companyProfile.companyDetails.legalCompanyName,\n    \"vatID\": msg.dbRecord.recordDetails.companyProfile.legalIdentifiers.euVatId ,\n    \"domain\": msg.dbRecord.domain,\n    \"countryCode\": msg.dbRecord.recordDetails.companyProfile.headquartersAddress.legalAddressIso,\n    \"privJwk\": msg.dbRecord.recordDetails.files.privateJwk.fileContent\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1722.5,
+        "y": 1100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "292fd258f9d8f207",
+        "type": "debug",
+        "z": "094a45cae4538377",
+        "name": "notary",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3702.5,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "a6863289687ef10a",
+        "type": "debug",
+        "z": "094a45cae4538377",
+        "g": "3fd6fbc8f2e52d6f",
+        "name": "T&C",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3662.5,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "5656a62ddc286a04",
+        "type": "mongodb4-client",
+        "name": "",
+        "protocol": "mongodb",
+        "hostname": "db.facis.cloud",
+        "port": "443",
+        "dbName": "onboarding",
+        "appName": "",
+        "authSource": "",
+        "authMechanism": "DEFAULT",
+        "tls": true,
+        "tlsCAFile": "",
+        "tlsCertificateKeyFile": "",
+        "tlsInsecure": true,
+        "connectTimeoutMS": "30000",
+        "socketTimeoutMS": "0",
+        "minPoolSize": "0",
+        "maxPoolSize": "100",
+        "maxIdleTimeMS": "0",
+        "uri": "",
+        "advanced": "{}",
+        "uriTabActive": "tab-uri-simple"
+    }
+]

@@ -1,0 +1,290 @@
+[
+    {
+        "id": "63a08cd96e3035e7",
+        "type": "tab",
+        "label": "✅UI",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "e1359bbeb3f828c7",
+        "type": "uibuilder",
+        "z": "63a08cd96e3035e7",
+        "name": "",
+        "topic": "",
+        "url": "partnerOnboarding",
+        "okToGo": true,
+        "fwdInMessages": false,
+        "allowScripts": false,
+        "allowStyles": false,
+        "copyIndex": true,
+        "templateFolder": "blank",
+        "extTemplate": "",
+        "showfolder": false,
+        "reload": false,
+        "sourceFolder": "src",
+        "deployedVersion": "7.4.2",
+        "showMsgUib": false,
+        "title": "",
+        "descr": "",
+        "editurl": "vscode://vscode-remote/ssh-remote+ionos.facis.cloud/data/uibuilder/partnerOnboarding/?windowId=_blank",
+        "x": 1402.5,
+        "y": 620,
+        "wires": [
+            [
+                "e7499a5347fbb31b",
+                "ca1c80200851e1de"
+            ],
+            [
+                "19e2cbc019a341bb"
+            ]
+        ]
+    },
+    {
+        "id": "7b712ac2bddd4965",
+        "type": "link in",
+        "z": "63a08cd96e3035e7",
+        "name": "sessioninit",
+        "links": [
+            "7fbd4e24270a5819"
+        ],
+        "x": 1005,
+        "y": 200,
+        "wires": [
+            [
+                "2775eb54233a12d7"
+            ]
+        ]
+    },
+    {
+        "id": "ea917288d5d06d2a",
+        "type": "link in",
+        "z": "63a08cd96e3035e7",
+        "name": "inputPartnerOnboarding",
+        "links": [
+            "058778d96c4de934",
+            "06f61d9142e2ca26",
+            "07817ff9ab95c324",
+            "18e49369390fdebc",
+            "345e02325fe7c6ac",
+            "4b750d8cb18f40b0",
+            "4cce175b83156eb5",
+            "6158afd2843e5633",
+            "6a21c1bc9e7abcc1",
+            "6c0a08d30e7455c9",
+            "76421c82d79fbaf5",
+            "894b374f662bd51b",
+            "8c2ab7aff63b4683",
+            "94667c3f31f40db2",
+            "b3e63ca2c050c9b1",
+            "c660681dab30ec83",
+            "e047092ddb24bcdb",
+            "e07ba080bf6235bd",
+            "e72d3592c6645144",
+            "f8819205500bd8e7",
+            "f8a534d1fcaab952"
+        ],
+        "x": 1005,
+        "y": 320,
+        "wires": [
+            [
+                "2775eb54233a12d7"
+            ]
+        ]
+    },
+    {
+        "id": "2f023b00b15fda51",
+        "type": "template",
+        "z": "63a08cd96e3035e7",
+        "name": "launch text title",
+        "field": "launch.title",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "Welcome to the FACIS FAP1 Partner Onboarding Portal",
+        "output": "str",
+        "x": 1457.5,
+        "y": 260,
+        "wires": [
+            [
+                "55fee4352fe41364"
+            ]
+        ]
+    },
+    {
+        "id": "55fee4352fe41364",
+        "type": "template",
+        "z": "63a08cd96e3035e7",
+        "name": "launch text description",
+        "field": "launch.description",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "This portal guides you through the onboarding process, based on the Gaia-X federation platform.",
+        "output": "str",
+        "x": 1777.5,
+        "y": 260,
+        "wires": [
+            [
+                "e1359bbeb3f828c7"
+            ]
+        ]
+    },
+    {
+        "id": "19e2cbc019a341bb",
+        "type": "function",
+        "z": "63a08cd96e3035e7",
+        "name": "session init",
+        "func": "if (msg.uibuilderCtrl == \"client connect\") {\n    let cln = RED.util.cloneMessage(msg);\n    msg = {}\n    msg._socketId = cln._socketId\n    msg.clientId = cln.clientId\n    console.log(\"=====msg======>\", msg)\n    return msg\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1737.5,
+        "y": 680,
+        "wires": [
+            [
+                "7fbd4e24270a5819"
+            ]
+        ]
+    },
+    {
+        "id": "7fbd4e24270a5819",
+        "type": "link out",
+        "z": "63a08cd96e3035e7",
+        "name": "sessioninit",
+        "mode": "link",
+        "links": [
+            "7b712ac2bddd4965"
+        ],
+        "x": 1925,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "ca1c80200851e1de",
+        "type": "debug",
+        "z": "63a08cd96e3035e7",
+        "name": "partnerOnboarding output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1410,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "0b42f842d4d44e5e",
+        "type": "link in",
+        "z": "63a08cd96e3035e7",
+        "name": "fomGeneralValues",
+        "links": [
+            "c5dd5683aa5e4962"
+        ],
+        "x": 1250,
+        "y": 260,
+        "wires": [
+            [
+                "2f023b00b15fda51"
+            ]
+        ]
+    },
+    {
+        "id": "2775eb54233a12d7",
+        "type": "link out",
+        "z": "63a08cd96e3035e7",
+        "name": "toGeneralValues",
+        "mode": "link",
+        "links": [
+            "2af45422211370e5"
+        ],
+        "x": 1105,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "e7499a5347fbb31b",
+        "type": "function",
+        "z": "63a08cd96e3035e7",
+        "name": "set _socketId",
+        "func": "\nmsg.data.session._socketId = msg._socketId\ndelete msg._socketId\ndelete msg.topic\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1737.5,
+        "y": 520,
+        "wires": [
+            [
+                "bbd120efb7047ccf"
+            ]
+        ]
+    },
+    {
+        "id": "bbd120efb7047ccf",
+        "type": "switch",
+        "z": "63a08cd96e3035e7",
+        "name": "check stage=pg1",
+        "property": "data.session.stage",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "pg1",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 2062.5,
+        "y": 520,
+        "wires": [
+            [
+                "1ade884b90d6ce92"
+            ],
+            [
+                "4646114c51098b21"
+            ]
+        ]
+    },
+    {
+        "id": "1ade884b90d6ce92",
+        "type": "link out",
+        "z": "63a08cd96e3035e7",
+        "name": "toWF1",
+        "mode": "link",
+        "links": [
+            "1fdf58aa0d4d13ad"
+        ],
+        "x": 2275,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "4646114c51098b21",
+        "type": "link out",
+        "z": "63a08cd96e3035e7",
+        "name": "toWF1",
+        "mode": "link",
+        "links": [
+            "7e88da8522acac95"
+        ],
+        "x": 2275,
+        "y": 560,
+        "wires": []
+    }
+]

@@ -1,0 +1,857 @@
+[
+    {
+        "id": "3695ae58d0303ac3",
+        "type": "tab",
+        "label": "✅3-verify certs as RSA (step2)",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "2c54433f7967d57f",
+        "type": "group",
+        "z": "3695ae58d0303ac3",
+        "name": "check RSA formats",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "08aa225a98b2bb5e",
+            "0d35d18e92bd1851",
+            "9ba9383f616b86f0",
+            "f04c66ce8988f772",
+            "7139d6aa0a52aa5f",
+            "1fdd88f65ecbc1c6",
+            "7521eb0473f4de8a",
+            "06f61d9142e2ca26",
+            "9428f4dca0821cba",
+            "68339045bf7cc3bf",
+            "f2e573118e6f7dac",
+            "b386561e068204cb",
+            "ce64f47c1e3ddb76",
+            "4b55a06221a7370a",
+            "bb9bc0b1166d253f",
+            "462619c4b84e4090",
+            "798e80636a01cf5f",
+            "eb6b2d194b208784",
+            "a7d9ca829dbfeedd",
+            "1092b09774944a3e",
+            "868e1339cd093aed",
+            "c6b4b3bdb3e65dc5",
+            "1ea35afcba0c2305",
+            "489c61d358c970d5",
+            "c4d331ae4fadc75d"
+        ],
+        "x": 184,
+        "y": 74,
+        "w": 2582,
+        "h": 952
+    },
+    {
+        "id": "09d97c61a4beb823",
+        "type": "group",
+        "z": "3695ae58d0303ac3",
+        "name": "save RSA files in db",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "a3dd367dcfa8271e",
+            "fc7d755fd269fa9e",
+            "2e9ccba7b6ca0c2b",
+            "40ae32a288bfbde4",
+            "e047092ddb24bcdb",
+            "2ca74d21c0cac25b",
+            "b2eaf0cbb71acc82",
+            "3f5fd247c6a98393",
+            "e5f72b47cd8bfa7b",
+            "e4f7afee017685ae"
+        ],
+        "x": 184,
+        "y": 1174,
+        "w": 1642,
+        "h": 472
+    },
+    {
+        "id": "08aa225a98b2bb5e",
+        "type": "switch",
+        "z": "3695ae58d0303ac3",
+        "g": "2c54433f7967d57f",
+        "name": "check certificate",
+        "property": "data.recordDetails.files.filetype",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "certificate",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 437.5,
+        "y": 460,
+        "wires": [
+            [
+                "f2e573118e6f7dac"
+            ],
+            [
+                "0d35d18e92bd1851"
+            ]
+        ]
+    },
+    {
+        "id": "0d35d18e92bd1851",
+        "type": "switch",
+        "z": "3695ae58d0303ac3",
+        "g": "2c54433f7967d57f",
+        "name": "check private",
+        "property": "data.recordDetails.files.filetype",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "privateKey",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 762.5,
+        "y": 760,
+        "wires": [
+            [
+                "ce64f47c1e3ddb76"
+            ],
+            [
+                "9ba9383f616b86f0"
+            ]
+        ]
+    },
+    {
+        "id": "9ba9383f616b86f0",
+        "type": "switch",
+        "z": "3695ae58d0303ac3",
+        "g": "2c54433f7967d57f",
+        "name": "check bundle",
+        "property": "data.recordDetails.files.filetype",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "bundle",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1097.5,
+        "y": 940,
+        "wires": [
+            [
+                "bb9bc0b1166d253f"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "f04c66ce8988f772",
+        "type": "function",
+        "z": "3695ae58d0303ac3",
+        "g": "2c54433f7967d57f",
+        "name": "Validate RSA (certificate)",
+        "func": "let certificate=msg.data.recordDetails.files.fileContent\nconst RSA_OID = Buffer.from([0x06,0x09,0x2A,0x86,0x48,0x86,0xF7,0x0D,0x01,0x01,0x01]); // 1.2.840.113549.1.1.1\nfunction containsSubarray(buf, sub){ \n    for(let i=0;i<=buf.length-sub.length;i++){\n        let ok=true;\n        for(let j=0;j<sub.length;j++){ if(buf[i+j]!==sub[j]){ok=false;break;} }\n        if(ok)return true;\n    }\n    return false; \n}\nfunction base64Clean(s){ return (s||'').replace(/[^A-Za-z0-9+/=]/g,''); }\n\ntry {\n    let buf;\n    if (Buffer.isBuffer(certificate)) {\n        buf = certificate;\n    } else if (typeof certificate === 'string') {\n        if (certificate.includes('-----BEGIN')) {\n            buf = Buffer.from(certificate, 'utf8');\n        } else {\n            buf = Buffer.from(certificate, 'base64');\n        }\n    } else {\n        throw new Error('certificate must be a Buffer or a string.');\n    }\n\n    const ascii = buf.toString('ascii');\n    let valid=false, reason='';\n\n    const re = /-----BEGIN CERTIFICATE-----([\\s\\S]*?)-----END CERTIFICATE-----/m;\n    const m = ascii.match(re);\n    if (m) {\n        const der = Buffer.from(base64Clean(m[1]), 'base64');\n        valid = containsSubarray(der, RSA_OID);\n        reason = valid ? 'Certificate is RSA (rsaEncryption OID)' : 'Certificate does not have an RSA OID (probably ECDSA/Ed25519).';\n    } else {\n        valid = containsSubarray(buf, RSA_OID);\n        reason = valid ? 'DER includes rsaEncryption OID' : 'DER lacks RSA OID';\n    }\n\n    msg.valid = valid;\n    msg.data.recordDetails.files.result = valid ? 'completed' : 'alert';\n    if (!valid) msg.reason = reason;\n    return msg;\n\n} catch(e){\n   msg.valid = false; msg.data.recordDetails.files.result ='alert'; msg.reason=e.message; return msg;\n}\n// }",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1142.5,
+        "y": 160,
+        "wires": [
+            [
+                "1ea35afcba0c2305"
+            ]
+        ]
+    },
+    {
+        "id": "7139d6aa0a52aa5f",
+        "type": "function",
+        "z": "3695ae58d0303ac3",
+        "g": "2c54433f7967d57f",
+        "name": "Validate RSA (privatekey)",
+        "func": "function ensurePath(obj, pathArr) {\n    let cur = obj;\n    for (const k of pathArr) cur = cur[k] ?? (cur[k] = {});\n    return cur;\n}\n\nfunction cleanBase64FromDataUrl(str) {\n    if (typeof str !== 'string') return null;\n    const m = str.match(/^data:.*?;base64,(.*)$/i);\n    return m ? m[1] : str;\n}\n\nconst RSA_OID = Buffer.from([0x06,0x09,0x2A,0x86,0x48,0x86,0xF7,0x0D,0x01,0x01,0x01]);\n\nfunction containsSubarray(buf, sub) {\n    for (let i = 0; i <= buf.length - sub.length; i++) {\n        let ok = true;\n        for (let j = 0; j < sub.length; j++) if (buf[i + j] !== sub[j]) { ok = false; break; }\n        if (ok) return true;\n    }\n    return false;\n}\n\nfunction isLikelyPkcs1(der) {\n    if (!Buffer.isBuffer(der) || der.length < 16) return false;\n    if (der[0] !== 0x30) return false;\n    let ints = 0;\n    for (let i = 1; i < Math.min(der.length, 128); i++) if (der[i] === 0x02 && ++ints >= 3) return true;\n    return false;\n}\n\nfunction base64Clean(s){ return (s||'').replace(/[^A-Za-z0-9+/=]/g,''); }\n\nfunction checkPemPrivate(ascii){\n    const re = /-----BEGIN ([A-Z0-9 ]+)-----([\\s\\S]*?)-----END \\1-----/g;\n    let m;\n    while ((m = re.exec(ascii)) !== null) {\n        const label = m[1].trim();\n        const inner = Buffer.from(base64Clean(m[2]), 'base64');\n\n        if (label === 'RSA PRIVATE KEY') return {ok:true, how:'PEM PKCS#1'};\n        if (label === 'PRIVATE KEY') {\n            if (containsSubarray(inner, RSA_OID)) return {ok:true, how:'PEM PKCS#8 with rsaEncryption'};\n            return {ok:false, reason:'It is a PRIVATE KEY but no RSA OID was found'};\n        }\n        if (label === 'OPENSSH PRIVATE KEY') return {ok:false, reason:'OpenSSH private key'};\n    }\n    return {ok:false, reason:'No valid PEM block was found'};\n}\n\ntry {\n    const pkNode = ensurePath(msg, ['data','recordDetails','files']);\n    let input = pkNode.fileContent;\n\n    if (typeof input === 'string') input = cleanBase64FromDataUrl(input);\n\n    const buf = Buffer.from(base64Clean(input), 'base64');\n    const ascii = buf.toString('ascii');\n\n    let isRsa = false, why='';\n\n    if (ascii.includes('-----BEGIN') && ascii.includes('-----END')) {\n        const r = checkPemPrivate(ascii);\n        isRsa = r.ok; why = r.how || r.reason;\n    } else {\n        isRsa = containsSubarray(buf, RSA_OID) || isLikelyPkcs1(buf);\n        why = isRsa ? 'DER matches PKCS#8/PKCS#1' : 'DER without rsaEncryption OID';\n    }\n\n    msg.valid = isRsa;\n    pkNode.result = isRsa ? 'completed' : 'alert';\n    if (!isRsa) msg.reason = why;\n\n    return msg;\n\n} catch(e){\n    msg.valid = false;\n    ensurePath(msg, ['data', 'recordDetails', 'files']).result = 'alert';\n    msg.reason = e.message;\n    return msg;\n}\n// }",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1465,
+        "y": 520,
+        "wires": [
+            [
+                "c6b4b3bdb3e65dc5"
+            ]
+        ]
+    },
+    {
+        "id": "1fdd88f65ecbc1c6",
+        "type": "function",
+        "z": "3695ae58d0303ac3",
+        "g": "2c54433f7967d57f",
+        "name": "Validate RSA (bundle)",
+        "func": "let bundle=msg.data.recordDetails.files.fileContent\nfunction containsSubarray(buf, sub){ for(let i=0;i<=buf.length-sub.length;i++){let ok=true;for(let j=0;j<sub.length;j++){if(buf[i+j]!==sub[j]){ok=false;break;}}if(ok)return true;}return false; }\nconst RSA_OID = Buffer.from([0x06,0x09,0x2A,0x86,0x48,0x86,0xF7,0x0D,0x01,0x01,0x01]);\nfunction base64Clean(s){ return (s||'').replace(/[^A-Za-z0-9+/=]/g,''); }\n\ntry{\n    if (typeof bundle !== 'string') throw new Error('payload must be base64 (string).');\n\n    const buf = Buffer.from(bundle, 'base64');\n    const ascii = buf.toString('ascii');\n\n    const re = /-----BEGIN (?:CERTIFICATE|X509 CERTIFICATE)-----([\\s\\S]*?)-----END (?:CERTIFICATE|X509 CERTIFICATE)-----/g;\n    let m, idx = 0, results = [];\n\n    while ((m = re.exec(ascii)) !== null){\n        idx++;\n        const der = Buffer.from(base64Clean(m[1]), 'base64');\n        if (containsSubarray(der, RSA_OID)) {\n            results.push({ index: idx, isRSA: true, how: 'rsaEncryption OID' });\n        } else {\n            results.push({ index: idx, isRSA: false, reason: 'No RSA OID was found' });\n        }\n    }\n\n    if (results.length === 0) {\n        const isRsaDer = containsSubarray(buf, RSA_OID);\n        results.push({\n            index: 1, isRSA: isRsaDer, how: isRsaDer ? 'rsaEncryption OID (DER)' : undefined, reason: isRsaDer ? undefined : 'Neither multiple PEM blocks nor OID in DER' });\n    }\n\n    const allRsa = results.every(r => r.isRSA === true);\n    msg.valid = allRsa;\n    msg.data.recordDetails.files.result = allRsa ? 'completed' : 'alert';\n    msg.details = results;\n    return msg;\n\n} catch(e){\n    msg.valid = false; msg.data.recordDetails.files.result ='alert'; \n    msg.reason=e.message||String(e); return msg;\n}\n// }",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1742.5,
+        "y": 820,
+        "wires": [
+            [
+                "1092b09774944a3e"
+            ]
+        ]
+    },
+    {
+        "id": "a3dd367dcfa8271e",
+        "type": "function",
+        "z": "3695ae58d0303ac3",
+        "g": "09d97c61a4beb823",
+        "name": "update record(add files)",
+        "func": "msg.collection = \"records\";\nmsg.operation  = \"updateOne\";\n\nconst query = { recordId: msg.dbRecord.recordId };\n\nconst files = msg?.data?.recordDetails?.files || {};\nconst set = {\n  stage: msg?.data?.session?.stage,\n  updatedAt: new Date(),\n  expiersAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)\n};\n\nfor (const [k, v] of Object.entries(files)) {\n  if (v !== undefined) {\n    set[`recordDetails.files.${k}`] = v;\n  }\n}\n\nif (Object.keys(set).length === 0) {\n  node.warn(\"Nothing to update\");\n  return null;\n}\n\nconst update  = { $set: set };\nconst options = { upsert: false };\n\nmsg.payload = [query, update, options];\n\nmsg.data.recordId = msg.dbRecord.recordId;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1182.5,
+        "y": 1340,
+        "wires": [
+            [
+                "fc7d755fd269fa9e"
+            ]
+        ]
+    },
+    {
+        "id": "fc7d755fd269fa9e",
+        "type": "mongodb4",
+        "z": "3695ae58d0303ac3",
+        "g": "09d97c61a4beb823",
+        "clientNode": "5656a62ddc286a04",
+        "mode": "collection",
+        "collection": "",
+        "operation": "",
+        "output": "toArray",
+        "maxTimeMS": "0",
+        "handleDocId": false,
+        "name": "",
+        "x": 897.5,
+        "y": 1460,
+        "wires": [
+            [
+                "2e9ccba7b6ca0c2b"
+            ]
+        ]
+    },
+    {
+        "id": "2e9ccba7b6ca0c2b",
+        "type": "switch",
+        "z": "3695ae58d0303ac3",
+        "g": "09d97c61a4beb823",
+        "name": "check db awnser",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            },
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1237.5,
+        "y": 1460,
+        "wires": [
+            [
+                "40ae32a288bfbde4"
+            ],
+            [
+                "2ca74d21c0cac25b"
+            ]
+        ]
+    },
+    {
+        "id": "40ae32a288bfbde4",
+        "type": "function",
+        "z": "3695ae58d0303ac3",
+        "g": "09d97c61a4beb823",
+        "name": "go to pg3.1",
+        "func": "function nextStage(stage) {\n    const s = String(stage ?? '');\n    const m = s.match(/pg\\s*(\\d+)/i);\n    if (!m) {\n        return s;\n    }\n    return `pg${parseInt(m[1], 10) + 1}`;\n}\nconst nextstage = nextStage(msg.data.session.stage)\n\n//go to pg3.1\n// msg.data.session.stage=nextstage\nmsg.isExpanded=true\nmsg.clientId=msg.data.session.clientId\nmsg._socketId=msg.data.session._socketId\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1562.5,
+        "y": 1360,
+        "wires": [
+            [
+                "e047092ddb24bcdb",
+                "e4f7afee017685ae"
+            ]
+        ]
+    },
+    {
+        "id": "e047092ddb24bcdb",
+        "type": "link out",
+        "z": "3695ae58d0303ac3",
+        "g": "09d97c61a4beb823",
+        "name": "link out 20",
+        "mode": "link",
+        "links": [
+            "ea917288d5d06d2a"
+        ],
+        "x": 1775,
+        "y": 1460,
+        "wires": []
+    },
+    {
+        "id": "2ca74d21c0cac25b",
+        "type": "function",
+        "z": "3695ae58d0303ac3",
+        "g": "09d97c61a4beb823",
+        "name": "set error",
+        "func": "if(!msg.data.error) msg.data.error={}\nmsg.data.error={\n    errorType:'did not insert',\n    errorMessage:'we cant save your files'\n}\n\n// msg.isExpanded=true\n// msg.data.session.stage = 'pg1'\nmsg.clientId=msg.data.session.clientId\nmsg._socketId=msg.data.session._socketId\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1562.5,
+        "y": 1560,
+        "wires": [
+            [
+                "e047092ddb24bcdb"
+            ]
+        ]
+    },
+    {
+        "id": "06f61d9142e2ca26",
+        "type": "link out",
+        "z": "3695ae58d0303ac3",
+        "g": "2c54433f7967d57f",
+        "name": "link out 21",
+        "mode": "link",
+        "links": [
+            "ea917288d5d06d2a"
+        ],
+        "x": 2715,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "7521eb0473f4de8a",
+        "type": "function",
+        "z": "3695ae58d0303ac3",
+        "g": "2c54433f7967d57f",
+        "name": "go to pg3.1",
+        "func": "function nextStage(stage) {\n    const s = String(stage ?? '');\n    const m = s.match(/pg\\s*(\\d+)/i);\n    if (!m) {\n        return s;\n    }\n    return `pg${parseInt(m[1], 10) + 1}`;\n}\nconst nextstage = nextStage(msg.data.session.stage)\n\n//go to pg3.1\n// msg.data.session.stage=nextstage\nmsg.data.session.stage='pg3'\nmsg.isExpanded=true\nmsg.clientId=msg.data.session.clientId\nmsg._socketId=msg.data.session._socketId\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2517.5,
+        "y": 420,
+        "wires": [
+            [
+                "06f61d9142e2ca26",
+                "68339045bf7cc3bf"
+            ]
+        ]
+    },
+    {
+        "id": "9428f4dca0821cba",
+        "type": "link in",
+        "z": "3695ae58d0303ac3",
+        "g": "2c54433f7967d57f",
+        "name": "input step 2 (verify RSA)",
+        "links": [
+            "09839d2a050414b1"
+        ],
+        "x": 235,
+        "y": 460,
+        "wires": [
+            [
+                "08aa225a98b2bb5e"
+            ]
+        ]
+    },
+    {
+        "id": "68339045bf7cc3bf",
+        "type": "debug",
+        "z": "3695ae58d0303ac3",
+        "g": "2c54433f7967d57f",
+        "name": "send validation result",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2517.5,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "b2eaf0cbb71acc82",
+        "type": "function",
+        "z": "3695ae58d0303ac3",
+        "g": "09d97c61a4beb823",
+        "name": "check exist all files",
+        "func": "if(\n    msg.data.recordDetails.files.certificate &&\n    msg.data.recordDetails.files.bundle &&\n    msg.data.recordDetails.files.privateKey\n) return [msg, null]\nelse return [null, msg]",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 435,
+        "y": 1440,
+        "wires": [
+            [
+                "e5f72b47cd8bfa7b"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "3f5fd247c6a98393",
+        "type": "link in",
+        "z": "3695ae58d0303ac3",
+        "g": "09d97c61a4beb823",
+        "name": "input step 2 (save in db)",
+        "links": [
+            "09839d2a050414b1"
+        ],
+        "x": 235,
+        "y": 1440,
+        "wires": [
+            [
+                "b2eaf0cbb71acc82"
+            ]
+        ]
+    },
+    {
+        "id": "f2e573118e6f7dac",
+        "type": "switch",
+        "z": "3695ae58d0303ac3",
+        "g": "2c54433f7967d57f",
+        "name": "check .crt format",
+        "property": "data.recordDetails.files.fileName",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": ".crt",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 797.5,
+        "y": 220,
+        "wires": [
+            [
+                "f04c66ce8988f772"
+            ],
+            [
+                "b386561e068204cb"
+            ]
+        ]
+    },
+    {
+        "id": "b386561e068204cb",
+        "type": "change",
+        "z": "3695ae58d0303ac3",
+        "g": "2c54433f7967d57f",
+        "name": "invalid .crt format",
+        "rules": [
+            {
+                "t": "set",
+                "p": "data.recordDetails.files.result",
+                "pt": "msg",
+                "to": "alert",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1117.5,
+        "y": 280,
+        "wires": [
+            [
+                "c4d331ae4fadc75d"
+            ]
+        ]
+    },
+    {
+        "id": "ce64f47c1e3ddb76",
+        "type": "switch",
+        "z": "3695ae58d0303ac3",
+        "g": "2c54433f7967d57f",
+        "name": "check .key format",
+        "property": "data.recordDetails.files.fileName",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": ".key",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1102.5,
+        "y": 580,
+        "wires": [
+            [
+                "7139d6aa0a52aa5f"
+            ],
+            [
+                "4b55a06221a7370a"
+            ]
+        ]
+    },
+    {
+        "id": "4b55a06221a7370a",
+        "type": "change",
+        "z": "3695ae58d0303ac3",
+        "g": "2c54433f7967d57f",
+        "name": "invalid .key format",
+        "rules": [
+            {
+                "t": "set",
+                "p": "data.recordDetails.files.result",
+                "pt": "msg",
+                "to": "alert",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1442.5,
+        "y": 640,
+        "wires": [
+            [
+                "489c61d358c970d5"
+            ]
+        ]
+    },
+    {
+        "id": "bb9bc0b1166d253f",
+        "type": "switch",
+        "z": "3695ae58d0303ac3",
+        "g": "2c54433f7967d57f",
+        "name": "check .ca-bundle format",
+        "property": "data.recordDetails.files.fileName",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": ".ca-bundle",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1422.5,
+        "y": 880,
+        "wires": [
+            [
+                "1fdd88f65ecbc1c6"
+            ],
+            [
+                "462619c4b84e4090"
+            ]
+        ]
+    },
+    {
+        "id": "462619c4b84e4090",
+        "type": "change",
+        "z": "3695ae58d0303ac3",
+        "g": "2c54433f7967d57f",
+        "name": "invalid .ca-bundle format",
+        "rules": [
+            {
+                "t": "set",
+                "p": "data.recordDetails.files.result",
+                "pt": "msg",
+                "to": "alert",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1762.5,
+        "y": 940,
+        "wires": [
+            [
+                "a7d9ca829dbfeedd"
+            ]
+        ]
+    },
+    {
+        "id": "798e80636a01cf5f",
+        "type": "function",
+        "z": "3695ae58d0303ac3",
+        "g": "2c54433f7967d57f",
+        "name": "set invalidFormat  error",
+        "func": "if(!msg.data.error) msg.data.error={}\nmsg.data.error={\n    errorType:'invalidFormat',\n    errorMessage:'invalid certificate '\n}\n\nmsg.isExpanded=true\nmsg.data.session.stage = 'pg3'\nmsg.clientId=msg.data.session.clientId\nmsg._socketId=msg.data.session._socketId\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2182.5,
+        "y": 540,
+        "wires": [
+            [
+                "7521eb0473f4de8a"
+            ]
+        ]
+    },
+    {
+        "id": "e5f72b47cd8bfa7b",
+        "type": "function",
+        "z": "3695ae58d0303ac3",
+        "g": "09d97c61a4beb823",
+        "name": "convert base64 to orginal format",
+        "func": "function decodeBase64(data) {\n    try {\n        const decoded = Buffer.from(data, \"base64\").toString(\"utf-8\");\n        return decoded;\n    } catch (e) {\n        throw new Error('Error while decoding: ' + e.message);\n    }\n}\n\nmsg.data.recordDetails.files.certificate.fileContent=decodeBase64(msg.data.recordDetails.files.certificate.fileContent)\nmsg.data.recordDetails.files.bundle.fileContent=decodeBase64(msg.data.recordDetails.files.bundle.fileContent)\nmsg.data.recordDetails.files.privateKey.fileContent=decodeBase64(msg.data.recordDetails.files.privateKey.fileContent)\n\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 1340,
+        "wires": [
+            [
+                "a3dd367dcfa8271e"
+            ]
+        ]
+    },
+    {
+        "id": "eb6b2d194b208784",
+        "type": "link in",
+        "z": "3695ae58d0303ac3",
+        "g": "2c54433f7967d57f",
+        "name": "link in 6",
+        "links": [
+            "a7d9ca829dbfeedd",
+            "489c61d358c970d5",
+            "c4d331ae4fadc75d"
+        ],
+        "x": 1965,
+        "y": 540,
+        "wires": [
+            [
+                "798e80636a01cf5f"
+            ]
+        ]
+    },
+    {
+        "id": "a7d9ca829dbfeedd",
+        "type": "link out",
+        "z": "3695ae58d0303ac3",
+        "g": "2c54433f7967d57f",
+        "name": "link out 7",
+        "mode": "link",
+        "links": [
+            "eb6b2d194b208784"
+        ],
+        "x": 1955,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "868e1339cd093aed",
+        "type": "link in",
+        "z": "3695ae58d0303ac3",
+        "g": "2c54433f7967d57f",
+        "name": "link in 7",
+        "links": [
+            "1092b09774944a3e",
+            "c6b4b3bdb3e65dc5",
+            "1ea35afcba0c2305"
+        ],
+        "x": 2285,
+        "y": 420,
+        "wires": [
+            [
+                "7521eb0473f4de8a"
+            ]
+        ]
+    },
+    {
+        "id": "1092b09774944a3e",
+        "type": "link out",
+        "z": "3695ae58d0303ac3",
+        "g": "2c54433f7967d57f",
+        "name": "link out 8",
+        "mode": "link",
+        "links": [
+            "868e1339cd093aed"
+        ],
+        "x": 1945,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "c6b4b3bdb3e65dc5",
+        "type": "link out",
+        "z": "3695ae58d0303ac3",
+        "g": "2c54433f7967d57f",
+        "name": "link out 9",
+        "mode": "link",
+        "links": [
+            "868e1339cd093aed"
+        ],
+        "x": 1660,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "1ea35afcba0c2305",
+        "type": "link out",
+        "z": "3695ae58d0303ac3",
+        "g": "2c54433f7967d57f",
+        "name": "link out 11",
+        "mode": "link",
+        "links": [
+            "868e1339cd093aed"
+        ],
+        "x": 1345,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "489c61d358c970d5",
+        "type": "link out",
+        "z": "3695ae58d0303ac3",
+        "g": "2c54433f7967d57f",
+        "name": "link out 12",
+        "mode": "link",
+        "links": [
+            "eb6b2d194b208784"
+        ],
+        "x": 1640,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "c4d331ae4fadc75d",
+        "type": "link out",
+        "z": "3695ae58d0303ac3",
+        "g": "2c54433f7967d57f",
+        "name": "link out 13",
+        "mode": "link",
+        "links": [
+            "eb6b2d194b208784"
+        ],
+        "x": 1325,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "e4f7afee017685ae",
+        "type": "debug",
+        "z": "3695ae58d0303ac3",
+        "g": "09d97c61a4beb823",
+        "name": "insert RSAs",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1562.5,
+        "y": 1260,
+        "wires": []
+    },
+    {
+        "id": "5656a62ddc286a04",
+        "type": "mongodb4-client",
+        "name": "",
+        "protocol": "mongodb",
+        "hostname": "db.facis.cloud",
+        "port": "443",
+        "dbName": "onboarding",
+        "appName": "",
+        "authSource": "",
+        "authMechanism": "DEFAULT",
+        "tls": true,
+        "tlsCAFile": "",
+        "tlsCertificateKeyFile": "",
+        "tlsInsecure": true,
+        "connectTimeoutMS": "30000",
+        "socketTimeoutMS": "0",
+        "minPoolSize": "0",
+        "maxPoolSize": "100",
+        "maxIdleTimeMS": "0",
+        "uri": "",
+        "advanced": "{}",
+        "uriTabActive": "tab-uri-simple"
+    }
+]
