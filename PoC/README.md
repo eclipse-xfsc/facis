@@ -13,4 +13,4 @@ This alignment accelerates adoption by ensuring architectural patterns are valid
 ---
 
 ## References
-The specifications and implementations are developed and maintained in the repository: [`eclipse-xfsc/facis-poc`](https://github.com/eclipse-xfsc/facis-poc).
+The specifications and implementations are developed and maintained in the repository: [`eclipse-xfsc/facis/poc`](https://github.com/eclipse-xfsc/facis/tree/main/PoC).
