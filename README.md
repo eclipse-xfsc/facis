@@ -58,7 +58,7 @@ A Modular Deployment Service integrated with the visual orchestration Engine tha
 | *ESB TSA* | - | *Coming Soon.* |
 | *AI Flow Builder* | - | [`eclipse-xfsc/ai-flow-builder`](https://github.com/eclipse-xfsc/smartdeployment/tree/main/AI%20Flow%20Builder) |
 
-## CAT Enhancements  - FACIS XFSC
+## FACIS - XFSC Catalogue Enhancements
 
 | Component | Description | Repository Link |
 |-----------|-------------|:-----------------:|
