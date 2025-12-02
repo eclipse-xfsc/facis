@@ -136,5 +136,3 @@ To be transformed into FAPs, new use cases must meet key requirements:
 - Contribution to **open-source community** via Eclipse Foundation  
 
 ---
-## References
-The specifications and implementations are developed and maintained in the repository: [`eclipse-xfsc/facis-fap`](https://github.com/eclipse-xfsc/facis-fap).
