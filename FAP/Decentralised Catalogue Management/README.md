@@ -19,5 +19,5 @@ By introducing a multi-catalogue abstraction layer, it allows seamless cross-cat
 - Cross-border Scalability:
   Enables scalability for cross-border and cross-sector federations.
 
-The specification for DCM can be found here : [PDF](https://github.com/eclipse-xfsc/facis/tree/main//FAP/Decentralised%20Catalogue%20Management/specification/FAP_DCM%20Specifications_v1.0.pdf)
+The specification for DCM can be found here : [PDF](https://github.com/eclipse-xfsc/facis/blob/main/FAP/Decentralised%20Catalogue%20Management/specification/FAP_DCM%20Specifications_v1.0.pdf)
 
