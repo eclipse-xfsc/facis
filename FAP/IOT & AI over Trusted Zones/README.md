@@ -19,4 +19,4 @@ Supports AI-driven data analysis.
 5. Visualizing :
 Visualizes results as dashboard widgets for each data channel.
 
-The specification for IoT & AI can be found here : [pdf](https://github.com/eclipse-xfsc/facis/tree/main/FAP/IOT%20%26%20AI%20over%20Trusted%20Zones/specification)
+The specification for IoT & AI can be found here : [PDF](https://github.com/eclipse-xfsc/facis/blob/main/FAP/IOT%20%26%20AI%20over%20Trusted%20Zones/specification/IoT-AI%20FAP%20Specifications.pdf)
