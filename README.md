@@ -26,9 +26,9 @@ This repository serve as the central-entry point for all the FACIS components. T
 This repository is responsible for implementing the standarized templates/ blueprints for the specific collaboration use cases.
 | FAP Repos | Description | Repository Link |
 |-----------|-------------|:-----------------:|
-| *FAP 1: Partner onboarding* | contains technical specification and implementation. | [`eclipse-xfsc/facis/fap1-implementation`](https://github.com/eclipse-xfsc/facis/tree/main/FAP/Partner%20Onboarding%20(Reference%20FAP)/implementation) |
-| *FAP 2: Decentralized Catalogue Managment* | Enables trusted service discovery across federated infrastructures. | [`eclipse-xfsc/facis/fap2-implementation`](https://github.com/eclipse-xfsc/facis/tree/main/FAP/Decentralised%20Catalogue%20Management/implementation) |
-|*FAP 3: IOT & AI pipeline over trusted services* | integrates sensing data with IoT and AI based data analysis for dashboard visualization. | [`eclipse-xfsc/facis/fap3-implementation`](https://github.com/eclipse-xfsc/facis/tree/main/FAP/IOT%20%26%20AI%20over%20Trusted%20Zones/implementation) |
+| *FAP 1: Partner onboarding* | contains technical specification and implementation. | [`eclipse-xfsc/facis/fap1`](https://github.com/eclipse-xfsc/facis/tree/main/FAP/Partner%20Onboarding%20(Reference%20FAP)) |
+| *FAP 2: Decentralized Catalogue Managment* | Enables trusted service discovery across federated infrastructures. | [`eclipse-xfsc/facis/fap2`](https://github.com/eclipse-xfsc/facis/tree/main/FAP/Decentralised%20Catalogue%20Management) |
+|*FAP 3: IOT & AI pipeline over trusted services* | integrates sensing data with IoT and AI based data analysis for dashboard visualization. | [`eclipse-xfsc/facis/fap3`](https://github.com/eclipse-xfsc/facis/tree/main/FAP/IOT%20%26%20AI%20over%20Trusted%20Zones) |
 
 #### 2. FACIS Proof-Of-Concepts (PoC) 
 | PoC | Description | Repository Link |
