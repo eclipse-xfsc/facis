@@ -19,7 +19,7 @@ This repository serve as the central-entry point for all the FACIS components. T
 | *DCS (Digital Contracting Services)* | open-source software for secure, automated and legally compliant contract services. | [`eclipse-xfsc/facis-DCS`](https://github.com/eclipse-xfsc/facis/tree/main/DCS) |
 | *SLA (Service Level Agreements)* | Defines the governance framework to ensure performance, security and accountability across multiple providers. | [`eclipse-xfsc/facis-SLA`](https://github.com/eclipse-xfsc/facis/tree/main/SLA) |
 | *PoC (Proof-Of-Concepts)* | Real-world scenarios implementation and validation demonstrating the FAPs and DCS. | [`eclipse-xfsc/facis-poc`](https://github.com/eclipse-xfsc/facis/tree/main/PoC) |
-| *Demonstrators* | prototype implementation showcasing the real-world use cases | *Coming Soon.* |
+| *Demonstrators* | prototype implementation showcasing the real-world use cases | [`eclipse-xfsc/demonstrators`](https://github.com/eclipse-xfsc/facis/tree/main/Demonstrators/Zero%20Trust%20Demonstrators) |
 
 
 #### 1. FACIS Federation Architecture Pattern (FAPs) 
@@ -35,6 +35,11 @@ This repository is responsible for implementing the standarized templates/ bluep
 |-----|-------------|:-----------------:|
 | *Aviation Collaboration* | It specifies the industrial usecases for secure cross-organizational service orchestration. | [`eclipse-xfsc/facis-aviation-poc`](https://github.com/eclipse-xfsc/facis/tree/main/PoC/aviation-poc) |
 | *Other PoC directories* | - | *Coming Soon.*|
+
+#### 3. Demonstrators
+| Demonstrators | Description | Repository Link |
+|-----|-------------|:-----------------:|
+| *zero Trust Demonstrators* | showes how Two Trust Zones interact through the TRAIN framework to securely exchange digital services between participants.  | [`eclipse-xfsc/demonstrators/zero-trust-demonstrators`](https://github.com/eclipse-xfsc/facis/tree/main/Demonstrators) |
 
 
 #### 4. Orchestration and Smart Deployment Tools
