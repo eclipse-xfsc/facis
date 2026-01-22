@@ -26,7 +26,7 @@ paths:
                         type: array
                         items:
                             type: string
-                            example: Et ad illum mollitia aut velit.
+                            example: Consequatur rerum laboriosam esse harum.
             schemes:
                 - http
     /archive/delete:
@@ -70,7 +70,7 @@ paths:
                     schema:
                         type: array
                         items:
-                            example: Hic quas.
+                            example: Tenetur esse voluptatum aut dicta.
             schemes:
                 - http
     /archive/store:
@@ -139,181 +139,6 @@ paths:
                 "200":
                     description: OK response.
                     schema: {}
-            schemes:
-                - http
-    /contract/approve:
-        post:
-            tags:
-                - contract_workflow_engine
-            summary: approve contract_workflow_engine
-            description: approve and forward contract.
-            operationId: contract_workflow_engine#approve
-            responses:
-                "200":
-                    description: OK response.
-                    schema:
-                        type: integer
-                        format: int64
-            schemes:
-                - http
-    /contract/audit:
-        post:
-            tags:
-                - contract_workflow_engine
-            summary: audit contract_workflow_engine
-            description: generate audit record.
-            operationId: contract_workflow_engine#audit
-            responses:
-                "200":
-                    description: OK response.
-                    schema:
-                        type: array
-                        items:
-                            type: string
-                            example: Voluptas et natus architecto rerum eum.
-            schemes:
-                - http
-    /contract/create:
-        post:
-            tags:
-                - contract_workflow_engine
-            summary: create contract_workflow_engine
-            description: initiate new contract draft from template.
-            operationId: contract_workflow_engine#create
-            responses:
-                "200":
-                    description: OK response.
-                    schema:
-                        type: string
-            schemes:
-                - http
-    /contract/negotiate:
-        post:
-            tags:
-                - contract_workflow_engine
-            summary: negotiate contract_workflow_engine
-            description: propose changes.
-            operationId: contract_workflow_engine#negotiate
-            responses:
-                "200":
-                    description: OK response.
-                    schema:
-                        type: string
-            schemes:
-                - http
-    /contract/reject:
-        post:
-            tags:
-                - contract_workflow_engine
-            summary: reject contract_workflow_engine
-            description: reject with explanation.
-            operationId: contract_workflow_engine#reject
-            responses:
-                "200":
-                    description: OK response.
-                    schema:
-                        type: integer
-                        format: int64
-            schemes:
-                - http
-    /contract/respond:
-        post:
-            tags:
-                - contract_workflow_engine
-            summary: respond contract_workflow_engine
-            description: provide feedback/findings. respond to counterpart changes.
-            operationId: contract_workflow_engine#respond
-            responses:
-                "200":
-                    description: OK response.
-                    schema:
-                        type: string
-            schemes:
-                - http
-    /contract/retrieve:
-        get:
-            tags:
-                - contract_workflow_engine
-            summary: retrieve contract_workflow_engine
-            description: fetch submitted contract. fetch reviewed contract. fetch contract(s).
-            operationId: contract_workflow_engine#retrieve
-            responses:
-                "200":
-                    description: OK response.
-                    schema: {}
-            schemes:
-                - http
-    /contract/review:
-        get:
-            tags:
-                - contract_workflow_engine
-            summary: review contract_workflow_engine
-            description: retrieve latest draft for comparison.
-            operationId: contract_workflow_engine#review
-            responses:
-                "200":
-                    description: OK response.
-                    schema: {}
-            schemes:
-                - http
-    /contract/search:
-        get:
-            tags:
-                - contract_workflow_engine
-            summary: search contract_workflow_engine
-            description: locate contracts by metadata or state. filter/search across lifecycle states.
-            operationId: contract_workflow_engine#search
-            responses:
-                "200":
-                    description: OK response.
-                    schema:
-                        type: array
-                        items:
-                            example: Accusamus eaque laudantium est id.
-            schemes:
-                - http
-    /contract/store:
-        post:
-            tags:
-                - contract_workflow_engine
-            summary: store contract_workflow_engine
-            description: store evidence.
-            operationId: contract_workflow_engine#store
-            responses:
-                "200":
-                    description: OK response.
-                    schema:
-                        type: integer
-                        format: int64
-            schemes:
-                - http
-    /contract/submit:
-        post:
-            tags:
-                - contract_workflow_engine
-            summary: submit contract_workflow_engine
-            description: finalize and submit contract for negotiation/review. finalize and submit negotiated version. finalize review outcome. finalize decision. finalize review outcome.
-            operationId: contract_workflow_engine#submit
-            responses:
-                "200":
-                    description: OK response.
-                    schema:
-                        type: string
-            schemes:
-                - http
-    /contract/terminate:
-        post:
-            tags:
-                - contract_workflow_engine
-            summary: terminate contract_workflow_engine
-            description: terminate a contract.
-            operationId: contract_workflow_engine#terminate
-            responses:
-                "200":
-                    description: OK response.
-                    schema:
-                        type: integer
-                        format: int64
             schemes:
                 - http
     /external/action:
@@ -449,7 +274,7 @@ paths:
                         type: array
                         items:
                             type: string
-                            example: Beatae necessitatibus repellendus.
+                            example: Et commodi aut ex quaerat voluptatem fugiat.
             schemes:
                 - http
     /signature/compliance:
@@ -563,7 +388,7 @@ paths:
                         type: array
                         items:
                             type: string
-                            example: Delectus aut laudantium.
+                            example: Ad ut asperiores quaerat natus qui.
             schemes:
                 - http
     /template/create:
@@ -653,7 +478,7 @@ paths:
                     schema:
                         type: array
                         items:
-                            example: Voluptates quibusdam dolorem sapiente veritatis dolorum et.
+                            example: Maxime in illum totam rem.
             schemes:
                 - http
     /template/submit:

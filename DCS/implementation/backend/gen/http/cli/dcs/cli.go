@@ -9,7 +9,6 @@ package cli
 
 import (
 	contractstoragearchivec "digital-contracting-service/gen/http/contract_storage_archive/client"
-	contractworkflowenginec "digital-contracting-service/gen/http/contract_workflow_engine/client"
 	dcstodcsc "digital-contracting-service/gen/http/dcs_to_dcs/client"
 	externaltargetsystemapic "digital-contracting-service/gen/http/external_target_system_api/client"
 	orchestrationwebhooksc "digital-contracting-service/gen/http/orchestration_webhooks/client"
@@ -31,24 +30,23 @@ import (
 //	command (subcommand1|subcommand2|...)
 func UsageCommands() []string {
 	return []string{
-		"template-repository (create|submit|update|update-manage|search|retrieve|retrieve-by-id|verify|approve|reject|register|archive|audit)",
-		"contract-workflow-engine (create|submit|negotiate|respond|review|retrieve|search|approve|reject|store|terminate|audit)",
-		"signature-management (retrieve|verify|apply|validate|revoke|audit|compliance)",
 		"contract-storage-archive (retrieve|search|store|terminate|delete|audit)",
-		"pac (audit|audit-report|monitor|incident-report)",
-		"template-catalogue-integration (discover|request|register)",
-		"orchestration-webhooks node-red-webhook",
-		"external-target-system-api (action|status|callback)",
 		"dcs-to-dcs retrieve",
+		"external-target-system-api (action|status|callback)",
+		"orchestration-webhooks node-red-webhook",
+		"pac (audit|audit-report|monitor|incident-report)",
+		"signature-management (retrieve|verify|apply|validate|revoke|audit|compliance)",
+		"template-catalogue-integration (discover|request|register)",
+		"template-repository (create|submit|update|update-manage|search|retrieve|retrieve-by-id|verify|approve|reject|register|archive|audit)",
 	}
 }
 
 // UsageExamples produces an example of a valid invocation of the CLI tool.
 func UsageExamples() string {
-	return os.Args[0] + " " + "template-repository create" + "\n" +
-		os.Args[0] + " " + "contract-workflow-engine create" + "\n" +
-		os.Args[0] + " " + "signature-management retrieve" + "\n" +
-		os.Args[0] + " " + "contract-storage-archive retrieve" + "\n" +
+	return os.Args[0] + " " + "contract-storage-archive retrieve" + "\n" +
+		os.Args[0] + " " + "dcs-to-dcs retrieve" + "\n" +
+		os.Args[0] + " " + "external-target-system-api action" + "\n" +
+		os.Args[0] + " " + "orchestration-webhooks node-red-webhook" + "\n" +
 		os.Args[0] + " " + "pac audit" + "\n" +
 		""
 }
@@ -63,6 +61,70 @@ func ParseEndpoint(
 	restore bool,
 ) (goa.Endpoint, any, error) {
 	var (
+		contractStorageArchiveFlags = flag.NewFlagSet("contract-storage-archive", flag.ContinueOnError)
+
+		contractStorageArchiveRetrieveFlags = flag.NewFlagSet("retrieve", flag.ExitOnError)
+
+		contractStorageArchiveSearchFlags = flag.NewFlagSet("search", flag.ExitOnError)
+
+		contractStorageArchiveStoreFlags = flag.NewFlagSet("store", flag.ExitOnError)
+
+		contractStorageArchiveTerminateFlags = flag.NewFlagSet("terminate", flag.ExitOnError)
+
+		contractStorageArchiveDeleteFlags = flag.NewFlagSet("delete", flag.ExitOnError)
+
+		contractStorageArchiveAuditFlags = flag.NewFlagSet("audit", flag.ExitOnError)
+
+		dcsToDcsFlags = flag.NewFlagSet("dcs-to-dcs", flag.ContinueOnError)
+
+		dcsToDcsRetrieveFlags = flag.NewFlagSet("retrieve", flag.ExitOnError)
+
+		externalTargetSystemAPIFlags = flag.NewFlagSet("external-target-system-api", flag.ContinueOnError)
+
+		externalTargetSystemAPIActionFlags = flag.NewFlagSet("action", flag.ExitOnError)
+
+		externalTargetSystemAPIStatusFlags = flag.NewFlagSet("status", flag.ExitOnError)
+
+		externalTargetSystemAPICallbackFlags = flag.NewFlagSet("callback", flag.ExitOnError)
+
+		orchestrationWebhooksFlags = flag.NewFlagSet("orchestration-webhooks", flag.ContinueOnError)
+
+		orchestrationWebhooksNodeRedWebhookFlags = flag.NewFlagSet("node-red-webhook", flag.ExitOnError)
+
+		pacFlags = flag.NewFlagSet("pac", flag.ContinueOnError)
+
+		pacAuditFlags = flag.NewFlagSet("audit", flag.ExitOnError)
+
+		pacAuditReportFlags = flag.NewFlagSet("audit-report", flag.ExitOnError)
+
+		pacMonitorFlags = flag.NewFlagSet("monitor", flag.ExitOnError)
+
+		pacIncidentReportFlags = flag.NewFlagSet("incident-report", flag.ExitOnError)
+
+		signatureManagementFlags = flag.NewFlagSet("signature-management", flag.ContinueOnError)
+
+		signatureManagementRetrieveFlags = flag.NewFlagSet("retrieve", flag.ExitOnError)
+
+		signatureManagementVerifyFlags = flag.NewFlagSet("verify", flag.ExitOnError)
+
+		signatureManagementApplyFlags = flag.NewFlagSet("apply", flag.ExitOnError)
+
+		signatureManagementValidateFlags = flag.NewFlagSet("validate", flag.ExitOnError)
+
+		signatureManagementRevokeFlags = flag.NewFlagSet("revoke", flag.ExitOnError)
+
+		signatureManagementAuditFlags = flag.NewFlagSet("audit", flag.ExitOnError)
+
+		signatureManagementComplianceFlags = flag.NewFlagSet("compliance", flag.ExitOnError)
+
+		templateCatalogueIntegrationFlags = flag.NewFlagSet("template-catalogue-integration", flag.ContinueOnError)
+
+		templateCatalogueIntegrationDiscoverFlags = flag.NewFlagSet("discover", flag.ExitOnError)
+
+		templateCatalogueIntegrationRequestFlags = flag.NewFlagSet("request", flag.ExitOnError)
+
+		templateCatalogueIntegrationRegisterFlags = flag.NewFlagSet("register", flag.ExitOnError)
+
 		templateRepositoryFlags = flag.NewFlagSet("template-repository", flag.ContinueOnError)
 
 		templateRepositoryCreateFlags = flag.NewFlagSet("create", flag.ExitOnError)
@@ -91,97 +153,46 @@ func ParseEndpoint(
 		templateRepositoryArchiveFlags = flag.NewFlagSet("archive", flag.ExitOnError)
 
 		templateRepositoryAuditFlags = flag.NewFlagSet("audit", flag.ExitOnError)
-
-		contractWorkflowEngineFlags = flag.NewFlagSet("contract-workflow-engine", flag.ContinueOnError)
-
-		contractWorkflowEngineCreateFlags = flag.NewFlagSet("create", flag.ExitOnError)
-
-		contractWorkflowEngineSubmitFlags = flag.NewFlagSet("submit", flag.ExitOnError)
-
-		contractWorkflowEngineNegotiateFlags = flag.NewFlagSet("negotiate", flag.ExitOnError)
-
-		contractWorkflowEngineRespondFlags = flag.NewFlagSet("respond", flag.ExitOnError)
-
-		contractWorkflowEngineReviewFlags = flag.NewFlagSet("review", flag.ExitOnError)
-
-		contractWorkflowEngineRetrieveFlags = flag.NewFlagSet("retrieve", flag.ExitOnError)
-
-		contractWorkflowEngineSearchFlags = flag.NewFlagSet("search", flag.ExitOnError)
-
-		contractWorkflowEngineApproveFlags = flag.NewFlagSet("approve", flag.ExitOnError)
-
-		contractWorkflowEngineRejectFlags = flag.NewFlagSet("reject", flag.ExitOnError)
-
-		contractWorkflowEngineStoreFlags = flag.NewFlagSet("store", flag.ExitOnError)
-
-		contractWorkflowEngineTerminateFlags = flag.NewFlagSet("terminate", flag.ExitOnError)
-
-		contractWorkflowEngineAuditFlags = flag.NewFlagSet("audit", flag.ExitOnError)
-
-		signatureManagementFlags = flag.NewFlagSet("signature-management", flag.ContinueOnError)
-
-		signatureManagementRetrieveFlags = flag.NewFlagSet("retrieve", flag.ExitOnError)
-
-		signatureManagementVerifyFlags = flag.NewFlagSet("verify", flag.ExitOnError)
-
-		signatureManagementApplyFlags = flag.NewFlagSet("apply", flag.ExitOnError)
-
-		signatureManagementValidateFlags = flag.NewFlagSet("validate", flag.ExitOnError)
-
-		signatureManagementRevokeFlags = flag.NewFlagSet("revoke", flag.ExitOnError)
-
-		signatureManagementAuditFlags = flag.NewFlagSet("audit", flag.ExitOnError)
-
-		signatureManagementComplianceFlags = flag.NewFlagSet("compliance", flag.ExitOnError)
-
-		contractStorageArchiveFlags = flag.NewFlagSet("contract-storage-archive", flag.ContinueOnError)
-
-		contractStorageArchiveRetrieveFlags = flag.NewFlagSet("retrieve", flag.ExitOnError)
-
-		contractStorageArchiveSearchFlags = flag.NewFlagSet("search", flag.ExitOnError)
-
-		contractStorageArchiveStoreFlags = flag.NewFlagSet("store", flag.ExitOnError)
-
-		contractStorageArchiveTerminateFlags = flag.NewFlagSet("terminate", flag.ExitOnError)
-
-		contractStorageArchiveDeleteFlags = flag.NewFlagSet("delete", flag.ExitOnError)
-
-		contractStorageArchiveAuditFlags = flag.NewFlagSet("audit", flag.ExitOnError)
-
-		pacFlags = flag.NewFlagSet("pac", flag.ContinueOnError)
-
-		pacAuditFlags = flag.NewFlagSet("audit", flag.ExitOnError)
-
-		pacAuditReportFlags = flag.NewFlagSet("audit-report", flag.ExitOnError)
-
-		pacMonitorFlags = flag.NewFlagSet("monitor", flag.ExitOnError)
-
-		pacIncidentReportFlags = flag.NewFlagSet("incident-report", flag.ExitOnError)
-
-		templateCatalogueIntegrationFlags = flag.NewFlagSet("template-catalogue-integration", flag.ContinueOnError)
-
-		templateCatalogueIntegrationDiscoverFlags = flag.NewFlagSet("discover", flag.ExitOnError)
-
-		templateCatalogueIntegrationRequestFlags = flag.NewFlagSet("request", flag.ExitOnError)
-
-		templateCatalogueIntegrationRegisterFlags = flag.NewFlagSet("register", flag.ExitOnError)
-
-		orchestrationWebhooksFlags = flag.NewFlagSet("orchestration-webhooks", flag.ContinueOnError)
-
-		orchestrationWebhooksNodeRedWebhookFlags = flag.NewFlagSet("node-red-webhook", flag.ExitOnError)
-
-		externalTargetSystemAPIFlags = flag.NewFlagSet("external-target-system-api", flag.ContinueOnError)
-
-		externalTargetSystemAPIActionFlags = flag.NewFlagSet("action", flag.ExitOnError)
-
-		externalTargetSystemAPIStatusFlags = flag.NewFlagSet("status", flag.ExitOnError)
-
-		externalTargetSystemAPICallbackFlags = flag.NewFlagSet("callback", flag.ExitOnError)
-
-		dcsToDcsFlags = flag.NewFlagSet("dcs-to-dcs", flag.ContinueOnError)
-
-		dcsToDcsRetrieveFlags = flag.NewFlagSet("retrieve", flag.ExitOnError)
 	)
+	contractStorageArchiveFlags.Usage = contractStorageArchiveUsage
+	contractStorageArchiveRetrieveFlags.Usage = contractStorageArchiveRetrieveUsage
+	contractStorageArchiveSearchFlags.Usage = contractStorageArchiveSearchUsage
+	contractStorageArchiveStoreFlags.Usage = contractStorageArchiveStoreUsage
+	contractStorageArchiveTerminateFlags.Usage = contractStorageArchiveTerminateUsage
+	contractStorageArchiveDeleteFlags.Usage = contractStorageArchiveDeleteUsage
+	contractStorageArchiveAuditFlags.Usage = contractStorageArchiveAuditUsage
+
+	dcsToDcsFlags.Usage = dcsToDcsUsage
+	dcsToDcsRetrieveFlags.Usage = dcsToDcsRetrieveUsage
+
+	externalTargetSystemAPIFlags.Usage = externalTargetSystemAPIUsage
+	externalTargetSystemAPIActionFlags.Usage = externalTargetSystemAPIActionUsage
+	externalTargetSystemAPIStatusFlags.Usage = externalTargetSystemAPIStatusUsage
+	externalTargetSystemAPICallbackFlags.Usage = externalTargetSystemAPICallbackUsage
+
+	orchestrationWebhooksFlags.Usage = orchestrationWebhooksUsage
+	orchestrationWebhooksNodeRedWebhookFlags.Usage = orchestrationWebhooksNodeRedWebhookUsage
+
+	pacFlags.Usage = pacUsage
+	pacAuditFlags.Usage = pacAuditUsage
+	pacAuditReportFlags.Usage = pacAuditReportUsage
+	pacMonitorFlags.Usage = pacMonitorUsage
+	pacIncidentReportFlags.Usage = pacIncidentReportUsage
+
+	signatureManagementFlags.Usage = signatureManagementUsage
+	signatureManagementRetrieveFlags.Usage = signatureManagementRetrieveUsage
+	signatureManagementVerifyFlags.Usage = signatureManagementVerifyUsage
+	signatureManagementApplyFlags.Usage = signatureManagementApplyUsage
+	signatureManagementValidateFlags.Usage = signatureManagementValidateUsage
+	signatureManagementRevokeFlags.Usage = signatureManagementRevokeUsage
+	signatureManagementAuditFlags.Usage = signatureManagementAuditUsage
+	signatureManagementComplianceFlags.Usage = signatureManagementComplianceUsage
+
+	templateCatalogueIntegrationFlags.Usage = templateCatalogueIntegrationUsage
+	templateCatalogueIntegrationDiscoverFlags.Usage = templateCatalogueIntegrationDiscoverUsage
+	templateCatalogueIntegrationRequestFlags.Usage = templateCatalogueIntegrationRequestUsage
+	templateCatalogueIntegrationRegisterFlags.Usage = templateCatalogueIntegrationRegisterUsage
+
 	templateRepositoryFlags.Usage = templateRepositoryUsage
 	templateRepositoryCreateFlags.Usage = templateRepositoryCreateUsage
 	templateRepositorySubmitFlags.Usage = templateRepositorySubmitUsage
@@ -196,59 +207,6 @@ func ParseEndpoint(
 	templateRepositoryRegisterFlags.Usage = templateRepositoryRegisterUsage
 	templateRepositoryArchiveFlags.Usage = templateRepositoryArchiveUsage
 	templateRepositoryAuditFlags.Usage = templateRepositoryAuditUsage
-
-	contractWorkflowEngineFlags.Usage = contractWorkflowEngineUsage
-	contractWorkflowEngineCreateFlags.Usage = contractWorkflowEngineCreateUsage
-	contractWorkflowEngineSubmitFlags.Usage = contractWorkflowEngineSubmitUsage
-	contractWorkflowEngineNegotiateFlags.Usage = contractWorkflowEngineNegotiateUsage
-	contractWorkflowEngineRespondFlags.Usage = contractWorkflowEngineRespondUsage
-	contractWorkflowEngineReviewFlags.Usage = contractWorkflowEngineReviewUsage
-	contractWorkflowEngineRetrieveFlags.Usage = contractWorkflowEngineRetrieveUsage
-	contractWorkflowEngineSearchFlags.Usage = contractWorkflowEngineSearchUsage
-	contractWorkflowEngineApproveFlags.Usage = contractWorkflowEngineApproveUsage
-	contractWorkflowEngineRejectFlags.Usage = contractWorkflowEngineRejectUsage
-	contractWorkflowEngineStoreFlags.Usage = contractWorkflowEngineStoreUsage
-	contractWorkflowEngineTerminateFlags.Usage = contractWorkflowEngineTerminateUsage
-	contractWorkflowEngineAuditFlags.Usage = contractWorkflowEngineAuditUsage
-
-	signatureManagementFlags.Usage = signatureManagementUsage
-	signatureManagementRetrieveFlags.Usage = signatureManagementRetrieveUsage
-	signatureManagementVerifyFlags.Usage = signatureManagementVerifyUsage
-	signatureManagementApplyFlags.Usage = signatureManagementApplyUsage
-	signatureManagementValidateFlags.Usage = signatureManagementValidateUsage
-	signatureManagementRevokeFlags.Usage = signatureManagementRevokeUsage
-	signatureManagementAuditFlags.Usage = signatureManagementAuditUsage
-	signatureManagementComplianceFlags.Usage = signatureManagementComplianceUsage
-
-	contractStorageArchiveFlags.Usage = contractStorageArchiveUsage
-	contractStorageArchiveRetrieveFlags.Usage = contractStorageArchiveRetrieveUsage
-	contractStorageArchiveSearchFlags.Usage = contractStorageArchiveSearchUsage
-	contractStorageArchiveStoreFlags.Usage = contractStorageArchiveStoreUsage
-	contractStorageArchiveTerminateFlags.Usage = contractStorageArchiveTerminateUsage
-	contractStorageArchiveDeleteFlags.Usage = contractStorageArchiveDeleteUsage
-	contractStorageArchiveAuditFlags.Usage = contractStorageArchiveAuditUsage
-
-	pacFlags.Usage = pacUsage
-	pacAuditFlags.Usage = pacAuditUsage
-	pacAuditReportFlags.Usage = pacAuditReportUsage
-	pacMonitorFlags.Usage = pacMonitorUsage
-	pacIncidentReportFlags.Usage = pacIncidentReportUsage
-
-	templateCatalogueIntegrationFlags.Usage = templateCatalogueIntegrationUsage
-	templateCatalogueIntegrationDiscoverFlags.Usage = templateCatalogueIntegrationDiscoverUsage
-	templateCatalogueIntegrationRequestFlags.Usage = templateCatalogueIntegrationRequestUsage
-	templateCatalogueIntegrationRegisterFlags.Usage = templateCatalogueIntegrationRegisterUsage
-
-	orchestrationWebhooksFlags.Usage = orchestrationWebhooksUsage
-	orchestrationWebhooksNodeRedWebhookFlags.Usage = orchestrationWebhooksNodeRedWebhookUsage
-
-	externalTargetSystemAPIFlags.Usage = externalTargetSystemAPIUsage
-	externalTargetSystemAPIActionFlags.Usage = externalTargetSystemAPIActionUsage
-	externalTargetSystemAPIStatusFlags.Usage = externalTargetSystemAPIStatusUsage
-	externalTargetSystemAPICallbackFlags.Usage = externalTargetSystemAPICallbackUsage
-
-	dcsToDcsFlags.Usage = dcsToDcsUsage
-	dcsToDcsRetrieveFlags.Usage = dcsToDcsRetrieveUsage
 
 	if err := flag.CommandLine.Parse(os.Args[1:]); err != nil {
 		return nil, nil, err
@@ -265,24 +223,22 @@ func ParseEndpoint(
 	{
 		svcn = flag.Arg(0)
 		switch svcn {
-		case "template-repository":
-			svcf = templateRepositoryFlags
-		case "contract-workflow-engine":
-			svcf = contractWorkflowEngineFlags
-		case "signature-management":
-			svcf = signatureManagementFlags
 		case "contract-storage-archive":
 			svcf = contractStorageArchiveFlags
-		case "pac":
-			svcf = pacFlags
-		case "template-catalogue-integration":
-			svcf = templateCatalogueIntegrationFlags
-		case "orchestration-webhooks":
-			svcf = orchestrationWebhooksFlags
-		case "external-target-system-api":
-			svcf = externalTargetSystemAPIFlags
 		case "dcs-to-dcs":
 			svcf = dcsToDcsFlags
+		case "external-target-system-api":
+			svcf = externalTargetSystemAPIFlags
+		case "orchestration-webhooks":
+			svcf = orchestrationWebhooksFlags
+		case "pac":
+			svcf = pacFlags
+		case "signature-management":
+			svcf = signatureManagementFlags
+		case "template-catalogue-integration":
+			svcf = templateCatalogueIntegrationFlags
+		case "template-repository":
+			svcf = templateRepositoryFlags
 		default:
 			return nil, nil, fmt.Errorf("unknown service %q", svcn)
 		}
@@ -298,6 +254,109 @@ func ParseEndpoint(
 	{
 		epn = svcf.Arg(0)
 		switch svcn {
+		case "contract-storage-archive":
+			switch epn {
+			case "retrieve":
+				epf = contractStorageArchiveRetrieveFlags
+
+			case "search":
+				epf = contractStorageArchiveSearchFlags
+
+			case "store":
+				epf = contractStorageArchiveStoreFlags
+
+			case "terminate":
+				epf = contractStorageArchiveTerminateFlags
+
+			case "delete":
+				epf = contractStorageArchiveDeleteFlags
+
+			case "audit":
+				epf = contractStorageArchiveAuditFlags
+
+			}
+
+		case "dcs-to-dcs":
+			switch epn {
+			case "retrieve":
+				epf = dcsToDcsRetrieveFlags
+
+			}
+
+		case "external-target-system-api":
+			switch epn {
+			case "action":
+				epf = externalTargetSystemAPIActionFlags
+
+			case "status":
+				epf = externalTargetSystemAPIStatusFlags
+
+			case "callback":
+				epf = externalTargetSystemAPICallbackFlags
+
+			}
+
+		case "orchestration-webhooks":
+			switch epn {
+			case "node-red-webhook":
+				epf = orchestrationWebhooksNodeRedWebhookFlags
+
+			}
+
+		case "pac":
+			switch epn {
+			case "audit":
+				epf = pacAuditFlags
+
+			case "audit-report":
+				epf = pacAuditReportFlags
+
+			case "monitor":
+				epf = pacMonitorFlags
+
+			case "incident-report":
+				epf = pacIncidentReportFlags
+
+			}
+
+		case "signature-management":
+			switch epn {
+			case "retrieve":
+				epf = signatureManagementRetrieveFlags
+
+			case "verify":
+				epf = signatureManagementVerifyFlags
+
+			case "apply":
+				epf = signatureManagementApplyFlags
+
+			case "validate":
+				epf = signatureManagementValidateFlags
+
+			case "revoke":
+				epf = signatureManagementRevokeFlags
+
+			case "audit":
+				epf = signatureManagementAuditFlags
+
+			case "compliance":
+				epf = signatureManagementComplianceFlags
+
+			}
+
+		case "template-catalogue-integration":
+			switch epn {
+			case "discover":
+				epf = templateCatalogueIntegrationDiscoverFlags
+
+			case "request":
+				epf = templateCatalogueIntegrationRequestFlags
+
+			case "register":
+				epf = templateCatalogueIntegrationRegisterFlags
+
+			}
+
 		case "template-repository":
 			switch epn {
 			case "create":
@@ -341,149 +400,6 @@ func ParseEndpoint(
 
 			}
 
-		case "contract-workflow-engine":
-			switch epn {
-			case "create":
-				epf = contractWorkflowEngineCreateFlags
-
-			case "submit":
-				epf = contractWorkflowEngineSubmitFlags
-
-			case "negotiate":
-				epf = contractWorkflowEngineNegotiateFlags
-
-			case "respond":
-				epf = contractWorkflowEngineRespondFlags
-
-			case "review":
-				epf = contractWorkflowEngineReviewFlags
-
-			case "retrieve":
-				epf = contractWorkflowEngineRetrieveFlags
-
-			case "search":
-				epf = contractWorkflowEngineSearchFlags
-
-			case "approve":
-				epf = contractWorkflowEngineApproveFlags
-
-			case "reject":
-				epf = contractWorkflowEngineRejectFlags
-
-			case "store":
-				epf = contractWorkflowEngineStoreFlags
-
-			case "terminate":
-				epf = contractWorkflowEngineTerminateFlags
-
-			case "audit":
-				epf = contractWorkflowEngineAuditFlags
-
-			}
-
-		case "signature-management":
-			switch epn {
-			case "retrieve":
-				epf = signatureManagementRetrieveFlags
-
-			case "verify":
-				epf = signatureManagementVerifyFlags
-
-			case "apply":
-				epf = signatureManagementApplyFlags
-
-			case "validate":
-				epf = signatureManagementValidateFlags
-
-			case "revoke":
-				epf = signatureManagementRevokeFlags
-
-			case "audit":
-				epf = signatureManagementAuditFlags
-
-			case "compliance":
-				epf = signatureManagementComplianceFlags
-
-			}
-
-		case "contract-storage-archive":
-			switch epn {
-			case "retrieve":
-				epf = contractStorageArchiveRetrieveFlags
-
-			case "search":
-				epf = contractStorageArchiveSearchFlags
-
-			case "store":
-				epf = contractStorageArchiveStoreFlags
-
-			case "terminate":
-				epf = contractStorageArchiveTerminateFlags
-
-			case "delete":
-				epf = contractStorageArchiveDeleteFlags
-
-			case "audit":
-				epf = contractStorageArchiveAuditFlags
-
-			}
-
-		case "pac":
-			switch epn {
-			case "audit":
-				epf = pacAuditFlags
-
-			case "audit-report":
-				epf = pacAuditReportFlags
-
-			case "monitor":
-				epf = pacMonitorFlags
-
-			case "incident-report":
-				epf = pacIncidentReportFlags
-
-			}
-
-		case "template-catalogue-integration":
-			switch epn {
-			case "discover":
-				epf = templateCatalogueIntegrationDiscoverFlags
-
-			case "request":
-				epf = templateCatalogueIntegrationRequestFlags
-
-			case "register":
-				epf = templateCatalogueIntegrationRegisterFlags
-
-			}
-
-		case "orchestration-webhooks":
-			switch epn {
-			case "node-red-webhook":
-				epf = orchestrationWebhooksNodeRedWebhookFlags
-
-			}
-
-		case "external-target-system-api":
-			switch epn {
-			case "action":
-				epf = externalTargetSystemAPIActionFlags
-
-			case "status":
-				epf = externalTargetSystemAPIStatusFlags
-
-			case "callback":
-				epf = externalTargetSystemAPICallbackFlags
-
-			}
-
-		case "dcs-to-dcs":
-			switch epn {
-			case "retrieve":
-				epf = dcsToDcsRetrieveFlags
-
-			}
-
 		}
 	}
 	if epf == nil {
@@ -504,6 +420,84 @@ func ParseEndpoint(
 	)
 	{
 		switch svcn {
+		case "contract-storage-archive":
+			c := contractstoragearchivec.NewClient(scheme, host, doer, enc, dec, restore)
+			switch epn {
+			case "retrieve":
+				endpoint = c.Retrieve()
+			case "search":
+				endpoint = c.Search()
+			case "store":
+				endpoint = c.Store()
+			case "terminate":
+				endpoint = c.Terminate()
+			case "delete":
+				endpoint = c.Delete()
+			case "audit":
+				endpoint = c.Audit()
+			}
+		case "dcs-to-dcs":
+			c := dcstodcsc.NewClient(scheme, host, doer, enc, dec, restore)
+			switch epn {
+			case "retrieve":
+				endpoint = c.Retrieve()
+			}
+		case "external-target-system-api":
+			c := externaltargetsystemapic.NewClient(scheme, host, doer, enc, dec, restore)
+			switch epn {
+			case "action":
+				endpoint = c.Action()
+			case "status":
+				endpoint = c.Status()
+			case "callback":
+				endpoint = c.Callback()
+			}
+		case "orchestration-webhooks":
+			c := orchestrationwebhooksc.NewClient(scheme, host, doer, enc, dec, restore)
+			switch epn {
+			case "node-red-webhook":
+				endpoint = c.NodeRedWebhook()
+			}
+		case "pac":
+			c := pacc.NewClient(scheme, host, doer, enc, dec, restore)
+			switch epn {
+			case "audit":
+				endpoint = c.Audit()
+			case "audit-report":
+				endpoint = c.AuditReport()
+			case "monitor":
+				endpoint = c.Monitor()
+			case "incident-report":
+				endpoint = c.IncidentReport()
+			}
+		case "signature-management":
+			c := signaturemanagementc.NewClient(scheme, host, doer, enc, dec, restore)
+			switch epn {
+			case "retrieve":
+				endpoint = c.Retrieve()
+			case "verify":
+				endpoint = c.Verify()
+			case "apply":
+				endpoint = c.Apply()
+			case "validate":
+				endpoint = c.Validate()
+			case "revoke":
+				endpoint = c.Revoke()
+			case "audit":
+				endpoint = c.Audit()
+			case "compliance":
+				endpoint = c.Compliance()
+			}
+		case "template-catalogue-integration":
+			c := templatecatalogueintegrationc.NewClient(scheme, host, doer, enc, dec, restore)
+			switch epn {
+			case "discover":
+				endpoint = c.Discover()
+			case "request":
+				endpoint = c.Request()
+			case "register":
+				endpoint = c.Register()
+			}
 		case "template-repository":
 			c := templaterepositoryc.NewClient(scheme, host, doer, enc, dec, restore)
 			switch epn {
@@ -535,112 +529,6 @@ func ParseEndpoint(
 			case "audit":
 				endpoint = c.Audit()
 			}
-		case "contract-workflow-engine":
-			c := contractworkflowenginec.NewClient(scheme, host, doer, enc, dec, restore)
-			switch epn {
-			case "create":
-				endpoint = c.Create()
-			case "submit":
-				endpoint = c.Submit()
-			case "negotiate":
-				endpoint = c.Negotiate()
-			case "respond":
-				endpoint = c.Respond()
-			case "review":
-				endpoint = c.Review()
-			case "retrieve":
-				endpoint = c.Retrieve()
-			case "search":
-				endpoint = c.Search()
-			case "approve":
-				endpoint = c.Approve()
-			case "reject":
-				endpoint = c.Reject()
-			case "store":
-				endpoint = c.Store()
-			case "terminate":
-				endpoint = c.Terminate()
-			case "audit":
-				endpoint = c.Audit()
-			}
-		case "signature-management":
-			c := signaturemanagementc.NewClient(scheme, host, doer, enc, dec, restore)
-			switch epn {
-			case "retrieve":
-				endpoint = c.Retrieve()
-			case "verify":
-				endpoint = c.Verify()
-			case "apply":
-				endpoint = c.Apply()
-			case "validate":
-				endpoint = c.Validate()
-			case "revoke":
-				endpoint = c.Revoke()
-			case "audit":
-				endpoint = c.Audit()
-			case "compliance":
-				endpoint = c.Compliance()
-			}
-		case "contract-storage-archive":
-			c := contractstoragearchivec.NewClient(scheme, host, doer, enc, dec, restore)
-			switch epn {
-			case "retrieve":
-				endpoint = c.Retrieve()
-			case "search":
-				endpoint = c.Search()
-			case "store":
-				endpoint = c.Store()
-			case "terminate":
-				endpoint = c.Terminate()
-			case "delete":
-				endpoint = c.Delete()
-			case "audit":
-				endpoint = c.Audit()
-			}
-		case "pac":
-			c := pacc.NewClient(scheme, host, doer, enc, dec, restore)
-			switch epn {
-			case "audit":
-				endpoint = c.Audit()
-			case "audit-report":
-				endpoint = c.AuditReport()
-			case "monitor":
-				endpoint = c.Monitor()
-			case "incident-report":
-				endpoint = c.IncidentReport()
-			}
-		case "template-catalogue-integration":
-			c := templatecatalogueintegrationc.NewClient(scheme, host, doer, enc, dec, restore)
-			switch epn {
-			case "discover":
-				endpoint = c.Discover()
-			case "request":
-				endpoint = c.Request()
-			case "register":
-				endpoint = c.Register()
-			}
-		case "orchestration-webhooks":
-			c := orchestrationwebhooksc.NewClient(scheme, host, doer, enc, dec, restore)
-			switch epn {
-			case "node-red-webhook":
-				endpoint = c.NodeRedWebhook()
-			}
-		case "external-target-system-api":
-			c := externaltargetsystemapic.NewClient(scheme, host, doer, enc, dec, restore)
-			switch epn {
-			case "action":
-				endpoint = c.Action()
-			case "status":
-				endpoint = c.Status()
-			case "callback":
-				endpoint = c.Callback()
-			}
-		case "dcs-to-dcs":
-			c := dcstodcsc.NewClient(scheme, host, doer, enc, dec, restore)
-			switch epn {
-			case "retrieve":
-				endpoint = c.Retrieve()
-			}
 		}
 	}
 	if err != nil {
@@ -648,6 +536,500 @@ func ParseEndpoint(
 	}
 
 	return endpoint, data, nil
+}
+
+// contractStorageArchiveUsage displays the usage of the
+// contract-storage-archive command and its subcommands.
+func contractStorageArchiveUsage() {
+	fmt.Fprintln(os.Stderr, `Contract Storage & Archive APIs (/archive/...)`)
+	fmt.Fprintf(os.Stderr, "Usage:\n    %s [globalflags] contract-storage-archive COMMAND [flags]\n\n", os.Args[0])
+	fmt.Fprintln(os.Stderr, "COMMAND:")
+	fmt.Fprintln(os.Stderr, `    retrieve: retrieve archived items.`)
+	fmt.Fprintln(os.Stderr, `    search: search archived records. search records by criteria.`)
+	fmt.Fprintln(os.Stderr, `    store: store new contract or evidence.`)
+	fmt.Fprintln(os.Stderr, `    terminate: terminate contract/archive entry.`)
+	fmt.Fprintln(os.Stderr, `    delete: permanently delete entry.`)
+	fmt.Fprintln(os.Stderr, `    audit: retrieve audit logs.`)
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Additional help:")
+	fmt.Fprintf(os.Stderr, "    %s contract-storage-archive COMMAND --help\n", os.Args[0])
+}
+func contractStorageArchiveRetrieveUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] contract-storage-archive retrieve", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `retrieve archived items.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-storage-archive retrieve")
+}
+
+func contractStorageArchiveSearchUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] contract-storage-archive search", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `search archived records. search records by criteria.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-storage-archive search")
+}
+
+func contractStorageArchiveStoreUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] contract-storage-archive store", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `store new contract or evidence.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-storage-archive store")
+}
+
+func contractStorageArchiveTerminateUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] contract-storage-archive terminate", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `terminate contract/archive entry.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-storage-archive terminate")
+}
+
+func contractStorageArchiveDeleteUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] contract-storage-archive delete", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `permanently delete entry.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-storage-archive delete")
+}
+
+func contractStorageArchiveAuditUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] contract-storage-archive audit", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `retrieve audit logs.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-storage-archive audit")
+}
+
+// dcsToDcsUsage displays the usage of the dcs-to-dcs command and its
+// subcommands.
+func dcsToDcsUsage() {
+	fmt.Fprintln(os.Stderr, `DCS supports direct interoperability between two or more DCS instances, enabling automated contract lifecycle operations across organizational boundaries.`)
+	fmt.Fprintf(os.Stderr, "Usage:\n    %s [globalflags] dcs-to-dcs COMMAND [flags]\n\n", os.Args[0])
+	fmt.Fprintln(os.Stderr, "COMMAND:")
+	fmt.Fprintln(os.Stderr, `    retrieve: Offer a policy-gated, read-only contract information endpoint between a DCS instance and a counterparty DCS`)
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Additional help:")
+	fmt.Fprintf(os.Stderr, "    %s dcs-to-dcs COMMAND --help\n", os.Args[0])
+}
+func dcsToDcsRetrieveUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] dcs-to-dcs retrieve", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `Offer a policy-gated, read-only contract information endpoint between a DCS instance and a counterparty DCS`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "dcs-to-dcs retrieve")
+}
+
+// externalTargetSystemAPIUsage displays the usage of the
+// external-target-system-api command and its subcommands.
+func externalTargetSystemAPIUsage() {
+	fmt.Fprintln(os.Stderr, `Integration APIs between DCS (CWE/SM/CSA) and external target systems (e.g., ERP or AI services): create/deploy actions, status queries, and event callbacks.`)
+	fmt.Fprintf(os.Stderr, "Usage:\n    %s [globalflags] external-target-system-api COMMAND [flags]\n\n", os.Args[0])
+	fmt.Fprintln(os.Stderr, "COMMAND:")
+	fmt.Fprintln(os.Stderr, `    action: Invoke external target system action (create/deploy) from DCS.`)
+	fmt.Fprintln(os.Stderr, `    status: Query external target system status from DCS.`)
+	fmt.Fprintln(os.Stderr, `    callback: Receive external target system callbacks/events into DCS.`)
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Additional help:")
+	fmt.Fprintf(os.Stderr, "    %s external-target-system-api COMMAND --help\n", os.Args[0])
+}
+func externalTargetSystemAPIActionUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] external-target-system-api action", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `Invoke external target system action (create/deploy) from DCS.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "external-target-system-api action")
+}
+
+func externalTargetSystemAPIStatusUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] external-target-system-api status", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `Query external target system status from DCS.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "external-target-system-api status")
+}
+
+func externalTargetSystemAPICallbackUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] external-target-system-api callback", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `Receive external target system callbacks/events into DCS.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "external-target-system-api callback")
+}
+
+// orchestrationWebhooksUsage displays the usage of the orchestration-webhooks
+// command and its subcommands.
+func orchestrationWebhooksUsage() {
+	fmt.Fprintln(os.Stderr, `Webhook and callback endpoints for external orchestration tools (e.g. Node-RED).`)
+	fmt.Fprintf(os.Stderr, "Usage:\n    %s [globalflags] orchestration-webhooks COMMAND [flags]\n\n", os.Args[0])
+	fmt.Fprintln(os.Stderr, "COMMAND:")
+	fmt.Fprintln(os.Stderr, `    node-red-webhook: Expose Node-Red - compatible endpoints and webhook callbacks.`)
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Additional help:")
+	fmt.Fprintf(os.Stderr, "    %s orchestration-webhooks COMMAND --help\n", os.Args[0])
+}
+func orchestrationWebhooksNodeRedWebhookUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] orchestration-webhooks node-red-webhook", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `Expose Node-Red - compatible endpoints and webhook callbacks.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "orchestration-webhooks node-red-webhook")
+}
+
+// pacUsage displays the usage of the pac command and its subcommands.
+func pacUsage() {
+	fmt.Fprintln(os.Stderr, `Process Audit & Compliance Management APIs (/pac/...)`)
+	fmt.Fprintf(os.Stderr, "Usage:\n    %s [globalflags] pac COMMAND [flags]\n\n", os.Args[0])
+	fmt.Fprintln(os.Stderr, "COMMAND:")
+	fmt.Fprintln(os.Stderr, `    audit: trigger an audit on selected scope.`)
+	fmt.Fprintln(os.Stderr, `    audit-report: generate and retrieve audit reports.`)
+	fmt.Fprintln(os.Stderr, `    monitor: continuous monitoring and event retrieval.`)
+	fmt.Fprintln(os.Stderr, `    incident-report: submit non-compliance findings as case records.`)
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Additional help:")
+	fmt.Fprintf(os.Stderr, "    %s pac COMMAND --help\n", os.Args[0])
+}
+func pacAuditUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] pac audit", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `trigger an audit on selected scope.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "pac audit")
+}
+
+func pacAuditReportUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] pac audit-report", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `generate and retrieve audit reports.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "pac audit-report")
+}
+
+func pacMonitorUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] pac monitor", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `continuous monitoring and event retrieval.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "pac monitor")
+}
+
+func pacIncidentReportUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] pac incident-report", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `submit non-compliance findings as case records.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "pac incident-report")
+}
+
+// signatureManagementUsage displays the usage of the signature-management
+// command and its subcommands.
+func signatureManagementUsage() {
+	fmt.Fprintln(os.Stderr, `Signature Management APIs (/signature/...)`)
+	fmt.Fprintf(os.Stderr, "Usage:\n    %s [globalflags] signature-management COMMAND [flags]\n\n", os.Args[0])
+	fmt.Fprintln(os.Stderr, "COMMAND:")
+	fmt.Fprintln(os.Stderr, `    retrieve: fetch contract & envelope.`)
+	fmt.Fprintln(os.Stderr, `    verify: check contract integrity & envelope.`)
+	fmt.Fprintln(os.Stderr, `    apply: apply digital signature.`)
+	fmt.Fprintln(os.Stderr, `    validate: validate applied signature. validate contract signature(s).`)
+	fmt.Fprintln(os.Stderr, `    revoke: revoke a signature.`)
+	fmt.Fprintln(os.Stderr, `    audit: retrieve compliance/audit logs.`)
+	fmt.Fprintln(os.Stderr, `    compliance: run compliance check.`)
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Additional help:")
+	fmt.Fprintf(os.Stderr, "    %s signature-management COMMAND --help\n", os.Args[0])
+}
+func signatureManagementRetrieveUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] signature-management retrieve", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `fetch contract & envelope.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "signature-management retrieve")
+}
+
+func signatureManagementVerifyUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] signature-management verify", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `check contract integrity & envelope.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "signature-management verify")
+}
+
+func signatureManagementApplyUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] signature-management apply", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `apply digital signature.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "signature-management apply")
+}
+
+func signatureManagementValidateUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] signature-management validate", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `validate applied signature. validate contract signature(s).`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "signature-management validate")
+}
+
+func signatureManagementRevokeUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] signature-management revoke", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `revoke a signature.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "signature-management revoke")
+}
+
+func signatureManagementAuditUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] signature-management audit", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `retrieve compliance/audit logs.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "signature-management audit")
+}
+
+func signatureManagementComplianceUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] signature-management compliance", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `run compliance check.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "signature-management compliance")
+}
+
+// templateCatalogueIntegrationUsage displays the usage of the
+// template-catalogue-integration command and its subcommands.
+func templateCatalogueIntegrationUsage() {
+	fmt.Fprintln(os.Stderr, `Integration APIs between Template Repository (TR) and XFSC Catalogue for template discovery, request, and registration.`)
+	fmt.Fprintf(os.Stderr, "Usage:\n    %s [globalflags] template-catalogue-integration COMMAND [flags]\n\n", os.Args[0])
+	fmt.Fprintln(os.Stderr, "COMMAND:")
+	fmt.Fprintln(os.Stderr, `    discover: Discover templates via XFSC Catalogue.`)
+	fmt.Fprintln(os.Stderr, `    request: Request template via XFSC Catalogue.`)
+	fmt.Fprintln(os.Stderr, `    register: Register template into XFSC Catalogue.`)
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Additional help:")
+	fmt.Fprintf(os.Stderr, "    %s template-catalogue-integration COMMAND --help\n", os.Args[0])
+}
+func templateCatalogueIntegrationDiscoverUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] template-catalogue-integration discover", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `Discover templates via XFSC Catalogue.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "template-catalogue-integration discover")
+}
+
+func templateCatalogueIntegrationRequestUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] template-catalogue-integration request", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `Request template via XFSC Catalogue.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "template-catalogue-integration request")
+}
+
+func templateCatalogueIntegrationRegisterUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] template-catalogue-integration register", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `Register template into XFSC Catalogue.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "template-catalogue-integration register")
 }
 
 // templateRepositoryUsage displays the usage of the template-repository
@@ -784,7 +1166,7 @@ func templateRepositoryRetrieveByIDUsage() {
 
 	fmt.Fprintln(os.Stderr)
 	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "template-repository retrieve-by-id --template-id \"Eveniet laudantium eum soluta.\"")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "template-repository retrieve-by-id --template-id \"Quibusdam et.\"")
 }
 
 func templateRepositoryVerifyUsage() {
@@ -881,712 +1263,4 @@ func templateRepositoryAuditUsage() {
 	fmt.Fprintln(os.Stderr)
 	fmt.Fprintln(os.Stderr, "Example:")
 	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "template-repository audit")
-}
-
-// contractWorkflowEngineUsage displays the usage of the
-// contract-workflow-engine command and its subcommands.
-func contractWorkflowEngineUsage() {
-	fmt.Fprintln(os.Stderr, `Contract Workflow Engine APIs (/contract/...)`)
-	fmt.Fprintf(os.Stderr, "Usage:\n    %s [globalflags] contract-workflow-engine COMMAND [flags]\n\n", os.Args[0])
-	fmt.Fprintln(os.Stderr, "COMMAND:")
-	fmt.Fprintln(os.Stderr, `    create: initiate new contract draft from template.`)
-	fmt.Fprintln(os.Stderr, `    submit: finalize and submit contract for negotiation/review. finalize and submit negotiated version. finalize review outcome. finalize decision. finalize review outcome.`)
-	fmt.Fprintln(os.Stderr, `    negotiate: propose changes.`)
-	fmt.Fprintln(os.Stderr, `    respond: provide feedback/findings. respond to counterpart changes.`)
-	fmt.Fprintln(os.Stderr, `    review: retrieve latest draft for comparison.`)
-	fmt.Fprintln(os.Stderr, `    retrieve: fetch submitted contract. fetch reviewed contract. fetch contract(s).`)
-	fmt.Fprintln(os.Stderr, `    search: locate contracts by metadata or state. filter/search across lifecycle states.`)
-	fmt.Fprintln(os.Stderr, `    approve: approve and forward contract.`)
-	fmt.Fprintln(os.Stderr, `    reject: reject with explanation.`)
-	fmt.Fprintln(os.Stderr, `    store: store evidence.`)
-	fmt.Fprintln(os.Stderr, `    terminate: terminate a contract.`)
-	fmt.Fprintln(os.Stderr, `    audit: generate audit record.`)
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Additional help:")
-	fmt.Fprintf(os.Stderr, "    %s contract-workflow-engine COMMAND --help\n", os.Args[0])
-}
-func contractWorkflowEngineCreateUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] contract-workflow-engine create", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `initiate new contract draft from template.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-workflow-engine create")
-}
-
-func contractWorkflowEngineSubmitUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] contract-workflow-engine submit", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `finalize and submit contract for negotiation/review. finalize and submit negotiated version. finalize review outcome. finalize decision. finalize review outcome.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-workflow-engine submit")
-}
-
-func contractWorkflowEngineNegotiateUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] contract-workflow-engine negotiate", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `propose changes.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-workflow-engine negotiate")
-}
-
-func contractWorkflowEngineRespondUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] contract-workflow-engine respond", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `provide feedback/findings. respond to counterpart changes.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-workflow-engine respond")
-}
-
-func contractWorkflowEngineReviewUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] contract-workflow-engine review", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `retrieve latest draft for comparison.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-workflow-engine review")
-}
-
-func contractWorkflowEngineRetrieveUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] contract-workflow-engine retrieve", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `fetch submitted contract. fetch reviewed contract. fetch contract(s).`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-workflow-engine retrieve")
-}
-
-func contractWorkflowEngineSearchUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] contract-workflow-engine search", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `locate contracts by metadata or state. filter/search across lifecycle states.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-workflow-engine search")
-}
-
-func contractWorkflowEngineApproveUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] contract-workflow-engine approve", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `approve and forward contract.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-workflow-engine approve")
-}
-
-func contractWorkflowEngineRejectUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] contract-workflow-engine reject", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `reject with explanation.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-workflow-engine reject")
-}
-
-func contractWorkflowEngineStoreUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] contract-workflow-engine store", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `store evidence.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-workflow-engine store")
-}
-
-func contractWorkflowEngineTerminateUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] contract-workflow-engine terminate", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `terminate a contract.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-workflow-engine terminate")
-}
-
-func contractWorkflowEngineAuditUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] contract-workflow-engine audit", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `generate audit record.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-workflow-engine audit")
-}
-
-// signatureManagementUsage displays the usage of the signature-management
-// command and its subcommands.
-func signatureManagementUsage() {
-	fmt.Fprintln(os.Stderr, `Signature Management APIs (/signature/...)`)
-	fmt.Fprintf(os.Stderr, "Usage:\n    %s [globalflags] signature-management COMMAND [flags]\n\n", os.Args[0])
-	fmt.Fprintln(os.Stderr, "COMMAND:")
-	fmt.Fprintln(os.Stderr, `    retrieve: fetch contract & envelope.`)
-	fmt.Fprintln(os.Stderr, `    verify: check contract integrity & envelope.`)
-	fmt.Fprintln(os.Stderr, `    apply: apply digital signature.`)
-	fmt.Fprintln(os.Stderr, `    validate: validate applied signature. validate contract signature(s).`)
-	fmt.Fprintln(os.Stderr, `    revoke: revoke a signature.`)
-	fmt.Fprintln(os.Stderr, `    audit: retrieve compliance/audit logs.`)
-	fmt.Fprintln(os.Stderr, `    compliance: run compliance check.`)
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Additional help:")
-	fmt.Fprintf(os.Stderr, "    %s signature-management COMMAND --help\n", os.Args[0])
-}
-func signatureManagementRetrieveUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] signature-management retrieve", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `fetch contract & envelope.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "signature-management retrieve")
-}
-
-func signatureManagementVerifyUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] signature-management verify", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `check contract integrity & envelope.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "signature-management verify")
-}
-
-func signatureManagementApplyUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] signature-management apply", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `apply digital signature.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "signature-management apply")
-}
-
-func signatureManagementValidateUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] signature-management validate", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `validate applied signature. validate contract signature(s).`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "signature-management validate")
-}
-
-func signatureManagementRevokeUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] signature-management revoke", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `revoke a signature.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "signature-management revoke")
-}
-
-func signatureManagementAuditUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] signature-management audit", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `retrieve compliance/audit logs.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "signature-management audit")
-}
-
-func signatureManagementComplianceUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] signature-management compliance", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `run compliance check.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "signature-management compliance")
-}
-
-// contractStorageArchiveUsage displays the usage of the
-// contract-storage-archive command and its subcommands.
-func contractStorageArchiveUsage() {
-	fmt.Fprintln(os.Stderr, `Contract Storage & Archive APIs (/archive/...)`)
-	fmt.Fprintf(os.Stderr, "Usage:\n    %s [globalflags] contract-storage-archive COMMAND [flags]\n\n", os.Args[0])
-	fmt.Fprintln(os.Stderr, "COMMAND:")
-	fmt.Fprintln(os.Stderr, `    retrieve: retrieve archived items.`)
-	fmt.Fprintln(os.Stderr, `    search: search archived records. search records by criteria.`)
-	fmt.Fprintln(os.Stderr, `    store: store new contract or evidence.`)
-	fmt.Fprintln(os.Stderr, `    terminate: terminate contract/archive entry.`)
-	fmt.Fprintln(os.Stderr, `    delete: permanently delete entry.`)
-	fmt.Fprintln(os.Stderr, `    audit: retrieve audit logs.`)
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Additional help:")
-	fmt.Fprintf(os.Stderr, "    %s contract-storage-archive COMMAND --help\n", os.Args[0])
-}
-func contractStorageArchiveRetrieveUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] contract-storage-archive retrieve", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `retrieve archived items.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-storage-archive retrieve")
-}
-
-func contractStorageArchiveSearchUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] contract-storage-archive search", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `search archived records. search records by criteria.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-storage-archive search")
-}
-
-func contractStorageArchiveStoreUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] contract-storage-archive store", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `store new contract or evidence.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-storage-archive store")
-}
-
-func contractStorageArchiveTerminateUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] contract-storage-archive terminate", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `terminate contract/archive entry.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-storage-archive terminate")
-}
-
-func contractStorageArchiveDeleteUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] contract-storage-archive delete", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `permanently delete entry.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-storage-archive delete")
-}
-
-func contractStorageArchiveAuditUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] contract-storage-archive audit", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `retrieve audit logs.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-storage-archive audit")
-}
-
-// pacUsage displays the usage of the pac command and its subcommands.
-func pacUsage() {
-	fmt.Fprintln(os.Stderr, `Process Audit & Compliance Management APIs (/pac/...)`)
-	fmt.Fprintf(os.Stderr, "Usage:\n    %s [globalflags] pac COMMAND [flags]\n\n", os.Args[0])
-	fmt.Fprintln(os.Stderr, "COMMAND:")
-	fmt.Fprintln(os.Stderr, `    audit: trigger an audit on selected scope.`)
-	fmt.Fprintln(os.Stderr, `    audit-report: generate and retrieve audit reports.`)
-	fmt.Fprintln(os.Stderr, `    monitor: continuous monitoring and event retrieval.`)
-	fmt.Fprintln(os.Stderr, `    incident-report: submit non-compliance findings as case records.`)
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Additional help:")
-	fmt.Fprintf(os.Stderr, "    %s pac COMMAND --help\n", os.Args[0])
-}
-func pacAuditUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] pac audit", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `trigger an audit on selected scope.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "pac audit")
-}
-
-func pacAuditReportUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] pac audit-report", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `generate and retrieve audit reports.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "pac audit-report")
-}
-
-func pacMonitorUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] pac monitor", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `continuous monitoring and event retrieval.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "pac monitor")
-}
-
-func pacIncidentReportUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] pac incident-report", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `submit non-compliance findings as case records.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "pac incident-report")
-}
-
-// templateCatalogueIntegrationUsage displays the usage of the
-// template-catalogue-integration command and its subcommands.
-func templateCatalogueIntegrationUsage() {
-	fmt.Fprintln(os.Stderr, `Integration APIs between Template Repository (TR) and XFSC Catalogue for template discovery, request, and registration.`)
-	fmt.Fprintf(os.Stderr, "Usage:\n    %s [globalflags] template-catalogue-integration COMMAND [flags]\n\n", os.Args[0])
-	fmt.Fprintln(os.Stderr, "COMMAND:")
-	fmt.Fprintln(os.Stderr, `    discover: Discover templates via XFSC Catalogue.`)
-	fmt.Fprintln(os.Stderr, `    request: Request template via XFSC Catalogue.`)
-	fmt.Fprintln(os.Stderr, `    register: Register template into XFSC Catalogue.`)
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Additional help:")
-	fmt.Fprintf(os.Stderr, "    %s template-catalogue-integration COMMAND --help\n", os.Args[0])
-}
-func templateCatalogueIntegrationDiscoverUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] template-catalogue-integration discover", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `Discover templates via XFSC Catalogue.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "template-catalogue-integration discover")
-}
-
-func templateCatalogueIntegrationRequestUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] template-catalogue-integration request", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `Request template via XFSC Catalogue.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "template-catalogue-integration request")
-}
-
-func templateCatalogueIntegrationRegisterUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] template-catalogue-integration register", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `Register template into XFSC Catalogue.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "template-catalogue-integration register")
-}
-
-// orchestrationWebhooksUsage displays the usage of the orchestration-webhooks
-// command and its subcommands.
-func orchestrationWebhooksUsage() {
-	fmt.Fprintln(os.Stderr, `Webhook and callback endpoints for external orchestration tools (e.g. Node-RED).`)
-	fmt.Fprintf(os.Stderr, "Usage:\n    %s [globalflags] orchestration-webhooks COMMAND [flags]\n\n", os.Args[0])
-	fmt.Fprintln(os.Stderr, "COMMAND:")
-	fmt.Fprintln(os.Stderr, `    node-red-webhook: Expose Node-Red - compatible endpoints and webhook callbacks.`)
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Additional help:")
-	fmt.Fprintf(os.Stderr, "    %s orchestration-webhooks COMMAND --help\n", os.Args[0])
-}
-func orchestrationWebhooksNodeRedWebhookUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] orchestration-webhooks node-red-webhook", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `Expose Node-Red - compatible endpoints and webhook callbacks.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "orchestration-webhooks node-red-webhook")
-}
-
-// externalTargetSystemAPIUsage displays the usage of the
-// external-target-system-api command and its subcommands.
-func externalTargetSystemAPIUsage() {
-	fmt.Fprintln(os.Stderr, `Integration APIs between DCS (CWE/SM/CSA) and external target systems (e.g., ERP or AI services): create/deploy actions, status queries, and event callbacks.`)
-	fmt.Fprintf(os.Stderr, "Usage:\n    %s [globalflags] external-target-system-api COMMAND [flags]\n\n", os.Args[0])
-	fmt.Fprintln(os.Stderr, "COMMAND:")
-	fmt.Fprintln(os.Stderr, `    action: Invoke external target system action (create/deploy) from DCS.`)
-	fmt.Fprintln(os.Stderr, `    status: Query external target system status from DCS.`)
-	fmt.Fprintln(os.Stderr, `    callback: Receive external target system callbacks/events into DCS.`)
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Additional help:")
-	fmt.Fprintf(os.Stderr, "    %s external-target-system-api COMMAND --help\n", os.Args[0])
-}
-func externalTargetSystemAPIActionUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] external-target-system-api action", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `Invoke external target system action (create/deploy) from DCS.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "external-target-system-api action")
-}
-
-func externalTargetSystemAPIStatusUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] external-target-system-api status", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `Query external target system status from DCS.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "external-target-system-api status")
-}
-
-func externalTargetSystemAPICallbackUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] external-target-system-api callback", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `Receive external target system callbacks/events into DCS.`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "external-target-system-api callback")
-}
-
-// dcsToDcsUsage displays the usage of the dcs-to-dcs command and its
-// subcommands.
-func dcsToDcsUsage() {
-	fmt.Fprintln(os.Stderr, `DCS supports direct interoperability between two or more DCS instances, enabling automated contract lifecycle operations across organizational boundaries.`)
-	fmt.Fprintf(os.Stderr, "Usage:\n    %s [globalflags] dcs-to-dcs COMMAND [flags]\n\n", os.Args[0])
-	fmt.Fprintln(os.Stderr, "COMMAND:")
-	fmt.Fprintln(os.Stderr, `    retrieve: Offer a policy-gated, read-only contract information endpoint between a DCS instance and a counterparty DCS`)
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Additional help:")
-	fmt.Fprintf(os.Stderr, "    %s dcs-to-dcs COMMAND --help\n", os.Args[0])
-}
-func dcsToDcsRetrieveUsage() {
-	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] dcs-to-dcs retrieve", os.Args[0])
-	fmt.Fprintln(os.Stderr)
-
-	// Description
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, `Offer a policy-gated, read-only contract information endpoint between a DCS instance and a counterparty DCS`)
-
-	// Flags list
-
-	fmt.Fprintln(os.Stderr)
-	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "dcs-to-dcs retrieve")
 }
