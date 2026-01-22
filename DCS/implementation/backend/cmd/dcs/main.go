@@ -11,7 +11,7 @@ import (
 	signaturemanagement "digital-contracting-service/gen/signature_management"
 	templatecatalogueintegration "digital-contracting-service/gen/template_catalogue_integration"
 	templaterepository "digital-contracting-service/gen/template_repository"
-	"digital-contracting-service/internal/controller"
+	"digital-contracting-service/internal/service"
 	"flag"
 	"fmt"
 	"net"
@@ -62,15 +62,15 @@ func main() {
 		dcsToDcsSvc                     dcstodcs.Service
 	)
 	{
-		templateRepositorySvc = controller.NewTemplateRepository()
-		contractWorkflowEngineSvc = controller.NewContractWorkflowEngine()
-		signatureManagementSvc = controller.NewSignatureManagement()
-		contractStorageArchiveSvc = controller.NewContractStorageArchive()
-		pacSvc = controller.NewPac()
-		templateCatalogueIntegrationSvc = controller.NewTemplateCatalogueIntegration()
-		orchestrationWebhooksSvc = controller.NewOrchestrationWebhooks()
-		externalTargetSystemAPISvc = controller.NewExternalTargetSystemAPI()
-		dcsToDcsSvc = controller.NewDcsToDcs()
+		templateRepositorySvc = service.NewTemplateRepository()
+		contractWorkflowEngineSvc = service.NewContractWorkflowEngine()
+		signatureManagementSvc = service.NewSignatureManagement()
+		contractStorageArchiveSvc = service.NewContractStorageArchive()
+		pacSvc = service.NewPac()
+		templateCatalogueIntegrationSvc = service.NewTemplateCatalogueIntegration()
+		orchestrationWebhooksSvc = service.NewOrchestrationWebhooks()
+		externalTargetSystemAPISvc = service.NewExternalTargetSystemAPI()
+		dcsToDcsSvc = service.NewDcsToDcs()
 	}
 
 	// Wrap the services in endpoints that can be invoked from other services
