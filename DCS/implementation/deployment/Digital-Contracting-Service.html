@@ -1,0 +1,250 @@
+<!-- Editor UI for Digital-Contracting-Service node -->
+<script type="text/x-red" data-template-name="Digital-Contracting-Service">
+  <style>
+      .tab-container {
+          display: flex;
+          border-bottom: 1px solid #ccc;
+      }
+      .tab-link {
+          display: inline-block;
+          padding: 8px 16px;
+          cursor: pointer;
+          border: 1px solid #ccc;
+          border-bottom: none;
+          background: #eee;
+          color: #555;
+          text-decoration: none;
+          font-weight: normal;
+      }
+      .tab-link.active {
+          background: #fff;
+          color: #000;
+          font-weight: bold;
+          border-bottom: 1px solid #fff;
+      }
+      .tab-content {
+          border: 1px solid #ccc;
+          border-top: none;
+          border-radius: 0 4px 4px 4px;
+          padding: 10px;
+          background: #fff;
+      }
+      .form-row {
+          display: flex;
+          align-items: center;
+          margin-bottom: 10px;
+      }
+      .form-row label {
+          width: 120px!important;
+          margin-right: 10px;
+          font-weight: normal;
+          color: #333;
+          text-align: right;
+      }
+      .form-row input[type="text"],
+      .form-row input[type="file"],
+      .form-row input[type="password"],
+      .form-row select,
+      .form-row textarea {
+          flex: 1;
+      }
+      #node-input-customScript {
+          width: 100%;
+          min-height: 250px;
+          resize: vertical;
+      }
+  </style>
+
+  <div class="form-row tab-container">
+      <a href="#" class="tab-link active" data-tab="tab1">Instance</a>
+      <a href="#" class="tab-link" data-tab="tab2">Deployment</a>
+      <a href="#" class="tab-link" data-tab="tab3">Domain</a>
+      <a href="#" class="tab-link" data-tab="tab4">Keycloak</a>
+      <a href="#" class="tab-link" data-tab="tab5">Credentials</a>
+  </div>
+
+  <!-- Tab1: Instance -->
+  <div id="tab1" class="tab-content">
+      <div class="form-row">
+          <label for="node-input-instanceName">Instance Name</label>
+          <input type="text" id="node-input-instanceName" placeholder="Instance name">
+      </div>
+      <div class="form-row">
+          <label for="node-input-name">Name</label>
+          <input type="text" id="node-input-name" placeholder="Node name">
+      </div>
+  </div>
+
+  <!-- Tab2: Deployment -->
+  <div id="tab2" class="tab-content" style="display: none;">
+      <div class="form-row">
+          <label for="node-input-deploymentType">Deployment Type</label>
+          <select id="node-input-deploymentType">
+              <option value="k8s">k8s</option>
+              <option value="docker" disabled>docker (coming soon)</option>
+          </select>
+      </div>
+      <div class="form-row">
+          <label for="node-input-kubeconfig">Kubeconfig</label>
+          <input type="file" id="node-input-kubeconfig">
+          <input type="hidden" id="node-input-kubeconfigContent">
+      </div>
+  </div>
+
+  <!-- Tab3: Domain -->
+  <div id="tab3" class="tab-content" style="display: none;">
+      <div class="form-row">
+          <label for="node-input-deploymentPathType">Deployment Type</label>
+          <select id="node-input-deploymentPathType">
+              <option value="path">Path</option>
+          </select>
+      </div>
+      <div class="form-row">
+          <label for="node-input-domainAddress">Domain address</label>
+          <input type="text" id="node-input-domainAddress" placeholder="Domain address">
+      </div>
+      <div class="form-row">
+          <label for="node-input-privateKey">Private Key</label>
+          <input type="file" id="node-input-privateKey">
+          <input type="hidden" id="node-input-privateKeyContent">
+      </div>
+      <div class="form-row">
+          <label for="node-input-certificate">Certificate</label>
+          <input type="file" id="node-input-certificate">
+          <input type="hidden" id="node-input-certificateContent">
+      </div>
+  </div>
+
+  <!-- Tab4: Keycloak -->
+  <div id="tab4" class="tab-content" style="display: none;">
+      <div class="form-row">
+          <label for="node-input-keycloakUrl">Keycloak Url</label>
+          <input type="text" id="node-input-keycloakUrl" placeholder="https://keycloak-instance.com">
+      </div>
+      <div class="form-row">
+          <label for="node-input-realm">Realm Name</label>
+          <input type="text" id="node-input-realm" placeholder="gaia-x">
+      </div>
+      <div class="form-row">
+          <label for="node-input-adminUser">Keycloak Admin User</label>
+          <input type="text" id="node-input-adminUser" placeholder="admin username">
+      </div>
+      <div class="form-row">
+          <label for="node-input-adminPass">Keycloak Admin Pass</label>
+          <input type="password" id="node-input-adminPass" placeholder="admin password">
+      </div>
+  </div>
+
+  <!-- Tab5: Credentials -->
+  <div id="tab5" class="tab-content" style="display: none;">
+      <div class="form-row">
+          <label for="node-input-newUser">New User Name</label>
+          <input type="text" id="node-input-newUser" placeholder="new user">
+      </div>
+      <div class="form-row">
+          <label for="node-input-newPass">New User Pass</label>
+          <input type="password" id="node-input-newPass" placeholder="new password">
+      </div>
+       <div class="form-row">
+          <label for="node-input-clientRole">Client Role</label>
+          <input type="text" id="node-input-clientRole" placeholder="client-role">
+      </div>
+  </div>
+</script>
+
+<script type="text/javascript">
+  (function () {
+    function readFileAsBase64(inputId, hiddenInputId) {
+      $("#" + inputId).on("change", function () {
+        let file = this.files[0];
+        if (file) {
+          let reader = new FileReader();
+          reader.onload = function (e) {
+            $("#" + hiddenInputId).val(e.target.result);
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    }
+
+    RED.nodes.registerType("Digital-Contracting-Service", {
+      category: "FAPs",
+      color: "#c0deed",
+      icon: "bridge.svg",
+      defaults: {
+        instanceName: { value: "" },
+        name: { value: "" },
+        deploymentType: { value: "k8s" },
+        deploymentPathType: { value: "path" },
+        domainAddress: { value: "" },
+        customScript: { value: "" },
+        kubeconfigContent: { value: "" },
+        privateKeyContent: { value: "" },
+        certificateContent: { value: "" },
+        adminUser: { value: "" },
+        adminPass: { value: "" },
+        newUser: { value: "" },
+        newPass: { value: "" },
+        clientRole: { value: "" },
+        realm: { value: "" },
+        keycloakUrl: { value: "" },
+        clientSecret: { value: "" },
+      },
+      inputs: 1,
+      outputs: 1,
+      label: function () {
+        return this.name || "Digital-Contracting-Service";
+      },
+      oneditprepare: function () {
+        $(".tab-link").click(function (e) {
+          e.preventDefault();
+          $(".tab-link").removeClass("active");
+          $(this).addClass("active");
+          $(".tab-content").hide();
+          $("#" + $(this).data("tab")).show();
+        });
+
+        $("#node-input-auth")
+          .change(function () {
+            if ($(this).val() === "basic") {
+              $("#auth-fields").show();
+            } else {
+              $("#auth-fields").hide();
+            }
+          })
+          .trigger("change");
+
+        function setupFile(fieldFile, fieldHidden) {
+          var inp = $("#node-input-" + fieldFile)[0];
+          inp.addEventListener("change", function () {
+            var f = this.files[0];
+            if (!f) {
+              return;
+            }
+            var reader = new FileReader();
+            reader.onload = function (e) {
+              $("#node-input-" + fieldHidden).val(e.target.result);
+            };
+            reader.readAsText(f);
+          });
+        }
+
+        var nodeId = this.id;
+        $.getJSON(
+          "digital-contracting-service/info/" + encodeURIComponent(nodeId),
+          function (data) {
+            $("#node-input-ingressExternalIp").val(
+              data.ingressExternalIp || ""
+            );
+            $("#node-input-dcsUrl").val(data.dcsUrl || "");
+            $("#node-input-clientSecret").val(data.clientSecret || "");
+          }
+        );
+
+        setupFile("kubeconfig", "kubeconfigContent");
+        setupFile("privateKey", "privateKeyContent");
+        setupFile("certificate", "certificateContent");
+      },
+    });
+  })();
+</script>
