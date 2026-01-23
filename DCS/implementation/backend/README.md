@@ -9,7 +9,16 @@ Preliminary design, experiments, and preparatory work for the Digital Contractin
 │   ├── dcs/          # HTTP API server entrypoint
 │   └── dcs-cli/      # (optional) CLI tooling
 ├── design/           # Goa DSL (API contracts)
-│   └── design.go
+│   └── contract_storage_archive.go # Design description for the Contract Storage Archive api
+│   └── contract_workflow_eninge.go # Design description for the Contract Workflow Engine api
+│   └── dcs_to_dcs.go               # Design description for the DCS to DCS communication api
+│   └── design.go                   # Goa main design description
+│   └── external_system_api.go      # Design description for the external system communication api
+│   └── orchestration_webhook.go    # Design description for the orchestration webhooks api
+│   └── pac.go                      # Design description for the Process Audit & Compliance Management api
+│   └── signature_management.go     # Design description for the Signature Management api
+│   └── template_catalogue_integration.go   # Design description for the Template Catalogue integration api
+│   └── template_repository.go      # Design description for the Template Repository api
 ├── gen/              # Goa-generated transport & types (DO NOT EDIT)
 ├── internal
 |   └── datatype/     # Used data types for the application
