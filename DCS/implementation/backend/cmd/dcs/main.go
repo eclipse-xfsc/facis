@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	dcs "digital-contracting-service"
 	contractstoragearchive "digital-contracting-service/gen/contract_storage_archive"
 	contractworkflowengine "digital-contracting-service/gen/contract_workflow_engine"
 	dcstodcs "digital-contracting-service/gen/dcs_to_dcs"
@@ -12,6 +11,7 @@ import (
 	signaturemanagement "digital-contracting-service/gen/signature_management"
 	templatecatalogueintegration "digital-contracting-service/gen/template_catalogue_integration"
 	templaterepository "digital-contracting-service/gen/template_repository"
+	"digital-contracting-service/internal/services"
 	"flag"
 	"fmt"
 	"net"
@@ -62,15 +62,15 @@ func main() {
 		templateRepositorySvc           templaterepository.Service
 	)
 	{
-		contractStorageArchiveSvc = dcs.NewContractStorageArchive()
-		contractWorkflowEngineSvc = dcs.NewContractWorkflowEngine()
-		dcsToDcsSvc = dcs.NewDcsToDcs()
-		externalTargetSystemAPISvc = dcs.NewExternalTargetSystemAPI()
-		orchestrationWebhooksSvc = dcs.NewOrchestrationWebhooks()
-		processAuditAndComplianceSvc = dcs.NewProcessAuditAndCompliance()
-		signatureManagementSvc = dcs.NewSignatureManagement()
-		templateCatalogueIntegrationSvc = dcs.NewTemplateCatalogueIntegration()
-		templateRepositorySvc = dcs.NewTemplateRepository()
+		contractStorageArchiveSvc = services.NewContractStorageArchive()
+		contractWorkflowEngineSvc = services.NewContractWorkflowEngine()
+		dcsToDcsSvc = services.NewDcsToDcs()
+		externalTargetSystemAPISvc = services.NewExternalTargetSystemAPI()
+		orchestrationWebhooksSvc = services.NewOrchestrationWebhooks()
+		processAuditAndComplianceSvc = services.NewProcessAuditAndCompliance()
+		signatureManagementSvc = services.NewSignatureManagement()
+		templateCatalogueIntegrationSvc = services.NewTemplateCatalogueIntegration()
+		templateRepositorySvc = services.NewTemplateRepository()
 	}
 
 	// Wrap the services in endpoints that can be invoked from other services
