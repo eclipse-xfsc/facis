@@ -319,10 +319,10 @@ paths:
     /external/action:
         post:
             tags:
-                - ExternalSystemApi
-            summary: action ExternalSystemApi
+                - ExternalTargetSystemApi
+            summary: action ExternalTargetSystemApi
             description: Invoke external target system action (create/deploy) from DCS.
-            operationId: ExternalSystemApi#action
+            operationId: ExternalTargetSystemApi#action
             responses:
                 "200":
                     description: OK response.
@@ -332,10 +332,10 @@ paths:
     /external/callback:
         post:
             tags:
-                - ExternalSystemApi
-            summary: callback ExternalSystemApi
+                - ExternalTargetSystemApi
+            summary: callback ExternalTargetSystemApi
             description: Receive external target system callbacks/events into DCS.
-            operationId: ExternalSystemApi#callback
+            operationId: ExternalTargetSystemApi#callback
             responses:
                 "200":
                     description: OK response.
@@ -345,10 +345,10 @@ paths:
     /external/status:
         get:
             tags:
-                - ExternalSystemApi
-            summary: status ExternalSystemApi
+                - ExternalTargetSystemApi
+            summary: status ExternalTargetSystemApi
             description: Query external target system status from DCS.
-            operationId: ExternalSystemApi#status
+            operationId: ExternalTargetSystemApi#status
             responses:
                 "200":
                     description: OK response.

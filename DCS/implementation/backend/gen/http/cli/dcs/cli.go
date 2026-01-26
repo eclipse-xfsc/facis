@@ -11,7 +11,7 @@ import (
 	contractstoragearchivec "digital-contracting-service/gen/http/contract_storage_archive/client"
 	contractworkflowenginec "digital-contracting-service/gen/http/contract_workflow_engine/client"
 	dcstodcsc "digital-contracting-service/gen/http/dcs_to_dcs/client"
-	externalsystemapic "digital-contracting-service/gen/http/external_system_api/client"
+	externaltargetsystemapic "digital-contracting-service/gen/http/external_target_system_api/client"
 	orchestrationwebhooksc "digital-contracting-service/gen/http/orchestration_webhooks/client"
 	processauditandcompliancec "digital-contracting-service/gen/http/process_audit_and_compliance/client"
 	signaturemanagementc "digital-contracting-service/gen/http/signature_management/client"
@@ -34,7 +34,7 @@ func UsageCommands() []string {
 		"contract-storage-archive (retrieve|search|store|terminate|delete|audit)",
 		"contract-workflow-engine (create|submit|negotiate|respond|review|retrieve|search|approve|reject|store|terminate|audit)",
 		"dcs-to-dcs retrieve",
-		"external-system-api (action|status|callback)",
+		"external-target-system-api (action|status|callback)",
 		"orchestration-webhooks node-red-webhook",
 		"process-audit-and-compliance (audit|audit-report|monitor|incident-report)",
 		"signature-management (retrieve|verify|apply|validate|revoke|audit|compliance)",
@@ -48,7 +48,7 @@ func UsageExamples() string {
 	return os.Args[0] + " " + "contract-storage-archive retrieve" + "\n" +
 		os.Args[0] + " " + "contract-workflow-engine create" + "\n" +
 		os.Args[0] + " " + "dcs-to-dcs retrieve" + "\n" +
-		os.Args[0] + " " + "external-system-api action" + "\n" +
+		os.Args[0] + " " + "external-target-system-api action" + "\n" +
 		os.Args[0] + " " + "orchestration-webhooks node-red-webhook" + "\n" +
 		""
 }
@@ -107,13 +107,13 @@ func ParseEndpoint(
 
 		dcsToDcsRetrieveFlags = flag.NewFlagSet("retrieve", flag.ExitOnError)
 
-		externalSystemAPIFlags = flag.NewFlagSet("external-system-api", flag.ContinueOnError)
+		externalTargetSystemAPIFlags = flag.NewFlagSet("external-target-system-api", flag.ContinueOnError)
 
-		externalSystemAPIActionFlags = flag.NewFlagSet("action", flag.ExitOnError)
+		externalTargetSystemAPIActionFlags = flag.NewFlagSet("action", flag.ExitOnError)
 
-		externalSystemAPIStatusFlags = flag.NewFlagSet("status", flag.ExitOnError)
+		externalTargetSystemAPIStatusFlags = flag.NewFlagSet("status", flag.ExitOnError)
 
-		externalSystemAPICallbackFlags = flag.NewFlagSet("callback", flag.ExitOnError)
+		externalTargetSystemAPICallbackFlags = flag.NewFlagSet("callback", flag.ExitOnError)
 
 		orchestrationWebhooksFlags = flag.NewFlagSet("orchestration-webhooks", flag.ContinueOnError)
 
@@ -207,10 +207,10 @@ func ParseEndpoint(
 	dcsToDcsFlags.Usage = dcsToDcsUsage
 	dcsToDcsRetrieveFlags.Usage = dcsToDcsRetrieveUsage
 
-	externalSystemAPIFlags.Usage = externalSystemAPIUsage
-	externalSystemAPIActionFlags.Usage = externalSystemAPIActionUsage
-	externalSystemAPIStatusFlags.Usage = externalSystemAPIStatusUsage
-	externalSystemAPICallbackFlags.Usage = externalSystemAPICallbackUsage
+	externalTargetSystemAPIFlags.Usage = externalTargetSystemAPIUsage
+	externalTargetSystemAPIActionFlags.Usage = externalTargetSystemAPIActionUsage
+	externalTargetSystemAPIStatusFlags.Usage = externalTargetSystemAPIStatusUsage
+	externalTargetSystemAPICallbackFlags.Usage = externalTargetSystemAPICallbackUsage
 
 	orchestrationWebhooksFlags.Usage = orchestrationWebhooksUsage
 	orchestrationWebhooksNodeRedWebhookFlags.Usage = orchestrationWebhooksNodeRedWebhookUsage
@@ -271,8 +271,8 @@ func ParseEndpoint(
 			svcf = contractWorkflowEngineFlags
 		case "dcs-to-dcs":
 			svcf = dcsToDcsFlags
-		case "external-system-api":
-			svcf = externalSystemAPIFlags
+		case "external-target-system-api":
+			svcf = externalTargetSystemAPIFlags
 		case "orchestration-webhooks":
 			svcf = orchestrationWebhooksFlags
 		case "process-audit-and-compliance":
@@ -367,16 +367,16 @@ func ParseEndpoint(
 
 			}
 
-		case "external-system-api":
+		case "external-target-system-api":
 			switch epn {
 			case "action":
-				epf = externalSystemAPIActionFlags
+				epf = externalTargetSystemAPIActionFlags
 
 			case "status":
-				epf = externalSystemAPIStatusFlags
+				epf = externalTargetSystemAPIStatusFlags
 
 			case "callback":
-				epf = externalSystemAPICallbackFlags
+				epf = externalTargetSystemAPICallbackFlags
 
 			}
 
@@ -554,8 +554,8 @@ func ParseEndpoint(
 			case "retrieve":
 				endpoint = c.Retrieve()
 			}
-		case "external-system-api":
-			c := externalsystemapic.NewClient(scheme, host, doer, enc, dec, restore)
+		case "external-target-system-api":
+			c := externaltargetsystemapic.NewClient(scheme, host, doer, enc, dec, restore)
 			switch epn {
 			case "action":
 				endpoint = c.Action()
@@ -1003,22 +1003,22 @@ func dcsToDcsRetrieveUsage() {
 	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "dcs-to-dcs retrieve")
 }
 
-// externalSystemAPIUsage displays the usage of the external-system-api command
-// and its subcommands.
-func externalSystemAPIUsage() {
+// externalTargetSystemAPIUsage displays the usage of the
+// external-target-system-api command and its subcommands.
+func externalTargetSystemAPIUsage() {
 	fmt.Fprintln(os.Stderr, `Integration APIs between DCS (CWE/SM/CSA) and external target systems (e.g., ERP or AI services): create/deploy actions, status queries, and event callbacks.`)
-	fmt.Fprintf(os.Stderr, "Usage:\n    %s [globalflags] external-system-api COMMAND [flags]\n\n", os.Args[0])
+	fmt.Fprintf(os.Stderr, "Usage:\n    %s [globalflags] external-target-system-api COMMAND [flags]\n\n", os.Args[0])
 	fmt.Fprintln(os.Stderr, "COMMAND:")
 	fmt.Fprintln(os.Stderr, `    action: Invoke external target system action (create/deploy) from DCS.`)
 	fmt.Fprintln(os.Stderr, `    status: Query external target system status from DCS.`)
 	fmt.Fprintln(os.Stderr, `    callback: Receive external target system callbacks/events into DCS.`)
 	fmt.Fprintln(os.Stderr)
 	fmt.Fprintln(os.Stderr, "Additional help:")
-	fmt.Fprintf(os.Stderr, "    %s external-system-api COMMAND --help\n", os.Args[0])
+	fmt.Fprintf(os.Stderr, "    %s external-target-system-api COMMAND --help\n", os.Args[0])
 }
-func externalSystemAPIActionUsage() {
+func externalTargetSystemAPIActionUsage() {
 	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] external-system-api action", os.Args[0])
+	fmt.Fprintf(os.Stderr, "%s [flags] external-target-system-api action", os.Args[0])
 	fmt.Fprintln(os.Stderr)
 
 	// Description
@@ -1029,12 +1029,12 @@ func externalSystemAPIActionUsage() {
 
 	fmt.Fprintln(os.Stderr)
 	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "external-system-api action")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "external-target-system-api action")
 }
 
-func externalSystemAPIStatusUsage() {
+func externalTargetSystemAPIStatusUsage() {
 	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] external-system-api status", os.Args[0])
+	fmt.Fprintf(os.Stderr, "%s [flags] external-target-system-api status", os.Args[0])
 	fmt.Fprintln(os.Stderr)
 
 	// Description
@@ -1045,12 +1045,12 @@ func externalSystemAPIStatusUsage() {
 
 	fmt.Fprintln(os.Stderr)
 	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "external-system-api status")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "external-target-system-api status")
 }
 
-func externalSystemAPICallbackUsage() {
+func externalTargetSystemAPICallbackUsage() {
 	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] external-system-api callback", os.Args[0])
+	fmt.Fprintf(os.Stderr, "%s [flags] external-target-system-api callback", os.Args[0])
 	fmt.Fprintln(os.Stderr)
 
 	// Description
@@ -1061,7 +1061,7 @@ func externalSystemAPICallbackUsage() {
 
 	fmt.Fprintln(os.Stderr)
 	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "external-system-api callback")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "external-target-system-api callback")
 }
 
 // orchestrationWebhooksUsage displays the usage of the orchestration-webhooks

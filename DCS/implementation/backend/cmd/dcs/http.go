@@ -5,11 +5,11 @@ import (
 	contractstoragearchive "digital-contracting-service/gen/contract_storage_archive"
 	contractworkflowengine "digital-contracting-service/gen/contract_workflow_engine"
 	dcstodcs "digital-contracting-service/gen/dcs_to_dcs"
-	externalsystemapi "digital-contracting-service/gen/external_system_api"
+	externaltargetsystemapi "digital-contracting-service/gen/external_target_system_api"
 	contractstoragearchivesvr "digital-contracting-service/gen/http/contract_storage_archive/server"
 	contractworkflowenginesvr "digital-contracting-service/gen/http/contract_workflow_engine/server"
 	dcstodcssvr "digital-contracting-service/gen/http/dcs_to_dcs/server"
-	externalsystemapisvr "digital-contracting-service/gen/http/external_system_api/server"
+	externaltargetsystemapisvr "digital-contracting-service/gen/http/external_target_system_api/server"
 	orchestrationwebhookssvr "digital-contracting-service/gen/http/orchestration_webhooks/server"
 	processauditandcompliancesvr "digital-contracting-service/gen/http/process_audit_and_compliance/server"
 	signaturemanagementsvr "digital-contracting-service/gen/http/signature_management/server"
@@ -32,7 +32,7 @@ import (
 
 // handleHTTPServer starts configures and starts a HTTP server on the given
 // URL. It shuts down the server if any error is received in the error channel.
-func handleHTTPServer(ctx context.Context, u *url.URL, contractStorageArchiveEndpoints *contractstoragearchive.Endpoints, contractWorkflowEngineEndpoints *contractworkflowengine.Endpoints, dcsToDcsEndpoints *dcstodcs.Endpoints, externalSystemAPIEndpoints *externalsystemapi.Endpoints, orchestrationWebhooksEndpoints *orchestrationwebhooks.Endpoints, processAuditAndComplianceEndpoints *processauditandcompliance.Endpoints, signatureManagementEndpoints *signaturemanagement.Endpoints, templateCatalogueIntegrationEndpoints *templatecatalogueintegration.Endpoints, templateRepositoryEndpoints *templaterepository.Endpoints, wg *sync.WaitGroup, errc chan error, dbg bool) {
+func handleHTTPServer(ctx context.Context, u *url.URL, contractStorageArchiveEndpoints *contractstoragearchive.Endpoints, contractWorkflowEngineEndpoints *contractworkflowengine.Endpoints, dcsToDcsEndpoints *dcstodcs.Endpoints, externalTargetSystemAPIEndpoints *externaltargetsystemapi.Endpoints, orchestrationWebhooksEndpoints *orchestrationwebhooks.Endpoints, processAuditAndComplianceEndpoints *processauditandcompliance.Endpoints, signatureManagementEndpoints *signaturemanagement.Endpoints, templateCatalogueIntegrationEndpoints *templatecatalogueintegration.Endpoints, templateRepositoryEndpoints *templaterepository.Endpoints, wg *sync.WaitGroup, errc chan error, dbg bool) {
 
 	// Provide the transport specific request decoder and response encoder.
 	// The goa http package has built-in support for JSON, XML and gob.
@@ -64,7 +64,7 @@ func handleHTTPServer(ctx context.Context, u *url.URL, contractStorageArchiveEnd
 		contractStorageArchiveServer       *contractstoragearchivesvr.Server
 		contractWorkflowEngineServer       *contractworkflowenginesvr.Server
 		dcsToDcsServer                     *dcstodcssvr.Server
-		externalSystemAPIServer            *externalsystemapisvr.Server
+		externalTargetSystemAPIServer      *externaltargetsystemapisvr.Server
 		orchestrationWebhooksServer        *orchestrationwebhookssvr.Server
 		processAuditAndComplianceServer    *processauditandcompliancesvr.Server
 		signatureManagementServer          *signaturemanagementsvr.Server
@@ -76,7 +76,7 @@ func handleHTTPServer(ctx context.Context, u *url.URL, contractStorageArchiveEnd
 		contractStorageArchiveServer = contractstoragearchivesvr.New(contractStorageArchiveEndpoints, mux, dec, enc, eh, nil)
 		contractWorkflowEngineServer = contractworkflowenginesvr.New(contractWorkflowEngineEndpoints, mux, dec, enc, eh, nil)
 		dcsToDcsServer = dcstodcssvr.New(dcsToDcsEndpoints, mux, dec, enc, eh, nil)
-		externalSystemAPIServer = externalsystemapisvr.New(externalSystemAPIEndpoints, mux, dec, enc, eh, nil)
+		externalTargetSystemAPIServer = externaltargetsystemapisvr.New(externalTargetSystemAPIEndpoints, mux, dec, enc, eh, nil)
 		orchestrationWebhooksServer = orchestrationwebhookssvr.New(orchestrationWebhooksEndpoints, mux, dec, enc, eh, nil)
 		processAuditAndComplianceServer = processauditandcompliancesvr.New(processAuditAndComplianceEndpoints, mux, dec, enc, eh, nil)
 		signatureManagementServer = signaturemanagementsvr.New(signatureManagementEndpoints, mux, dec, enc, eh, nil)
@@ -88,7 +88,7 @@ func handleHTTPServer(ctx context.Context, u *url.URL, contractStorageArchiveEnd
 	contractstoragearchivesvr.Mount(mux, contractStorageArchiveServer)
 	contractworkflowenginesvr.Mount(mux, contractWorkflowEngineServer)
 	dcstodcssvr.Mount(mux, dcsToDcsServer)
-	externalsystemapisvr.Mount(mux, externalSystemAPIServer)
+	externaltargetsystemapisvr.Mount(mux, externalTargetSystemAPIServer)
 	orchestrationwebhookssvr.Mount(mux, orchestrationWebhooksServer)
 	processauditandcompliancesvr.Mount(mux, processAuditAndComplianceServer)
 	signaturemanagementsvr.Mount(mux, signatureManagementServer)
@@ -114,7 +114,7 @@ func handleHTTPServer(ctx context.Context, u *url.URL, contractStorageArchiveEnd
 	for _, m := range dcsToDcsServer.Mounts {
 		log.Printf(ctx, "HTTP %q mounted on %s %s", m.Method, m.Verb, m.Pattern)
 	}
-	for _, m := range externalSystemAPIServer.Mounts {
+	for _, m := range externalTargetSystemAPIServer.Mounts {
 		log.Printf(ctx, "HTTP %q mounted on %s %s", m.Method, m.Verb, m.Pattern)
 	}
 	for _, m := range orchestrationWebhooksServer.Mounts {
