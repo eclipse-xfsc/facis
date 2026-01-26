@@ -5,7 +5,7 @@ import (
 )
 
 // DCS-to-DCS Information Service (counterparty integration)
-var _dcs_to_dcs = Service("dcs_to_dcs", func() {
+var _ = Service("DcsToDcs", func() {
 	Description("DCS supports direct interoperability between two or more DCS instances, enabling automated contract lifecycle operations across organizational boundaries.")
 
 	// TBD: path and method are not defined in SRS

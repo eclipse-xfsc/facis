@@ -5,7 +5,7 @@ import (
 )
 
 // Signature Management Service  (/signature/...)
-var _signature_management = Service("signature_management", func() {
+var _ = Service("SignatureManagement", func() {
 	Description("Signature Management APIs (/signature/...)")
 
 	Method("retrieve", func() {

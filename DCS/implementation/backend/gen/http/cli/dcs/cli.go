@@ -9,10 +9,11 @@ package cli
 
 import (
 	contractstoragearchivec "digital-contracting-service/gen/http/contract_storage_archive/client"
+	contractworkflowenginec "digital-contracting-service/gen/http/contract_workflow_engine/client"
 	dcstodcsc "digital-contracting-service/gen/http/dcs_to_dcs/client"
-	externaltargetsystemapic "digital-contracting-service/gen/http/external_target_system_api/client"
+	externalsystemapic "digital-contracting-service/gen/http/external_system_api/client"
 	orchestrationwebhooksc "digital-contracting-service/gen/http/orchestration_webhooks/client"
-	pacc "digital-contracting-service/gen/http/pac/client"
+	processauditandcompliancec "digital-contracting-service/gen/http/process_audit_and_compliance/client"
 	signaturemanagementc "digital-contracting-service/gen/http/signature_management/client"
 	templatecatalogueintegrationc "digital-contracting-service/gen/http/template_catalogue_integration/client"
 	templaterepositoryc "digital-contracting-service/gen/http/template_repository/client"
@@ -31,10 +32,11 @@ import (
 func UsageCommands() []string {
 	return []string{
 		"contract-storage-archive (retrieve|search|store|terminate|delete|audit)",
+		"contract-workflow-engine (create|submit|negotiate|respond|review|retrieve|search|approve|reject|store|terminate|audit)",
 		"dcs-to-dcs retrieve",
-		"external-target-system-api (action|status|callback)",
+		"external-system-api (action|status|callback)",
 		"orchestration-webhooks node-red-webhook",
-		"pac (audit|audit-report|monitor|incident-report)",
+		"process-audit-and-compliance (audit|audit-report|monitor|incident-report)",
 		"signature-management (retrieve|verify|apply|validate|revoke|audit|compliance)",
 		"template-catalogue-integration (discover|request|register)",
 		"template-repository (create|submit|update|update-manage|search|retrieve|retrieve-by-id|verify|approve|reject|register|archive|audit)",
@@ -44,10 +46,10 @@ func UsageCommands() []string {
 // UsageExamples produces an example of a valid invocation of the CLI tool.
 func UsageExamples() string {
 	return os.Args[0] + " " + "contract-storage-archive retrieve" + "\n" +
+		os.Args[0] + " " + "contract-workflow-engine create" + "\n" +
 		os.Args[0] + " " + "dcs-to-dcs retrieve" + "\n" +
-		os.Args[0] + " " + "external-target-system-api action" + "\n" +
+		os.Args[0] + " " + "external-system-api action" + "\n" +
 		os.Args[0] + " " + "orchestration-webhooks node-red-webhook" + "\n" +
-		os.Args[0] + " " + "pac audit" + "\n" +
 		""
 }
 
@@ -75,31 +77,57 @@ func ParseEndpoint(
 
 		contractStorageArchiveAuditFlags = flag.NewFlagSet("audit", flag.ExitOnError)
 
+		contractWorkflowEngineFlags = flag.NewFlagSet("contract-workflow-engine", flag.ContinueOnError)
+
+		contractWorkflowEngineCreateFlags = flag.NewFlagSet("create", flag.ExitOnError)
+
+		contractWorkflowEngineSubmitFlags = flag.NewFlagSet("submit", flag.ExitOnError)
+
+		contractWorkflowEngineNegotiateFlags = flag.NewFlagSet("negotiate", flag.ExitOnError)
+
+		contractWorkflowEngineRespondFlags = flag.NewFlagSet("respond", flag.ExitOnError)
+
+		contractWorkflowEngineReviewFlags = flag.NewFlagSet("review", flag.ExitOnError)
+
+		contractWorkflowEngineRetrieveFlags = flag.NewFlagSet("retrieve", flag.ExitOnError)
+
+		contractWorkflowEngineSearchFlags = flag.NewFlagSet("search", flag.ExitOnError)
+
+		contractWorkflowEngineApproveFlags = flag.NewFlagSet("approve", flag.ExitOnError)
+
+		contractWorkflowEngineRejectFlags = flag.NewFlagSet("reject", flag.ExitOnError)
+
+		contractWorkflowEngineStoreFlags = flag.NewFlagSet("store", flag.ExitOnError)
+
+		contractWorkflowEngineTerminateFlags = flag.NewFlagSet("terminate", flag.ExitOnError)
+
+		contractWorkflowEngineAuditFlags = flag.NewFlagSet("audit", flag.ExitOnError)
+
 		dcsToDcsFlags = flag.NewFlagSet("dcs-to-dcs", flag.ContinueOnError)
 
 		dcsToDcsRetrieveFlags = flag.NewFlagSet("retrieve", flag.ExitOnError)
 
-		externalTargetSystemAPIFlags = flag.NewFlagSet("external-target-system-api", flag.ContinueOnError)
+		externalSystemAPIFlags = flag.NewFlagSet("external-system-api", flag.ContinueOnError)
 
-		externalTargetSystemAPIActionFlags = flag.NewFlagSet("action", flag.ExitOnError)
+		externalSystemAPIActionFlags = flag.NewFlagSet("action", flag.ExitOnError)
 
-		externalTargetSystemAPIStatusFlags = flag.NewFlagSet("status", flag.ExitOnError)
+		externalSystemAPIStatusFlags = flag.NewFlagSet("status", flag.ExitOnError)
 
-		externalTargetSystemAPICallbackFlags = flag.NewFlagSet("callback", flag.ExitOnError)
+		externalSystemAPICallbackFlags = flag.NewFlagSet("callback", flag.ExitOnError)
 
 		orchestrationWebhooksFlags = flag.NewFlagSet("orchestration-webhooks", flag.ContinueOnError)
 
 		orchestrationWebhooksNodeRedWebhookFlags = flag.NewFlagSet("node-red-webhook", flag.ExitOnError)
 
-		pacFlags = flag.NewFlagSet("pac", flag.ContinueOnError)
+		processAuditAndComplianceFlags = flag.NewFlagSet("process-audit-and-compliance", flag.ContinueOnError)
 
-		pacAuditFlags = flag.NewFlagSet("audit", flag.ExitOnError)
+		processAuditAndComplianceAuditFlags = flag.NewFlagSet("audit", flag.ExitOnError)
 
-		pacAuditReportFlags = flag.NewFlagSet("audit-report", flag.ExitOnError)
+		processAuditAndComplianceAuditReportFlags = flag.NewFlagSet("audit-report", flag.ExitOnError)
 
-		pacMonitorFlags = flag.NewFlagSet("monitor", flag.ExitOnError)
+		processAuditAndComplianceMonitorFlags = flag.NewFlagSet("monitor", flag.ExitOnError)
 
-		pacIncidentReportFlags = flag.NewFlagSet("incident-report", flag.ExitOnError)
+		processAuditAndComplianceIncidentReportFlags = flag.NewFlagSet("incident-report", flag.ExitOnError)
 
 		signatureManagementFlags = flag.NewFlagSet("signature-management", flag.ContinueOnError)
 
@@ -162,22 +190,36 @@ func ParseEndpoint(
 	contractStorageArchiveDeleteFlags.Usage = contractStorageArchiveDeleteUsage
 	contractStorageArchiveAuditFlags.Usage = contractStorageArchiveAuditUsage
 
+	contractWorkflowEngineFlags.Usage = contractWorkflowEngineUsage
+	contractWorkflowEngineCreateFlags.Usage = contractWorkflowEngineCreateUsage
+	contractWorkflowEngineSubmitFlags.Usage = contractWorkflowEngineSubmitUsage
+	contractWorkflowEngineNegotiateFlags.Usage = contractWorkflowEngineNegotiateUsage
+	contractWorkflowEngineRespondFlags.Usage = contractWorkflowEngineRespondUsage
+	contractWorkflowEngineReviewFlags.Usage = contractWorkflowEngineReviewUsage
+	contractWorkflowEngineRetrieveFlags.Usage = contractWorkflowEngineRetrieveUsage
+	contractWorkflowEngineSearchFlags.Usage = contractWorkflowEngineSearchUsage
+	contractWorkflowEngineApproveFlags.Usage = contractWorkflowEngineApproveUsage
+	contractWorkflowEngineRejectFlags.Usage = contractWorkflowEngineRejectUsage
+	contractWorkflowEngineStoreFlags.Usage = contractWorkflowEngineStoreUsage
+	contractWorkflowEngineTerminateFlags.Usage = contractWorkflowEngineTerminateUsage
+	contractWorkflowEngineAuditFlags.Usage = contractWorkflowEngineAuditUsage
+
 	dcsToDcsFlags.Usage = dcsToDcsUsage
 	dcsToDcsRetrieveFlags.Usage = dcsToDcsRetrieveUsage
 
-	externalTargetSystemAPIFlags.Usage = externalTargetSystemAPIUsage
-	externalTargetSystemAPIActionFlags.Usage = externalTargetSystemAPIActionUsage
-	externalTargetSystemAPIStatusFlags.Usage = externalTargetSystemAPIStatusUsage
-	externalTargetSystemAPICallbackFlags.Usage = externalTargetSystemAPICallbackUsage
+	externalSystemAPIFlags.Usage = externalSystemAPIUsage
+	externalSystemAPIActionFlags.Usage = externalSystemAPIActionUsage
+	externalSystemAPIStatusFlags.Usage = externalSystemAPIStatusUsage
+	externalSystemAPICallbackFlags.Usage = externalSystemAPICallbackUsage
 
 	orchestrationWebhooksFlags.Usage = orchestrationWebhooksUsage
 	orchestrationWebhooksNodeRedWebhookFlags.Usage = orchestrationWebhooksNodeRedWebhookUsage
 
-	pacFlags.Usage = pacUsage
-	pacAuditFlags.Usage = pacAuditUsage
-	pacAuditReportFlags.Usage = pacAuditReportUsage
-	pacMonitorFlags.Usage = pacMonitorUsage
-	pacIncidentReportFlags.Usage = pacIncidentReportUsage
+	processAuditAndComplianceFlags.Usage = processAuditAndComplianceUsage
+	processAuditAndComplianceAuditFlags.Usage = processAuditAndComplianceAuditUsage
+	processAuditAndComplianceAuditReportFlags.Usage = processAuditAndComplianceAuditReportUsage
+	processAuditAndComplianceMonitorFlags.Usage = processAuditAndComplianceMonitorUsage
+	processAuditAndComplianceIncidentReportFlags.Usage = processAuditAndComplianceIncidentReportUsage
 
 	signatureManagementFlags.Usage = signatureManagementUsage
 	signatureManagementRetrieveFlags.Usage = signatureManagementRetrieveUsage
@@ -225,14 +267,16 @@ func ParseEndpoint(
 		switch svcn {
 		case "contract-storage-archive":
 			svcf = contractStorageArchiveFlags
+		case "contract-workflow-engine":
+			svcf = contractWorkflowEngineFlags
 		case "dcs-to-dcs":
 			svcf = dcsToDcsFlags
-		case "external-target-system-api":
-			svcf = externalTargetSystemAPIFlags
+		case "external-system-api":
+			svcf = externalSystemAPIFlags
 		case "orchestration-webhooks":
 			svcf = orchestrationWebhooksFlags
-		case "pac":
-			svcf = pacFlags
+		case "process-audit-and-compliance":
+			svcf = processAuditAndComplianceFlags
 		case "signature-management":
 			svcf = signatureManagementFlags
 		case "template-catalogue-integration":
@@ -276,6 +320,46 @@ func ParseEndpoint(
 
 			}
 
+		case "contract-workflow-engine":
+			switch epn {
+			case "create":
+				epf = contractWorkflowEngineCreateFlags
+
+			case "submit":
+				epf = contractWorkflowEngineSubmitFlags
+
+			case "negotiate":
+				epf = contractWorkflowEngineNegotiateFlags
+
+			case "respond":
+				epf = contractWorkflowEngineRespondFlags
+
+			case "review":
+				epf = contractWorkflowEngineReviewFlags
+
+			case "retrieve":
+				epf = contractWorkflowEngineRetrieveFlags
+
+			case "search":
+				epf = contractWorkflowEngineSearchFlags
+
+			case "approve":
+				epf = contractWorkflowEngineApproveFlags
+
+			case "reject":
+				epf = contractWorkflowEngineRejectFlags
+
+			case "store":
+				epf = contractWorkflowEngineStoreFlags
+
+			case "terminate":
+				epf = contractWorkflowEngineTerminateFlags
+
+			case "audit":
+				epf = contractWorkflowEngineAuditFlags
+
+			}
+
 		case "dcs-to-dcs":
 			switch epn {
 			case "retrieve":
@@ -283,16 +367,16 @@ func ParseEndpoint(
 
 			}
 
-		case "external-target-system-api":
+		case "external-system-api":
 			switch epn {
 			case "action":
-				epf = externalTargetSystemAPIActionFlags
+				epf = externalSystemAPIActionFlags
 
 			case "status":
-				epf = externalTargetSystemAPIStatusFlags
+				epf = externalSystemAPIStatusFlags
 
 			case "callback":
-				epf = externalTargetSystemAPICallbackFlags
+				epf = externalSystemAPICallbackFlags
 
 			}
 
@@ -303,19 +387,19 @@ func ParseEndpoint(
 
 			}
 
-		case "pac":
+		case "process-audit-and-compliance":
 			switch epn {
 			case "audit":
-				epf = pacAuditFlags
+				epf = processAuditAndComplianceAuditFlags
 
 			case "audit-report":
-				epf = pacAuditReportFlags
+				epf = processAuditAndComplianceAuditReportFlags
 
 			case "monitor":
-				epf = pacMonitorFlags
+				epf = processAuditAndComplianceMonitorFlags
 
 			case "incident-report":
-				epf = pacIncidentReportFlags
+				epf = processAuditAndComplianceIncidentReportFlags
 
 			}
 
@@ -436,14 +520,42 @@ func ParseEndpoint(
 			case "audit":
 				endpoint = c.Audit()
 			}
+		case "contract-workflow-engine":
+			c := contractworkflowenginec.NewClient(scheme, host, doer, enc, dec, restore)
+			switch epn {
+			case "create":
+				endpoint = c.Create()
+			case "submit":
+				endpoint = c.Submit()
+			case "negotiate":
+				endpoint = c.Negotiate()
+			case "respond":
+				endpoint = c.Respond()
+			case "review":
+				endpoint = c.Review()
+			case "retrieve":
+				endpoint = c.Retrieve()
+			case "search":
+				endpoint = c.Search()
+			case "approve":
+				endpoint = c.Approve()
+			case "reject":
+				endpoint = c.Reject()
+			case "store":
+				endpoint = c.Store()
+			case "terminate":
+				endpoint = c.Terminate()
+			case "audit":
+				endpoint = c.Audit()
+			}
 		case "dcs-to-dcs":
 			c := dcstodcsc.NewClient(scheme, host, doer, enc, dec, restore)
 			switch epn {
 			case "retrieve":
 				endpoint = c.Retrieve()
 			}
-		case "external-target-system-api":
-			c := externaltargetsystemapic.NewClient(scheme, host, doer, enc, dec, restore)
+		case "external-system-api":
+			c := externalsystemapic.NewClient(scheme, host, doer, enc, dec, restore)
 			switch epn {
 			case "action":
 				endpoint = c.Action()
@@ -458,8 +570,8 @@ func ParseEndpoint(
 			case "node-red-webhook":
 				endpoint = c.NodeRedWebhook()
 			}
-		case "pac":
-			c := pacc.NewClient(scheme, host, doer, enc, dec, restore)
+		case "process-audit-and-compliance":
+			c := processauditandcompliancec.NewClient(scheme, host, doer, enc, dec, restore)
 			switch epn {
 			case "audit":
 				endpoint = c.Audit()
@@ -650,6 +762,220 @@ func contractStorageArchiveAuditUsage() {
 	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-storage-archive audit")
 }
 
+// contractWorkflowEngineUsage displays the usage of the
+// contract-workflow-engine command and its subcommands.
+func contractWorkflowEngineUsage() {
+	fmt.Fprintln(os.Stderr, `Contract Workflow Engine APIs (/contract/...)`)
+	fmt.Fprintf(os.Stderr, "Usage:\n    %s [globalflags] contract-workflow-engine COMMAND [flags]\n\n", os.Args[0])
+	fmt.Fprintln(os.Stderr, "COMMAND:")
+	fmt.Fprintln(os.Stderr, `    create: initiate new contract draft from template.`)
+	fmt.Fprintln(os.Stderr, `    submit: finalize and submit contract for negotiation/review. finalize and submit negotiated version. finalize review outcome. finalize decision. finalize review outcome.`)
+	fmt.Fprintln(os.Stderr, `    negotiate: propose changes.`)
+	fmt.Fprintln(os.Stderr, `    respond: provide feedback/findings. respond to counterpart changes.`)
+	fmt.Fprintln(os.Stderr, `    review: retrieve latest draft for comparison.`)
+	fmt.Fprintln(os.Stderr, `    retrieve: fetch submitted contract. fetch reviewed contract. fetch contract(s).`)
+	fmt.Fprintln(os.Stderr, `    search: locate contracts by metadata or state. filter/search across lifecycle states.`)
+	fmt.Fprintln(os.Stderr, `    approve: approve and forward contract.`)
+	fmt.Fprintln(os.Stderr, `    reject: reject with explanation.`)
+	fmt.Fprintln(os.Stderr, `    store: store evidence.`)
+	fmt.Fprintln(os.Stderr, `    terminate: terminate a contract.`)
+	fmt.Fprintln(os.Stderr, `    audit: generate audit record.`)
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Additional help:")
+	fmt.Fprintf(os.Stderr, "    %s contract-workflow-engine COMMAND --help\n", os.Args[0])
+}
+func contractWorkflowEngineCreateUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] contract-workflow-engine create", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `initiate new contract draft from template.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-workflow-engine create")
+}
+
+func contractWorkflowEngineSubmitUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] contract-workflow-engine submit", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `finalize and submit contract for negotiation/review. finalize and submit negotiated version. finalize review outcome. finalize decision. finalize review outcome.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-workflow-engine submit")
+}
+
+func contractWorkflowEngineNegotiateUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] contract-workflow-engine negotiate", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `propose changes.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-workflow-engine negotiate")
+}
+
+func contractWorkflowEngineRespondUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] contract-workflow-engine respond", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `provide feedback/findings. respond to counterpart changes.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-workflow-engine respond")
+}
+
+func contractWorkflowEngineReviewUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] contract-workflow-engine review", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `retrieve latest draft for comparison.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-workflow-engine review")
+}
+
+func contractWorkflowEngineRetrieveUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] contract-workflow-engine retrieve", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `fetch submitted contract. fetch reviewed contract. fetch contract(s).`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-workflow-engine retrieve")
+}
+
+func contractWorkflowEngineSearchUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] contract-workflow-engine search", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `locate contracts by metadata or state. filter/search across lifecycle states.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-workflow-engine search")
+}
+
+func contractWorkflowEngineApproveUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] contract-workflow-engine approve", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `approve and forward contract.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-workflow-engine approve")
+}
+
+func contractWorkflowEngineRejectUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] contract-workflow-engine reject", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `reject with explanation.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-workflow-engine reject")
+}
+
+func contractWorkflowEngineStoreUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] contract-workflow-engine store", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `store evidence.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-workflow-engine store")
+}
+
+func contractWorkflowEngineTerminateUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] contract-workflow-engine terminate", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `terminate a contract.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-workflow-engine terminate")
+}
+
+func contractWorkflowEngineAuditUsage() {
+	// Header with flags
+	fmt.Fprintf(os.Stderr, "%s [flags] contract-workflow-engine audit", os.Args[0])
+	fmt.Fprintln(os.Stderr)
+
+	// Description
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, `generate audit record.`)
+
+	// Flags list
+
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprintln(os.Stderr, "Example:")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "contract-workflow-engine audit")
+}
+
 // dcsToDcsUsage displays the usage of the dcs-to-dcs command and its
 // subcommands.
 func dcsToDcsUsage() {
@@ -677,22 +1003,22 @@ func dcsToDcsRetrieveUsage() {
 	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "dcs-to-dcs retrieve")
 }
 
-// externalTargetSystemAPIUsage displays the usage of the
-// external-target-system-api command and its subcommands.
-func externalTargetSystemAPIUsage() {
+// externalSystemAPIUsage displays the usage of the external-system-api command
+// and its subcommands.
+func externalSystemAPIUsage() {
 	fmt.Fprintln(os.Stderr, `Integration APIs between DCS (CWE/SM/CSA) and external target systems (e.g., ERP or AI services): create/deploy actions, status queries, and event callbacks.`)
-	fmt.Fprintf(os.Stderr, "Usage:\n    %s [globalflags] external-target-system-api COMMAND [flags]\n\n", os.Args[0])
+	fmt.Fprintf(os.Stderr, "Usage:\n    %s [globalflags] external-system-api COMMAND [flags]\n\n", os.Args[0])
 	fmt.Fprintln(os.Stderr, "COMMAND:")
 	fmt.Fprintln(os.Stderr, `    action: Invoke external target system action (create/deploy) from DCS.`)
 	fmt.Fprintln(os.Stderr, `    status: Query external target system status from DCS.`)
 	fmt.Fprintln(os.Stderr, `    callback: Receive external target system callbacks/events into DCS.`)
 	fmt.Fprintln(os.Stderr)
 	fmt.Fprintln(os.Stderr, "Additional help:")
-	fmt.Fprintf(os.Stderr, "    %s external-target-system-api COMMAND --help\n", os.Args[0])
+	fmt.Fprintf(os.Stderr, "    %s external-system-api COMMAND --help\n", os.Args[0])
 }
-func externalTargetSystemAPIActionUsage() {
+func externalSystemAPIActionUsage() {
 	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] external-target-system-api action", os.Args[0])
+	fmt.Fprintf(os.Stderr, "%s [flags] external-system-api action", os.Args[0])
 	fmt.Fprintln(os.Stderr)
 
 	// Description
@@ -703,12 +1029,12 @@ func externalTargetSystemAPIActionUsage() {
 
 	fmt.Fprintln(os.Stderr)
 	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "external-target-system-api action")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "external-system-api action")
 }
 
-func externalTargetSystemAPIStatusUsage() {
+func externalSystemAPIStatusUsage() {
 	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] external-target-system-api status", os.Args[0])
+	fmt.Fprintf(os.Stderr, "%s [flags] external-system-api status", os.Args[0])
 	fmt.Fprintln(os.Stderr)
 
 	// Description
@@ -719,12 +1045,12 @@ func externalTargetSystemAPIStatusUsage() {
 
 	fmt.Fprintln(os.Stderr)
 	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "external-target-system-api status")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "external-system-api status")
 }
 
-func externalTargetSystemAPICallbackUsage() {
+func externalSystemAPICallbackUsage() {
 	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] external-target-system-api callback", os.Args[0])
+	fmt.Fprintf(os.Stderr, "%s [flags] external-system-api callback", os.Args[0])
 	fmt.Fprintln(os.Stderr)
 
 	// Description
@@ -735,7 +1061,7 @@ func externalTargetSystemAPICallbackUsage() {
 
 	fmt.Fprintln(os.Stderr)
 	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "external-target-system-api callback")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "external-system-api callback")
 }
 
 // orchestrationWebhooksUsage displays the usage of the orchestration-webhooks
@@ -765,10 +1091,11 @@ func orchestrationWebhooksNodeRedWebhookUsage() {
 	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "orchestration-webhooks node-red-webhook")
 }
 
-// pacUsage displays the usage of the pac command and its subcommands.
-func pacUsage() {
+// processAuditAndComplianceUsage displays the usage of the
+// process-audit-and-compliance command and its subcommands.
+func processAuditAndComplianceUsage() {
 	fmt.Fprintln(os.Stderr, `Process Audit & Compliance Management APIs (/pac/...)`)
-	fmt.Fprintf(os.Stderr, "Usage:\n    %s [globalflags] pac COMMAND [flags]\n\n", os.Args[0])
+	fmt.Fprintf(os.Stderr, "Usage:\n    %s [globalflags] process-audit-and-compliance COMMAND [flags]\n\n", os.Args[0])
 	fmt.Fprintln(os.Stderr, "COMMAND:")
 	fmt.Fprintln(os.Stderr, `    audit: trigger an audit on selected scope.`)
 	fmt.Fprintln(os.Stderr, `    audit-report: generate and retrieve audit reports.`)
@@ -776,11 +1103,11 @@ func pacUsage() {
 	fmt.Fprintln(os.Stderr, `    incident-report: submit non-compliance findings as case records.`)
 	fmt.Fprintln(os.Stderr)
 	fmt.Fprintln(os.Stderr, "Additional help:")
-	fmt.Fprintf(os.Stderr, "    %s pac COMMAND --help\n", os.Args[0])
+	fmt.Fprintf(os.Stderr, "    %s process-audit-and-compliance COMMAND --help\n", os.Args[0])
 }
-func pacAuditUsage() {
+func processAuditAndComplianceAuditUsage() {
 	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] pac audit", os.Args[0])
+	fmt.Fprintf(os.Stderr, "%s [flags] process-audit-and-compliance audit", os.Args[0])
 	fmt.Fprintln(os.Stderr)
 
 	// Description
@@ -791,12 +1118,12 @@ func pacAuditUsage() {
 
 	fmt.Fprintln(os.Stderr)
 	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "pac audit")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "process-audit-and-compliance audit")
 }
 
-func pacAuditReportUsage() {
+func processAuditAndComplianceAuditReportUsage() {
 	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] pac audit-report", os.Args[0])
+	fmt.Fprintf(os.Stderr, "%s [flags] process-audit-and-compliance audit-report", os.Args[0])
 	fmt.Fprintln(os.Stderr)
 
 	// Description
@@ -807,12 +1134,12 @@ func pacAuditReportUsage() {
 
 	fmt.Fprintln(os.Stderr)
 	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "pac audit-report")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "process-audit-and-compliance audit-report")
 }
 
-func pacMonitorUsage() {
+func processAuditAndComplianceMonitorUsage() {
 	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] pac monitor", os.Args[0])
+	fmt.Fprintf(os.Stderr, "%s [flags] process-audit-and-compliance monitor", os.Args[0])
 	fmt.Fprintln(os.Stderr)
 
 	// Description
@@ -823,12 +1150,12 @@ func pacMonitorUsage() {
 
 	fmt.Fprintln(os.Stderr)
 	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "pac monitor")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "process-audit-and-compliance monitor")
 }
 
-func pacIncidentReportUsage() {
+func processAuditAndComplianceIncidentReportUsage() {
 	// Header with flags
-	fmt.Fprintf(os.Stderr, "%s [flags] pac incident-report", os.Args[0])
+	fmt.Fprintf(os.Stderr, "%s [flags] process-audit-and-compliance incident-report", os.Args[0])
 	fmt.Fprintln(os.Stderr)
 
 	// Description
@@ -839,7 +1166,7 @@ func pacIncidentReportUsage() {
 
 	fmt.Fprintln(os.Stderr)
 	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "pac incident-report")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "process-audit-and-compliance incident-report")
 }
 
 // signatureManagementUsage displays the usage of the signature-management
@@ -1166,7 +1493,7 @@ func templateRepositoryRetrieveByIDUsage() {
 
 	fmt.Fprintln(os.Stderr)
 	fmt.Fprintln(os.Stderr, "Example:")
-	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "template-repository retrieve-by-id --template-id \"Quibusdam et.\"")
+	fmt.Fprintf(os.Stderr, "    %s %s\n", os.Args[0], "template-repository retrieve-by-id --template-id \"Voluptatem omnis a vel doloremque.\"")
 }
 
 func templateRepositoryVerifyUsage() {

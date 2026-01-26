@@ -5,7 +5,7 @@ import (
 )
 
 // External Target System API Integration Service (DCS <-> External Systems)
-var _external_target_system_api = Service("external_target_system_api", func() {
+var _ = Service("ExternalSystemApi", func() {
 	Description("Integration APIs between DCS (CWE/SM/CSA) and external target systems (e.g., ERP or AI services): create/deploy actions, status queries, and event callbacks.")
 
 	// TBD: path and method are not defined in SRS

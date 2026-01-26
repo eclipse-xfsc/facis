@@ -3,14 +3,15 @@ package main
 import (
 	"context"
 	contractstoragearchive "digital-contracting-service/gen/contract_storage_archive"
+	contractworkflowengine "digital-contracting-service/gen/contract_workflow_engine"
 	dcstodcs "digital-contracting-service/gen/dcs_to_dcs"
-	externaltargetsystemapi "digital-contracting-service/gen/external_target_system_api"
+	externalsystemapi "digital-contracting-service/gen/external_system_api"
 	orchestrationwebhooks "digital-contracting-service/gen/orchestration_webhooks"
-	pac "digital-contracting-service/gen/pac"
+	processauditandcompliance "digital-contracting-service/gen/process_audit_and_compliance"
 	signaturemanagement "digital-contracting-service/gen/signature_management"
 	templatecatalogueintegration "digital-contracting-service/gen/template_catalogue_integration"
 	templaterepository "digital-contracting-service/gen/template_repository"
-	"digital-contracting-service/internal/service"
+	"digital-contracting-service/internal/services"
 	"flag"
 	"fmt"
 	"net"
@@ -51,33 +52,36 @@ func main() {
 	// Initialize the services.
 	var (
 		contractStorageArchiveSvc       contractstoragearchive.Service
+		contractWorkflowEngineSvc       contractworkflowengine.Service
 		dcsToDcsSvc                     dcstodcs.Service
-		externalTargetSystemAPISvc      externaltargetsystemapi.Service
+		externalSystemAPISvc            externalsystemapi.Service
 		orchestrationWebhooksSvc        orchestrationwebhooks.Service
-		pacSvc                          pac.Service
+		processAuditAndComplianceSvc    processauditandcompliance.Service
 		signatureManagementSvc          signaturemanagement.Service
 		templateCatalogueIntegrationSvc templatecatalogueintegration.Service
 		templateRepositorySvc           templaterepository.Service
 	)
 	{
-		contractStorageArchiveSvc = service.NewContractStorageArchive()
-		dcsToDcsSvc = service.NewDcsToDcs()
-		externalTargetSystemAPISvc = service.NewExternalTargetSystemAPI()
-		orchestrationWebhooksSvc = service.NewOrchestrationWebhooks()
-		pacSvc = service.NewPac()
-		signatureManagementSvc = service.NewSignatureManagement()
-		templateCatalogueIntegrationSvc = service.NewTemplateCatalogueIntegration()
-		templateRepositorySvc = service.NewTemplateRepository()
+		contractStorageArchiveSvc = services.NewContractStorageArchive()
+		contractWorkflowEngineSvc = services.NewContractWorkflowEngine()
+		dcsToDcsSvc = services.NewDcsToDcs()
+		externalSystemAPISvc = services.NewExternalSystemAPI()
+		orchestrationWebhooksSvc = services.NewOrchestrationWebhooks()
+		processAuditAndComplianceSvc = services.NewProcessAuditAndCompliance()
+		signatureManagementSvc = services.NewSignatureManagement()
+		templateCatalogueIntegrationSvc = services.NewTemplateCatalogueIntegration()
+		templateRepositorySvc = services.NewTemplateRepository()
 	}
 
 	// Wrap the services in endpoints that can be invoked from other services
 	// potentially running in different processes.
 	var (
 		contractStorageArchiveEndpoints       *contractstoragearchive.Endpoints
+		contractWorkflowEngineEndpoints       *contractworkflowengine.Endpoints
 		dcsToDcsEndpoints                     *dcstodcs.Endpoints
-		externalTargetSystemAPIEndpoints      *externaltargetsystemapi.Endpoints
+		externalSystemAPIEndpoints            *externalsystemapi.Endpoints
 		orchestrationWebhooksEndpoints        *orchestrationwebhooks.Endpoints
-		pacEndpoints                          *pac.Endpoints
+		processAuditAndComplianceEndpoints    *processauditandcompliance.Endpoints
 		signatureManagementEndpoints          *signaturemanagement.Endpoints
 		templateCatalogueIntegrationEndpoints *templatecatalogueintegration.Endpoints
 		templateRepositoryEndpoints           *templaterepository.Endpoints
@@ -86,18 +90,21 @@ func main() {
 		contractStorageArchiveEndpoints = contractstoragearchive.NewEndpoints(contractStorageArchiveSvc)
 		contractStorageArchiveEndpoints.Use(debug.LogPayloads())
 		contractStorageArchiveEndpoints.Use(log.Endpoint)
+		contractWorkflowEngineEndpoints = contractworkflowengine.NewEndpoints(contractWorkflowEngineSvc)
+		contractWorkflowEngineEndpoints.Use(debug.LogPayloads())
+		contractWorkflowEngineEndpoints.Use(log.Endpoint)
 		dcsToDcsEndpoints = dcstodcs.NewEndpoints(dcsToDcsSvc)
 		dcsToDcsEndpoints.Use(debug.LogPayloads())
 		dcsToDcsEndpoints.Use(log.Endpoint)
-		externalTargetSystemAPIEndpoints = externaltargetsystemapi.NewEndpoints(externalTargetSystemAPISvc)
-		externalTargetSystemAPIEndpoints.Use(debug.LogPayloads())
-		externalTargetSystemAPIEndpoints.Use(log.Endpoint)
+		externalSystemAPIEndpoints = externalsystemapi.NewEndpoints(externalSystemAPISvc)
+		externalSystemAPIEndpoints.Use(debug.LogPayloads())
+		externalSystemAPIEndpoints.Use(log.Endpoint)
 		orchestrationWebhooksEndpoints = orchestrationwebhooks.NewEndpoints(orchestrationWebhooksSvc)
 		orchestrationWebhooksEndpoints.Use(debug.LogPayloads())
 		orchestrationWebhooksEndpoints.Use(log.Endpoint)
-		pacEndpoints = pac.NewEndpoints(pacSvc)
-		pacEndpoints.Use(debug.LogPayloads())
-		pacEndpoints.Use(log.Endpoint)
+		processAuditAndComplianceEndpoints = processauditandcompliance.NewEndpoints(processAuditAndComplianceSvc)
+		processAuditAndComplianceEndpoints.Use(debug.LogPayloads())
+		processAuditAndComplianceEndpoints.Use(log.Endpoint)
 		signatureManagementEndpoints = signaturemanagement.NewEndpoints(signatureManagementSvc)
 		signatureManagementEndpoints.Use(debug.LogPayloads())
 		signatureManagementEndpoints.Use(log.Endpoint)
@@ -148,7 +155,7 @@ func main() {
 			} else if u.Port() == "" {
 				u.Host = net.JoinHostPort(u.Host, "80")
 			}
-			handleHTTPServer(ctx, u, contractStorageArchiveEndpoints, dcsToDcsEndpoints, externalTargetSystemAPIEndpoints, orchestrationWebhooksEndpoints, pacEndpoints, signatureManagementEndpoints, templateCatalogueIntegrationEndpoints, templateRepositoryEndpoints, &wg, errc, *dbgF)
+			handleHTTPServer(ctx, u, contractStorageArchiveEndpoints, contractWorkflowEngineEndpoints, dcsToDcsEndpoints, externalSystemAPIEndpoints, orchestrationWebhooksEndpoints, processAuditAndComplianceEndpoints, signatureManagementEndpoints, templateCatalogueIntegrationEndpoints, templateRepositoryEndpoints, &wg, errc, *dbgF)
 		}
 
 	default:

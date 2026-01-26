@@ -5,7 +5,7 @@ import (
 )
 
 // Contract Storage & Archive Service  (/archive/...)
-var _contract_storage_archive = Service("contract_storage_archive", func() {
+var _ = Service("ContractStorageArchive", func() {
 	Description("Contract Storage & Archive APIs (/archive/...)")
 
 	Method("retrieve", func() {

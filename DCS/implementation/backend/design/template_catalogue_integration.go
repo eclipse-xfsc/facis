@@ -5,7 +5,7 @@ import (
 )
 
 // Template Catalogue Integration Service (TR <-> XFSC Catalogue)
-var _template_catalogue_integration = Service("template_catalogue_integration", func() {
+var _ = Service("TemplateCatalogueIntegration", func() {
 	Description("Integration APIs between Template Repository (TR) and XFSC Catalogue for template discovery, request, and registration.")
 
 	// TBD: callback path and method not defined in SRS

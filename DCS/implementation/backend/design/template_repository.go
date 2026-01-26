@@ -5,7 +5,7 @@ import (
 )
 
 // Template Repository Service  (/template/...)
-var _template_repository = Service("template_repository", func() {
+var _ = Service("TemplateRepository", func() {
 	Description("Template Repository APIs (/template/...)")
 
 	// POST /template/create

@@ -5,7 +5,7 @@ import (
 )
 
 // External Orchestration Webhook Service (e.g. Node-RED)
-var _orchestration_webhooks = Service("orchestration_webhooks", func() {
+var _ = Service("OrchestrationWebhooks", func() {
 	Description("Webhook and callback endpoints for external orchestration tools (e.g. Node-RED).")
 
 	// TBD: callback path and method not defined in SRS

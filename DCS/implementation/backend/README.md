@@ -15,7 +15,7 @@ Preliminary design, experiments, and preparatory work for the Digital Contractin
 │   └── design.go                   # Goa main design description
 │   └── external_system_api.go      # Design description for the external system communication api
 │   └── orchestration_webhook.go    # Design description for the orchestration webhooks api
-│   └── pac.go                      # Design description for the Process Audit & Compliance Management api
+│   └── process_audit_and_compliance.go     # Design description for the Process Audit & Compliance Management api
 │   └── signature_management.go     # Design description for the Signature Management api
 │   └── template_catalogue_integration.go   # Design description for the Template Catalogue integration api
 │   └── template_repository.go      # Design description for the Template Repository api
