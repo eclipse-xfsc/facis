@@ -1,0 +1,55 @@
+# Default configuration for FACIS Simulation Service
+
+simulation:
+  seed: 12345
+  time_acceleration: 1
+  start_time: null  # Use current time if null
+  end_time: null    # Run indefinitely if null
+
+meters:
+  - id: janitza-umg96rm-001
+    type: janitza_umg96rm
+    base_power_w: 3000
+    voltage_v: 230
+
+pv_systems:
+  - id: pv-system-001
+    capacity_kwp: 10
+    location:
+      latitude: 52.52
+      longitude: 13.405
+    orientation:
+      azimuth: 180
+      tilt: 35
+
+weather:
+  location:
+    latitude: 52.52
+    longitude: 13.405
+
+prices:
+  model: epex_spot
+  base_price_eur_kwh: 0.08
+
+loads:
+  oven:
+    power_kw: 3.5
+  hvac:
+    power_kw: 2.0
+    setpoint_c: 24
+
+api:
+  http:
+    port: 8080
+    host: "0.0.0.0"
+  mqtt:
+    broker: localhost
+    port: 1883
+    qos: 1
+  modbus:
+    port: 502
+    host: "0.0.0.0"
+
+logging:
+  level: INFO
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"

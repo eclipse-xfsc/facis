@@ -1,0 +1,42 @@
+services:
+  simulation:
+    build: .
+    container_name: facis-simulation
+    ports:
+      - "8080:8080"
+      - "502:502"
+    environment:
+      - SIMULATION_SEED=12345
+      - TIME_ACCELERATION=1
+      - MQTT_BROKER=mqtt
+      - MQTT_PORT=1883
+    volumes:
+      - simulation-data:/data
+    depends_on:
+      mqtt:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/v1/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+
+  mqtt:
+    image: eclipse-mosquitto:2
+    container_name: facis-mqtt
+    ports:
+      - "1883:1883"
+    volumes:
+      - mqtt-data:/mosquitto/data
+      - mqtt-log:/mosquitto/log
+    healthcheck:
+      test: ["CMD", "mosquitto_sub", "-t", "$$SYS/#", "-C", "1", "-i", "healthcheck", "-W", "3"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  simulation-data:
+  mqtt-data:
+  mqtt-log:
