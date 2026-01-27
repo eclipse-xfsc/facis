@@ -11,8 +11,7 @@ import uvicorn
 from src.api.rest.app import create_app
 
 logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger(__name__)
 
@@ -20,9 +19,9 @@ logger = logging.getLogger(__name__)
 def main() -> None:
     """Main entry point for the simulation service."""
     logger.info("Starting FACIS Simulation Service...")
-    
+
     app = create_app()
-    
+
     uvicorn.run(app, host="0.0.0.0", port=8080)
 
 

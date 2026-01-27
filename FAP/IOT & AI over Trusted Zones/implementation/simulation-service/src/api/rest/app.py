@@ -19,7 +19,7 @@ def create_app() -> FastAPI:
         docs_url="/api/docs",
         openapi_url="/api/openapi.json",
     )
-    
+
     app.add_middleware(
         CORSMiddleware,
         allow_origins=["*"],
@@ -27,9 +27,9 @@ def create_app() -> FastAPI:
         allow_methods=["*"],
         allow_headers=["*"],
     )
-    
+
     app.include_router(health.router, prefix="/api/v1", tags=["health"])
     app.include_router(meters.router, prefix="/api/v1", tags=["meters"])
     app.include_router(simulation.router, prefix="/api/v1", tags=["simulation"])
-    
+
     return app
