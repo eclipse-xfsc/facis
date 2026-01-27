@@ -22,7 +22,7 @@ Preliminary design, experiments, and preparatory work for the Digital Contractin
 ├── gen/              # Goa-generated transport & types (DO NOT EDIT)
 ├── internal
 |   └── datatype/     # Used data types for the application
-│   └── service/      # Application service implementations
+│   └── services/      # Application service implementations
 ├── go.mod
 ├── go.sum
 └── README.md
@@ -44,7 +44,7 @@ go mod tidy
 Generate the Goa code under `gen/` after modifying `design/design.go`:
 
 ```
-goa gen design
+goa gen digital-contracting-service/design
 ```
 
 
