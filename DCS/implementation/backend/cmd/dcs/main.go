@@ -11,7 +11,7 @@ import (
 	signaturemanagement "digital-contracting-service/gen/signature_management"
 	templatecatalogueintegration "digital-contracting-service/gen/template_catalogue_integration"
 	templaterepository "digital-contracting-service/gen/template_repository"
-	"digital-contracting-service/internal/services"
+	"digital-contracting-service/internal/service"
 	"flag"
 	"fmt"
 	"net"
@@ -49,7 +49,7 @@ func main() {
 	}
 	log.Print(ctx, log.KV{K: "http-port", V: *httpPortF})
 
-	// Initialize the services.
+	// Initialize the service.
 	var (
 		contractStorageArchiveSvc       contractstoragearchive.Service
 		contractWorkflowEngineSvc       contractworkflowengine.Service
@@ -62,18 +62,18 @@ func main() {
 		templateRepositorySvc           templaterepository.Service
 	)
 	{
-		contractStorageArchiveSvc = services.NewContractStorageArchive()
-		contractWorkflowEngineSvc = services.NewContractWorkflowEngine()
-		dcsToDcsSvc = services.NewDcsToDcs()
-		externalTargetSystemAPISvc = services.NewExternalTargetSystemAPI()
-		orchestrationWebhooksSvc = services.NewOrchestrationWebhooks()
-		processAuditAndComplianceSvc = services.NewProcessAuditAndCompliance()
-		signatureManagementSvc = services.NewSignatureManagement()
-		templateCatalogueIntegrationSvc = services.NewTemplateCatalogueIntegration()
-		templateRepositorySvc = services.NewTemplateRepository()
+		contractStorageArchiveSvc = service.NewContractStorageArchive()
+		contractWorkflowEngineSvc = service.NewContractWorkflowEngine()
+		dcsToDcsSvc = service.NewDcsToDcs()
+		externalTargetSystemAPISvc = service.NewExternalTargetSystemAPI()
+		orchestrationWebhooksSvc = service.NewOrchestrationWebhooks()
+		processAuditAndComplianceSvc = service.NewProcessAuditAndCompliance()
+		signatureManagementSvc = service.NewSignatureManagement()
+		templateCatalogueIntegrationSvc = service.NewTemplateCatalogueIntegration()
+		templateRepositorySvc = service.NewTemplateRepository()
 	}
 
-	// Wrap the services in endpoints that can be invoked from other services
+	// Wrap the service in endpoints that can be invoked from other service
 	// potentially running in different processes.
 	var (
 		contractStorageArchiveEndpoints       *contractstoragearchive.Endpoints
@@ -121,7 +121,7 @@ func main() {
 	errc := make(chan error)
 
 	// Setup interrupt handler. This optional step configures the process so
-	// that SIGINT and SIGTERM signals cause the services to stop gracefully.
+	// that SIGINT and SIGTERM signals cause the service to stop gracefully.
 	go func() {
 		c := make(chan os.Signal, 1)
 		signal.Notify(c, syscall.SIGINT, syscall.SIGTERM)

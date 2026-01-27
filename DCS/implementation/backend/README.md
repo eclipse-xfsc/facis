@@ -22,7 +22,7 @@ Preliminary design, experiments, and preparatory work for the Digital Contractin
 ├── gen/              # Goa-generated transport & types (DO NOT EDIT)
 ├── internal
 |   └── datatype/     # Used data types for the application
-│   └── services/      # Application service implementations
+│   └── service/      # Application service implementations
 ├── go.mod
 ├── go.sum
 └── README.md
