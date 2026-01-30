@@ -1,5 +1,5 @@
 #-- Base Stage --
-FROM debian:stable-slim as base
+FROM debian:stable-slim AS base
 
 ARG DOCKER_USER=default_user
 
@@ -17,7 +17,7 @@ RUN groupadd -r "${DOCKER_USER}" && useradd -r -g "${DOCKER_USER}" "${DOCKER_USE
 
 
 #-- Build Stage --
-FROM base as digital-contracting-service
+FROM base AS digital-contracting-service
 
 ARG DOCKER_USER=default_user
 
@@ -31,7 +31,7 @@ WORKDIR /app
 
 USER $DOCKER_USER
 
-COPY ./ /app/
+COPY --chown=$DOCKER_USER:$DOCKER_USER ./ /app/
 
 EXPOSE 8991
 
