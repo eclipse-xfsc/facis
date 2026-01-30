@@ -37,7 +37,7 @@ spec:
               service:
                 name: {{ include "digital-contracting-service.fullname" $ }}
                 port:
-                  number: {{ $.Values.service.port }}
+                  number: {{ $.Values.service.port | int }}
           {{- end }}
     {{- end }}
 {{- end }}
