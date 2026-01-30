@@ -6,7 +6,7 @@ Feature: Contract Deployment
 
   Scenario: Trigger contract deployment
     Given a contract "Acme NDA 2025" is in "Signed" status
-    And a target system is configured for deployment
+    And a target system is configured
     When a Contract Manager submits the signed contract for deployment
     Then the system should:
       | Action                    | Details                               |
@@ -50,7 +50,7 @@ Feature: Contract Deployment
   Scenario: View deployment status
     Given multiple contracts have been deployed
     When a Contract Manager checks deployment status
-    Then all deployed contracts should show:
+    Then the system should:
       | Field            | Value                 |
       | Contract ID      | Unique identifier     |
       | Status           | Deployed/Failed       |

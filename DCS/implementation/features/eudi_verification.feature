@@ -7,7 +7,7 @@ Feature: EU Digital Identity (EUDI) Person Identification Data Verification
   Scenario: Verify EUDI PID from compliant wallet
     Given a signer uses an EUDI-compliant wallet
     When EUDI PID verification is initiated
-    Then the system should support verification from:
+    Then the system should:
       | Wallet Provider            | Example              |
       | Lissi EUDI Wallet          | Connector available  |
       | EU EUDI Reference Impl      | Reference implementation |

@@ -8,8 +8,8 @@ Feature: Contract Execution in Target Systems - Detailed Sub Processes
 
   # UC-13-01 – Deploy Contract to Target System
   Scenario: Execute contract in ERP target systems
-    Given a contract is signed and validated
-    And a target system is configured and available
+    Given a contract has been signed and validated
+    And a target system is configured
     When the target system requests or receives a contract deployment payload
     Then the system should:
       | Action                    | Result              |
@@ -17,4 +17,4 @@ Feature: Contract Execution in Target Systems - Detailed Sub Processes
       | Target Confirms           | Activation ack      |
       | Record Proof              | Delivery evidence   |
       | Reference Documentation  | Archive proof       |
-    And DCS should store proof of execution reference
+    And the system records proof of delivery

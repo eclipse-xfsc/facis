@@ -8,7 +8,7 @@ Feature: Lifecycle Management - Detailed Sub Processes
   Scenario: Dashboard displays SLA and compliance tracking
     Given a contract is under lifecycle management
     When a Contract Manager or Contract Observer opens the contract lifecycle dashboard
-    Then it should display:
+    Then the system should:
       | Metric              | Description          |
       | KPIs/Milestones     | Performance targets  |
       | Alerts              | SLA violations       |

@@ -20,7 +20,7 @@ Feature: Template Management - Detailed Sub Processes
     Then a template should be created with required metadata
     And the system should return a unique Template ID and version
     And the template should appear in search results
-    And the creation action should be audit-logged with user and timestamp
+    And the system should record the template creation in the audit log
 
   # UC-02-02 – Search & Retrieve Templates
   Scenario: Search and retrieve existing templates
@@ -31,24 +31,24 @@ Feature: Template Management - Detailed Sub Processes
       | Category    | Legal          |
       | Status      | Approved       |
     Then search results should respect RBAC rules
-    And opening a template should display:
+    And the system should:
       | Information        | Content           |
       | Current Version    | Latest version #  |
       | Provenance         | Creator/changes   |
       | Template Status    | Approved/Draft    |
-    And access events should be logged
+    And the system should record the template access in the audit log
 
   # UC-02-03 – Generate Contract from Template
   Scenario: Generate contract from template
-    Given an approved template "Standard NDA 2025" exists
+    Given an approved contract template "Standard NDA 2025" exists
     When a Template Approver provides required inputs to generate a contract instance
-    Then the system should produce a draft contract with:
+    Then the system should:
       | Property            | Value                 |
       | Linked Template ID  | Template reference    |
       | Machine-Readable    | Valid format rendering|
       | Human-Readable      | PDF/document view     |
     And both versions should render correctly
-    And contract generation should be logged
+    And the system should record the contract generation in the audit log
 
   # UC-02-04 – Update Contract Template
   Scenario: Update contract template with versioning
@@ -56,12 +56,12 @@ Feature: Template Management - Detailed Sub Processes
     When a Template Creator updates the contract template
     Then the system should create a new immutable version "1.1"
     And previous version should remain readable
-    And the system should show:
+    And the system should:
       | Information | Value                    |
       | Diff        | Changes between versions |
       | Author      | Who made the change      |
       | Timestamp   | When changed             |
-    And the change should be logged
+    And the system should record the template change in the audit log
 
   # UC-02-05 – Deprecate Contract Template
   Scenario: Deprecate contract template
@@ -72,14 +72,14 @@ Feature: Template Management - Detailed Sub Processes
       | Prevent New Generation        | No new contracts    |
       | Show Deprecation Banner       | UI displays status  |
       | Log Deprecation Event         | Audit trail entry   |
-    And the timestamp and deprecating user should be recorded
+    And the system should record the template deprecation in the audit log
 
   # UC-02-06 – Add Template Provenance
   Scenario: Add provenance to template
     Given a template is being created or updated
-    And a user is logged in with role "Template Approver"
+    And the user is logged in with role "Template Approver"
     When a Template Approver adds provenance fields
-    Then the system should capture:
+    Then the system should:
       | Field          | Content                |
       | Origin         | Creator and date       |
       | Contributors   | Who modified it        |
@@ -91,7 +91,7 @@ Feature: Template Management - Detailed Sub Processes
   Scenario: Verify template correctness and authenticity
     Given a template with provenance exists
     When a Template Manager verifies the template and its provenance
-    Then the system should validate:
+    Then the system should:
       | Check              | Description              |
       | Schema Validation  | JSON-LD/SHACL compliance |
       | Signature Check    | Digital signature valid  |
@@ -100,7 +100,7 @@ Feature: Template Management - Detailed Sub Processes
 
   # UC-02-08 – Create & Maintain Semantic Schemas
   Scenario: Manage semantic schemas for templates
-    Given a user is logged in with role "Template Manager"
+    Given the user is logged in with role "Template Manager"
     When the user creates or updates a schema
     Then the system should:
       | Action             | Result                 |
@@ -111,9 +111,9 @@ Feature: Template Management - Detailed Sub Processes
 
   # UC-02-09 – Template Management Dashboard
   Scenario: Monitor template lifecycle and usage
-    Given a user is logged in with role "Template Manager"
+    Given the user is logged in with role "Template Manager"
     When the user opens the template management dashboard
-    Then it should display:
+    Then the system should:
       | Metric                 | Description              |
       | Per-Template Lifecycle | Creation to deprecation  |
       | Usage Metrics          | Contracts generated      |

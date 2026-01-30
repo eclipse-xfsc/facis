@@ -6,9 +6,9 @@ Feature: Audit and Compliance - Detailed Sub Processes
 
   # UC-08-01 – Report Contract Activity Logs & Timestamps
   Scenario: Generate auditable activity reports
-    Given a contract activity logs exist
-    When an Auditor or Compliance Officer submits a request to generate an activity report
-    Then it should include:
+    Given contract activity logs are available
+    When an Auditor or Compliance Officer requests an activity report
+    Then the system should:
       | Field         | Content                |
       | Actors        | Users who took actions |
       | Timestamps    | When actions occurred  |

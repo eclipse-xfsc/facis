@@ -8,18 +8,18 @@ Feature: Contract Signing and Signature Validation
   Background:
     Given a secure document viewer is configured
     And signature validation is enabled
-    And identity credential validation is available
+    And the system is configured with credential validation enabled
 
   Scenario: Open secure viewer
     Given a contract is ready for signing
     And a Contract Signer is assigned to the contract
     When a Contract Signer accesses the secure document viewer for the contract
-    Then the system should provide:
+    Then the system should:
       | Feature               | Description                          |
       | Secure Viewer         | Protected contract view              |
       | Access Control        | Only authenticated/authorized access |
       | Signing Context       | Contract shown in signing mode       |
-    And the system should record the viewer access event with timestamp in the audit log
+    And the system should record the viewer access in the audit log
 
   Scenario: Present identity and proof of authority (PoA)
     Given a contract is open in the secure document viewer
@@ -30,10 +30,10 @@ Feature: Contract Signing and Signature Validation
       | Validate Identity         | Credential is valid and acceptable           |
       | Validate PoA              | Credential is valid and acceptable           |
       | Bind Identity + PoA       | Bound to the signing session for the contract|
-    And the system should record the credential presentation and validation outcome in the audit log
+    And the system should record the credential presentation in the audit log
 
   Scenario: Verify result
-    Given a contract has been digitally signed
+    Given a contract has been signed
     When a Contract Signer or Contract Manager initiates signature verification
     Then the system should:
       | Check                 | Result / Expectation            |
@@ -42,7 +42,7 @@ Feature: Contract Signing and Signature Validation
       | Policy Checks         | Signature complies with policy       |
       | Document Integrity    | Content unchanged after signing      |
     And the system should produce a verification report
-    And the system should record the verification event with timestamp in the audit log
+    And the system should record the signature verification in the audit log
 
   Scenario: Verify signer identity
     Given a contract is open in the secure contract viewer
@@ -50,7 +50,7 @@ Feature: Contract Signing and Signature Validation
     When the Contract Signer presents an identity credential
     Then the system verifies the identity of the Contract Signer
     And the Contract Signer is allowed to proceed with signing
-    And the identity verification is recorded
+    And the system should record the identity verification in the audit log
 
   Scenario: Validate proof of authority
     Given the Contract Signer is identified
@@ -58,7 +58,7 @@ Feature: Contract Signing and Signature Validation
     When the Contract Signer presents a proof of authority
     Then the system validates the authority for the contract
     And the Contract Signer is authorized to sign
-    And the authorization result is recorded
+    And the system should record the authorization result in the audit log
 
   Scenario: Execute digital signature
     Given a signer is verified and has reviewed the contract
@@ -80,4 +80,4 @@ Feature: Contract Signing and Signature Validation
     Given a contract requires signatures from multiple parties
     When all required parties complete their signing actions
     Then the contract reaches a fully signed state
-    And the completion is recorded
+    And the system should record the signing completion in the audit log

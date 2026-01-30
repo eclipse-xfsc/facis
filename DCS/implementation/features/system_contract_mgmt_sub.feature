@@ -45,18 +45,18 @@ Feature: API-Based Contract Lifecycle - Detailed Sub Processes
   Scenario: Query and update contract lifecycle
     Given a contract is under lifecycle management
     When a System Contract Manager component requests access to manage the contract’s lifecycle
-    Then the system should support:
+    Then the system should:
       | Operation           | Description          |
       | List Contracts      | Query all            |
       | Update Metadata     | Modify fields        |
       | Read History        | Access audit trail   |
       | Enforce RBAC        | Role-based access    |
       | Version Changes     | Track modifications  |
-    And all changes should be logged
+    And the system should record the lifecycle changes in the audit log
 
   # UC-12-05 – Sign Contract via API
   Scenario: Automated/AI-driven signing via API
-    Given a contract is ready to sign
+    Given a contract is ready for signing
     When a System Contract Signer initiates a signature operation via API
     Then the system should:
       | Action              | Result                |

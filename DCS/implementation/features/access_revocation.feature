@@ -6,9 +6,9 @@ Feature: Access Rights Revocation and Signature Invalidation
 
   Background:
     Given access control mechanisms are fully operational
-    And revocation lists are maintained and accessible
+    And the XFSC Revocation List is accessible
     And immediate access termination is possible
-    And audit logging is enabled for all revocation events
+    And audit logging is enabled for all system operations
 
   Scenario: Revoke user role and permissions immediately
     Given a user "jane.smith" has role "Contract Signer"
@@ -20,7 +20,7 @@ Feature: Access Rights Revocation and Signature Invalidation
       | Revoke All Associated Perms        | All permissions removed        |
       | Update Access Rules                | Role-protected access removed  |
       | Update Revocation List             | Update to XFSC revocation list |
-    And revocation should be logged with:
+    And the audit log entry should include:
       | Audit Field              | Value                  |
       | Event Type               | Role Revocation        |
       | User Revoked             | jane.smith             |
@@ -31,7 +31,7 @@ Feature: Access Rights Revocation and Signature Invalidation
 
   Scenario: Revoke active signing authority
     Given the role "Contract Signer" for user "jane.smith" has been revoked
-    And a contract is signable
+    And a contract is ready for signing
     When "jane.smith" attempts to sign the contract
     Then the system should:
       | Action            | Details                     |

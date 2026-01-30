@@ -4,7 +4,7 @@ Feature: Contract Creation, Negotiation, and Approval
 
   Background:
     Given version control is enabled for contracts
-    And audit logging is enabled for all contract operations
+    And audit logging is enabled for all system operations
 
   Scenario: Create contract from approved template
     Given an approved contract template exists

@@ -8,18 +8,18 @@ Feature: System Administration - Detailed Sub Processes
   Scenario: Administer roles, security, and settings
     Given the administrator accesses system settings
     When system configuration is performed
-    Then the following should be manageable:
+    Then the system should:
       | Item                | Actions              |
       | Roles & Permissions | Create/modify/delete |
       | User Assignments    | Assign/revoke roles  |
       | Security Settings   | Configure policies   |
-    And all changes should be audit-logged
+    And the system should record the configuration changes in the audit log
 
   # UC-09-02 – System Monitoring & Logging
   Scenario: Monitor health metrics and security logs
-    Given the monitoring dashboard is accessed
+    Given the monitoring dashboard is available
     When the system is observed
-    Then it should display:
+    Then the system should:
       | Metric              | Description          |
       | Health Metrics      | System status        |
       | Searchable Logs     | Filterable events    |

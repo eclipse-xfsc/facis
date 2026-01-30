@@ -22,7 +22,7 @@ Feature: Audit and Compliance Reporting
 
   Scenario: Run audit on policy compliance
     Given contract contents and lifecycle history are available
-    When an Auditor or Compliance Officer initiates a policy compliance audit
+    When an Auditor or Compliance Officer initiates a compliance audit
     Then the system should:
       | Action                | Details                               |
       | Evaluate Compliance   | Contract is checked against policies  |
@@ -42,7 +42,7 @@ Feature: Audit and Compliance Reporting
   Scenario: Maintain tamper-proof audit trail for contract lifecycle events
     Given contract lifecycle events are generated (e.g., creation, edits, approvals, signatures)
     When the system records an audit log entry for a lifecycle event
-    Then each log entry should include:
+    Then the audit log entry should include:
       | Field                       | Content                         |
       | Timestamp                   | When the event occurred         |
       | Actor Identity              | Who performed the action        |

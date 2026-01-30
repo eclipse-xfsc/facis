@@ -22,13 +22,13 @@ Feature: Contract Creation and Approval - Detailed Sub Processes
   Scenario: Collaborate on contract negotiation
     Given a contract is in "Draft" status
     When a Contract Manager or Contract Reviewer opens a draft contract to negotiate contract clauses
-    Then the system should support:
+    Then the system should:
       | Feature                | Description             |
       | Add Comments/Edits     | Suggest changes         |
       | Track Changes          | See modifications       |
       | Negotiation Log        | View discussion history |
       | Version History        | Maintain all versions   |
-    And all changes should be logged with actor and timestamp
+    And the system should record the negotiation changes in the audit log
 
   # UC-03-03 – Adjust Contract Terms
   Scenario: Granular clause edits without regeneration
@@ -67,7 +67,7 @@ Feature: Contract Creation and Approval - Detailed Sub Processes
 
   # UC-03-06 – Manage Contract Signing Process
   Scenario: Coordinate structured signing steps
-    Given a contract is signable
+    Given a contract is ready for signing
     When a Contract Manager initiates the contract signing workflow
     Then the system should:
       | Feature              | Description              |
@@ -75,13 +75,13 @@ Feature: Contract Creation and Approval - Detailed Sub Processes
       | Set Sequence         | Order of signing        |
       | Schedule Reminders   | Automated notifications |
       | Track Status         | Signing progress        |
-    And changes to signing sequence should be logged
+    And the system should record the signing sequence changes in the audit log
 
   # UC-03-07 – Contract Dashboard & Search
   Scenario: Track contract progress and search
     Given multiple contracts exist in the system
     When a Contract Manager or Contract Observer accesses the contract dashboard
-    Then it should display:
+    Then the system should:
       | Feature              | Description           |
       | Lifecycle States     | Current status        |
       | Full-Text Search     | Search contract text  |

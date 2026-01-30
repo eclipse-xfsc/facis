@@ -9,7 +9,7 @@ Feature: Workflow Automation - Detailed Sub Processes
   # UC-10-01 – Automate Contract Workflow Processes
   Scenario: Integrate workflows with AI/ERP orchestration
     Given an external AI/ERP system is configured
-    And a contract workflow is ready is configured
+    And a contract workflow is configured
     When Process Orchestrator initiates integration of the contract workflow with the external system
     Then the system should:
       | Action                    | Result              |

@@ -6,7 +6,7 @@ Feature: Contract Deployment - Detailed Sub Processes
 
   # UC-05-01 – Deploy Signed Contract to Target System
   Scenario: Deploy contract with proof of delivery
-    Given a contract is signed and ready for deployment
+    Given a contract has been signed and validated
     When a Contract Manager submits a signed contract for deployment to the target system
     Then the system should:
       | Action                | Result                |
@@ -14,4 +14,4 @@ Feature: Contract Deployment - Detailed Sub Processes
       | Receive Ack/Callback  | Confirmation receipt  |
       | Target Reads Content  | Acceptance validated  |
       | Log Proof             | Delivery documented   |
-    And DCS should record proof of delivery
+    And the system records proof of delivery

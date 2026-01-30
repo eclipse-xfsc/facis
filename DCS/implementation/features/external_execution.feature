@@ -5,11 +5,11 @@ Feature: External System Execution and Integration
   So that the contract can be executed in the target environment and proof of execution is stored
 
   Background:
-    Given a signed and validated contract is available for deployment
-    And a target system is configured for contract execution
+    Given a contract has been signed and validated
+    And a target system is configured
 
   Scenario: Prepare execution payload
-    Given a signed and validated contract is available for deployment
+    Given a contract has been signed and validated
     When the Contract Manager requests contract deployment
     Then the system prepares a deployment payload for the target system
     And the payload contains the contract content and required deployment context
@@ -27,7 +27,7 @@ Feature: External System Execution and Integration
     Given a deployment payload has been delivered to the target system
     When the system verifies deployment activation in the target system
     Then the target system confirms activation or execution has started
-    And the system stores proof of contract execution
+    And the system records proof of delivery
     And the contract status reflects "Executed"
 
   Scenario: Handle external system response

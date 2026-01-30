@@ -8,7 +8,7 @@ Feature: Identity and Authorization Management - Detailed Sub Processes
 
   # UC-14-01 – Retrieve Identity & PoA Credentials
   Scenario: Credential verification and session binding
-    Given a Contract Signatory or System Signatory is authenticated for signing a contract
+    Given a Contract Signer or System Contract Signer is authenticated for signing a contract
     And required identity and PoA credentials are not yet bound to the user session
     When the signer initiates the signing process for a contract
     Then the system should:
@@ -18,4 +18,4 @@ Feature: Identity and Authorization Management - Detailed Sub Processes
       | Check Status              | Not revoked         |
       | Grant Authorization       | On success          |
       | Block on Failure          | Deny with reason    |
-    And all events should be logged for audit
+    And the system should record the credential verification in the audit log

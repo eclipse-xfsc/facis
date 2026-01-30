@@ -15,7 +15,7 @@ Feature: Contract Lifecycle Management
     When the Contract Manager opens the contract lifecycle dashboard
     Then the system shows contract lifecycle KPIs
     And the system shows alerts for contracts requiring attention
-    And the dashboard view is recorded
+    And the system should record the dashboard access in the audit log
 
   Scenario: Initiate contract renewal flow
     Given a contract is active and nearing expiration
@@ -23,7 +23,7 @@ Feature: Contract Lifecycle Management
     When the Contract Manager initiates the renewal flow
     Then the system creates a renewal workflow task for the contract
     And the contract enters the "Renewal Pending" state
-    And the renewal initiation is recorded
+    And the system should record the renewal initiation in the audit log
 
   Scenario: Confirm contract renewal with new terms
     Given a contract is in "Renewal Pending" state
@@ -31,15 +31,15 @@ Feature: Contract Lifecycle Management
     When the Contract Manager confirms the renewal
     Then the contract transitions to the "Renewed" state
     And the renewed contract terms and dates are applied
-    And the state change is recorded
+    And the system should record the state change in the audit log
 
   Scenario: Initiate contract termination flow
-    Given a contract is in an active state
+    Given a contract is in "Active" status
     And the Contract Manager is authorized to terminate the contract
     When the Contract Manager initiates the termination flow
     Then the contract enters the "Termination Pending" state
     And a termination workflow task is created
-    And the termination initiation is recorded
+    And the system should record the termination initiation in the audit log
 
   Scenario: Confirm contract termination
     Given a contract is in "Termination Pending" state
@@ -47,4 +47,4 @@ Feature: Contract Lifecycle Management
     When the Contract Manager confirms the termination
     Then the contract transitions to the "Terminated" state
     And the termination effective date is recorded
-    And the state change is recorded
+    And the system should record the state change in the audit log

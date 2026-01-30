@@ -7,7 +7,7 @@ Feature: System Administration and User Management
   Background:
     Given RBAC is fully configured
     And system monitoring is enabled
-    And audit logging is active for all admin actions
+    And audit logging is enabled for all system operations
     And user account management is available
 
   Scenario: Create new role with specific permissions
@@ -71,7 +71,7 @@ Feature: System Administration and User Management
       | Update Access Lists   | Remove from all acls   |
       | Prevent Re-access     | Until re-assigned      |
     And the revocation should take effect immediately
-    And the audit trail should include:
+    And the audit log entry should include:
       | Audit Field           | Value                  |
       | Event Type            | Role Revoked           |
       | Revoked By            | Administrator          |
@@ -82,7 +82,7 @@ Feature: System Administration and User Management
   Scenario: View role-based access configuration
     Given role-based access configuration exists
     When a System Administrator views the current RBAC configuration
-    Then the system should display:
+    Then the system should:
       | Configuration Element | Details                |
       | Defined Roles         | Roles are listed       |
       | Role Permissions      | Permissions are shown  |

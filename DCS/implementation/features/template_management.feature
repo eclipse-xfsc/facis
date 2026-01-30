@@ -13,13 +13,13 @@ Feature: Template Management and Lifecycle
     When the Contract Manager views the template catalog
     Then the system shows a list of approved contract templates
     And each template displays its identifier and current status
-    And the catalog access is recorded
+    And the system should record the catalog access in the audit log
 
   Scenario: Select an approved contract template for contract creation
-    Given an approved contract template is available
+    Given an approved contract template exists
     When the Contract Manager selects the template for contract creation
     Then the system makes the selected template available for downstream contract creation
-    And the template selection is recorded
+    And the system should record the template selection in the audit log
 
   Scenario: Approve template changes
     Given a contract template is in "Pending Review" status
@@ -28,5 +28,5 @@ Feature: Template Management and Lifecycle
     And approves the template
     Then the template status changes to "Approved"
     And the approved template becomes available for contract creation
-    And the status transition is recorded for audit
+    And the system should record the status transition in the audit log
 

@@ -14,4 +14,4 @@ Feature: API-Based Contract Management - Detailed Sub Processes
       | Execute Workflow   | Complete operation   |
       | Interaction Log    | Track all calls      |
       | Traceability       | Full audit trail     |
-    And all API interactions should be logged
+    And the system should record the API interactions in the audit log

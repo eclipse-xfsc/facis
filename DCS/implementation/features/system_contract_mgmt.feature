@@ -9,14 +9,14 @@ Feature: System-Based Contract Management
     When the Contract Manager views the system contract inventory
     Then the system provides a list of contracts with their current states
     And the inventory supports filtering and lookup
-    And the access is recorded
+    And the system should record the inventory access in the audit log
 
   Scenario: View system-level contract status overview
     Given multiple contracts exist in different lifecycle states
     When the Contract Manager views the system status overview
     Then the system shows an aggregated view of contract states
     And contracts requiring attention are indicated
-    And the overview access is recorded
+    And the system should record the overview access in the audit log
 
   Scenario: System validates contract at each step
     Given a contract is at each lifecycle stage
@@ -30,7 +30,7 @@ Feature: System-Based Contract Management
   Scenario: Track system state changes
     Given a contract transitions between states
     When each state change occurs
-    Then the system should record:
+    Then the system should:
       | Field             | Value                   |
       | Previous State    | Contract's prior state  |
       | New State         | Contract's new state    |
@@ -52,5 +52,5 @@ Feature: System-Based Contract Management
     When failure is detected
     Then the system should automatically rollback to last consistent state
     And partial changes should not persist
-    And the failure should be logged with details
+    And the system should record the failure in the audit log
     And recovery options should be available to administrators

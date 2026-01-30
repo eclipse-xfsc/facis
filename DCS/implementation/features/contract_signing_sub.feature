@@ -8,14 +8,14 @@ Feature: Contract Signing - Detailed Sub Processes
   Scenario: Secure electronic signature process
     Given a contract is ready for signing
     When a Contract Signer accesses the secure document viewer
-    Then the system should provide:
+    Then the system should:
       | Feature                | Description                |
       | Secure Viewer          | Protected document view    |
       | Legally Binding E-Sig  | Valid digital signature    |
       | Identity/PoA Binding   | Proof of authority         |
       | Signer Authentication  | Verify identity            |
     And the system should produce signed artifact (PAdES/JAdES)
-    And status should be updated and event logged
+    And the system should record the signing event in the audit log
 
   # UC-04-02 – Verify Counterparty Authorization
   Scenario: Check legal authority to sign
@@ -30,7 +30,7 @@ Feature: Contract Signing - Detailed Sub Processes
 
   # UC-04-03 – Verify Counterparty Signature
   Scenario: Validate signature authenticity and integrity
-    Given a contract has been signed by counterparty
+    Given a contract has been signed
     When a Contract Signer or Contract Manager initiates the signature verification
     Then the system should:
       | Check                 | Result                   |

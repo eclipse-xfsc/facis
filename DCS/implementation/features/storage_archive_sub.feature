@@ -6,7 +6,7 @@ Feature: Storage and Archive Management - Detailed Sub Processes
 
   # UC-07-01 – Store Contract in Secure Archive
   Scenario: Tamper-proof long-term contract storage
-    Given a signed contract is ready for archival
+    Given a contract has been signed
     When a Contract Manager user stores the signed contract
     Then the system should:
       | Action              | Result                |
@@ -27,13 +27,13 @@ Feature: Storage and Archive Management - Detailed Sub Processes
       | Permit Roles       | Allow access          |
       | Log Changes        | Audit trail entry     |
       | Log Access Attempts| Security tracking     |
-    And all access changes should be logged
+    And the system should record the access changes in the audit log
 
   # UC-07-03 – Storage & Security Dashboard
   Scenario: Monitor archive status and integrity
     Given contracts are archived
     When a Archive Manager opens the contract archive dashboard
-    Then it should show:
+    Then the system should:
       | Metric              | Description          |
       | Coverage/Integrity  | Archive health       |
       | Alerts              | Any integrity issues |
