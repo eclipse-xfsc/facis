@@ -7,7 +7,7 @@ replicaCount: 1
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
-  repository: docker.io/library/digital-contract-service
+  repository: digital-contracting-service
   # This sets the pull policy for images.
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
@@ -64,7 +64,7 @@ ingress:
   annotations:
     kubernetes.io/tls-acme: "true"
     kubernetes.io/ingress.allow-http: "true"
-#    cert-manager.io/cluster-issuer: cert-manager-webhook
+    cert-manager.io/cluster-issuer: cert-manager-webhook
     nginx.ingress.kubernetes.io/ssl-redirect: "true" #true"
     nginx.ingress.kubernetes.io/affinity: cookie
     nginx.ingress.kubernetes.io/session-cookie-expires: "172800"
