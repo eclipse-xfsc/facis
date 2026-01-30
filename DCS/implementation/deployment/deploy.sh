@@ -63,14 +63,14 @@ for cmd in kubectl helm jq curl sed trap; do
 done
 
 #----------------------------------------
-# Verify ingress-nginx is installed
+# Verify ingress class traefik is installed
 #----------------------------------------
-log "ℹ Checking ingress-nginx..."
-if ! kubectl get ns ingress-nginx &>/dev/null; then
-  log "❌ ingress-nginx namespace not found. Please install ingress-nginx manually and retry."
+log "ℹ Checking for ingressClass traefik..."
+if ! kubectl get ingressclass traefik &>/dev/null; then
+  log "❌ Ingress class traefik not found"
   exit 1
 else
-    log "✅ ingress-nginx is installed"
+    log "✅ Ingress class traefik found"
 fi
 
 #----------------------------------------
@@ -78,10 +78,10 @@ fi
 #----------------------------------------
 log "ℹ️ Waiting for ingress-nginx External-IP..."
 while true; do
-  EX_IP=$(kubectl get svc ingress-nginx-controller -n ingress-nginx \
+  EX_IP=$(kubectl get svc traefik -n kube-system \
     -o jsonpath='{.status.loadBalancer.ingress[0].ip}' 2>/dev/null || echo "")
   if [[ -n "$EX_IP" && "$EX_IP" != "<pending>" ]]; then
-    log "✅ ingress-nginx External-IP: $EX_IP"
+    log "✅ ingress External-IP: $EX_IP"
     break
   fi
   log "⏳ External-IP pending, retrying in 5s..."
@@ -98,7 +98,7 @@ if kubectl get ns "$NAMESPACE" &>/dev/null; then
   log "⚠ Namespace '$NAMESPACE' already exists. Showing existing deployment info and exiting."
 
   # 1. External‐IP
-  EX_IP=$(kubectl get svc ingress-nginx-controller -n ingress-nginx \
+  EX_IP=$(kubectl get svc traefik -n kube-system \
     -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
   echo "🔹 ingress External-IP: $EX_IP"
 
