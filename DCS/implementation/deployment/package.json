@@ -1,0 +1,21 @@
+{
+  "name": "node-red-contrib-digital-contracting-service",
+  "version": "0.0.1",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "Digital-Contracting-Service.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "node-red": {
+    "nodes": {
+      "Digital-Contracting-Service": "Digital-Contracting-Service.js"
+    }
+  },
+  "dependencies": {
+    "request": "^2.88.2",
+    "tmp": "^0.2.3"
+  }
+}
