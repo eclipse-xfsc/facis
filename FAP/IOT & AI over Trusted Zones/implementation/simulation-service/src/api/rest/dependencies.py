@@ -13,9 +13,11 @@ from src.core import SimulationEngine
 from src.models.consumer_load import ConsumerLoadConfig, DeviceType
 from src.models.meter import MeterConfig
 from src.models.price import PriceConfig
+from src.models.weather import WeatherConfig
 from src.simulators.consumer_load import ConsumerLoadSimulator
 from src.simulators.energy_meter import EnergyMeterSimulator
 from src.simulators.energy_price import EnergyPriceSimulator
+from src.simulators.weather import WeatherSimulator
 
 if TYPE_CHECKING:
     pass
@@ -37,6 +39,7 @@ class SimulationState:
         self._meters: dict[str, EnergyMeterSimulator] = {}
         self._price_feeds: dict[str, EnergyPriceSimulator] = {}
         self._loads: dict[str, ConsumerLoadSimulator] = {}
+        self._weather_stations: dict[str, WeatherSimulator] = {}
         self._initialized = False
 
     @classmethod
@@ -68,6 +71,7 @@ class SimulationState:
         self._engine.register_generator_type("energy_meter", EnergyMeterSimulator)
         self._engine.register_generator_type("energy_price", EnergyPriceSimulator)
         self._engine.register_generator_type("consumer_load", ConsumerLoadSimulator)
+        self._engine.register_generator_type("weather", WeatherSimulator)
 
         # Create default entities from config
         self._setup_default_entities()
@@ -97,6 +101,13 @@ class SimulationState:
             operate_on_weekends=False,
         )
         self.add_load("industrial-oven-001", oven_config)
+
+        # Create a default weather station (Berlin)
+        weather_config = WeatherConfig(
+            latitude=52.52,
+            longitude=13.405,
+        )
+        self.add_weather_station("berlin-001", weather_config)
 
     @property
     def settings(self) -> Settings:
@@ -179,6 +190,29 @@ class SimulationState:
         """List all consumer load device IDs."""
         return list(self._loads.keys())
 
+    def add_weather_station(
+        self, station_id: str, config: WeatherConfig | None = None
+    ) -> WeatherSimulator:
+        """Add a weather station simulator."""
+        if config is None:
+            config = WeatherConfig()
+
+        simulator = WeatherSimulator(
+            entity_id=station_id,
+            rng=self.engine.rng,
+            config=config,
+        )
+        self._weather_stations[station_id] = simulator
+        return simulator
+
+    def get_weather_station(self, station_id: str) -> WeatherSimulator | None:
+        """Get a weather station simulator by ID."""
+        return self._weather_stations.get(station_id)
+
+    def list_weather_stations(self) -> list[str]:
+        """List all weather station IDs."""
+        return list(self._weather_stations.keys())
+
     def reset(self, new_seed: int | None = None) -> None:
         """Reset the simulation state."""
         if self._engine:
@@ -203,6 +237,12 @@ class SimulationState:
                     entity_id=device_id,
                     rng=self._engine.rng,
                     config=load.config,
+                )
+            for station_id, station in list(self._weather_stations.items()):
+                self._weather_stations[station_id] = WeatherSimulator(
+                    entity_id=station_id,
+                    rng=self._engine.rng,
+                    config=station.config,
                 )
 
 

@@ -1,6 +1,6 @@
 # REST API Routes
 
-from src.api.rest.routes import health, loads, meters, prices, simulation
+from src.api.rest.routes import health, loads, meters, prices, simulation, weather
 
 __all__ = [
     "health",
@@ -8,4 +8,5 @@ __all__ = [
     "meters",
     "prices",
     "simulation",
+    "weather",
 ]

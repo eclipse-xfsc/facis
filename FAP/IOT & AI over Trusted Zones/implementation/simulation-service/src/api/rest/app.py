@@ -10,7 +10,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from src.api.rest.dependencies import SimulationState
-from src.api.rest.routes import health, loads, meters, prices, simulation
+from src.api.rest.routes import health, loads, meters, prices, simulation, weather
 
 
 @asynccontextmanager
@@ -53,6 +53,7 @@ def create_app() -> FastAPI:
     app.include_router(meters.router, prefix="/api/v1", tags=["Energy Meters"])
     app.include_router(prices.router, prefix="/api/v1", tags=["Energy Prices"])
     app.include_router(loads.router, prefix="/api/v1", tags=["Consumer Loads"])
+    app.include_router(weather.router, prefix="/api/v1", tags=["Weather Data"])
     app.include_router(simulation.router, prefix="/api/v1", tags=["Simulation Control"])
 
     return app

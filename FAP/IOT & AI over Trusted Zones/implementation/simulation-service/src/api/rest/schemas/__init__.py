@@ -38,6 +38,14 @@ from src.api.rest.schemas.simulation import (
     SimulationStartResponse,
     SimulationStatusResponse,
 )
+from src.api.rest.schemas.weather import (
+    ConditionsSchema,
+    LocationSchema,
+    WeatherHistoryResponse,
+    WeatherListResponse,
+    WeatherReadingResponse,
+    WeatherStationInfo,
+)
 
 __all__ = [
     # Common
@@ -73,4 +81,11 @@ __all__ = [
     "SimulationPauseResponse",
     "SimulationResetRequest",
     "SimulationResetResponse",
+    # Weather
+    "LocationSchema",
+    "ConditionsSchema",
+    "WeatherReadingResponse",
+    "WeatherStationInfo",
+    "WeatherListResponse",
+    "WeatherHistoryResponse",
 ]
