@@ -27,11 +27,25 @@ services:
     container_name: facis-mqtt
     ports:
       - "1883:1883"
+      - "9001:9001"
     volumes:
       - mqtt-data:/mosquitto/data
       - mqtt-log:/mosquitto/log
+      - ./config/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
     healthcheck:
-      test: ["CMD", "mosquitto_sub", "-t", "$$SYS/#", "-C", "1", "-i", "healthcheck", "-W", "3"]
+      test:
+        [
+          "CMD",
+          "mosquitto_sub",
+          "-t",
+          "$$SYS/#",
+          "-C",
+          "1",
+          "-i",
+          "healthcheck",
+          "-W",
+          "3",
+        ]
       interval: 30s
       timeout: 10s
       retries: 3

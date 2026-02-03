@@ -137,8 +137,10 @@ consumers:
 # -----------------------------------------------------------------------------
 # MQTT Configuration
 # -----------------------------------------------------------------------------
+# Note: In Docker, use service name 'mqtt' instead of 'localhost'
+# Override with SIMULATOR_MQTT__HOST environment variable
 mqtt:
-  host: localhost
+  host: mqtt
   port: 1883
   client_id: facis-simulator
   qos: 1
