@@ -81,7 +81,8 @@ class SimulationEngine:
         # Extract configuration
         if settings is not None:
             seed = settings.simulation.seed
-            acceleration = settings.simulation.time_acceleration
+            # speed_factor is a float (e.g., 10.0 for 10x), convert to int for clock
+            acceleration = int(settings.simulation.speed_factor)
             start_time = settings.simulation.start_time
         else:
             seed = 12345
@@ -99,9 +100,7 @@ class SimulationEngine:
         # Generator factories: type_name -> factory function
         self._generator_factories: dict[str, type[BaseTimeSeriesGenerator]] = {}
 
-        logger.info(
-            f"SimulationEngine initialized with seed={seed}, acceleration={acceleration}"
-        )
+        logger.info(f"SimulationEngine initialized with seed={seed}, acceleration={acceleration}")
 
     @property
     def seed(self) -> int:
@@ -272,9 +271,7 @@ class SimulationEngine:
 
         return generator.generate_at(self._clock.simulation_time)
 
-    def generate_at(
-        self, entity_id: str, timestamp: datetime | str
-    ) -> TimeSeriesPoint | None:
+    def generate_at(self, entity_id: str, timestamp: datetime | str) -> TimeSeriesPoint | None:
         """
         Generate data for an entity at a specific timestamp.
 

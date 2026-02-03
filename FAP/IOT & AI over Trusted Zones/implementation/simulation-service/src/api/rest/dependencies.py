@@ -6,11 +6,12 @@ Provides shared instances of simulation engine and configuration.
 
 from __future__ import annotations
 
+import logging
 from typing import TYPE_CHECKING
 
-from src.config import Settings, load_config
+from src.config import Settings, load_config, log_config
 from src.core import SimulationEngine
-from src.models.consumer_load import ConsumerLoadConfig, DeviceType
+from src.models.consumer_load import ConsumerLoadConfig, DeviceType, OperatingWindow
 from src.models.meter import MeterConfig
 from src.models.price import PriceConfig
 from src.models.pv import PVConfig
@@ -22,7 +23,11 @@ from src.simulators.pv_generation import PVGenerationSimulator
 from src.simulators.weather import WeatherSimulator
 
 if TYPE_CHECKING:
-    pass
+    from src.config import ConsumerConfig as ConfigConsumerConfig
+    from src.config import MeterConfig as ConfigMeterConfig
+    from src.config import PVSystemConfig as ConfigPVSystemConfig
+
+logger = logging.getLogger(__name__)
 
 
 class SimulationState:
@@ -68,6 +73,10 @@ class SimulationState:
             return
 
         self._settings = settings or load_config()
+
+        # Log configuration on startup
+        log_config(self._settings)
+
         self._engine = SimulationEngine(self._settings)
 
         # Register generator types
@@ -77,51 +86,106 @@ class SimulationState:
         self._engine.register_generator_type("weather", WeatherSimulator)
         self._engine.register_generator_type("pv_generation", PVGenerationSimulator)
 
-        # Create default entities from config
-        self._setup_default_entities()
+        # Create entities from configuration
+        self._setup_entities_from_config()
 
         self._initialized = True
 
-    def _setup_default_entities(self) -> None:
-        """Set up default meters, price feeds, and loads from configuration."""
-        # Create a default meter
-        meter_config = MeterConfig(
-            meter_id="janitza-umg96rm-001",
-            base_power_kw=10.0,
-            peak_power_kw=25.0,
-        )
-        self.add_meter("janitza-umg96rm-001", meter_config)
+    def _setup_entities_from_config(self) -> None:
+        """Set up meters, PV systems, and consumers from configuration."""
+        # Create weather station first (PV systems depend on it)
+        # Use location from first PV system or default to Berlin
+        if self._settings and self._settings.pv_systems:
+            first_pv = self._settings.pv_systems[0]
+            weather_config = WeatherConfig(
+                latitude=first_pv.latitude,
+                longitude=first_pv.longitude,
+            )
+        else:
+            weather_config = WeatherConfig(
+                latitude=52.52,
+                longitude=13.405,
+            )
+        self.add_weather_station("weather-001", weather_config)
+        logger.info(f"Created weather station: weather-001")
+
+        # Create meters from config
+        if self._settings:
+            for meter_cfg in self._settings.meters:
+                meter_config = self._convert_meter_config(meter_cfg)
+                self.add_meter(meter_cfg.id, meter_config)
+                logger.info(f"Created meter: {meter_cfg.id}")
+
+            # Create PV systems from config
+            for pv_cfg in self._settings.pv_systems:
+                pv_config = self._convert_pv_config(pv_cfg)
+                self.add_pv_system(pv_cfg.id, pv_config)
+                logger.info(f"Created PV system: {pv_cfg.id}")
+
+            # Create consumer loads from config
+            for consumer_cfg in self._settings.consumers:
+                consumer_config = self._convert_consumer_config(consumer_cfg)
+                self.add_load(consumer_cfg.id, consumer_config)
+                logger.info(f"Created consumer: {consumer_cfg.id}")
 
         # Create a default price feed
         price_config = PriceConfig(feed_id="epex-spot-de")
         self.add_price_feed("epex-spot-de", price_config)
+        logger.info("Created price feed: epex-spot-de")
 
-        # Create a default industrial oven
-        oven_config = ConsumerLoadConfig(
-            device_id="industrial-oven-001",
-            device_type=DeviceType.INDUSTRIAL_OVEN,
-            rated_power_kw=3.0,
-            duty_cycle_pct=70.0,
-            operate_on_weekends=False,
+    def _convert_meter_config(self, cfg: "ConfigMeterConfig") -> MeterConfig:
+        """Convert config meter to simulator meter config."""
+        return MeterConfig(
+            meter_id=cfg.id,
+            base_power_kw=cfg.base_load_kw,
+            peak_power_kw=cfg.peak_load_kw,
+            nominal_voltage_v=cfg.nominal_voltage_v,
+            voltage_variance_pct=cfg.voltage_variance_pct,
+            nominal_frequency_hz=cfg.nominal_frequency_hz,
+            frequency_variance_hz=cfg.frequency_variance_hz,
+            power_factor_min=cfg.power_factor_min,
+            power_factor_max=cfg.power_factor_max,
+            initial_energy_kwh=cfg.initial_energy_kwh,
         )
-        self.add_load("industrial-oven-001", oven_config)
 
-        # Create a default weather station (Berlin)
-        weather_config = WeatherConfig(
-            latitude=52.52,
-            longitude=13.405,
+    def _convert_pv_config(self, cfg: "ConfigPVSystemConfig") -> PVConfig:
+        """Convert config PV system to simulator PV config."""
+        return PVConfig(
+            system_id=cfg.id,
+            weather_station_id="weather-001",
+            nominal_capacity_kwp=cfg.nominal_capacity_kw,
+            system_losses_percent=cfg.losses * 100,  # Convert fraction to percent
+            temperature_coefficient_pct_per_c=cfg.temperature_coefficient * 100,  # Convert to %
+            reference_temperature_c=cfg.reference_temperature_c,
         )
-        self.add_weather_station("berlin-001", weather_config)
 
-        # Create a default PV system (linked to Berlin weather station)
-        pv_config = PVConfig(
-            system_id="pv-system-001",
-            weather_station_id="berlin-001",
-            nominal_capacity_kwp=10.0,
-            system_losses_percent=15.0,
-            temperature_coefficient_pct_per_c=-0.4,
+    def _convert_consumer_config(self, cfg: "ConfigConsumerConfig") -> ConsumerLoadConfig:
+        """Convert config consumer to simulator consumer config."""
+        # Map device type string to enum
+        device_type_map = {
+            "industrial_oven": DeviceType.INDUSTRIAL_OVEN,
+            "hvac": DeviceType.HVAC,
+            "compressor": DeviceType.COMPRESSOR,
+            "pump": DeviceType.PUMP,
+            "generic": DeviceType.GENERIC,
+        }
+        device_type = device_type_map.get(cfg.device_type, DeviceType.GENERIC)
+
+        # Convert operating windows
+        operating_windows = [
+            OperatingWindow(start_hour=w.start_hour, end_hour=w.end_hour)
+            for w in cfg.operating_windows
+        ]
+
+        return ConsumerLoadConfig(
+            device_id=cfg.id,
+            device_type=device_type,
+            rated_power_kw=cfg.rated_power_kw,
+            power_variance_pct=cfg.power_variance_pct,
+            duty_cycle_pct=cfg.duty_cycle * 100,  # Convert fraction to percent
+            operating_windows=operating_windows,
+            operate_on_weekends=cfg.operate_on_weekends,
         )
-        self.add_pv_system("pv-system-001", pv_config)
 
     @property
     def settings(self) -> Settings:

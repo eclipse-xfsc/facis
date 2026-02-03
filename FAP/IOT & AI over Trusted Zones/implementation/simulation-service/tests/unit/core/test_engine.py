@@ -48,7 +48,7 @@ class TestSimulationEngine:
         settings = Settings(
             simulation=SimulationConfig(
                 seed=99999,
-                time_acceleration=10,
+                speed_factor=10.0,
                 start_time="2024-01-01T00:00:00+00:00",
             )
         )
