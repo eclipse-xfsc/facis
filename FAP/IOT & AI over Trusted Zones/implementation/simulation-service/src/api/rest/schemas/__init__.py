@@ -30,6 +30,13 @@ from src.api.rest.schemas.price import (
     PriceHistoryResponse,
     PriceReadingResponse,
 )
+from src.api.rest.schemas.pv import (
+    PVHistoryResponse,
+    PVListResponse,
+    PVReadingResponse,
+    PVReadingsSchema,
+    PVSystemInfo,
+)
 from src.api.rest.schemas.simulation import (
     SimulationPauseResponse,
     SimulationResetRequest,
@@ -88,4 +95,10 @@ __all__ = [
     "WeatherStationInfo",
     "WeatherListResponse",
     "WeatherHistoryResponse",
+    # PV
+    "PVReadingsSchema",
+    "PVReadingResponse",
+    "PVSystemInfo",
+    "PVListResponse",
+    "PVHistoryResponse",
 ]
