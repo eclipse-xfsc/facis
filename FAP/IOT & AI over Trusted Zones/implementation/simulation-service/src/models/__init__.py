@@ -7,8 +7,20 @@ from src.models.consumer_load import (
     DeviceType,
     OperatingWindow,
 )
+from src.models.correlation import (
+    CorrelatedSnapshot,
+    CorrelationConfig,
+    DerivedMetrics,
+)
 from src.models.meter import MeterConfig, MeterReading, MeterReadings
 from src.models.price import PriceConfig, PriceReading, TariffType
+from src.models.pv import PVConfig, PVReading, PVReadings
+from src.models.weather import (
+    LocationData,
+    WeatherConditions,
+    WeatherConfig,
+    WeatherReading,
+)
 
 __all__ = [
     # Meter models
@@ -25,4 +37,17 @@ __all__ = [
     "DeviceState",
     "DeviceType",
     "OperatingWindow",
+    # Weather models
+    "WeatherConfig",
+    "WeatherReading",
+    "WeatherConditions",
+    "LocationData",
+    # PV models
+    "PVConfig",
+    "PVReading",
+    "PVReadings",
+    # Correlation models
+    "CorrelatedSnapshot",
+    "CorrelationConfig",
+    "DerivedMetrics",
 ]
