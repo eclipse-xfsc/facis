@@ -1,0 +1,65 @@
+name: CI Pipeline
+on:
+  push:
+    tags:
+      - 'dcs-dev-*.*.*'
+  workflow_dispatch:
+    inputs:
+      docker_tag:
+        description: 'Docker image tag'
+        required: false
+        default: 'latest'
+      docker_registry:
+        description: 'Docker registry URL'
+        required: false
+        default: 'h6s71ks6.c1.de1.container-registry.ovh.net'
+      docker_repo:
+        description: 'Docker repository name'
+        required: false
+        default: 'facis'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    environment: neusta-development
+    env:
+      DOCKER_REGISTRY: ${{ github.event.inputs.docker_registry || 'h6s71ks6.c1.de1.container-registry.ovh.net' }}
+      DOCKER_REPO: ${{ github.event.inputs.docker_repo || 'facis' }}
+      DOCKER_TAG: ${{ github.ref_type == 'tag' && github.ref_name || github.event.inputs.docker_tag || 'latest' }}
+
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-go@v6
+        with:
+          go-version: '1.25'
+
+      - name: Verify Go installation
+        run: | 
+          go env
+
+      - name: Install Goa CLI
+        run: |
+          go install goa.design/goa/v3/cmd/goa@latest
+
+      - name: Verify Go modules
+        run: |
+          cd DCS/implementation/backend
+          go mod tidy
+          go mod verify
+          
+      - name: Generate Goa design code
+        run: |
+          cd DCS/implementation/backend
+          goa gen digital-contracting-service/design
+
+      - name: Docker login
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ github.event.inputs.docker_registry || 'h6s71ks6.c1.de1.container-registry.ovh.net' }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build backend Docker image
+        run: |
+          cd DCS/implementation/backend
+          bash build-image.sh $DOCKER_TAG
