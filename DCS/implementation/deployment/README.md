@@ -109,8 +109,7 @@ You should see JSON output in the Debug panel, showing catalogue entries.
 ---
 
 ### 9. Build a Docker image by GitHub Action
-To build a Docker image by GitHub Action, create a tag with dcs-dev-*.*.*
-This creates a new Docker image with this tag.
+To build a Docker image by GitHub Action, create a tag with dcs-dev-*.*.* or dcs-release-*.*.*
 
 ## ⚙️ Configuration
 
