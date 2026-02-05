@@ -7,11 +7,6 @@ on:
 jobs:
   build_docker_image:
     runs-on: ubuntu-latest
-    environment: neusta-development
-    env:
-      DOCKER_REGISTRY: ${{ vars.DOCKER_REGISTRY }}
-      DOCKER_REPO: ${{ vars.DOCKER_REPO }}
-      DOCKER_TAG: ${{ github.ref_type == 'tag' && github.ref_name }}
 
     steps:
       - uses: actions/checkout@v6
