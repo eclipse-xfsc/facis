@@ -36,8 +36,7 @@ Feature: Contract Renewal and Termination Management
     And the alert is delivered according to notification preferences
 
   Scenario: Formally terminate contract
-    Given I am authenticated with role "Contract Manager"
-    And contract "Service Agreement" is in "Active" status
+    Given contract "Service Agreement" is in "Active" status
     When I terminate contract "Service Agreement" with reason "Mutual agreement"
     Then the contract is marked as "Terminated"
     And the termination reason is recorded
