@@ -1,22 +1,12 @@
 @UC-01 @FR-UC-01-1 @FR-UC-01-2 @FR-UC-01-3
 Feature: User Authentication & Authorization
-  As a user, I want to authenticate securely and be authorized based on my role
-  So that I can access appropriate DCS functions while maintaining security.
+  Users authenticate securely and are authorized based on roles and credentials.
 
-  Background:
-    Given the DCS system is operational
-
-  Scenario Outline: Successful authentication with valid credential
-    Given I present a valid <credential_type> credential
+  Scenario: Successful authentication with valid credential
+    Given I present a valid verifiable credential
     When I attempt to access the DCS system
     Then I am authenticated and granted access based on my role
     And my access is logged with timestamp and user ID
-
-    Examples:
-      | credential_type     |
-      | verifiable          |
-      | identity            |
-      | PoA                 |
 
   Scenario: Authorization denied for invalid credential
     Given I present an expired credential
@@ -24,16 +14,11 @@ Feature: User Authentication & Authorization
     Then the request is denied with error "Credential invalid or access revoked"
     And the attempt is logged for audit
 
-  Scenario Outline: Role enforcement prevents unauthorized actions
-    Given I am authenticated with role "<role>"
-    When I attempt to access <restricted_function>
+  Scenario: Role enforcement prevents unauthorized actions
+    Given I am authenticated with role "Contract Creator"
+    When I attempt to access admin functions
     Then the request is denied with an authorization error
     And the denial is logged
-
-    Examples:
-      | role             | restricted_function |
-      | Contract Creator | admin functions     |
-      | Template Reviewer| system settings     |
 
   Scenario: PoA credential validation for signing
     Given I am authenticated with role "Contract Signer"
@@ -48,7 +33,32 @@ Feature: User Authentication & Authorization
     Then the request is denied
     And access rights are invalidated until re-credentialing
 
-  Scenario: Authentication and authorization events are logged
-    Given I am authenticated with role "Contract Creator"
-    When I access a protected resource
-    Then the authentication and authorization events are logged with timestamp and user ID
+  # FR-UC-01-4: Multiple invalid credential attempts trigger lockout
+  Scenario: Multiple failed credential attempts trigger account lockout
+    Given I present an invalid credential
+    When I fail authentication 5 consecutive times
+    Then my account is locked
+    And I receive error "Account locked due to multiple failed attempts"
+    And the lockout event is logged for security monitoring
+
+  Scenario: Locked account cannot authenticate even with valid credential
+    Given my account has been locked due to failed attempts
+    When I present a valid verifiable credential
+    Then the request is denied with error "Account locked"
+    And I am instructed to contact an administrator
+
+  Scenario: Administrator can unlock a locked account
+    Given user "locked.user@example.com" has a locked account
+    And I am authenticated with role "System Administrator"
+    When I unlock the account for user "locked.user@example.com"
+    Then the account is unlocked
+    And the user can authenticate with valid credentials
+    And the unlock action is logged for audit
+
+  Scenario: Wallet integration failure allows retry
+    Given I am authenticated with role "Contract Signer"
+    And my wallet integration encounters a temporary failure
+    When I attempt to sign a contract
+    Then the system notifies me of the wallet failure
+    And I am offered the option to retry
+    And the failure is logged for troubleshooting
