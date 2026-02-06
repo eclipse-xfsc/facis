@@ -1,0 +1,9 @@
+# Test environment configuration
+# Inherits from default.yaml with overrides
+
+simulation:
+  seed: 99999  # Fixed seed for test reproducibility
+  time_acceleration: 1000  # Fast for testing
+
+logging:
+  level: DEBUG

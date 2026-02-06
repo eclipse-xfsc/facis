@@ -1,0 +1,8 @@
+# Development environment configuration
+# Inherits from default.yaml with overrides
+
+simulation:
+  time_acceleration: 10  # Faster for development
+
+logging:
+  level: DEBUG
