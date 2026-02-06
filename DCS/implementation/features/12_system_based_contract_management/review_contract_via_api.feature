@@ -4,7 +4,7 @@ Feature: Review Contract via API
   through API-based checks and rule evaluation.
 
   Scenario: Review contract via API for compliance
-    Given a system service authenticates via API
+    Given a system service is authenticated via API
     And contract "Service Agreement" is in "Draft" status
     When the system sends a review request for contract "Service Agreement"
     Then the contract is validated against predefined rules
@@ -12,12 +12,13 @@ Feature: Review Contract via API
     And a validation report is returned
 
   Scenario: API review triggers automated corrections
-    Given contract validation identifies issues
+    Given a system service is authenticated via API
+    And contract validation identifies issues
     When the system receives review results via API
     Then automated correction suggestions are provided
     And the contract can be updated via API
 
   Scenario: Review API with role-based access
-    Given a system without review permissions
+    Given a system service without review permissions is authenticated via API
     When the system attempts contract review via API
-    Then the request is denied with authorization error
+    Then the request is denied with an authorization error

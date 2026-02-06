@@ -4,19 +4,21 @@ Feature: Manage Contracts via API
   through APIs for querying, updating, and tracking.
 
   Scenario: Query contract status via API
-    Given a system service authenticates via API
+    Given a system service is authenticated via API
     When the system queries contract "Service Agreement" status
     Then the current status and metadata are returned
     And access respects RBAC
 
   Scenario: Update contract via API
-    Given contract "Service Agreement" is in "Active" status
+    Given a system service is authenticated via API
+    And contract "Service Agreement" is in "Active" status
     When the system sends update request with new terms
     Then the contract is updated
-    And changes are versioned and logged
+    And changes are versioned and logged with timestamp and actor identity
 
   Scenario: Track contract performance via API
-    Given contract has KPIs defined
+    Given a system service is authenticated via API
+    And contract has KPIs defined
     When the system requests performance metrics via API
     Then KPI data is returned
     And alerts are included if thresholds exceeded

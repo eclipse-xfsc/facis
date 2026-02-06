@@ -1,4 +1,4 @@
-@FR-PACM-04
+@UC-08 @FR-PACM-04
 Feature: Audit Log Access Control
   Access to audit logs is restricted based on roles
   with all access logged for traceability.

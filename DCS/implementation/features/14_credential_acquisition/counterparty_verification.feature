@@ -1,7 +1,9 @@
-@UC-14-01 @FR-SM-04 @FR-SM-26
+@UC-04-02 @UC-14 @FR-SM-04 @FR-SM-26
 Feature: Counterparty Authorization and PoA Credential Chain Verification
   The system verifies counterparty PoA credentials and delegation
   chains before allowing contract signing to proceed.
+  Note: Implements UC-04-02 (Verify Counterparty Authorization) as part of
+  UC-14 (Identity and PoA Credential Acquisition) workflows.
 
   Scenario: Verify valid counterparty PoA credential chain
     Given I am authenticated with role "Contract Signer"
