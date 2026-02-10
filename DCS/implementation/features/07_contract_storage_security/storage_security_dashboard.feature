@@ -1,4 +1,4 @@
-@UC-07-03 @FR-CSA-21
+@UC-07-03 @FR-CSA-21 @FR-CSA-02 @FR-CWE-07
 Feature: Contract Storage and Security Dashboard
   Archive Managers monitor archive status, data integrity, access logs,
   and alerts through a centralized dashboard.
@@ -57,3 +57,41 @@ Feature: Contract Storage and Security Dashboard
     Given I am authenticated with role "Contract Observer"
     When I attempt to open the contract storage and security dashboard
     Then the request is denied with an authorization error
+
+  Scenario: Archive Manager can only retrieve contracts they have access to
+    Given I am authenticated with role "Archive Manager"
+    And I manage contracts for department "Finance"
+    And contract "Invoice Agreement" is archived for department "Finance"
+    And contract "HR Policy Contract" is archived for department "Human Resources"
+    When I view archived contracts on the dashboard
+    Then I see contract "Invoice Agreement"
+    And I cannot see contract "HR Policy Contract"
+    And access denial is logged
+
+  Scenario: Contract party can retrieve archived contracts they are involved in
+    Given I am authenticated with role "Contract Manager"
+    And I am a representative of party "Acme Corp"
+    And contract "Service Agreement" involves party "Acme Corp" and is archived
+    And contract "Unrelated Agreement" does not involve party "Acme Corp"
+    When I retrieve contract "Service Agreement" from the archive
+    Then the contract is accessible with full audit trail
+    And the access is logged with timestamp and party identity
+    And contract "Unrelated Agreement" is inaccessible
+
+  Scenario: User cannot retrieve archived contracts they are not party to
+    Given I am authenticated with role "Contract Manager"
+    And I am a representative of party "UnrelatedCorp"
+    And contract "Third-Party Agreement" was archived with parties "Acme Corp" and "TechVendor Inc"
+    When I attempt to retrieve contract "Third-Party Agreement" from the archive
+    Then the request is denied with a "Access denied - not a party to this archived contract" error
+    And the access attempt is logged
+
+  Scenario: Legal Officer can retrieve contracts requiring legal compliance review
+    Given I am authenticated with role "Legal Officer"
+    And contract "Compliance Agreement" requires legal compliance review
+    And contract "Compliance Agreement" is archived
+    And I have authorization for compliance review access
+    When I retrieve contract "Compliance Agreement" from the archive
+    Then the contract is accessible with compliance metadata
+    And the compliance review status is displayed
+    And the retrieval is logged as a compliance review access

@@ -1,4 +1,4 @@
-@UC-04-01 @FR-CWE-19 @FR-CWE-26 @FR-SM-13 @FR-SM-16
+@UC-04-01 @FR-CWE-19 @FR-CWE-26 @FR-SM-13 @FR-SM-16 @FR-SM-07 @FR-SM-14
 Feature: Contract Signing
   Contract Signers review contracts in a secure viewer and apply
   legally binding digital signatures with identity and PoA credentials.
@@ -178,4 +178,40 @@ Feature: Contract Signing
     When I export the contract in PDF/A-3 format
     Then the signing summary is embedded in the PDF
     And the embedded summary is machine-readable
+
+  Scenario: Signer with correct role can retrieve and sign designated contract
+    Given I am authenticated with role "Contract Signer"
+    And I am designated as a signatory for contract "Service Agreement"
+    And contract "Service Agreement" is in "Approved" status
+    When I retrieve contract "Service Agreement" for signing
+    Then the contract is accessible in the secure viewer
+    And I can apply my digital signature to the contract
+    And the retrieval and signing action is logged
+
+  Scenario: Signer not designated for contract cannot retrieve it
+    Given I am authenticated with role "Contract Signer"
+    And I am not designated as a signatory for contract "Service Agreement"
+    When I attempt to retrieve contract "Service Agreement"
+    Then the request is denied with a "Not a designated signatory for this contract" error
+    And the access denial is logged
+
+  Scenario: Contract enforces distinct role for each signatory
+    Given I am authenticated with role "Contract Manager"
+    And contract "Multi-Party Agreement" is in "Approved" status
+    And contract "Multi-Party Agreement" requires "Procurement Officer" at position 1
+    And contract "Multi-Party Agreement" requires "Finance Director" at position 2
+    When I view the signing requirements for contract "Multi-Party Agreement"
+    Then the required role for position 1 is "Procurement Officer"
+    And the required role for position 2 is "Finance Director"
+    And signing order is enforced with credential verification
+
+  Scenario: Signatory cannot sign contract if role credentials do not match
+    Given I am authenticated with role "Contract Signer"
+    And I hold a PoA credential from "Authority X"
+    And I am designated as a signatory for contract "Restricted Agreement"
+    And contract "Restricted Agreement" requires PoA credential from "Authority Y"
+    When I attempt to sign contract "Restricted Agreement"
+    Then the request is denied with a "Credential issuer does not match contract requirement" error
+    And the credential mismatch is logged
+    And the contract remains unsigned
 
