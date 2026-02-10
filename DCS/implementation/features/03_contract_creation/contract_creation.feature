@@ -1,4 +1,4 @@
-@UC-03-01 @FR-CWE-13 @FR-CWE-03 @FR-CWE-30
+@UC-03-01 @FR-CWE-13 @FR-CWE-03 @FR-CWE-30 @FR-CWE-07
 Feature: Contract Creation
   Contract Creators generate contracts from predefined templates with
   auto-filled metadata. The system supports dynamic contract assembling
@@ -64,3 +64,35 @@ Feature: Contract Creation
     Given I am authenticated with role "Contract Observer"
     When I attempt to create a contract from template "Service Agreement Template"
     Then the request is denied with an authorization error
+
+  Scenario: Contract Creator can only create contracts for authorized parties
+    Given I am authenticated with role "Contract Creator"
+    And I am authorized to create contracts involving party "Acme Corp"
+    When I create a contract from template "Service Agreement Template"
+    And I specify party "Acme Corp" as a contract party
+    Then the contract is created successfully
+    And the contract is associated with party "Acme Corp"
+
+  Scenario: Contract Creator cannot create contracts involving unauthorized parties
+    Given I am authenticated with role "Contract Creator"
+    And I am not authorized to create contracts with party "RestrictedVendor Inc"
+    When I attempt to create a contract involving party "RestrictedVendor Inc"
+    Then the request is denied with an "Not authorized to create contracts with this party" error
+    And the contract creation is prevented
+    And the attempt is logged
+
+  Scenario: Created contract is accessible only to authorized parties
+    Given I am authenticated with role "Contract Creator"
+    And I have created contract "Service Agreement" with parties "Acme Corp" and "TechVendor Inc"
+    When a representative of party "Acme Corp" attempts to access the contract
+    Then the contract is accessible and visible
+    And when a representative of unrelated party "UnrelatedCorp" attempts to access the contract
+    Then the access is denied with a "Not authorized to access this contract" error
+
+  Scenario: Unauthorized party cannot access created contract
+    Given I am authenticated with role "Contract Observer"
+    And contract "Service Agreement" is created with parties "Acme Corp" and "TechVendor Inc"
+    And I do not have authorization for either party
+    When I attempt to access contract "Service Agreement"
+    Then the request is denied with an "Access denied - unauthorized for contract parties" error
+    And the access denial is logged with timestamp

@@ -1,4 +1,4 @@
-@UC-03-02 @FR-CWE-08 @FR-CWE-14 @FR-CWE-18
+@UC-03-02 @FR-CWE-08 @FR-CWE-14 @FR-CWE-18 @FR-CWE-07
 Feature: Contract Negotiation
   Contract Managers and Contract Reviewers negotiate contract terms through
   commenting, version tracking, and structured negotiation workflows with
@@ -72,3 +72,38 @@ Feature: Contract Negotiation
     And contract "Service Agreement" is in "Draft" status
     When I attempt to add a comment to contract "Service Agreement"
     Then the request is denied with an authorization error
+
+  Scenario: Only parties to contract can negotiate terms
+    Given I am authenticated with role "Contract Reviewer"
+    And contract "Service Agreement" involves parties "Acme Corp" and "TechVendor Inc"
+    And I am a representative of party "Acme Corp"
+    When I open contract "Service Agreement" for negotiation
+    Then the negotiation interface is displayed
+    And I can add comments to contract clauses
+    And my comments are attributed to organization "Acme Corp"
+
+  Scenario: Non-party reviewer cannot negotiate contract not assigned to them
+    Given I am authenticated with role "Contract Reviewer"
+    And contract "Service Agreement" involves parties "Acme Corp" and "TechVendor Inc"
+    And I am a representative of organization "UnrelatedCorp"
+    When I attempt to access contract "Service Agreement" for negotiation
+    Then the request is denied with an "Access denied - not a party to this contract" error
+    And the access denial is logged
+
+  Scenario: Contract Creator and assigned Reviewers can negotiate
+    Given I am authenticated with role "Contract Manager"
+    And contract "Service Agreement" is assigned to reviewers "Alice" and "Bob"
+    And I am listed as an assigned reviewer
+    When I open contract "Service Agreement" for negotiation
+    Then I can add comments and propose redlines
+    And only assigned reviewers and the creator can see negotiation comments
+    And negotiation actions are logged with reviewer identity
+
+  Scenario: Reviewer cannot approve own redline proposals
+    Given I am authenticated with role "Contract Reviewer"
+    And contract "Service Agreement" is open for negotiation
+    And I have proposed a redline edit to clause "Liability"
+    When I attempt to approve my own redline proposal
+    Then the request is denied with a "Conflict of interest - cannot approve own proposal" error
+    And another authorized reviewer must approve
+    And the restriction is logged

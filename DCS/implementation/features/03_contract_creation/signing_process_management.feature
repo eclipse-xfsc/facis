@@ -1,4 +1,4 @@
-@UC-03-06 @FR-SM-13
+@UC-03-06 @FR-SM-13 @FR-SM-07 @FR-SM-14
 Feature: Contract Signing Process Management
   Contract Managers coordinate the structured signing process for all
   parties. The system schedules and tracks signing steps, assigns
@@ -76,3 +76,40 @@ Feature: Contract Signing Process Management
     And contract "Service Agreement" is in "Approved" status
     When I attempt to initiate the signing workflow for contract "Service Agreement"
     Then the request is denied with an authorization error
+
+  Scenario: Designated signatory with required role can sign contract
+    Given I am authenticated with role "Contract Signer"
+    And contract "Service Agreement" designates me as signatory
+    And I hold the required credential for this signing position
+    When I initiate signing for contract "Service Agreement"
+    Then the signing action is permitted
+    And the signatory assignment with my identity is recorded
+    And the signature is applied to the contract
+
+  Scenario: Non-designated signer cannot sign contract even with system role
+    Given I am authenticated with role "Contract Signer"
+    And contract "Service Agreement" is in "Approved" status
+    And I am not designated as a signatory for contract "Service Agreement"
+    When I attempt to sign contract "Service Agreement"
+    Then the request is denied with a "Not a designated signatory for this contract" error
+    And the rejection is logged
+
+  Scenario: Enforce role-specific signing permissions within workflow
+    Given I am authenticated with role "Contract Manager"
+    And contract "Multi-Party Agreement" requires distinct roles at each position
+    And position 1 requires role "CFO"
+    And position 2 requires role "Legal Officer"
+    When I configure signers "Alice" as "CFO" and "Bob" as "Legal Officer"
+    Then the role requirements are recorded for each position
+    And signing order is enforced with role validation
+    And only users with matching credentials can sign each position
+
+  Scenario: Signer without required role credential cannot sign contract
+    Given I am authenticated with role "Contract Signer"
+    And I hold a PoA credential from "Authority A"
+    And contract "Procurement Agreement" requires PoA from "Authority B"
+    And I am designated as a signatory on the contract
+    When I attempt to sign contract "Procurement Agreement"
+    Then the request is denied with a "Required credential from Authority B not held" error
+    And the credential verification failure is logged
+    And the contract remains unsigned
