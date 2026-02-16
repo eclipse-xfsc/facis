@@ -7,7 +7,9 @@ Main REST API application for FACIS Simulation Service.
 import asyncio
 import logging
 from contextlib import asynccontextmanager
+from pathlib import Path
 
+import yaml
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -17,6 +19,9 @@ from src.api.rest.routes import health, loads, meters, prices, pv, simulation, w
 from src.core.engine import EngineState
 
 logger = logging.getLogger(__name__)
+
+# docs/openapi.yaml relative to project root (parent of src/)
+_OPENAPI_SPEC = Path(__file__).resolve().parent.parent.parent.parent / "docs" / "openapi.yaml"
 
 
 class MQTTPublishTask:
@@ -174,19 +179,8 @@ async def lifespan(app: FastAPI):
 
 def create_app() -> FastAPI:
     """Create and configure the FastAPI application."""
-    app = FastAPI(
-        title="FACIS Simulation Service",
-        description=(
-            "Deterministic simulation service for FACIS IoT & AI demonstrator. "
-            "Provides simulated energy meter readings and electricity prices "
-            "via REST API and MQTT."
-        ),
-        version="1.0.0",
-        docs_url="/docs",
-        redoc_url="/redoc",
-        openapi_url="/openapi.json",
-        lifespan=lifespan,
-    )
+    # title, description, version live in docs/openapi.yaml and are served at /docs
+    app = FastAPI(docs_url="/docs", redoc_url="/redoc", openapi_url="/openapi.json", lifespan=lifespan)
 
     # CORS middleware
     app.add_middleware(
@@ -205,6 +199,9 @@ def create_app() -> FastAPI:
     app.include_router(weather.router, prefix="/api/v1", tags=["Weather Data"])
     app.include_router(pv.router, prefix="/api/v1", tags=["PV Generation"])
     app.include_router(simulation.router, prefix="/api/v1", tags=["Simulation Control"])
+
+    with open(_OPENAPI_SPEC, encoding="utf-8") as f:
+        app.openapi_schema = yaml.safe_load(f)
 
     return app
 
