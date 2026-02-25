@@ -70,6 +70,10 @@ A Modular Deployment Service integrated with the visual orchestration Engine tha
 | *Federated Catalogue* | The Federated Catalogue under XFSC has been enhanced to align with FACIS requirements, improving the way metadata objects are managed and verified.  | **Documentation:**[`docs/federated-catalogue`](https://github.com/eclipse-xfsc/docs/tree/main/federated-catalogue) <br><br> **Implementation:**[`implementation/federated-catalogue`](https://github.com/eclipse-xfsc/federated-catalogue) |
 
 
+## Deployment Docs (T-system Kubernetes)
+| Component | Description | Repository Link |
+|-----------|-------------|:-----------------:|
+| *OSC-Devops* | A Kubernetes configuration of the T-Systems Open Sovereign Cloud (OSC) for Trust Services (Confidential Computing) was analysed and documented. | [`eclipse-xfsc/osc-devops-docs`](https://github.com/eclipse-xfsc/osc-devops-docs) |
 
 ---
 

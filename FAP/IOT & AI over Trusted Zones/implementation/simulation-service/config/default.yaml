@@ -1,0 +1,169 @@
+# =============================================================================
+# FACIS Simulation Service - Default Configuration
+# =============================================================================
+#
+# This file contains the default configuration for the simulation service.
+# Values can be overridden by:
+#   1. Environment-specific YAML files (development.yaml, production.yaml, test.yaml)
+#   2. Environment variables with SIMULATOR_ prefix
+#
+# Environment variable examples:
+#   SIMULATOR_SIMULATION__SEED=42
+#   SIMULATOR_SIMULATION__SPEED_FACTOR=10.0
+#   SIMULATOR_MQTT__HOST=broker.example.com
+#   SIMULATOR_MQTT__PORT=1883
+#   SIMULATOR_HTTP__PORT=8000
+#
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Simulation Engine Settings
+# -----------------------------------------------------------------------------
+simulation:
+  # Random seed for reproducibility (same seed = same simulation results)
+  seed: 12345
+
+  # Simulation interval in minutes (how often readings are generated)
+  interval_minutes: 1
+
+  # Simulation start time in ISO 8601 format (null = use current time)
+  # Examples: "2024-01-15T08:00:00Z", "2024-06-01T00:00:00+02:00"
+  start_time: null
+
+  # Speed factor (1.0 = real-time, 10.0 = 10x faster)
+  speed_factor: 1.0
+
+# -----------------------------------------------------------------------------
+# Energy Meters
+# -----------------------------------------------------------------------------
+# List of energy meter configurations. Each meter generates 3-phase readings.
+meters:
+  - id: janitza-umg96rm-001
+    base_load_kw: 10.0 # Minimum continuous load in kW
+    peak_load_kw: 25.0 # Maximum expected load in kW
+    nominal_voltage_v: 230.0 # Nominal voltage (V)
+    voltage_variance_pct: 5.0 # Voltage variance percentage
+    nominal_frequency_hz: 50.0 # Grid frequency (Hz)
+    frequency_variance_hz: 0.05 # Frequency variance (Hz)
+    power_factor_min: 0.95 # Minimum power factor
+    power_factor_max: 0.99 # Maximum power factor
+    initial_energy_kwh: 0.0 # Starting cumulative energy reading
+
+  - id: janitza-umg96rm-002
+    base_load_kw: 5.0
+    peak_load_kw: 15.0
+    nominal_voltage_v: 230.0
+    voltage_variance_pct: 5.0
+    nominal_frequency_hz: 50.0
+    frequency_variance_hz: 0.05
+    power_factor_min: 0.92
+    power_factor_max: 0.98
+    initial_energy_kwh: 1000.0
+
+# -----------------------------------------------------------------------------
+# Photovoltaic (PV) Systems
+# -----------------------------------------------------------------------------
+# List of PV system configurations. Each system generates solar power readings.
+pv_systems:
+  - id: pv-system-001
+    nominal_capacity_kw: 10.0 # System capacity in kWp
+    losses: 0.15 # System losses (0.15 = 15%)
+    temperature_coefficient: -0.004 # Power temp coefficient per °C
+    reference_temperature_c: 25.0 # STC reference temperature
+    azimuth_deg: 180.0 # Panel facing direction (180 = south)
+    tilt_deg: 35.0 # Panel tilt angle from horizontal
+    latitude: 52.52 # Installation latitude
+    longitude: 13.405 # Installation longitude
+
+  - id: pv-system-002
+    nominal_capacity_kw: 5.0
+    losses: 0.12
+    temperature_coefficient: -0.004
+    reference_temperature_c: 25.0
+    azimuth_deg: 180.0
+    tilt_deg: 30.0
+    latitude: 52.52
+    longitude: 13.405
+
+# -----------------------------------------------------------------------------
+# Consumer Devices
+# -----------------------------------------------------------------------------
+# List of consumer device configurations. Each device simulates load patterns.
+consumers:
+  - id: industrial-oven-001
+    device_type: industrial_oven
+    rated_power_kw: 3.0 # Rated power consumption
+    duty_cycle: 0.70 # 70% on-time during operating windows
+    power_variance_pct: 5.0 # Power variance when ON
+    operate_on_weekends: false
+    operating_windows:
+      - start_hour: 7
+        end_hour: 9
+      - start_hour: 11
+        end_hour: 13
+      - start_hour: 15
+        end_hour: 17
+
+  - id: hvac-001
+    device_type: hvac
+    rated_power_kw: 2.0
+    duty_cycle: 0.60
+    power_variance_pct: 10.0
+    operate_on_weekends: true
+    operating_windows:
+      - start_hour: 6
+        end_hour: 22
+
+  - id: compressor-001
+    device_type: compressor
+    rated_power_kw: 5.5
+    duty_cycle: 0.50
+    power_variance_pct: 8.0
+    operate_on_weekends: false
+    operating_windows:
+      - start_hour: 8
+        end_hour: 18
+
+  - id: pump-001
+    device_type: pump
+    rated_power_kw: 1.5
+    duty_cycle: 0.80
+    power_variance_pct: 3.0
+    operate_on_weekends: false
+    operating_windows:
+      - start_hour: 6
+        end_hour: 20
+
+# -----------------------------------------------------------------------------
+# MQTT Configuration
+# -----------------------------------------------------------------------------
+# Note: In Docker, use service name 'mqtt' instead of 'localhost'
+# Override with SIMULATOR_MQTT__HOST environment variable
+mqtt:
+  host: mqtt
+  port: 1883
+  client_id: facis-simulator
+  qos: 1
+  # username: null  # Uncomment to enable authentication
+  # password: null
+
+# -----------------------------------------------------------------------------
+# HTTP/REST API Configuration
+# -----------------------------------------------------------------------------
+http:
+  host: "0.0.0.0"
+  port: 8080
+
+# -----------------------------------------------------------------------------
+# Modbus TCP Configuration
+# -----------------------------------------------------------------------------
+modbus:
+  host: "0.0.0.0"
+  port: 502
+
+# -----------------------------------------------------------------------------
+# Logging Configuration
+# -----------------------------------------------------------------------------
+logging:
+  level: INFO
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
