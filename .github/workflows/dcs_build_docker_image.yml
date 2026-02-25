@@ -14,14 +14,29 @@ jobs:
       DOCKER_REPO: ${{ vars.DOCKER_REPO }}
       DOCKER_TAG: ${{ github.ref_type == 'tag' && github.ref_name }}
 
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpassword
+          POSTGRES_DB: testdb
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-go@v6
         with:
-          go-version: '1.25'
+          go-version: '1.25.7'
 
       - name: Verify Go installation
-        run: | 
+        run: |
           go env
 
       - name: Install Goa CLI
@@ -33,13 +48,24 @@ jobs:
           cd DCS/implementation/backend
           go mod tidy
           go mod verify
-          
+
       - name: Generate Goa design code
         run: |
           cd DCS/implementation/backend
           goa gen digital-contracting-service/design
 
+      - name: Run SQL scripts
+        env:
+          PGPASSWORD: testpassword
+        run: |
+          for f in DCS/implementation/backend/sql/*.sql; do
+            echo "Running $f"
+            psql -h localhost -U testuser -d testdb -f "$f"
+          done
+
       - name: Run Tests with Coverage
+        env:
+          DATABASE_URL: "user=testuser password=testpassword dbname=testdb sslmode=disable"
         run: |
           cd DCS/implementation/backend
           go test ./... -gcflags="all=-N -l" -coverprofile=coverage.out
@@ -47,23 +73,22 @@ jobs:
 
       - name: Install staticcheck
         run: |
-          cd DCS/implementation/backend
           go install honnef.co/go/tools/cmd/staticcheck@latest
 
+      # Switching off ST1001 and ST1000 is needed to fix staticcheck errors caused by goa's generated files and design files
       - name: Run staticcheck
         run: |
           cd DCS/implementation/backend
-          staticcheck ./...
+          staticcheck -checks="all,-ST1001,-ST1000" ./...
 
       - name: Install govulncheck
         run: |
-          cd DCS/implementation/backend
           go install golang.org/x/vuln/cmd/govulncheck@latest
 
       - name: Run govulncheck
         run: |
           cd DCS/implementation/backend
-          govulncheck ./...  
+          govulncheck ./...
 
       - name: Docker login
         uses: docker/login-action@v3
