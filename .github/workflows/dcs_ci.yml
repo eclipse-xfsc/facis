@@ -44,10 +44,11 @@ jobs:
           cd DCS/implementation/backend
           go install honnef.co/go/tools/cmd/staticcheck@latest
 
+      # Switching off ST1001 and ST1000 is needed to fix staticcheck errors caused by goa's generated files and design files
       - name: Run staticcheck
         run: |
           cd DCS/implementation/backend
-          staticcheck ./...
+          staticcheck -checks="all,-ST1001, -ST1000" ./...
 
       - name: Install govulncheck
         run: |
