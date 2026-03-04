@@ -1,0 +1,103 @@
+name: Build Docker image for DCS
+on:
+  push:
+    tags:
+      - 'dcs-dev-*.*.*'
+      - 'dcs-release-*.*.*'
+
+jobs:
+  build_docker_image:
+    runs-on: ubuntu-latest
+    environment: neusta-development
+    env:
+      DOCKER_REGISTRY: ${{ vars.DOCKER_REGISTRY }}
+      DOCKER_REPO: ${{ vars.DOCKER_REPO }}
+      DOCKER_TAG: ${{ github.ref_type == 'tag' && github.ref_name }}
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpassword
+          POSTGRES_DB: testdb
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-go@v6
+        with:
+          go-version: '1.25.7'
+
+      - name: Verify Go installation
+        run: |
+          go env
+
+      - name: Install Goa CLI
+        run: |
+          go install goa.design/goa/v3/cmd/goa@latest
+
+      - name: Verify Go modules
+        run: |
+          cd DCS/implementation/backend
+          go mod tidy
+          go mod verify
+
+      - name: Generate Goa design code
+        run: |
+          cd DCS/implementation/backend
+          goa gen digital-contracting-service/design
+
+      - name: Run SQL scripts
+        env:
+          PGPASSWORD: testpassword
+        run: |
+          for f in DCS/implementation/backend/sql/*.sql; do
+            echo "Running $f"
+            psql -h localhost -U testuser -d testdb -f "$f"
+          done
+
+      - name: Run Tests with Coverage
+        env:
+          DATABASE_URL: "user=testuser password=testpassword dbname=testdb sslmode=disable"
+        run: |
+          cd DCS/implementation/backend
+          go test ./... -gcflags="all=-N -l" -coverprofile=coverage.out
+          go tool cover -func=coverage.out
+
+      - name: Install staticcheck
+        run: |
+          go install honnef.co/go/tools/cmd/staticcheck@latest
+
+      # Switching off ST1001 and ST1000 is needed to fix staticcheck errors caused by goa's generated files and design files
+      - name: Run staticcheck
+        run: |
+          cd DCS/implementation/backend
+          staticcheck -checks="all,-ST1001,-ST1000" ./...
+
+      - name: Install govulncheck
+        run: |
+          go install golang.org/x/vuln/cmd/govulncheck@latest
+
+      - name: Run govulncheck
+        run: |
+          cd DCS/implementation/backend
+          govulncheck ./...
+
+      - name: Docker login
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.DOCKER_REGISTRY }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build backend Docker image
+        run: |
+          cd DCS/implementation/backend
+          bash build-image.sh $DOCKER_TAG

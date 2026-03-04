@@ -108,6 +108,32 @@ You should see JSON output in the Debug panel, showing catalogue entries.
 
 ---
 
+### 9. Build a Docker image by GitHub Action
+
+Configuration:
+Create in GitHub an environment with the following variables and secrets.
+
+Environment variables:
+* DOCKER_REGISTRY
+* DOCKER_REPO
+
+Secret variables:
+* DOCKER_USERNAME
+* DOCKER_PASSWORD
+
+Set in dcs_build_docker_image.yml your environment name:
+```
+...
+jobs:
+    build_docker_image:
+    runs-on: ubuntu-latest
+        environment: <your-environment>
+        env:
+        ...
+```
+
+To build a Docker image by GitHub Action, create a tag with dcs-dev-*.*.* or dcs-release-*.*.*
+
 ## ⚙️ Configuration
 
 Before running:
