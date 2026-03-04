@@ -1,0 +1,2021 @@
+openapi: 3.0.3
+info:
+  title: FACIS Simulation Service
+  description: |
+    Deterministic simulation service for the FACIS IoT & AI demonstrator.
+    Provides simulated energy meter readings, electricity prices, weather data,
+    PV generation output, and consumer load profiles via REST API.
+
+    ## Overview
+
+    The simulation engine produces reproducible time-series and event data for
+    Smart Energy Monitoring use cases. All random processes are seeded, so the
+    same seed + start-time always generates identical data.
+
+    ## Protocols
+
+    | Protocol   | Default Port | Purpose              |
+    |------------|--------------|----------------------|
+    | REST/HTTP  | 8080         | Query & control API  |
+    | MQTT       | 1883         | Real-time pub/sub    |
+    | Modbus TCP | 502          | Industrial metering   |
+
+    This specification covers the **REST API** only.
+
+    ## Data Intervals
+
+    All history and forecast endpoints support two interval resolutions:
+    - `15min` — 15-minute intervals (default for history)
+    - `1hour` — 1-hour intervals (default for forecast)
+
+    ## Pagination
+
+    History endpoints use **limit-based** pagination. Set `limit` (1–1000,
+    default 100) and check the `has_more` boolean to know whether additional
+    records exist beyond the returned window.
+
+    ## Authentication
+
+    This service does **not** enforce authentication. It is designed for
+    internal / lab use behind a network boundary.
+  version: 1.0.0
+  contact:
+    name: ATLAS IoT Lab GmbH
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+
+servers:
+  - url: http://localhost:8080/api/v1
+    description: Local development server
+
+tags:
+  - name: Health & Configuration
+    description: Service health checks and runtime configuration management
+  - name: Energy Meters
+    description: >
+      Janitza UMG 96RM–compatible energy meter readings — three-phase power,
+      voltage, current, power factor, frequency, and cumulative energy
+  - name: Energy Prices
+    description: >
+      EPEX Spot DE–style electricity price feed — current price, forecast, and
+      historical data with tariff type classification
+  - name: Consumer Loads
+    description: >
+      Energy-intensive consumer device simulation — industrial ovens, HVAC,
+      compressors, pumps, with duty-cycle and operating-window modelling
+  - name: Weather Data
+    description: >
+      Correlated weather station data — temperature, humidity, wind,
+      cloud cover, and solar irradiance (GHI, DNI, DHI)
+  - name: PV Generation
+    description: >
+      Photovoltaic system output simulation — power output, daily energy,
+      irradiance, module temperature, and efficiency, correlated with
+      weather station data
+  - name: Simulation Control
+    description: >
+      Start, pause, reset the simulation clock. Query simulation status
+      including current virtual time, seed, and acceleration factor
+
+paths:
+  # ── Health & Configuration ────────────────────────────────────────────
+
+  /health:
+    get:
+      operationId: healthCheck
+      tags: [Health & Configuration]
+      summary: Health check
+      description: |
+        Returns the service status, name, version, and current server
+        timestamp. Use this endpoint for liveness / readiness probes.
+      responses:
+        "200":
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+              example:
+                status: healthy
+                service: facis-simulation-service
+                version: "1.0.0"
+                timestamp: "2026-02-16T10:30:00Z"
+
+  /config:
+    get:
+      operationId: getConfig
+      tags: [Health & Configuration]
+      summary: Get current configuration
+      description: |
+        Returns the current simulation seed, time acceleration factor,
+        simulation state, and lists of registered meters and price feeds.
+      responses:
+        "200":
+          description: Current configuration
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConfigResponse"
+              example:
+                seed: 12345
+                time_acceleration: 1
+                start_time: "2026-02-16T00:00:00Z"
+                simulation_state: running
+                registered_meters:
+                  - meter-001
+                  - meter-002
+                registered_price_feeds:
+                  - epex-spot-de
+    put:
+      operationId: updateConfig
+      tags: [Health & Configuration]
+      summary: Update configuration
+      description: |
+        Updates simulation seed and/or time acceleration.
+        **Changing the seed resets the entire simulation** — all generators
+        are re-initialised with the new seed.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ConfigUpdateRequest"
+            example:
+              seed: 99999
+              time_acceleration: 10
+      responses:
+        "200":
+          description: Updated configuration (same shape as GET /config)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConfigResponse"
+        "422":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+
+  # ── Energy Meters ─────────────────────────────────────────────────────
+
+  /meters:
+    get:
+      operationId: listMeters
+      tags: [Energy Meters]
+      summary: List all meters
+      description: |
+        Returns metadata for every registered energy meter, including type,
+        base/peak power, and nominal voltage.
+      responses:
+        "200":
+          description: List of meters
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MeterListResponse"
+              example:
+                meters:
+                  - meter_id: meter-001
+                    type: janitza_umg96rm
+                    base_power_kw: 5.0
+                    peak_power_kw: 15.0
+                    nominal_voltage_v: 230.0
+                count: 1
+
+  /meters/{meter_id}/current:
+    get:
+      operationId: getMeterCurrent
+      tags: [Energy Meters]
+      summary: Get current meter reading
+      description: |
+        Returns the instantaneous simulated reading for the given meter at
+        the current simulation time. Includes three-phase power, voltage,
+        current, power factor, frequency, and cumulative energy.
+      parameters:
+        - $ref: "#/components/parameters/MeterId"
+      responses:
+        "200":
+          description: Current meter reading
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MeterReadingResponse"
+              example:
+                timestamp: "2026-02-16T10:30:00Z"
+                meter_id: meter-001
+                readings:
+                  active_power_l1_w: 1523.4
+                  active_power_l2_w: 1489.7
+                  active_power_l3_w: 1510.2
+                  voltage_l1_v: 230.5
+                  voltage_l2_v: 229.8
+                  voltage_l3_v: 230.1
+                  current_l1_a: 6.61
+                  current_l2_a: 6.48
+                  current_l3_a: 6.56
+                  power_factor: 0.95
+                  frequency_hz: 50.01
+                  total_energy_kwh: 12345.67
+        "404":
+          description: >
+            Meter not found. Returned when no registered meter exists with
+            the given `meter_id`. Response body is always
+            `{"detail": "Meter '<meter_id>' not found"}`.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+              example:
+                detail: "Meter 'meter-999' not found"
+
+  /meters/{meter_id}/history:
+    get:
+      operationId: getMeterHistory
+      tags: [Energy Meters]
+      summary: Get historical meter readings
+      description: |
+        Returns a time-series of meter readings for the requested range.
+        Defaults to the last 24 hours from current simulation time when
+        `start_time` / `end_time` are omitted.
+      parameters:
+        - $ref: "#/components/parameters/MeterId"
+        - $ref: "#/components/parameters/StartTime"
+        - $ref: "#/components/parameters/EndTime"
+        - $ref: "#/components/parameters/Interval"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: Historical readings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MeterHistoryResponse"
+        "404":
+          description: Meter not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+        "422":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+
+  # ── Energy Prices ─────────────────────────────────────────────────────
+
+  /prices/current:
+    get:
+      operationId: getCurrentPrice
+      tags: [Energy Prices]
+      summary: Get current energy price
+      description: |
+        Returns the current simulated electricity price from the default
+        EPEX Spot DE feed, including the tariff type classification.
+      responses:
+        "200":
+          description: Current price
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PriceCurrentResponse"
+              example:
+                feed_id: epex-spot-de
+                current:
+                  timestamp: "2026-02-16T10:30:00Z"
+                  price_eur_per_kwh: 0.2634
+                  tariff_type: midday
+        "404":
+          description: Returned when no price feed is configured (default setup creates one).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+              example:
+                detail: "Price feed not configured"
+
+  /prices/forecast:
+    get:
+      operationId: getPriceForecast
+      tags: [Energy Prices]
+      summary: Get price forecast
+      description: |
+        Returns forecasted prices starting from the current simulation time
+        for the given number of hours ahead. Default is 24 hours at 1-hour
+        intervals.
+      parameters:
+        - name: hours
+          in: query
+          required: false
+          description: Number of hours to forecast (max 168 = 7 days)
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 168
+            default: 24
+        - name: interval
+          in: query
+          required: false
+          description: Forecast data interval
+          schema:
+            $ref: "#/components/schemas/IntervalParam"
+          example: 1hour
+      responses:
+        "200":
+          description: Price forecast
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PriceForecastResponse"
+        "404":
+          description: Returned when no price feed is configured.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+              example:
+                detail: "Price feed not configured"
+        "422":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+
+  /prices/history:
+    get:
+      operationId: getPriceHistory
+      tags: [Energy Prices]
+      summary: Get historical prices
+      description: |
+        Returns historical electricity prices for the requested range.
+        Defaults to the last 24 hours from current simulation time when
+        `start_time` / `end_time` are omitted.
+      parameters:
+        - $ref: "#/components/parameters/StartTime"
+        - $ref: "#/components/parameters/EndTime"
+        - $ref: "#/components/parameters/Interval"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: Historical prices
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PriceHistoryResponse"
+        "404":
+          description: Returned when no price feed is configured.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+              example:
+                detail: "Price feed not configured"
+        "422":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+
+  # ── Consumer Loads ────────────────────────────────────────────────────
+
+  /loads:
+    get:
+      operationId: listLoads
+      tags: [Consumer Loads]
+      summary: List all consumer load devices
+      description: |
+        Returns metadata for every registered consumer load device,
+        including type, rated power, duty cycle, and operating windows.
+      responses:
+        "200":
+          description: List of devices
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConsumerLoadListResponse"
+              example:
+                devices:
+                  - device_id: oven-001
+                    device_type: industrial_oven
+                    rated_power_kw: 3.0
+                    duty_cycle_pct: 70.0
+                    operate_on_weekends: false
+                    operating_windows:
+                      - start_hour: 7
+                        end_hour: 9
+                      - start_hour: 11
+                        end_hour: 13
+                count: 1
+
+  /loads/{device_id}/current:
+    get:
+      operationId: getLoadCurrent
+      tags: [Consumer Loads]
+      summary: Get current device reading
+      description: |
+        Returns the instantaneous simulated reading for the given device at
+        the current simulation time. Includes device state (ON/OFF) and
+        current power draw.
+      parameters:
+        - $ref: "#/components/parameters/DeviceId"
+      responses:
+        "200":
+          description: Current device reading
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConsumerLoadCurrentResponse"
+              example:
+                device_id: oven-001
+                current:
+                  timestamp: "2026-02-16T10:30:00Z"
+                  device_id: oven-001
+                  device_type: industrial_oven
+                  device_state: "ON"
+                  device_power_kw: 2.873
+        "404":
+          description: Device not found. Returned when no consumer load exists with the given `device_id`.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+              example:
+                detail: "Device 'oven-001' not found"
+
+  /loads/{device_id}/history:
+    get:
+      operationId: getLoadHistory
+      tags: [Consumer Loads]
+      summary: Get historical device readings
+      description: |
+        Returns a time-series of device readings for the requested range.
+        Defaults to the last 24 hours from current simulation time when
+        `start_time` / `end_time` are omitted.
+      parameters:
+        - $ref: "#/components/parameters/DeviceId"
+        - $ref: "#/components/parameters/StartTime"
+        - $ref: "#/components/parameters/EndTime"
+        - $ref: "#/components/parameters/Interval"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: Historical device readings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConsumerLoadHistoryResponse"
+        "404":
+          description: Device not found. Returned when no consumer load exists with the given `device_id`.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+              example:
+                detail: "Device 'oven-001' not found"
+        "422":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+
+  # ── Weather Data ──────────────────────────────────────────────────────
+
+  /weather:
+    get:
+      operationId: listWeatherStations
+      tags: [Weather Data]
+      summary: List all weather stations
+      description: |
+        Returns metadata for every registered weather station, including
+        geographic location and seasonal base temperatures.
+      responses:
+        "200":
+          description: List of weather stations
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WeatherListResponse"
+              example:
+                stations:
+                  - station_id: weather-001
+                    latitude: 52.52
+                    longitude: 13.405
+                    base_temperature_summer_c: 22.0
+                    base_temperature_winter_c: 2.0
+                count: 1
+
+  /weather/{station_id}/current:
+    get:
+      operationId: getWeatherCurrent
+      tags: [Weather Data]
+      summary: Get current weather reading
+      description: |
+        Returns the current simulated weather conditions for the given
+        station. Includes temperature, humidity, wind, cloud cover, and
+        three-component solar irradiance (GHI, DNI, DHI).
+      parameters:
+        - $ref: "#/components/parameters/StationId"
+      responses:
+        "200":
+          description: Current weather reading
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WeatherReadingResponse"
+              example:
+                timestamp: "2026-02-16T10:30:00Z"
+                location:
+                  latitude: 52.52
+                  longitude: 13.405
+                conditions:
+                  temperature_c: 5.3
+                  humidity_percent: 68.2
+                  wind_speed_ms: 3.7
+                  wind_direction_deg: 225.0
+                  cloud_cover_percent: 42.5
+                  ghi_w_m2: 312.8
+                  dni_w_m2: 450.1
+                  dhi_w_m2: 95.6
+        "404":
+          description: Weather station not found. Returned when no station exists with the given `station_id`.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+              example:
+                detail: "Weather station 'weather-0012' not found"
+
+  /weather/{station_id}/history:
+    get:
+      operationId: getWeatherHistory
+      tags: [Weather Data]
+      summary: Get historical weather data
+      description: |
+        Returns a time-series of weather readings for the requested range.
+        Defaults to the last 24 hours from current simulation time when
+        `start_time` / `end_time` are omitted.
+      parameters:
+        - $ref: "#/components/parameters/StationId"
+        - $ref: "#/components/parameters/StartTime"
+        - $ref: "#/components/parameters/EndTime"
+        - $ref: "#/components/parameters/Interval"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: Historical weather readings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WeatherHistoryResponse"
+        "404":
+          description: Weather station not found. Returned when no station exists with the given `station_id`.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+              example:
+                detail: "Weather station 'weather-0012' not found"
+        "422":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+
+  # ── PV Generation ─────────────────────────────────────────────────────
+
+  /pv:
+    get:
+      operationId: listPVSystems
+      tags: [PV Generation]
+      summary: List all PV systems
+      description: |
+        Returns metadata for every registered photovoltaic system, including
+        nominal capacity, system losses, and temperature coefficient.
+      responses:
+        "200":
+          description: List of PV systems
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PVListResponse"
+              example:
+                systems:
+                  - system_id: pv-system-001
+                    weather_station_id: weather-001
+                    nominal_capacity_kwp: 10.0
+                    system_losses_percent: 14.0
+                    temperature_coefficient_pct_per_c: -0.4
+                count: 1
+
+  /pv/{system_id}/current:
+    get:
+      operationId: getPVCurrent
+      tags: [PV Generation]
+      summary: Get current PV generation reading
+      description: |
+        Returns the instantaneous simulated PV output for the given system.
+        Power output is correlated with the linked weather station's
+        irradiance and temperature data.
+      parameters:
+        - $ref: "#/components/parameters/SystemId"
+      responses:
+        "200":
+          description: Current PV reading
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PVReadingResponse"
+              example:
+                timestamp: "2026-02-16T10:30:00Z"
+                system_id: pv-system-001
+                readings:
+                  power_output_kw: 4.23
+                  daily_energy_kwh: 18.7
+                  irradiance_w_m2: 312.8
+                  module_temperature_c: 28.4
+                  efficiency_percent: 15.2
+        "404":
+          description: PV system not found. Returned when no PV system exists with the given `system_id`.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+              example:
+                detail: "PV system 'pv-001' not found"
+
+  /pv/{system_id}/history:
+    get:
+      operationId: getPVHistory
+      tags: [PV Generation]
+      summary: Get historical PV generation data
+      description: |
+        Returns a time-series of PV readings for the requested range.
+        Defaults to the last 24 hours from current simulation time when
+        `start_time` / `end_time` are omitted.
+      parameters:
+        - $ref: "#/components/parameters/SystemId"
+        - $ref: "#/components/parameters/StartTime"
+        - $ref: "#/components/parameters/EndTime"
+        - $ref: "#/components/parameters/Interval"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: Historical PV readings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PVHistoryResponse"
+        "404":
+          description: PV system not found. Returned when no PV system exists with the given `system_id`.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+              example:
+                detail: "PV system 'pv-001' not found"
+        "422":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+
+  # ── Simulation Control ────────────────────────────────────────────────
+
+  /simulation/status:
+    get:
+      operationId: getSimulationStatus
+      tags: [Simulation Control]
+      summary: Get simulation status
+      description: |
+        Returns the current simulation engine state, virtual clock time,
+        seed, acceleration factor, and count of registered entities.
+      responses:
+        "200":
+          description: Current simulation status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SimulationStatusResponse"
+              example:
+                state: running
+                simulation_time: "2026-02-16T10:30:00Z"
+                seed: 12345
+                acceleration: 1
+                registered_entities: 5
+
+  /simulation/start:
+    post:
+      operationId: startSimulation
+      tags: [Simulation Control]
+      summary: Start or resume simulation
+      description: |
+        Begins or resumes the simulation clock. If the simulation is paused
+        it will be resumed; otherwise it will be started fresh.
+        Optionally provide a start time to jump the clock.
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SimulationStartRequest"
+            example:
+              start_time: "2026-01-01T00:00:00Z"
+      responses:
+        "200":
+          description: Simulation started / resumed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SimulationStartResponse"
+              example:
+                status: started
+                message: Simulation started
+                simulation_time: "2026-01-01T00:00:00Z"
+        "422":
+          description: Validation error (e.g. invalid body such as invalid `start_time` format)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+              example:
+                detail:
+                  - type: int_parsing
+                    loc:
+                      - body
+                      - seed
+                    msg: "Input should be a valid integer, unable to parse string as an integer"
+                    input: "invalid"
+
+  /simulation/pause:
+    post:
+      operationId: pauseSimulation
+      tags: [Simulation Control]
+      summary: Pause simulation
+      description: |
+        Pauses the simulation clock. The clock can be resumed later by
+        calling POST /simulation/start.
+      responses:
+        "200":
+          description: Simulation paused
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SimulationPauseResponse"
+              example:
+                status: paused
+                message: Simulation paused
+                simulation_time: "2026-02-16T10:30:00Z"
+
+  /simulation/reset:
+    post:
+      operationId: resetSimulation
+      tags: [Simulation Control]
+      summary: Reset simulation
+      description: |
+        Resets the entire simulation to its initial state. All generators
+        are re-initialised. Optionally specify a new seed and/or start time.
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SimulationResetRequest"
+            example:
+              seed: 54321
+              start_time: "2026-06-01T00:00:00Z"
+      responses:
+        "200":
+          description: Simulation reset
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SimulationResetResponse"
+              example:
+                status: reset
+                message: Simulation reset to initial state
+                seed: 54321
+                simulation_time: "2026-06-01T00:00:00Z"
+        "422":
+          description: Validation error (e.g. invalid body such as non-integer `seed`)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+              example:
+                detail:
+                  - type: int_parsing
+                    loc:
+                      - body
+                      - seed
+                    msg: "Input should be a valid integer, unable to parse string as an integer"
+                    input: "invalid"
+
+# ═══════════════════════════════════════════════════════════════════════
+# Components
+# ═══════════════════════════════════════════════════════════════════════
+
+components:
+
+  # ── Reusable Parameters ─────────────────────────────────────────────
+
+  parameters:
+    MeterId:
+      name: meter_id
+      in: path
+      required: true
+      description: Unique identifier of the energy meter (e.g. `meter-001`)
+      schema:
+        type: string
+      example: meter-001
+
+    DeviceId:
+      name: device_id
+      in: path
+      required: true
+      description: Unique identifier of the consumer load device (e.g. `oven-001`)
+      schema:
+        type: string
+      example: oven-001
+
+    StationId:
+      name: station_id
+      in: path
+      required: true
+      description: Unique identifier of the weather station (e.g. `weather-001`)
+      schema:
+        type: string
+      example: weather-001
+
+    SystemId:
+      name: system_id
+      in: path
+      required: true
+      description: Unique identifier of the PV system (e.g. `pv-system-001`)
+      schema:
+        type: string
+      example: pv-system-001
+
+    StartTime:
+      name: start_time
+      in: query
+      required: false
+      description: >
+        Start of the time range in ISO 8601 format. Defaults to 24 hours
+        before `end_time` if omitted.
+      schema:
+        type: string
+        format: date-time
+      example: "2026-02-15T10:00:00Z"
+
+    EndTime:
+      name: end_time
+      in: query
+      required: false
+      description: >
+        End of the time range in ISO 8601 format. Defaults to the current
+        simulation time if omitted.
+      schema:
+        type: string
+        format: date-time
+      example: "2026-02-16T10:00:00Z"
+
+    Interval:
+      name: interval
+      in: query
+      required: false
+      description: Data interval resolution
+      schema:
+        $ref: "#/components/schemas/IntervalParam"
+
+    Limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of results to return
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 100
+
+  # ── Schemas ─────────────────────────────────────────────────────────
+
+  schemas:
+
+    # ── Enums ───────────────────────────────────────────────────────
+
+    IntervalParam:
+      type: string
+      description: Supported time-series interval resolutions
+      enum:
+        - 15min
+        - 1hour
+      default: 15min
+
+    TariffType:
+      type: string
+      description: |
+        Electricity tariff period classification based on time of day:
+        - `night` — 00:00–06:00
+        - `morning_peak` — 06:00–09:00
+        - `midday` — 09:00–17:00
+        - `evening_peak` — 17:00–20:00
+        - `evening` — 20:00–00:00
+      enum:
+        - night
+        - morning_peak
+        - midday
+        - evening_peak
+        - evening
+
+    DeviceType:
+      type: string
+      description: Type of consumer device being simulated
+      enum:
+        - industrial_oven
+        - hvac
+        - compressor
+        - pump
+        - generic
+
+    DeviceState:
+      type: string
+      description: Current operating state of a consumer device
+      enum:
+        - "ON"
+        - "OFF"
+
+    SimulationState:
+      type: string
+      description: Simulation engine lifecycle state
+      enum:
+        - initialized
+        - running
+        - paused
+        - stopped
+
+    # ── Health & Configuration ──────────────────────────────────────
+
+    HealthResponse:
+      type: object
+      required: [status, service, version, timestamp]
+      properties:
+        status:
+          type: string
+          description: Service health status
+          example: healthy
+        service:
+          type: string
+          description: Service name
+          example: facis-simulation-service
+        version:
+          type: string
+          description: Semantic version of the service
+          example: "1.0.0"
+        timestamp:
+          type: string
+          description: Current server time in ISO 8601 format
+          example: "2026-02-16T10:30:00Z"
+
+    ConfigResponse:
+      type: object
+      required:
+        - seed
+        - time_acceleration
+        - simulation_state
+        - registered_meters
+        - registered_price_feeds
+      properties:
+        seed:
+          type: integer
+          description: >
+            Deterministic random seed. The same seed always produces
+            identical simulation data.
+          example: 12345
+        time_acceleration:
+          type: integer
+          description: >
+            Factor by which simulation time runs faster than wall-clock
+            time (1 = real-time, 60 = 1 simulated minute per real second)
+          example: 1
+        start_time:
+          type: string
+          nullable: true
+          description: Simulation start time in ISO 8601 format
+          example: "2026-02-16T00:00:00Z"
+        simulation_state:
+          $ref: "#/components/schemas/SimulationState"
+        registered_meters:
+          type: array
+          items:
+            type: string
+          description: IDs of all registered energy meters
+          example: [meter-001, meter-002]
+        registered_price_feeds:
+          type: array
+          items:
+            type: string
+          description: IDs of all registered price feeds
+          example: [epex-spot-de]
+
+    ConfigUpdateRequest:
+      type: object
+      description: >
+        At least one field should be provided. Omitted fields are left
+        unchanged.
+      properties:
+        seed:
+          type: integer
+          nullable: true
+          description: >
+            New deterministic seed. Setting this **resets** the simulation.
+          example: 99999
+        time_acceleration:
+          type: integer
+          nullable: true
+          minimum: 1
+          maximum: 1000
+          description: New time acceleration factor (1–1000)
+          example: 10
+
+    # ── Energy Meter ────────────────────────────────────────────────
+
+    MeterReadingsSchema:
+      type: object
+      description: Three-phase energy meter readings
+      required:
+        - active_power_l1_w
+        - active_power_l2_w
+        - active_power_l3_w
+        - voltage_l1_v
+        - voltage_l2_v
+        - voltage_l3_v
+        - current_l1_a
+        - current_l2_a
+        - current_l3_a
+        - power_factor
+        - frequency_hz
+        - total_energy_kwh
+      properties:
+        active_power_l1_w:
+          type: number
+          format: float
+          description: Active power on phase L1 in watts
+          example: 1523.4
+        active_power_l2_w:
+          type: number
+          format: float
+          description: Active power on phase L2 in watts
+          example: 1489.7
+        active_power_l3_w:
+          type: number
+          format: float
+          description: Active power on phase L3 in watts
+          example: 1510.2
+        voltage_l1_v:
+          type: number
+          format: float
+          description: Voltage on phase L1 in volts
+          example: 230.5
+        voltage_l2_v:
+          type: number
+          format: float
+          description: Voltage on phase L2 in volts
+          example: 229.8
+        voltage_l3_v:
+          type: number
+          format: float
+          description: Voltage on phase L3 in volts
+          example: 230.1
+        current_l1_a:
+          type: number
+          format: float
+          description: Current on phase L1 in amperes
+          example: 6.61
+        current_l2_a:
+          type: number
+          format: float
+          description: Current on phase L2 in amperes
+          example: 6.48
+        current_l3_a:
+          type: number
+          format: float
+          description: Current on phase L3 in amperes
+          example: 6.56
+        power_factor:
+          type: number
+          format: float
+          description: Power factor (dimensionless, 0.0–1.0)
+          minimum: 0
+          maximum: 1
+          example: 0.95
+        frequency_hz:
+          type: number
+          format: float
+          description: Grid frequency in hertz
+          example: 50.01
+        total_energy_kwh:
+          type: number
+          format: float
+          description: >
+            Cumulative total energy consumed since meter initialisation,
+            in kilowatt-hours. This value only increases.
+          example: 12345.67
+
+    MeterReadingResponse:
+      type: object
+      description: A single timestamped meter reading
+      required: [timestamp, meter_id, readings]
+      properties:
+        timestamp:
+          type: string
+          description: Reading time in ISO 8601 format
+          example: "2026-02-16T10:30:00Z"
+        meter_id:
+          type: string
+          description: Meter identifier
+          example: meter-001
+        readings:
+          $ref: "#/components/schemas/MeterReadingsSchema"
+
+    MeterInfo:
+      type: object
+      description: Metadata for a registered energy meter
+      required: [meter_id, type, base_power_kw, peak_power_kw, nominal_voltage_v]
+      properties:
+        meter_id:
+          type: string
+          description: Unique meter identifier
+          example: meter-001
+        type:
+          type: string
+          description: Meter model type
+          default: janitza_umg96rm
+          example: janitza_umg96rm
+        base_power_kw:
+          type: number
+          format: float
+          description: Base (minimum) load power in kW
+          example: 5.0
+        peak_power_kw:
+          type: number
+          format: float
+          description: Peak load power in kW
+          example: 15.0
+        nominal_voltage_v:
+          type: number
+          format: float
+          description: Nominal phase voltage in volts
+          default: 230.0
+          example: 230.0
+
+    MeterListResponse:
+      type: object
+      required: [meters, count]
+      properties:
+        meters:
+          type: array
+          items:
+            $ref: "#/components/schemas/MeterInfo"
+          description: List of registered meters
+        count:
+          type: integer
+          description: Total number of meters
+          example: 2
+
+    MeterHistoryResponse:
+      type: object
+      required:
+        - meter_id
+        - readings
+        - count
+        - limit
+        - has_more
+        - interval
+      properties:
+        meter_id:
+          type: string
+          description: Meter identifier
+          example: meter-001
+        readings:
+          type: array
+          items:
+            $ref: "#/components/schemas/MeterReadingResponse"
+        count:
+          type: integer
+          description: Number of readings returned
+          example: 96
+        limit:
+          type: integer
+          description: Requested maximum
+          example: 100
+        has_more:
+          type: boolean
+          description: >
+            `true` if additional readings exist beyond the returned set
+          example: false
+        start_time:
+          type: string
+          nullable: true
+          description: Effective query start time
+          example: "2026-02-15T10:30:00Z"
+        end_time:
+          type: string
+          nullable: true
+          description: Effective query end time
+          example: "2026-02-16T10:30:00Z"
+        interval:
+          type: string
+          description: Data interval used
+          example: 15min
+
+    # ── Energy Prices ───────────────────────────────────────────────
+
+    PriceReadingResponse:
+      type: object
+      description: A single timestamped price reading
+      required: [timestamp, price_eur_per_kwh, tariff_type]
+      properties:
+        timestamp:
+          type: string
+          description: Price time in ISO 8601 format
+          example: "2026-02-16T10:30:00Z"
+        price_eur_per_kwh:
+          type: number
+          format: float
+          description: Electricity price in euros per kilowatt-hour
+          example: 0.2634
+        tariff_type:
+          $ref: "#/components/schemas/TariffType"
+
+    PriceCurrentResponse:
+      type: object
+      required: [feed_id, current]
+      properties:
+        feed_id:
+          type: string
+          description: Price feed identifier
+          default: epex-spot-de
+          example: epex-spot-de
+        current:
+          $ref: "#/components/schemas/PriceReadingResponse"
+
+    PriceForecastResponse:
+      type: object
+      required: [feed_id, forecast, count, start_time, end_time, interval]
+      properties:
+        feed_id:
+          type: string
+          description: Price feed identifier
+          default: epex-spot-de
+          example: epex-spot-de
+        forecast:
+          type: array
+          items:
+            $ref: "#/components/schemas/PriceReadingResponse"
+          description: Forecasted price points
+        count:
+          type: integer
+          description: Number of forecast points
+          example: 24
+        start_time:
+          type: string
+          description: Forecast window start
+          example: "2026-02-16T10:00:00Z"
+        end_time:
+          type: string
+          description: Forecast window end
+          example: "2026-02-17T10:00:00Z"
+        interval:
+          type: string
+          description: Forecast interval
+          example: 1hour
+
+    PriceHistoryResponse:
+      type: object
+      required:
+        - feed_id
+        - prices
+        - count
+        - limit
+        - has_more
+        - interval
+      properties:
+        feed_id:
+          type: string
+          description: Price feed identifier
+          default: epex-spot-de
+          example: epex-spot-de
+        prices:
+          type: array
+          items:
+            $ref: "#/components/schemas/PriceReadingResponse"
+          description: Historical price points
+        count:
+          type: integer
+          description: Number of prices returned
+          example: 96
+        limit:
+          type: integer
+          description: Requested maximum
+          example: 100
+        has_more:
+          type: boolean
+          description: >
+            `true` if additional prices exist beyond the returned set
+          example: false
+        start_time:
+          type: string
+          nullable: true
+          description: Effective query start time
+          example: "2026-02-15T10:00:00Z"
+        end_time:
+          type: string
+          nullable: true
+          description: Effective query end time
+          example: "2026-02-16T10:00:00Z"
+        interval:
+          type: string
+          description: Data interval used
+          example: 15min
+
+    # ── Consumer Loads ──────────────────────────────────────────────
+
+    OperatingWindowSchema:
+      type: object
+      description: >
+        A daily time window during which the device may operate.
+        Supports overnight windows (e.g. start_hour=22, end_hour=6).
+      required: [start_hour, end_hour]
+      properties:
+        start_hour:
+          type: integer
+          minimum: 0
+          maximum: 23
+          description: Window start hour (0–23, inclusive)
+          example: 7
+        end_hour:
+          type: integer
+          minimum: 0
+          maximum: 23
+          description: Window end hour (0–23, exclusive)
+          example: 9
+
+    ConsumerLoadReadingResponse:
+      type: object
+      description: A single timestamped consumer load reading
+      required:
+        - timestamp
+        - device_id
+        - device_type
+        - device_state
+        - device_power_kw
+      properties:
+        timestamp:
+          type: string
+          description: Reading time in ISO 8601 format
+          example: "2026-02-16T10:30:00Z"
+        device_id:
+          type: string
+          description: Device identifier
+          example: oven-001
+        device_type:
+          $ref: "#/components/schemas/DeviceType"
+        device_state:
+          $ref: "#/components/schemas/DeviceState"
+        device_power_kw:
+          type: number
+          format: float
+          description: Current power consumption in kilowatts (0 when OFF)
+          example: 2.873
+
+    ConsumerLoadInfo:
+      type: object
+      description: Metadata for a registered consumer device
+      required:
+        - device_id
+        - device_type
+        - rated_power_kw
+        - duty_cycle_pct
+        - operate_on_weekends
+        - operating_windows
+      properties:
+        device_id:
+          type: string
+          description: Unique device identifier
+          example: oven-001
+        device_type:
+          $ref: "#/components/schemas/DeviceType"
+        rated_power_kw:
+          type: number
+          format: float
+          description: Rated (nameplate) power in kW
+          example: 3.0
+        duty_cycle_pct:
+          type: number
+          format: float
+          description: >
+            Percentage of time the device is ON during its operating
+            windows (0–100)
+          minimum: 0
+          maximum: 100
+          example: 70.0
+        operate_on_weekends:
+          type: boolean
+          description: Whether the device runs on Saturdays and Sundays
+          example: false
+        operating_windows:
+          type: array
+          items:
+            $ref: "#/components/schemas/OperatingWindowSchema"
+          description: Daily windows when the device may be ON
+
+    ConsumerLoadListResponse:
+      type: object
+      required: [devices, count]
+      properties:
+        devices:
+          type: array
+          items:
+            $ref: "#/components/schemas/ConsumerLoadInfo"
+          description: List of consumer load devices
+        count:
+          type: integer
+          description: Number of devices
+          example: 3
+
+    ConsumerLoadCurrentResponse:
+      type: object
+      required: [device_id, current]
+      properties:
+        device_id:
+          type: string
+          description: Device identifier
+          example: oven-001
+        current:
+          $ref: "#/components/schemas/ConsumerLoadReadingResponse"
+
+    ConsumerLoadHistoryResponse:
+      type: object
+      required:
+        - device_id
+        - readings
+        - count
+        - limit
+        - has_more
+        - interval
+      properties:
+        device_id:
+          type: string
+          description: Device identifier
+          example: oven-001
+        readings:
+          type: array
+          items:
+            $ref: "#/components/schemas/ConsumerLoadReadingResponse"
+        count:
+          type: integer
+          description: Number of readings returned
+          example: 96
+        limit:
+          type: integer
+          description: Requested maximum
+          example: 100
+        has_more:
+          type: boolean
+          description: >
+            `true` if additional readings exist beyond the returned set
+          example: false
+        start_time:
+          type: string
+          nullable: true
+          description: Effective query start time
+          example: "2026-02-15T10:30:00Z"
+        end_time:
+          type: string
+          nullable: true
+          description: Effective query end time
+          example: "2026-02-16T10:30:00Z"
+        interval:
+          type: string
+          description: Data interval used
+          example: 15min
+
+    # ── Weather ─────────────────────────────────────────────────────
+
+    LocationSchema:
+      type: object
+      description: Geographic coordinates
+      required: [latitude, longitude]
+      properties:
+        latitude:
+          type: number
+          format: double
+          description: Latitude in decimal degrees (WGS 84)
+          example: 52.52
+        longitude:
+          type: number
+          format: double
+          description: Longitude in decimal degrees (WGS 84)
+          example: 13.405
+
+    ConditionsSchema:
+      type: object
+      description: Weather condition measurements
+      required:
+        - temperature_c
+        - humidity_percent
+        - wind_speed_ms
+        - wind_direction_deg
+        - cloud_cover_percent
+        - ghi_w_m2
+        - dni_w_m2
+        - dhi_w_m2
+      properties:
+        temperature_c:
+          type: number
+          format: float
+          description: Air temperature in degrees Celsius
+          example: 5.3
+        humidity_percent:
+          type: number
+          format: float
+          description: Relative humidity as a percentage (0–100)
+          minimum: 0
+          maximum: 100
+          example: 68.2
+        wind_speed_ms:
+          type: number
+          format: float
+          description: Wind speed in metres per second
+          minimum: 0
+          example: 3.7
+        wind_direction_deg:
+          type: number
+          format: float
+          description: Wind direction in degrees from north (0–360)
+          minimum: 0
+          maximum: 360
+          example: 225.0
+        cloud_cover_percent:
+          type: number
+          format: float
+          description: Cloud cover as a percentage (0–100)
+          minimum: 0
+          maximum: 100
+          example: 42.5
+        ghi_w_m2:
+          type: number
+          format: float
+          description: Global Horizontal Irradiance in watts per square metre
+          minimum: 0
+          example: 312.8
+        dni_w_m2:
+          type: number
+          format: float
+          description: Direct Normal Irradiance in watts per square metre
+          minimum: 0
+          example: 450.1
+        dhi_w_m2:
+          type: number
+          format: float
+          description: Diffuse Horizontal Irradiance in watts per square metre
+          minimum: 0
+          example: 95.6
+
+    WeatherReadingResponse:
+      type: object
+      description: A single timestamped weather reading
+      required: [timestamp, location, conditions]
+      properties:
+        timestamp:
+          type: string
+          description: Reading time in ISO 8601 format
+          example: "2026-02-16T10:30:00Z"
+        location:
+          $ref: "#/components/schemas/LocationSchema"
+        conditions:
+          $ref: "#/components/schemas/ConditionsSchema"
+
+    WeatherStationInfo:
+      type: object
+      description: Metadata for a registered weather station
+      required:
+        - station_id
+        - latitude
+        - longitude
+        - base_temperature_summer_c
+        - base_temperature_winter_c
+      properties:
+        station_id:
+          type: string
+          description: Unique station identifier
+          example: weather-001
+        latitude:
+          type: number
+          format: double
+          description: Station latitude in decimal degrees
+          example: 52.52
+        longitude:
+          type: number
+          format: double
+          description: Station longitude in decimal degrees
+          example: 13.405
+        base_temperature_summer_c:
+          type: number
+          format: float
+          description: >
+            Baseline daytime temperature used for summer months (°C)
+          example: 22.0
+        base_temperature_winter_c:
+          type: number
+          format: float
+          description: >
+            Baseline daytime temperature used for winter months (°C)
+          example: 2.0
+
+    WeatherListResponse:
+      type: object
+      required: [stations, count]
+      properties:
+        stations:
+          type: array
+          items:
+            $ref: "#/components/schemas/WeatherStationInfo"
+          description: List of weather stations
+        count:
+          type: integer
+          description: Number of stations
+          example: 1
+
+    WeatherHistoryResponse:
+      type: object
+      required:
+        - station_id
+        - readings
+        - count
+        - limit
+        - has_more
+        - start_time
+        - end_time
+        - interval
+      properties:
+        station_id:
+          type: string
+          description: Weather station identifier
+          example: weather-001
+        readings:
+          type: array
+          items:
+            $ref: "#/components/schemas/WeatherReadingResponse"
+        count:
+          type: integer
+          description: Number of readings returned
+          example: 96
+        limit:
+          type: integer
+          description: Requested maximum
+          example: 100
+        has_more:
+          type: boolean
+          description: >
+            `true` if additional readings exist beyond the returned set
+          example: false
+        start_time:
+          type: string
+          description: Effective query start time
+          example: "2026-02-15T10:30:00Z"
+        end_time:
+          type: string
+          description: Effective query end time
+          example: "2026-02-16T10:30:00Z"
+        interval:
+          type: string
+          description: Data interval used
+          example: 15min
+
+    # ── PV Generation ───────────────────────────────────────────────
+
+    PVReadingsSchema:
+      type: object
+      description: PV system output readings
+      required:
+        - power_output_kw
+        - daily_energy_kwh
+        - irradiance_w_m2
+        - module_temperature_c
+        - efficiency_percent
+      properties:
+        power_output_kw:
+          type: number
+          format: float
+          description: Current AC power output in kilowatts
+          minimum: 0
+          example: 4.23
+        daily_energy_kwh:
+          type: number
+          format: float
+          description: Cumulative energy generated today in kWh (resets at midnight)
+          minimum: 0
+          example: 18.7
+        irradiance_w_m2:
+          type: number
+          format: float
+          description: Plane-of-array irradiance in W/m²
+          minimum: 0
+          example: 312.8
+        module_temperature_c:
+          type: number
+          format: float
+          description: PV module temperature in degrees Celsius
+          example: 28.4
+        efficiency_percent:
+          type: number
+          format: float
+          description: Instantaneous system efficiency as a percentage
+          minimum: 0
+          example: 15.2
+
+    PVReadingResponse:
+      type: object
+      description: A single timestamped PV reading
+      required: [timestamp, system_id, readings]
+      properties:
+        timestamp:
+          type: string
+          description: Reading time in ISO 8601 format
+          example: "2026-02-16T10:30:00Z"
+        system_id:
+          type: string
+          description: PV system identifier
+          example: pv-system-001
+        readings:
+          $ref: "#/components/schemas/PVReadingsSchema"
+
+    PVSystemInfo:
+      type: object
+      description: Metadata for a registered photovoltaic system
+      required:
+        - system_id
+        - weather_station_id
+        - nominal_capacity_kwp
+        - system_losses_percent
+        - temperature_coefficient_pct_per_c
+      properties:
+        system_id:
+          type: string
+          description: Unique PV system identifier
+          example: pv-system-001
+        weather_station_id:
+          type: string
+          description: ID of the associated weather station providing irradiance data
+          example: weather-001
+        nominal_capacity_kwp:
+          type: number
+          format: float
+          description: Nominal (peak) capacity in kilowatt-peak
+          example: 10.0
+        system_losses_percent:
+          type: number
+          format: float
+          description: >
+            Total system losses as a percentage (cabling, inverter,
+            soiling, etc.)
+          example: 14.0
+        temperature_coefficient_pct_per_c:
+          type: number
+          format: float
+          description: >
+            Power temperature coefficient in percent per degree Celsius
+            (typically negative, e.g. -0.4 means power drops 0.4% per
+            °C above reference temperature)
+          example: -0.4
+
+    PVListResponse:
+      type: object
+      required: [systems, count]
+      properties:
+        systems:
+          type: array
+          items:
+            $ref: "#/components/schemas/PVSystemInfo"
+          description: List of PV systems
+        count:
+          type: integer
+          description: Number of systems
+          example: 1
+
+    PVHistoryResponse:
+      type: object
+      required:
+        - system_id
+        - readings
+        - count
+        - limit
+        - has_more
+        - start_time
+        - end_time
+        - interval
+      properties:
+        system_id:
+          type: string
+          description: PV system identifier
+          example: pv-system-001
+        readings:
+          type: array
+          items:
+            $ref: "#/components/schemas/PVReadingResponse"
+        count:
+          type: integer
+          description: Number of readings returned
+          example: 96
+        limit:
+          type: integer
+          description: Requested maximum
+          example: 100
+        has_more:
+          type: boolean
+          description: >
+            `true` if additional readings exist beyond the returned set
+          example: false
+        start_time:
+          type: string
+          description: Effective query start time
+          example: "2026-02-15T10:30:00Z"
+        end_time:
+          type: string
+          description: Effective query end time
+          example: "2026-02-16T10:30:00Z"
+        interval:
+          type: string
+          description: Data interval used
+          example: 15min
+
+    # ── Simulation Control ──────────────────────────────────────────
+
+    SimulationStatusResponse:
+      type: object
+      required:
+        - state
+        - simulation_time
+        - seed
+        - acceleration
+        - registered_entities
+      properties:
+        state:
+          $ref: "#/components/schemas/SimulationState"
+        simulation_time:
+          type: string
+          description: Current simulation virtual time in ISO 8601 format
+          example: "2026-02-16T10:30:00Z"
+        seed:
+          type: integer
+          description: Active deterministic seed
+          example: 12345
+        acceleration:
+          type: integer
+          description: Time acceleration factor
+          example: 1
+        registered_entities:
+          type: integer
+          description: >
+            Total count of registered entities (meters + PV systems +
+            weather stations + loads + price feeds)
+          example: 5
+
+    SimulationStartRequest:
+      type: object
+      description: Optional parameters for starting the simulation
+      properties:
+        start_time:
+          type: string
+          nullable: true
+          description: >
+            ISO 8601 timestamp to jump the simulation clock to before
+            starting. If omitted, the current clock time is used.
+          example: "2026-01-01T00:00:00Z"
+
+    SimulationStartResponse:
+      type: object
+      required: [status, message, simulation_time]
+      properties:
+        status:
+          type: string
+          description: Operation result
+          example: started
+        message:
+          type: string
+          description: Human-readable status message
+          example: Simulation started
+        simulation_time:
+          type: string
+          description: Simulation time after the operation
+          example: "2026-01-01T00:00:00Z"
+
+    SimulationPauseResponse:
+      type: object
+      required: [status, message, simulation_time]
+      properties:
+        status:
+          type: string
+          description: Operation result
+          example: paused
+        message:
+          type: string
+          description: Human-readable status message
+          example: Simulation paused
+        simulation_time:
+          type: string
+          description: Simulation time when paused
+          example: "2026-02-16T10:30:00Z"
+
+    SimulationResetRequest:
+      type: object
+      description: Optional parameters for resetting the simulation
+      properties:
+        seed:
+          type: integer
+          nullable: true
+          description: New seed value. If omitted, the existing seed is reused.
+          example: 54321
+        start_time:
+          type: string
+          nullable: true
+          description: New start time in ISO 8601 format. If omitted, defaults apply.
+          example: "2026-06-01T00:00:00Z"
+
+    SimulationResetResponse:
+      type: object
+      required: [status, message, seed, simulation_time]
+      properties:
+        status:
+          type: string
+          description: Operation result
+          example: reset
+        message:
+          type: string
+          description: Human-readable status message
+          example: Simulation reset to initial state
+        seed:
+          type: integer
+          description: Active seed after reset
+          example: 54321
+        simulation_time:
+          type: string
+          description: Simulation time after reset
+          example: "2026-06-01T00:00:00Z"
+
+    # ── Error Schemas ───────────────────────────────────────────────
+
+    HTTPValidationError:
+      type: object
+      description: >
+        Error payload for 404 and similar HTTP errors. Single field
+        `detail` contains a human-readable message (e.g. resource not found).
+      required: [detail]
+      properties:
+        detail:
+          type: string
+          description: Human-readable error message
+          example: "Resource not found"
+
+    ValidationErrorResponse:
+      type: object
+      description: >
+        FastAPI / Pydantic 422 validation error response (auto-generated).
+      required: [detail]
+      properties:
+        detail:
+          type: array
+          items:
+            $ref: "#/components/schemas/ValidationErrorItem"
+
+    ValidationErrorItem:
+      type: object
+      required: [loc, msg, type]
+      properties:
+        loc:
+          type: array
+          items:
+            oneOf:
+              - type: string
+              - type: integer
+          description: >
+            JSON path to the invalid field (e.g. `["query", "limit"]`)
+          example: ["query", "limit"]
+        msg:
+          type: string
+          description: Validation error message
+          example: "ensure this value is greater than or equal to 1"
+        type:
+          type: string
+          description: Pydantic error type identifier
+          example: value_error.number.not_ge

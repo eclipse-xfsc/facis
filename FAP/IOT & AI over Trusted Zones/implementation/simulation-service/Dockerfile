@@ -18,9 +18,10 @@ WORKDIR /app
 COPY --from=builder /wheels /wheels
 RUN pip install --no-cache-dir /wheels/* && rm -rf /wheels
 
-# Copy application code
+# Copy application code and OpenAPI spec (used by /docs and /redoc)
 COPY src/ ./src/
 COPY config/ ./config/
+COPY docs/ ./docs/
 
 # Create non-root user
 RUN useradd -m -u 1000 simulation && \
