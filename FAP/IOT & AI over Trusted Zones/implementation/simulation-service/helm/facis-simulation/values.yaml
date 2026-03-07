@@ -1,0 +1,263 @@
+# =============================================================================
+# FACIS Simulation Service — Helm Values
+# =============================================================================
+# All values are documented inline. Override any value with --set or -f.
+
+# ---------------------------------------------------------------------------
+# Container Image
+# ---------------------------------------------------------------------------
+image:
+  # -- Container registry and repository
+  repository: ghcr.io/siemens-2/facis/simulation-service
+  # -- Image tag (defaults to Chart appVersion)
+  tag: ""
+  # -- Image pull policy
+  pullPolicy: IfNotPresent
+
+# -- Image pull secrets for private registries
+imagePullSecrets: []
+# - name: regcred
+
+# -- Override the chart name
+nameOverride: ""
+# -- Override the full release name
+fullnameOverride: ""
+
+# ---------------------------------------------------------------------------
+# Replica count
+# ---------------------------------------------------------------------------
+# -- Number of replicas (1 recommended — simulation is stateful/deterministic)
+replicaCount: 1
+
+# ---------------------------------------------------------------------------
+# Simulation Configuration
+# ---------------------------------------------------------------------------
+simulation:
+  # -- Random seed for deterministic reproducibility (same seed = same output)
+  seed: 12345
+  # -- Interval in minutes between generated readings
+  intervalMinutes: 1
+  # -- Speed factor (1.0 = real-time, 60.0 = 1 simulated hour per real minute)
+  speedFactor: 1.0
+  # -- Simulation mode: 'normal' or 'event' (anomalies/spikes)
+  mode: normal
+  # -- Site identifier (shared across all feeds for correlation)
+  siteId: site-berlin-001
+
+# ---------------------------------------------------------------------------
+# Entity Counts
+# ---------------------------------------------------------------------------
+entities:
+  # -- Number of energy meters to simulate
+  meters: 2
+  # -- Number of PV systems to simulate
+  pvSystems: 2
+  # -- Number of consumer devices to simulate
+  consumers: 4
+
+# ---------------------------------------------------------------------------
+# MQTT Broker Connection
+# ---------------------------------------------------------------------------
+mqtt:
+  # -- MQTT broker hostname
+  host: facis-mqtt
+  # -- MQTT broker port
+  port: 1883
+  # -- MQTT client identifier
+  clientId: facis-simulator
+  # -- Default QoS level (0, 1, or 2)
+  qos: 1
+
+# ---------------------------------------------------------------------------
+# Kafka Connection
+# ---------------------------------------------------------------------------
+kafka:
+  # -- Enable Kafka publishing
+  enabled: true
+  # -- Kafka bootstrap server(s)
+  bootstrapServers: kafka:9092
+  # -- Kafka client identifier
+  clientId: facis-simulator
+  # -- Security protocol: PLAINTEXT or SSL
+  securityProtocol: PLAINTEXT
+  # -- SSL certificate paths (when securityProtocol=SSL)
+  ssl:
+    # -- Path to CA certificate inside the container
+    caLocation: ""
+    # -- Path to client certificate inside the container
+    certificateLocation: ""
+    # -- Path to client key inside the container
+    keyLocation: ""
+
+# ---------------------------------------------------------------------------
+# ORCE (Orchestration Engine) Connection
+# ---------------------------------------------------------------------------
+orce:
+  # -- Enable ORCE publishing
+  enabled: false
+  # -- ORCE base URL
+  url: http://facis-orce:1880
+  # -- ORCE webhook path
+  webhookPath: /api/sim/tick
+  # -- Request timeout in seconds
+  timeoutSeconds: 10.0
+
+# ---------------------------------------------------------------------------
+# HTTP / REST API
+# ---------------------------------------------------------------------------
+http:
+  # -- HTTP listen port inside the container
+  port: 8080
+
+# ---------------------------------------------------------------------------
+# Modbus TCP
+# ---------------------------------------------------------------------------
+modbus:
+  # -- Enable Modbus TCP server
+  enabled: true
+  # -- Modbus listen port inside the container
+  port: 502
+
+# ---------------------------------------------------------------------------
+# Service
+# ---------------------------------------------------------------------------
+service:
+  # -- Kubernetes Service type
+  type: ClusterIP
+  # -- HTTP service port
+  httpPort: 8080
+  # -- Modbus service port
+  modbusPort: 502
+  # -- Additional annotations for the Service
+  annotations: {}
+
+# ---------------------------------------------------------------------------
+# Logging
+# ---------------------------------------------------------------------------
+logging:
+  # -- Log level: DEBUG, INFO, WARNING, ERROR, CRITICAL
+  level: INFO
+
+# ---------------------------------------------------------------------------
+# Pod Security Context
+# ---------------------------------------------------------------------------
+podSecurityContext:
+  # -- Run all containers as non-root
+  runAsNonRoot: true
+  # -- UID to run as (matches Dockerfile USER 1000)
+  runAsUser: 1000
+  # -- GID to run as
+  runAsGroup: 1000
+  # -- Filesystem group
+  fsGroup: 1000
+
+# ---------------------------------------------------------------------------
+# Container Security Context
+# ---------------------------------------------------------------------------
+securityContext:
+  # -- Disallow privilege escalation
+  allowPrivilegeEscalation: false
+  # -- Read-only root filesystem
+  readOnlyRootFilesystem: true
+  # -- Run as non-root
+  runAsNonRoot: true
+  # -- UID to run as
+  runAsUser: 1000
+  # -- Drop all Linux capabilities
+  capabilities:
+    drop:
+      - ALL
+
+# ---------------------------------------------------------------------------
+# Resource Requests and Limits
+# ---------------------------------------------------------------------------
+resources:
+  requests:
+    # -- CPU request
+    cpu: 100m
+    # -- Memory request
+    memory: 128Mi
+  limits:
+    # -- CPU limit
+    cpu: 500m
+    # -- Memory limit
+    memory: 512Mi
+
+# ---------------------------------------------------------------------------
+# Liveness and Readiness Probes
+# ---------------------------------------------------------------------------
+livenessProbe:
+  httpGet:
+    path: /api/v1/health
+    port: http
+  initialDelaySeconds: 10
+  periodSeconds: 30
+  timeoutSeconds: 3
+  failureThreshold: 3
+
+readinessProbe:
+  httpGet:
+    path: /api/v1/health
+    port: http
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  timeoutSeconds: 3
+  failureThreshold: 3
+
+# ---------------------------------------------------------------------------
+# ServiceAccount
+# ---------------------------------------------------------------------------
+serviceAccount:
+  # -- Create a ServiceAccount
+  create: true
+  # -- ServiceAccount name (generated if empty)
+  name: ""
+  # -- Annotations for the ServiceAccount
+  annotations: {}
+  # -- Automount API credentials into pods
+  automountServiceAccountToken: false
+
+# ---------------------------------------------------------------------------
+# Ingress (optional)
+# ---------------------------------------------------------------------------
+ingress:
+  # -- Enable Ingress resource
+  enabled: false
+  # -- Ingress class name
+  className: ""
+  # -- Ingress annotations
+  annotations: {}
+  # -- Ingress host rules
+  hosts: []
+  #  - host: simulation.facis.cloud
+  #    paths:
+  #      - path: /
+  #        pathType: Prefix
+  # -- TLS configuration
+  tls: []
+
+# ---------------------------------------------------------------------------
+# Node scheduling
+# ---------------------------------------------------------------------------
+# -- Node selector labels
+nodeSelector: {}
+# -- Tolerations
+tolerations: []
+# -- Affinity rules
+affinity: {}
+
+# ---------------------------------------------------------------------------
+# Additional environment variables
+# ---------------------------------------------------------------------------
+# -- Extra environment variables injected into the container
+extraEnv: []
+# - name: SIMULATOR_SIMULATION__START_TIME
+#   value: "2024-01-15T08:00:00Z"
+
+# ---------------------------------------------------------------------------
+# Additional volumes and volume mounts
+# ---------------------------------------------------------------------------
+# -- Extra volumes
+extraVolumes: []
+# -- Extra volume mounts
+extraVolumeMounts: []

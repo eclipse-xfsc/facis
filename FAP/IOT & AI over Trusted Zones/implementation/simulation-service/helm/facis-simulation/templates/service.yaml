@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "facis-simulation.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "facis-simulation.labels" . | nindent 4 }}
+  {{- with .Values.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - name: http
+      port: {{ .Values.service.httpPort }}
+      targetPort: http
+      protocol: TCP
+    {{- if .Values.modbus.enabled }}
+    - name: modbus
+      port: {{ .Values.service.modbusPort }}
+      targetPort: modbus
+      protocol: TCP
+    {{- end }}
+  selector:
+    {{- include "facis-simulation.selectorLabels" . | nindent 4 }}

@@ -1,0 +1,121 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "facis-simulation.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "facis-simulation.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "facis-simulation.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "facis-simulation.labels" . | nindent 8 }}
+      annotations:
+        # Force rollout on ConfigMap change
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "facis-simulation.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ include "facis-simulation.image" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.http.port }}
+              protocol: TCP
+            {{- if .Values.modbus.enabled }}
+            - name: modbus
+              containerPort: {{ .Values.modbus.port }}
+              protocol: TCP
+            {{- end }}
+          env:
+            - name: PYTHONUNBUFFERED
+              value: "1"
+            - name: PYTHONDONTWRITEBYTECODE
+              value: "1"
+            # Simulation settings (SIMULATOR_ prefix with __ nesting)
+            - name: SIMULATOR_SIMULATION__SEED
+              value: {{ .Values.simulation.seed | quote }}
+            - name: SIMULATOR_SIMULATION__INTERVAL_MINUTES
+              value: {{ .Values.simulation.intervalMinutes | quote }}
+            - name: SIMULATOR_SIMULATION__SPEED_FACTOR
+              value: {{ .Values.simulation.speedFactor | quote }}
+            - name: SIMULATOR_SIMULATION__MODE
+              value: {{ .Values.simulation.mode | quote }}
+            # MQTT
+            - name: SIMULATOR_MQTT__HOST
+              value: {{ .Values.mqtt.host | quote }}
+            - name: SIMULATOR_MQTT__PORT
+              value: {{ .Values.mqtt.port | quote }}
+            # Kafka
+            - name: SIMULATOR_KAFKA__ENABLED
+              value: {{ .Values.kafka.enabled | quote }}
+            - name: SIMULATOR_KAFKA__BOOTSTRAP_SERVERS
+              value: {{ .Values.kafka.bootstrapServers | quote }}
+            - name: SIMULATOR_KAFKA__SECURITY_PROTOCOL
+              value: {{ .Values.kafka.securityProtocol | quote }}
+            # ORCE
+            - name: SIMULATOR_ORCE__ENABLED
+              value: {{ .Values.orce.enabled | quote }}
+            - name: SIMULATOR_ORCE__URL
+              value: {{ .Values.orce.url | quote }}
+            # HTTP / Modbus
+            - name: SIMULATOR_HTTP__HOST
+              value: "0.0.0.0"
+            - name: SIMULATOR_HTTP__PORT
+              value: {{ .Values.http.port | quote }}
+            - name: SIMULATOR_MODBUS__PORT
+              value: {{ .Values.modbus.port | quote }}
+            # Logging
+            - name: SIMULATOR_LOGGING__LEVEL
+              value: {{ .Values.logging.level | quote }}
+            {{- with .Values.extraEnv }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: config
+              mountPath: /app/config/default.yaml
+              subPath: default.yaml
+              readOnly: true
+            - name: tmp
+              mountPath: /tmp
+            {{- with .Values.extraVolumeMounts }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+      volumes:
+        - name: config
+          configMap:
+            name: {{ include "facis-simulation.fullname" . }}-config
+        - name: tmp
+          emptyDir:
+            sizeLimit: 64Mi
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
