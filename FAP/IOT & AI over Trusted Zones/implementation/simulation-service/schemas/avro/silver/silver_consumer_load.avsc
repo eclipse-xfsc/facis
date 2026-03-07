@@ -1,0 +1,78 @@
+{
+  "type": "record",
+  "name": "SilverConsumerLoad",
+  "namespace": "cloud.facis.fap.iotai.silver",
+  "doc": "Silver layer harmonized schema for Smart Energy consumer load feed. This feed has a flat source structure; Silver adds metadata columns and uses Avro enums for type safety. Reference: Spec section 12.2-12.3.",
+  "fields": [
+    {
+      "name": "event_timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Original event timestamp from the simulation (UTC)."
+    },
+    {
+      "name": "ingest_timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Wall-clock time when NiFi ingested the source Bronze record (UTC)."
+    },
+    {
+      "name": "site_id",
+      "type": "string",
+      "doc": "Logical site identifier for cross-feed correlation."
+    },
+    {
+      "name": "building_id",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Optional building identifier within the site."
+    },
+    {
+      "name": "device_id",
+      "type": "string",
+      "doc": "Unique device identifier (e.g. industrial-oven-001)."
+    },
+    {
+      "name": "asset_id",
+      "type": "string",
+      "doc": "Canonical asset identifier (typically same as device_id)."
+    },
+    {
+      "name": "schema_version",
+      "type": "string",
+      "default": "1.0",
+      "doc": "Source schema version for forward compatibility."
+    },
+    {
+      "name": "device_type",
+      "type": {
+        "type": "enum",
+        "name": "DeviceType",
+        "namespace": "cloud.facis.fap.iotai.silver",
+        "symbols": ["INDUSTRIAL_OVEN", "HVAC", "COMPRESSOR", "PUMP", "GENERIC"],
+        "doc": "Industrial device classification."
+      },
+      "doc": "Device type classification."
+    },
+    {
+      "name": "device_state",
+      "type": {
+        "type": "enum",
+        "name": "DeviceState",
+        "namespace": "cloud.facis.fap.iotai.silver",
+        "symbols": ["ON", "OFF", "STANDBY"],
+        "doc": "Operational state of the device."
+      },
+      "doc": "Current device operational state."
+    },
+    {
+      "name": "device_power_kw",
+      "type": "double",
+      "doc": "Current power draw (kW). Zero when device_state is OFF."
+    }
+  ]
+}

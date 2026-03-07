@@ -1,0 +1,96 @@
+{
+  "type": "record",
+  "name": "SilverWeather",
+  "namespace": "cloud.facis.fap.iotai.silver",
+  "doc": "Silver layer harmonized schema for Smart Energy weather observations. Nested fields from conditions.* and location.* are flattened to top-level columns. Reference: Spec section 12.2-12.3.",
+  "fields": [
+    {
+      "name": "event_timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Original event timestamp from the simulation (UTC)."
+    },
+    {
+      "name": "ingest_timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Wall-clock time when NiFi ingested the source Bronze record (UTC)."
+    },
+    {
+      "name": "site_id",
+      "type": "string",
+      "doc": "Logical site identifier for cross-feed correlation."
+    },
+    {
+      "name": "building_id",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Optional building identifier within the site."
+    },
+    {
+      "name": "schema_version",
+      "type": "string",
+      "default": "1.0",
+      "doc": "Source schema version for forward compatibility."
+    },
+    {
+      "name": "temperature_c",
+      "type": "double",
+      "doc": "Ambient temperature (deg C). Top-level summary from conditions.temperature_c."
+    },
+    {
+      "name": "solar_irradiance_w_m2",
+      "type": "double",
+      "doc": "GHI at station (W/m2). Top-level summary field."
+    },
+    {
+      "name": "latitude",
+      "type": "double",
+      "doc": "Station latitude (decimal degrees). Flattened from location.latitude."
+    },
+    {
+      "name": "longitude",
+      "type": "double",
+      "doc": "Station longitude (decimal degrees). Flattened from location.longitude."
+    },
+    {
+      "name": "humidity_percent",
+      "type": "double",
+      "doc": "Relative humidity (%). Flattened from conditions.humidity_percent."
+    },
+    {
+      "name": "wind_speed_ms",
+      "type": "double",
+      "doc": "Wind speed (m/s). Flattened from conditions.wind_speed_ms."
+    },
+    {
+      "name": "wind_direction_deg",
+      "type": "double",
+      "doc": "Wind direction (degrees, 0-359). Flattened from conditions.wind_direction_deg."
+    },
+    {
+      "name": "cloud_cover_percent",
+      "type": "double",
+      "doc": "Cloud cover (%). Flattened from conditions.cloud_cover_percent."
+    },
+    {
+      "name": "ghi_w_m2",
+      "type": "double",
+      "doc": "Global Horizontal Irradiance (W/m2). Flattened from conditions.ghi_w_m2."
+    },
+    {
+      "name": "dni_w_m2",
+      "type": "double",
+      "doc": "Direct Normal Irradiance (W/m2). Flattened from conditions.dni_w_m2."
+    },
+    {
+      "name": "dhi_w_m2",
+      "type": "double",
+      "doc": "Diffuse Horizontal Irradiance (W/m2). Flattened from conditions.dhi_w_m2."
+    }
+  ]
+}

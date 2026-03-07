@@ -1,0 +1,121 @@
+{
+  "type": "record",
+  "name": "SilverEnergyMeter",
+  "namespace": "cloud.facis.fap.iotai.silver",
+  "doc": "Silver layer harmonized schema for Smart Energy meter readings. Nested fields from readings.* are flattened to top-level columns. Metadata fields site_id and building_id are added for multi-site correlation. Reference: Spec section 12.2-12.3.",
+  "fields": [
+    {
+      "name": "event_timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Original event timestamp from the simulation (UTC)."
+    },
+    {
+      "name": "ingest_timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Wall-clock time when NiFi ingested the source Bronze record (UTC)."
+    },
+    {
+      "name": "site_id",
+      "type": "string",
+      "doc": "Logical site identifier for cross-feed correlation (e.g. site-berlin-001)."
+    },
+    {
+      "name": "building_id",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Optional building identifier within the site. Reserved for multi-building deployments."
+    },
+    {
+      "name": "meter_id",
+      "type": "string",
+      "doc": "Unique meter identifier (e.g. janitza-umg96rm-001)."
+    },
+    {
+      "name": "asset_id",
+      "type": "string",
+      "doc": "Canonical asset identifier (typically same as meter_id)."
+    },
+    {
+      "name": "schema_version",
+      "type": "string",
+      "default": "1.0",
+      "doc": "Source schema version for forward compatibility."
+    },
+    {
+      "name": "active_power_kw",
+      "type": "double",
+      "doc": "Total active power across all phases (kW). Derived: sum(L1+L2+L3)/1000."
+    },
+    {
+      "name": "active_energy_kwh_total",
+      "type": "double",
+      "doc": "Cumulative active energy counter (kWh). Monotonically increasing."
+    },
+    {
+      "name": "active_power_l1_w",
+      "type": "double",
+      "doc": "Phase L1 active power (W). Flattened from readings.active_power_l1_w."
+    },
+    {
+      "name": "active_power_l2_w",
+      "type": "double",
+      "doc": "Phase L2 active power (W). Flattened from readings.active_power_l2_w."
+    },
+    {
+      "name": "active_power_l3_w",
+      "type": "double",
+      "doc": "Phase L3 active power (W). Flattened from readings.active_power_l3_w."
+    },
+    {
+      "name": "voltage_l1_v",
+      "type": "double",
+      "doc": "Phase L1 voltage (V). Flattened from readings.voltage_l1_v."
+    },
+    {
+      "name": "voltage_l2_v",
+      "type": "double",
+      "doc": "Phase L2 voltage (V). Flattened from readings.voltage_l2_v."
+    },
+    {
+      "name": "voltage_l3_v",
+      "type": "double",
+      "doc": "Phase L3 voltage (V). Flattened from readings.voltage_l3_v."
+    },
+    {
+      "name": "current_l1_a",
+      "type": "double",
+      "doc": "Phase L1 current (A). Flattened from readings.current_l1_a."
+    },
+    {
+      "name": "current_l2_a",
+      "type": "double",
+      "doc": "Phase L2 current (A). Flattened from readings.current_l2_a."
+    },
+    {
+      "name": "current_l3_a",
+      "type": "double",
+      "doc": "Phase L3 current (A). Flattened from readings.current_l3_a."
+    },
+    {
+      "name": "power_factor",
+      "type": "double",
+      "doc": "Power factor (dimensionless, 0.0-1.0). Flattened from readings.power_factor."
+    },
+    {
+      "name": "frequency_hz",
+      "type": "double",
+      "doc": "Grid frequency (Hz, nominal 50). Flattened from readings.frequency_hz."
+    },
+    {
+      "name": "total_energy_kwh",
+      "type": "double",
+      "doc": "Total energy counter (kWh). Flattened from readings.total_energy_kwh."
+    }
+  ]
+}

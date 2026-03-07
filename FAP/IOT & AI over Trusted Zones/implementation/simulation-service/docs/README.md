@@ -18,7 +18,8 @@ docs/
 │   ├── mqtt-reference.md             MQTT topic and payload reference
 │   └── modbus-reference.md           Modbus TCP register map
 ├── data-model/
-│   └── schema-reference.md           Data schema reference (all feeds)
+│   ├── schema-reference.md           Data schema reference (all feeds)
+│   └── avro-schema-reference.md      Avro schemas — Bronze & Silver layers
 ├── guides/
 │   └── lakehouse-reference.md        Lakehouse layer reference (Bronze/Silver/Gold)
 └── milestone-reports/

@@ -1,0 +1,8 @@
+{
+  "ingest_timestamp": 1741363200000,
+  "source_topic": "sim.smart_energy.price",
+  "kafka_partition": 0,
+  "kafka_offset": 3412,
+  "kafka_key": null,
+  "raw_payload": "{\"timestamp\":\"2026-03-07T12:00:00Z\",\"site_id\":\"site-berlin-001\",\"schema_version\":\"1.0\",\"type\":\"smart_energy.price\",\"price_eur_per_kwh\":0.102,\"tariff_type\":\"MIDDAY\"}"
+}

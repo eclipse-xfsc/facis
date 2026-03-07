@@ -1,0 +1,8 @@
+{
+  "ingest_timestamp": 1741363200000,
+  "source_topic": "sim.smart_energy.weather",
+  "kafka_partition": 0,
+  "kafka_offset": 8921,
+  "kafka_key": "site-berlin-001",
+  "raw_payload": "{\"timestamp\":\"2026-03-07T12:00:00Z\",\"site_id\":\"site-berlin-001\",\"schema_version\":\"1.0\",\"type\":\"smart_energy.weather\",\"temperature_c\":18.3,\"solar_irradiance_w_m2\":850.3,\"location\":{\"latitude\":52.52,\"longitude\":13.405},\"conditions\":{\"humidity_percent\":55.2,\"wind_speed_ms\":4.1,\"wind_direction_deg\":225.0,\"cloud_cover_percent\":30.0,\"ghi_w_m2\":850.3,\"dni_w_m2\":720.0,\"dhi_w_m2\":130.3}}"
+}
