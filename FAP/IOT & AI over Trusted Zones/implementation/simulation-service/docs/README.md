@@ -19,7 +19,8 @@ docs/
 │   └── modbus-reference.md           Modbus TCP register map
 ├── data-model/
 │   ├── schema-reference.md           Data schema reference (all feeds)
-│   └── avro-schema-reference.md      Avro schemas — Bronze & Silver layers
+│   ├── avro-schema-reference.md      Avro schemas — Bronze & Silver layers
+│   └── data-structures-semantics.md  Data structures, semantics & relationships
 ├── guides/
 │   └── lakehouse-reference.md        Lakehouse layer reference (Bronze/Silver/Gold)
 └── milestone-reports/
