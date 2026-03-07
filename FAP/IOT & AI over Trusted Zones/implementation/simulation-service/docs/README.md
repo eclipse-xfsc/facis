@@ -28,6 +28,8 @@ docs/
 │   ├── configuration.md              All configuration options reference
 │   ├── extending.md                  How to add new simulator feed types
 │   └── lakehouse-reference.md        Lakehouse layer reference (Bronze/Silver/Gold)
+├── pipeline/
+│   └── mqtt-kafka-bronze-pipeline.md MQTT → Kafka Bronze ingestion pipeline
 └── milestone-reports/
     ├── MS2_Technical_Reference.md    MS2 end-to-end technical reference
     └── MS2_Demo_Guide.md            MS2 demo walkthrough
