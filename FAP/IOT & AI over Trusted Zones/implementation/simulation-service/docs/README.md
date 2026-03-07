@@ -22,6 +22,11 @@ docs/
 │   ├── avro-schema-reference.md      Avro schemas — Bronze & Silver layers
 │   └── data-structures-semantics.md  Data structures, semantics & relationships
 ├── guides/
+│   ├── index.md                      Developer guide — overview and quickstart
+│   ├── setup.md                      Development environment setup
+│   ├── architecture.md               Component design and data flow
+│   ├── configuration.md              All configuration options reference
+│   ├── extending.md                  How to add new simulator feed types
 │   └── lakehouse-reference.md        Lakehouse layer reference (Bronze/Silver/Gold)
 └── milestone-reports/
     ├── MS2_Technical_Reference.md    MS2 end-to-end technical reference
