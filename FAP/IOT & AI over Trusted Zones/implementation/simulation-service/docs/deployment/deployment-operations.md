@@ -21,6 +21,8 @@ This document describes the procedures to deploy and operate the FACIS IoT & AI 
 | End-to-end validation | Keycloak identity provider setup |
 | Seed dataset generation | TLS root CA creation |
 
+For platform infrastructure requirements (what must be in place before this guide can be followed), see [Infrastructure Prerequisites](infrastructure-prerequisites.md). That document specifies exact Kafka topics, Trino catalog settings, Keycloak realm configuration, and network requirements for the infrastructure team.
+
 ### 1.2 Prerequisites
 
 - Docker and Docker Compose v2+
@@ -28,6 +30,7 @@ This document describes the procedures to deploy and operate the FACIS IoT & AI 
 - `kubectl` configured with cluster access
 - TLS certificates for Kafka mTLS (CA cert, client cert, client key)
 - Credentials file (`.env.cluster`) — see Section 2.1
+- All infrastructure prerequisites verified — see [Infrastructure Prerequisites](infrastructure-prerequisites.md) § 9
 
 ## 2. Credential Management
 
@@ -242,9 +245,46 @@ python scripts/setup_lakehouse.py --env-file .env.cluster --dry-run
 python scripts/setup_lakehouse.py --env-file .env.cluster --teardown
 ```
 
-Expected output: `24/24 objects created` (9 Bronze tables + 9 Silver views + 6 Gold views).
+Expected output: `24/24 objects created` (9 Bronze tables + 9 Silver views + 12 Gold views).
 
-### 6.2 Configure NiFi Pipeline
+### 6.2 Provision Trino JDBC Driver for NiFi
+
+The NiFi ingestion pipeline requires the Trino JDBC driver to insert data into Bronze tables. The driver must be provisioned before configuring the pipeline.
+
+**Option A: Automated provisioning (recommended)**
+
+```bash
+# Persistent: Creates a PVC and downloads the JAR via a K8s Job
+scripts/provision_nifi_jdbc.sh
+
+# Then patch the NiFi cluster to mount the PVC
+# See k8s/nifi/nifi-jdbc-volume-patch.yaml for instructions
+```
+
+**Option B: Direct provisioning (ephemeral — for dev/testing)**
+
+```bash
+# Downloads JAR directly into each running NiFi pod (lost on restart)
+scripts/provision_nifi_jdbc.sh --direct
+```
+
+**Option C: Manual kubectl exec**
+
+```bash
+kubectl exec -n stackable <nifi-pod> -- \
+  sh -c 'mkdir -p /opt/nifi/jdbc && curl -fSL -o /opt/nifi/jdbc/trino-jdbc-467.jar \
+  https://repo1.maven.org/maven2/io/trino/trino-jdbc/467/trino-jdbc-467.jar'
+```
+
+**Verify** the driver is in place:
+
+```bash
+scripts/provision_nifi_jdbc.sh --verify
+```
+
+K8s manifests for the PVC and provisioner Job are in `k8s/nifi/`.
+
+### 6.3 Configure NiFi Kafka → Bronze Pipeline
 
 The `setup_nifi.py` script creates the ingestion pipeline (36 processors for 9 Kafka topics):
 
@@ -259,15 +299,25 @@ python scripts/setup_nifi.py --env-file .env.cluster --dry-run
 python scripts/setup_nifi.py --env-file .env.cluster --teardown
 ```
 
-**Post-setup manual step:** The Trino JDBC driver (`trino-jdbc-467.jar`) must be available on each NiFi node. Copy it to a stable path:
+### 6.4 Configure NiFi MQTT → Kafka Bridge (Optional)
+
+When using the MQTT ORCE flow variant (no rdkafka plugin), data flows via MQTT instead of Kafka. The MQTT-to-Kafka bridge routes all 9 feeds (5 Smart Energy + 4 Smart City) to their corresponding Kafka topics:
 
 ```bash
-kubectl exec -n stackable <nifi-pod> -- \
-  sh -c 'mkdir -p /tmp/jdbc && curl -L -o /tmp/jdbc/trino-jdbc-467.jar \
-  https://repo1.maven.org/maven2/io/trino/trino-jdbc/467/trino-jdbc-467.jar'
+# Create MQTT → Kafka pipeline (9 routes)
+python scripts/setup_nifi_mqtt_to_kafka.py --env-file .env.cluster
+
+# Preview without applying
+python scripts/setup_nifi_mqtt_to_kafka.py --env-file .env.cluster --dry-run
 ```
 
-For production, mount the JAR via a ConfigMap or PersistentVolume.
+**Data flow variants:**
+
+| ORCE Flow | Smart Energy Path | Smart City Path | NiFi Scripts Needed |
+|---|---|---|---|
+| `facis-simulation-cluster.json` (rdkafka) | ORCE → Kafka directly | ORCE → Kafka directly | `setup_nifi.py` only |
+| `facis-simulation-mqtt.json` (MQTT) | ORCE → MQTT → NiFi → Kafka | ORCE → MQTT → NiFi → Kafka | `setup_nifi_mqtt_to_kafka.py` + `setup_nifi.py` |
+| Direct Kafka (no ORCE) | Simulation → Kafka | Simulation → Kafka | `setup_nifi.py` only |
 
 ## 7. Validation
 

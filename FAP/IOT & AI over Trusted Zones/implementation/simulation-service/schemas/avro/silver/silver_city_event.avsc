@@ -1,0 +1,72 @@
+{
+  "type": "record",
+  "name": "SilverCityEvent",
+  "namespace": "cloud.facis.fap.iotai.silver",
+  "doc": "Silver layer harmonized schema for Smart City event feed. Extracts typed fields from Bronze raw JSON, applies data quality filtering (non-null timestamps), and adds severity classification label. Reference: setup_lakehouse.py Silver view definition.",
+  "fields": [
+    {
+      "name": "event_timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Original event timestamp from the simulation (UTC)."
+    },
+    {
+      "name": "ingest_timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Wall-clock time when NiFi ingested the source Bronze record (UTC)."
+    },
+    {
+      "name": "city_id",
+      "type": "string",
+      "doc": "City identifier for cross-feed correlation."
+    },
+    {
+      "name": "zone_id",
+      "type": "string",
+      "doc": "Zone identifier within the city."
+    },
+    {
+      "name": "schema_version",
+      "type": "string",
+      "default": "1.0",
+      "doc": "Source schema version for forward compatibility."
+    },
+    {
+      "name": "event_type",
+      "type": {
+        "type": "enum",
+        "name": "CityEventType",
+        "namespace": "cloud.facis.fap.iotai.silver",
+        "symbols": ["ACCIDENT", "EMERGENCY", "EVENT"],
+        "doc": "Type of city event."
+      },
+      "doc": "Classification of the city event."
+    },
+    {
+      "name": "severity",
+      "type": "int",
+      "doc": "Severity level (1 = low, 2 = medium, 3 = high, 4+ = critical)."
+    },
+    {
+      "name": "active",
+      "type": "boolean",
+      "doc": "Whether the event is currently active."
+    },
+    {
+      "name": "severity_label",
+      "type": {
+        "type": "enum",
+        "name": "SeverityLabel",
+        "namespace": "cloud.facis.fap.iotai.silver",
+        "symbols": ["LOW", "MEDIUM", "HIGH", "CRITICAL"],
+        "doc": "Human-readable severity classification."
+      },
+      "doc": "Derived field: severity mapped to label (1→low, 2→medium, 3→high, 4+→critical)."
+    }
+  ]
+}

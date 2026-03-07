@@ -1,0 +1,22 @@
+# PersistentVolumeClaim for the Trino JDBC driver.
+# Unlike /tmp (ephemeral), this survives NiFi pod restarts.
+#
+# Used by: nifi-jdbc-provisioner.yaml (Job) and NiFi pods (volume mount).
+# Size: 10Mi is generous for a single ~5MB JAR.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nifi-jdbc-driver
+  namespace: stackable
+  labels:
+    app.kubernetes.io/name: nifi
+    app.kubernetes.io/component: jdbc-driver
+    app.kubernetes.io/part-of: facis-fap
+spec:
+  accessModes:
+    - ReadOnlyMany       # JAR is read-only; multiple NiFi pods can share
+  resources:
+    requests:
+      storage: 10Mi
+  # Use the cluster's default StorageClass.
+  # Override with: storageClassName: <your-sc>

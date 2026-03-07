@@ -1,0 +1,45 @@
+# Stackable NiFi Cluster Patch — Mount JDBC driver PVC
+#
+# The Stackable NiFi Operator manages the NiFi StatefulSet. To mount
+# additional volumes into NiFi pods, patch the NiFiCluster resource.
+#
+# HOW TO APPLY:
+#
+# Option A: kubectl patch (merge patch)
+#   kubectl patch nificluster <nifi-cluster-name> -n stackable \
+#     --type merge -p "$(cat k8s/nifi/nifi-jdbc-volume-patch.yaml)"
+#
+# Option B: If using Stackable's podOverrides (recommended), add the
+#   volume and volumeMount to your NiFiCluster spec directly.
+#
+# After patching, NiFi pods will restart with /opt/nifi/jdbc/trino-jdbc-467.jar
+# available. The InvokeHTTP processor in setup_nifi.py references this path.
+#
+# ---
+# Patch content for Stackable NiFiCluster podOverrides:
+#
+# spec:
+#   nodes:
+#     roleGroups:
+#       default:
+#         podOverrides:
+#           spec:
+#             containers:
+#               - name: nifi
+#                 volumeMounts:
+#                   - name: jdbc-driver
+#                     mountPath: /opt/nifi/jdbc
+#                     readOnly: true
+#             volumes:
+#               - name: jdbc-driver
+#                 persistentVolumeClaim:
+#                   claimName: nifi-jdbc-driver
+#
+# ---
+# ALTERNATIVE: If Stackable doesn't support podOverrides for your version,
+# use the manual kubectl exec approach documented in deployment-operations.md:
+#
+#   kubectl exec -n stackable <nifi-pod> -- \
+#     sh -c 'mkdir -p /opt/nifi/jdbc && cp /jdbc/trino-jdbc-467.jar /opt/nifi/jdbc/'
+#
+# Note: The /tmp path is ephemeral. Always prefer the PVC-based approach.

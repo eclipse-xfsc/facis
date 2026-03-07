@@ -57,8 +57,9 @@ STACKABLE_TRUSTSTORE = "/stackable/server_tls/truststore.p12"
 STACKABLE_STORE_PASSWORD = "secret"
 
 # Trino password auth (from trino-users K8s secret)
-TRINO_USER = "admin"
-TRINO_PASSWORD = "sj3u82ka"
+# Override via FACIS_TRINO_USER / FACIS_TRINO_PASSWORD env vars or .env.cluster
+TRINO_USER = os.getenv("FACIS_TRINO_USER", "admin")
+TRINO_PASSWORD = os.getenv("FACIS_TRINO_PASSWORD", "sj3u82ka")
 
 CONSUMER_GROUP = "facis-nifi-lakehouse"
 

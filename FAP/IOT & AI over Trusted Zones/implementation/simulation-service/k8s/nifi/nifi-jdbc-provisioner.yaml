@@ -1,0 +1,56 @@
+# One-shot Job that downloads the Trino JDBC driver into a PersistentVolume.
+#
+# Run after creating the PVC (nifi-jdbc-pvc.yaml).
+# The JAR persists across NiFi pod restarts and reschedules.
+#
+# To re-run (e.g., for a driver version upgrade):
+#   kubectl delete job nifi-jdbc-provisioner -n stackable
+#   kubectl apply -f k8s/nifi/nifi-jdbc-provisioner.yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: nifi-jdbc-provisioner
+  namespace: stackable
+  labels:
+    app.kubernetes.io/name: nifi
+    app.kubernetes.io/component: jdbc-provisioner
+    app.kubernetes.io/part-of: facis-fap
+spec:
+  backoffLimit: 3
+  ttlSecondsAfterFinished: 600   # Auto-cleanup 10 min after completion
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: nifi-jdbc-provisioner
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: download
+          image: curlimages/curl:8.5.0
+          command:
+            - sh
+            - -c
+            - |
+              set -e
+              DRIVER_URL="https://repo1.maven.org/maven2/io/trino/trino-jdbc/467/trino-jdbc-467.jar"
+              DEST="/jdbc/trino-jdbc-467.jar"
+
+              echo "Downloading Trino JDBC driver..."
+              curl -fSL -o "$DEST" "$DRIVER_URL"
+
+              # Verify file size (should be ~5MB)
+              SIZE=$(stat -c%s "$DEST" 2>/dev/null || stat -f%z "$DEST" 2>/dev/null)
+              if [ "$SIZE" -lt 1000000 ]; then
+                echo "ERROR: Downloaded file too small (${SIZE} bytes). Download may have failed."
+                exit 1
+              fi
+
+              echo "Trino JDBC driver downloaded successfully (${SIZE} bytes)."
+              ls -la /jdbc/
+          volumeMounts:
+            - name: jdbc-driver
+              mountPath: /jdbc
+      volumes:
+        - name: jdbc-driver
+          persistentVolumeClaim:
+            claimName: nifi-jdbc-driver

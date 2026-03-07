@@ -56,6 +56,30 @@
       "mqtt_qos": 0,
       "kafka_topic": "energy.bronze.consumer-states",
       "description": "Consumer device load states"
+    },
+    {
+      "mqtt_subscription": "facis/city/light/+",
+      "mqtt_qos": 0,
+      "kafka_topic": "sim.smart_city.light",
+      "description": "Streetlight telemetry (dimming, power per zone)"
+    },
+    {
+      "mqtt_subscription": "facis/city/traffic/+",
+      "mqtt_qos": 0,
+      "kafka_topic": "sim.smart_city.traffic",
+      "description": "Traffic zone indices (congestion data)"
+    },
+    {
+      "mqtt_subscription": "facis/city/event/+",
+      "mqtt_qos": 1,
+      "kafka_topic": "sim.smart_city.event",
+      "description": "City events (accidents, emergencies, public events)"
+    },
+    {
+      "mqtt_subscription": "facis/city/weather",
+      "mqtt_qos": 0,
+      "kafka_topic": "sim.smart_city.weather",
+      "description": "City weather/visibility (fog index, sunrise/sunset)"
     }
   ],
   "dead_letter_queue": {
@@ -85,7 +109,7 @@
     }
   },
   "processor_chain": {
-    "description": "Per-route pipeline (repeated 5 times, once per MQTT subscription)",
+    "description": "Per-route pipeline (repeated 9 times, once per MQTT subscription)",
     "processors": [
       {
         "order": 1,

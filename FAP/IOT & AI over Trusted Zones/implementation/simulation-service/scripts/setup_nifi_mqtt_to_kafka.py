@@ -10,18 +10,24 @@ Creates an Apache NiFi 2.x pipeline that:
     5. Routes failures to a dead-letter queue
 
 Architecture:
-    ConsumeMQTT (5 subscriptions with MQTT wildcards)
+    ConsumeMQTT (9 subscriptions with MQTT wildcards)
         → RouteOnAttribute (match MQTT topic → Kafka destination)
         → JoltTransformJSON (enrich with ingest_timestamp, source_system, source_topic)
         → PublishKafka (produce to Bronze Kafka topic)
         → dead-letter-queue (on failure)
 
-MQTT → Kafka Topic Mapping:
+MQTT → Kafka Topic Mapping (Smart Energy):
     facis/energy/meter/+       → energy.bronze.meter-readings
     facis/prices/spot          → energy.bronze.prices
     facis/weather/current      → energy.bronze.weather
     facis/energy/pv/+          → energy.bronze.pv-generation
     facis/loads/+              → energy.bronze.consumer-states
+
+MQTT → Kafka Topic Mapping (Smart City):
+    facis/city/light/+         → sim.smart_city.light
+    facis/city/traffic/+       → sim.smart_city.traffic
+    facis/city/event/+         → sim.smart_city.event
+    facis/city/weather         → sim.smart_city.weather
 
 Usage:
     python scripts/setup_nifi_mqtt_to_kafka.py --env-file .env.cluster
@@ -121,6 +127,39 @@ MQTT_KAFKA_ROUTES: list[dict] = [
         "route_name": "consumer-states",
         "kafka_topic": "energy.bronze.consumer-states",
         "description": "Consumer device load states",
+        "qos": 0,
+    },
+    # --- Smart City routes (used with MQTT ORCE flow variant) ---
+    {
+        "mqtt_subscription": "facis/city/light/+",
+        "route_regex": r"facis/city/light/.+",
+        "route_name": "streetlight",
+        "kafka_topic": "sim.smart_city.light",
+        "description": "Streetlight telemetry (dimming, power per zone)",
+        "qos": 0,
+    },
+    {
+        "mqtt_subscription": "facis/city/traffic/+",
+        "route_regex": r"facis/city/traffic/.+",
+        "route_name": "traffic",
+        "kafka_topic": "sim.smart_city.traffic",
+        "description": "Traffic zone indices (congestion data)",
+        "qos": 0,
+    },
+    {
+        "mqtt_subscription": "facis/city/event/+",
+        "route_regex": r"facis/city/event/.+",
+        "route_name": "city-event",
+        "kafka_topic": "sim.smart_city.event",
+        "description": "City events (accidents, emergencies, public events)",
+        "qos": 1,
+    },
+    {
+        "mqtt_subscription": "facis/city/weather",
+        "route_regex": r"facis/city/weather",
+        "route_name": "city-weather",
+        "kafka_topic": "sim.smart_city.weather",
+        "description": "City weather/visibility (fog index, sunrise/sunset)",
         "qos": 0,
     },
 ]
