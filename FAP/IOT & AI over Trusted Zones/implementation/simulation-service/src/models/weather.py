@@ -5,8 +5,9 @@ Pydantic schema for weather conditions including solar irradiance.
 """
 
 from datetime import datetime
+from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, computed_field
 
 
 class LocationData(BaseModel):
@@ -34,14 +35,34 @@ class WeatherConditions(BaseModel):
 class WeatherReading(BaseModel):
     """Complete weather reading payload matching spec section 11.5."""
 
+    type: Literal["weather"] = Field(default="weather", description="Feed type")
+    schema_version: str = Field(default="1.0", description="Schema version")
+    site_id: str = Field(default="", description="Site identifier for correlation")
     timestamp: datetime = Field(..., description="Reading timestamp in ISO 8601 format")
     location: LocationData = Field(..., description="Geographic location")
     conditions: WeatherConditions = Field(..., description="Weather conditions")
 
+    @computed_field
+    @property
+    def temperature_c(self) -> float:
+        """Top-level temperature in Celsius."""
+        return self.conditions.temperature_c
+
+    @computed_field
+    @property
+    def solar_irradiance_w_m2(self) -> float:
+        """Top-level solar irradiance (GHI) in W/m2."""
+        return self.conditions.ghi_w_m2
+
     def to_json_payload(self) -> dict:
         """Convert to JSON payload matching spec structure."""
         return {
+            "type": self.type,
+            "schema_version": self.schema_version,
+            "site_id": self.site_id,
             "timestamp": self.timestamp.isoformat().replace("+00:00", "Z"),
+            "temperature_c": round(self.temperature_c, 1),
+            "solar_irradiance_w_m2": round(self.solar_irradiance_w_m2, 1),
             "location": {
                 "latitude": round(self.location.latitude, 4),
                 "longitude": round(self.location.longitude, 4),

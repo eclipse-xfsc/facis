@@ -62,6 +62,7 @@ class WeatherSimulator(BaseTimeSeriesGenerator[WeatherReading]):
         rng: DeterministicRNG,
         interval: IntervalMinutes = IntervalMinutes.FIFTEEN_MINUTES,
         config: WeatherConfig | None = None,
+        site_id: str = "",
     ) -> None:
         """
         Initialize the weather simulator.
@@ -71,12 +72,14 @@ class WeatherSimulator(BaseTimeSeriesGenerator[WeatherReading]):
             rng: Deterministic random number generator.
             interval: Time interval for readings.
             config: Weather configuration. Uses defaults (Berlin) if None.
+            site_id: Site identifier for correlation.
         """
         super().__init__(entity_id, rng, interval)
 
         if config is None:
             config = WeatherConfig()
         self._config = config
+        self._site_id = site_id
 
     @property
     def config(self) -> WeatherConfig:
@@ -182,6 +185,7 @@ class WeatherSimulator(BaseTimeSeriesGenerator[WeatherReading]):
         )
 
         return WeatherReading(
+            site_id=self._site_id,
             timestamp=timestamp,
             location=location,
             conditions=conditions,

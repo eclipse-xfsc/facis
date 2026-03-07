@@ -63,6 +63,7 @@ class CorrelatedSnapshot(BaseModel):
     All feeds share the same timestamp for correlation analysis.
     """
 
+    site_id: str = Field(default="", description="Site identifier for correlation")
     timestamp: datetime = Field(
         ...,
         description="Synchronized timestamp for all feeds (ISO 8601)",

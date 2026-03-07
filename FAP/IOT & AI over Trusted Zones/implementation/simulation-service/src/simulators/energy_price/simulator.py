@@ -46,6 +46,8 @@ class EnergyPriceSimulator(BaseTimeSeriesGenerator[PriceReading]):
         rng: DeterministicRNG,
         interval: IntervalMinutes = IntervalMinutes.FIFTEEN_MINUTES,
         config: PriceConfig | None = None,
+        site_id: str = "",
+        mode: str = "normal",
     ) -> None:
         """
         Initialize the energy price simulator.
@@ -55,12 +57,16 @@ class EnergyPriceSimulator(BaseTimeSeriesGenerator[PriceReading]):
             rng: Deterministic random number generator.
             interval: Time interval for price updates.
             config: Price configuration. Uses defaults if None.
+            site_id: Site identifier (unused for market prices, kept for consistency).
+            mode: Simulation mode ('normal' or 'event').
         """
         super().__init__(entity_id, rng, interval)
 
         if config is None:
             config = PriceConfig(feed_id=entity_id)
         self._config = config
+        self._site_id = site_id
+        self._mode = mode
 
     @property
     def config(self) -> PriceConfig:
@@ -114,8 +120,11 @@ class EnergyPriceSimulator(BaseTimeSeriesGenerator[PriceReading]):
         if is_weekend(timestamp):
             price = apply_weekend_discount(price, self._config.weekend_discount_pct)
 
-        # 5. Add random volatility
-        price = apply_volatility(price, ts_rng, self._config.volatility_pct)
+        # 5. Add random volatility (doubled in event mode)
+        volatility = self._config.volatility_pct
+        if self._mode == "event":
+            volatility *= 2.0
+        price = apply_volatility(price, ts_rng, volatility)
 
         # 6. Enforce minimum price floor (never negative)
         price = enforce_price_floor(price, self._config.min_price)

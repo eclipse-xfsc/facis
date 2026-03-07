@@ -60,6 +60,7 @@ class PVGenerationSimulator(BaseTimeSeriesGenerator[PVReading]):
         weather_simulator: WeatherSimulator,
         interval: IntervalMinutes = IntervalMinutes.FIFTEEN_MINUTES,
         config: PVConfig | None = None,
+        site_id: str = "",
     ) -> None:
         """
         Initialize the PV generation simulator.
@@ -70,6 +71,7 @@ class PVGenerationSimulator(BaseTimeSeriesGenerator[PVReading]):
             weather_simulator: Weather simulator for irradiance and temperature.
             interval: Time interval for readings.
             config: PV system configuration. Uses defaults if None.
+            site_id: Site identifier for correlation.
         """
         super().__init__(entity_id, rng, interval)
 
@@ -77,6 +79,7 @@ class PVGenerationSimulator(BaseTimeSeriesGenerator[PVReading]):
             config = PVConfig(system_id=entity_id)
         self._config = config
         self._weather_simulator = weather_simulator
+        self._site_id = site_id
 
         # Track daily energy accumulation
         self._last_energy_date: date | None = None
@@ -267,6 +270,7 @@ class PVGenerationSimulator(BaseTimeSeriesGenerator[PVReading]):
         )
 
         return PVReading(
+            site_id=self._site_id,
             timestamp=timestamp,
             system_id=self._config.system_id,
             readings=readings,

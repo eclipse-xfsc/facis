@@ -1,0 +1,43 @@
+# =============================================================================
+# FACIS Simulation Service - Cluster Configuration
+# =============================================================================
+#
+# Configuration for deploying against the remote FACIS cluster.
+#
+# Data flow: Simulation --HTTP--> ORCE --rdkafka--> Remote Kafka
+#
+# The simulation's direct Kafka channel is DISABLED.  ORCE receives the
+# unified tick envelope, splits feeds, and publishes to Kafka via rdkafka
+# with mTLS (using the facis-simulation-cluster.json flow).
+#
+# Usage:
+#   export FACIS_ENV=cluster
+#   python -m src.main
+#
+# Prerequisites:
+#   - TLS certificates placed in /certs/ (ca.crt, client.crt, client.key)
+#   - ORCE deployed (ecofacis/xfsc-orce:2.0.3 on amd64 cluster nodes)
+#     with the cluster flow (facis-simulation-cluster.json) imported
+#   - node-red-contrib-rdkafka installed in ORCE
+#
+# =============================================================================
+
+# Use a faster simulation for demo (60x = 1 simulated hour per real minute)
+simulation:
+  speed_factor: 60.0
+  mode: normal
+
+# Direct Kafka publishing DISABLED — ORCE handles Kafka publishing
+kafka:
+  enabled: false
+
+# ORCE webhook (the primary data path for MS2)
+# ORCE splits the tick envelope and publishes to Kafka via rdkafka with mTLS
+orce:
+  url: http://orce:1880
+  webhook_path: /api/sim/tick
+  enabled: true
+  timeout_seconds: 15.0
+
+logging:
+  level: INFO

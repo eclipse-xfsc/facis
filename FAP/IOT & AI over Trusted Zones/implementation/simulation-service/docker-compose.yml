@@ -10,10 +10,17 @@ services:
       - TIME_ACCELERATION=1
       - MQTT_BROKER=mqtt
       - MQTT_PORT=1883
+      - SIMULATOR_KAFKA__BOOTSTRAP_SERVERS=kafka:9092
+      - SIMULATOR_ORCE__URL=http://orce:1880
+      - SIMULATOR_ORCE__ENABLED=true
     volumes:
       - simulation-data:/data
     depends_on:
       mqtt:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+      orce:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/api/v1/health"]
@@ -50,7 +57,76 @@ services:
       timeout: 10s
       retries: 3
 
+  kafka:
+    image: confluentinc/cp-kafka:7.6.0
+    container_name: facis-kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_LOG_RETENTION_HOURS: 24
+      CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
+    volumes:
+      - kafka-data:/var/lib/kafka/data
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "kafka-broker-api-versions",
+          "--bootstrap-server",
+          "localhost:9092",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  orce:
+    image: ecofacis/xfsc-orce:2.0.3
+    platform: linux/amd64
+    container_name: facis-orce
+    ports:
+      - "1880:1880"
+    volumes:
+      - orce-data:/data
+      - ./orce/flows/facis-simulation.json:/data/flows.json:ro
+      - ./certs:/certs:ro
+    environment:
+      - NODE_RED_CREDENTIAL_SECRET=facis-dev
+      - FLOWS=flows.json
+    depends_on:
+      kafka:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:1880"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: facis-kafka-ui
+    ports:
+      - "8090:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: facis-dev
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+    depends_on:
+      kafka:
+        condition: service_healthy
+
 volumes:
   simulation-data:
   mqtt-data:
   mqtt-log:
+  kafka-data:
+  orce-data:

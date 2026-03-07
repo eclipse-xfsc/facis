@@ -15,11 +15,18 @@ from src.models.consumer_load import ConsumerLoadConfig, DeviceType, OperatingWi
 from src.models.meter import MeterConfig
 from src.models.price import PriceConfig
 from src.models.pv import PVConfig
+from src.models.smart_city.streetlight import StreetlightConfig
 from src.models.weather import WeatherConfig
 from src.simulators.consumer_load import ConsumerLoadSimulator
+from src.simulators.correlation.engine import CorrelationEngine
 from src.simulators.energy_meter import EnergyMeterSimulator
 from src.simulators.energy_price import EnergyPriceSimulator
 from src.simulators.pv_generation import PVGenerationSimulator
+from src.simulators.smart_city.correlation import SmartCityCorrelationEngine
+from src.simulators.smart_city.event import CityEventSimulator
+from src.simulators.smart_city.streetlight import StreetlightSimulator
+from src.simulators.smart_city.traffic import TrafficSimulator
+from src.simulators.smart_city.visibility import VisibilitySimulator
 from src.simulators.weather import WeatherSimulator
 
 if TYPE_CHECKING:
@@ -43,11 +50,19 @@ class SimulationState:
         """Initialize simulation state."""
         self._settings: Settings | None = None
         self._engine: SimulationEngine | None = None
+        # Smart Energy
         self._meters: dict[str, EnergyMeterSimulator] = {}
         self._price_feeds: dict[str, EnergyPriceSimulator] = {}
         self._loads: dict[str, ConsumerLoadSimulator] = {}
         self._weather_stations: dict[str, WeatherSimulator] = {}
         self._pv_systems: dict[str, PVGenerationSimulator] = {}
+        self._energy_correlation: CorrelationEngine | None = None
+        # Smart City
+        self._streetlight_simulators: dict[str, StreetlightSimulator] = {}
+        self._traffic_simulators: dict[str, TrafficSimulator] = {}
+        self._event_simulators: dict[str, CityEventSimulator] = {}
+        self._visibility_simulator: VisibilitySimulator | None = None
+        self._smart_city_correlation: SmartCityCorrelationEngine | None = None
         self._initialized = False
 
     @classmethod
@@ -132,6 +147,91 @@ class SimulationState:
         price_config = PriceConfig(feed_id="epex-spot-de")
         self.add_price_feed("epex-spot-de", price_config)
         logger.info("Created price feed: epex-spot-de")
+
+        # Create Smart City entities from config
+        if self._settings:
+            sc = self._settings.smart_city
+            event_sims: list[CityEventSimulator] = []
+            light_sims: list[StreetlightSimulator] = []
+            traffic_sims: list[TrafficSimulator] = []
+            sim_mode = self._settings.simulation.mode
+
+            for zone_cfg in sc.zones:
+                # Event simulator per zone
+                event_sim = CityEventSimulator(
+                    entity_id=f"event-{zone_cfg.id}",
+                    rng=self.engine.rng,
+                    city_id=sc.city_id,
+                    zone_id=zone_cfg.id,
+                    mode=sim_mode,
+                )
+                self._event_simulators[zone_cfg.id] = event_sim
+                event_sims.append(event_sim)
+                logger.info(f"Created event simulator for zone: {zone_cfg.id}")
+
+                # Traffic simulator per zone
+                traffic_sim = TrafficSimulator(
+                    entity_id=f"traffic-{zone_cfg.id}",
+                    rng=self.engine.rng,
+                    city_id=sc.city_id,
+                    zone_id=zone_cfg.id,
+                )
+                self._traffic_simulators[zone_cfg.id] = traffic_sim
+                traffic_sims.append(traffic_sim)
+                logger.info(f"Created traffic simulator for zone: {zone_cfg.id}")
+
+                # Streetlight simulators per zone
+                for light_cfg in zone_cfg.lights:
+                    light_model_config = StreetlightConfig(
+                        light_id=light_cfg.id,
+                        zone_id=zone_cfg.id,
+                        rated_power_w=light_cfg.rated_power_w,
+                    )
+                    light_sim = StreetlightSimulator(
+                        entity_id=light_cfg.id,
+                        rng=self.engine.rng,
+                        config=light_model_config,
+                        city_id=sc.city_id,
+                        site_id=self._settings.site_id,
+                        latitude=sc.latitude,
+                        longitude=sc.longitude,
+                    )
+                    self._streetlight_simulators[light_cfg.id] = light_sim
+                    light_sims.append(light_sim)
+                    logger.info(f"Created streetlight simulator: {light_cfg.id}")
+
+            # Visibility simulator (city-wide)
+            self._visibility_simulator = VisibilitySimulator(
+                entity_id=f"visibility-{sc.city_id}",
+                rng=self.engine.rng,
+                city_id=sc.city_id,
+                latitude=sc.latitude,
+                longitude=sc.longitude,
+            )
+            logger.info(f"Created visibility simulator for city: {sc.city_id}")
+
+            # Smart City correlation engine
+            self._smart_city_correlation = SmartCityCorrelationEngine(
+                event_simulators=event_sims,
+                streetlight_simulators=light_sims,
+                traffic_simulators=traffic_sims,
+                visibility_simulator=self._visibility_simulator,
+                city_id=sc.city_id,
+                interval_minutes=self._settings.simulation.interval_minutes,
+            )
+            logger.info("Smart City correlation engine initialized")
+
+        # Smart Energy correlation engine
+        first_weather = next(iter(self._weather_stations.values()), None)
+        first_price = next(iter(self._price_feeds.values()), None)
+        self._energy_correlation = CorrelationEngine(
+            weather_simulator=first_weather,
+            pv_simulators=list(self._pv_systems.values()),
+            meter_simulators=list(self._meters.values()),
+            load_simulators=list(self._loads.values()),
+            price_simulator=first_price,
+        )
+        logger.info("Smart Energy correlation engine initialized")
 
     def _convert_meter_config(self, cfg: "ConfigMeterConfig") -> MeterConfig:
         """Convert config meter to simulator meter config."""

@@ -6,6 +6,7 @@ Pydantic schema for energy-intensive device readings.
 
 from datetime import datetime
 from enum import Enum
+from typing import Literal
 
 from pydantic import BaseModel, Field
 
@@ -44,15 +45,27 @@ class OperatingWindow(BaseModel):
 class ConsumerLoadReading(BaseModel):
     """Consumer device reading for a specific timestamp."""
 
+    type: Literal["consumer"] = Field(default="consumer", description="Feed type")
+    schema_version: str = Field(default="1.0", description="Schema version")
+    site_id: str = Field(default="", description="Site identifier for correlation")
     timestamp: datetime = Field(..., description="Reading timestamp in ISO 8601 format")
     device_id: str = Field(..., description="Unique device identifier")
     device_type: DeviceType = Field(..., description="Type of device")
     device_state: DeviceState = Field(..., description="Current device state (ON/OFF)")
     device_power_kw: float = Field(..., ge=0.0, description="Current power consumption in kW")
 
+    @property
+    def asset_id(self) -> str:
+        """Asset identifier (same as device_id)."""
+        return self.device_id
+
     def to_json_payload(self) -> dict:
         """Convert to JSON payload matching spec structure."""
         return {
+            "type": self.type,
+            "schema_version": self.schema_version,
+            "site_id": self.site_id,
+            "asset_id": self.asset_id,
             "timestamp": self.timestamp.isoformat().replace("+00:00", "Z"),
             "device_id": self.device_id,
             "device_type": self.device_type.value,

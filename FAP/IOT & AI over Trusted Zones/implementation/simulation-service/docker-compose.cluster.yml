@@ -1,0 +1,38 @@
+# =============================================================================
+# FACIS Simulation Service - Cluster Override
+# =============================================================================
+#
+# Docker Compose override for the remote FACIS cluster demo.
+#
+# Data flow (matches architecture diagram):
+#   Simulation --HTTP POST--> ORCE --rdkafka--> Remote Kafka (212.132.83.222:9093)
+#
+# ORCE receives the unified tick envelope, validates schema, splits by feed
+# type, and publishes each feed to its Kafka topic via rdkafka with mTLS.
+# The simulation's direct Kafka channel is disabled.
+#
+# Usage:
+#   # 1. Place TLS certificates
+#   cp /path/to/{ca.crt,client.crt,client.key} certs/
+#
+#   # 2. Start with cluster publishing
+#   docker compose -f docker-compose.yml -f docker-compose.cluster.yml up --build
+#
+# Prerequisites:
+#   - TLS certs in ./certs/ (ca.crt, client.crt, client.key)
+# =============================================================================
+
+services:
+  simulation:
+    environment:
+      - FACIS_ENV=cluster
+      - SIMULATOR_SIMULATION__SPEED_FACTOR=60.0
+      - SIMULATOR_KAFKA__ENABLED=false
+      - SIMULATOR_ORCE__ENABLED=true
+
+  orce:
+    build: ./orce
+    volumes:
+      - orce-data:/data
+      - ./orce/flows/facis-simulation-cluster.json:/data/flows.json:ro
+      - ./certs:/certs:ro

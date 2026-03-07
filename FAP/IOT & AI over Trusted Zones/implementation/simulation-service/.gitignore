@@ -45,5 +45,12 @@ htmlcov/
 *.log
 /data/
 
+# TLS certificates (never commit secrets)
+certs/*.crt
+certs/*.key
+certs/*.pem
+!certs/README.md
+
 # system files
 .DS_Store
+.env.cluster

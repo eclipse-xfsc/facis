@@ -6,6 +6,7 @@ Pydantic schema for energy market prices.
 
 from datetime import datetime
 from enum import Enum
+from typing import Literal
 
 from pydantic import BaseModel, Field
 
@@ -23,6 +24,8 @@ class TariffType(str, Enum):
 class PriceReading(BaseModel):
     """Energy price reading for a specific timestamp."""
 
+    type: Literal["energy_price"] = Field(default="energy_price", description="Feed type")
+    schema_version: str = Field(default="1.0", description="Schema version")
     timestamp: datetime = Field(..., description="Price timestamp in ISO 8601 format")
     price_eur_per_kwh: float = Field(..., ge=0.0, description="Price in EUR per kWh")
     tariff_type: TariffType = Field(..., description="Current tariff period type")
@@ -30,6 +33,8 @@ class PriceReading(BaseModel):
     def to_json_payload(self) -> dict:
         """Convert to JSON payload matching spec structure."""
         return {
+            "type": self.type,
+            "schema_version": self.schema_version,
             "timestamp": self.timestamp.isoformat().replace("+00:00", "Z"),
             "price_eur_per_kwh": round(self.price_eur_per_kwh, 4),
             "tariff_type": self.tariff_type.value,
