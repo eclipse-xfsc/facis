@@ -254,7 +254,15 @@ Every tick, the simulation POSTs this JSON to ORCE:
 
 ### 4.1 Architecture
 
-ORCE is a customized [Node-RED](https://nodered.org/) instance (ecofacis/xfsc-orce:2.0.3) with added Kafka support via `node-red-contrib-rdkafka` and a custom SSL/mTLS patch.
+ORCE is a customized [Node-RED](https://nodered.org/) instance (ecofacis/xfsc-orce:2.0.3). Three flow variants are available depending on the deployment scenario:
+
+| Flow File | Transport | Plugins | Use Case |
+|-----------|-----------|---------|----------|
+| `facis-simulation.json` | None (validate only) | None | Sim handles Kafka directly |
+| `facis-simulation-mqtt.json` | MQTT → NiFi → Kafka | **None** | Plugin-free deployment |
+| `facis-simulation-cluster.json` | rdkafka → Kafka | `node-red-contrib-rdkafka` | Direct Kafka with mTLS |
+
+#### 4.1.1 Cluster Flow (rdkafka)
 
 **Flow:** `orce/flows/facis-simulation-cluster.json`
 
@@ -271,6 +279,49 @@ Route to Kafka Topic (9-output router based on msg.topic)
     ↓
 HTTP 200 OK (messages_queued count returned)
 ```
+
+#### 4.1.2 MQTT Flow (no plugins)
+
+**Flow:** `orce/flows/facis-simulation-mqtt.json`
+
+This variant uses only built-in Node-RED MQTT nodes — no external plugins or native libraries required. Kafka ingestion is handled downstream by the NiFi ConsumeMQTT pipeline (see Section 6).
+
+```
+HTTP POST /api/sim/tick
+    ↓
+Validate Schema (same validation as cluster flow)
+    ↓
+Split & Route to MQTT Topics (per-feed QoS matching topics.py)
+    ↓
+MQTT Out (built-in node, publishes to Mosquitto broker)
+    ↓
+NiFi ConsumeMQTT → Kafka Bronze Topics
+    ↓
+HTTP 200 OK (messages_queued count + transport: "mqtt")
+```
+
+**MQTT topic mapping (ORCE → Mosquitto → NiFi → Kafka):**
+
+| Envelope Path | MQTT Topic | QoS | Kafka Bronze Topic |
+|---------------|------------|-----|--------------------|
+| `smart_energy.meters[]` | `facis/energy/meter/{id}` | 1 | `energy.bronze.meter` |
+| `smart_energy.pv[]` | `facis/energy/pv/{id}` | 1 | `energy.bronze.pv` |
+| `smart_energy.weather` | `facis/weather/current` | 0 | `energy.bronze.weather` |
+| `smart_energy.price` | `facis/prices/spot` | 1 | `energy.bronze.price` |
+| `smart_energy.consumers[]` | `facis/loads/{type}` | 0 | `energy.bronze.consumer` |
+| `smart_city.streetlights[]` | `facis/city/light/{zone}` | 0 | via NiFi routing |
+| `smart_city.traffic_readings[]` | `facis/city/traffic/{zone}` | 0 | via NiFi routing |
+| `smart_city.events[]` | `facis/city/event/{zone}` | 1 | via NiFi routing |
+| `smart_city.visibility` | `facis/city/weather` | 0 | via NiFi routing |
+
+**Additional features in the MQTT flow:**
+
+- **Health endpoint:** `GET /api/orce/health` returns MQTT connection status, tick stats, and error counts
+- **Birth/will messages:** `facis/orce/status` topic tracks ORCE online/offline state
+- **Connection monitoring:** Status node watches MQTT broker connectivity and logs disconnects
+- **Retain flags:** Weather and price topics use MQTT retain for late subscribers
+
+**When to use the MQTT flow:** When the rdkafka native extension cannot be built (e.g., ARM environments, minimal container images, or environments where `librdkafka-dev` is unavailable), or when you want to avoid the complexity of the rdkafka patch and custom entrypoint. The trade-off is slightly higher latency (MQTT → NiFi → Kafka adds one hop) and a dependency on the NiFi ConsumeMQTT pipeline being operational.
 
 ### 4.2 Dockerfile
 

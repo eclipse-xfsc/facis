@@ -231,7 +231,7 @@
         "type": "comment",
         "z": "facis-sim-flow",
         "name": "FACIS MS2: Simulation → ORCE → Kafka (Cluster)",
-        "info": "## Cluster Flow\n\nRequires: npm install node-red-contrib-rdkafka\n\n1. HTTP-in receives tick envelope from simulation\n2. Validate schema\n3. Split into individual feed messages\n4. Route each to the correct Kafka producer\n5. Publish via rdkafka with TLS",
+        "info": "## Cluster Flow\n\nRequires: npm install node-red-contrib-rdkafka\n\n1. HTTP-in receives tick envelope from simulation\n2. Validate schema\n3. Split into individual feed messages\n4. Route each to the correct Kafka producer\n5. Publish via rdkafka with TLS\n\n## Flow Variants\n- facis-simulation.json:         Validate only (sim handles Kafka)\n- facis-simulation-mqtt.json:    MQTT output (no plugins, NiFi routes to Kafka)\n- facis-simulation-cluster.json: THIS — rdkafka output (requires plugin)",
         "x": 250,
         "y": 60,
         "wires": []

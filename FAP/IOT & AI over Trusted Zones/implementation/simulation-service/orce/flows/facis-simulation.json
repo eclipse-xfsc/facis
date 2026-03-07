@@ -4,7 +4,7 @@
     "type": "tab",
     "label": "FACIS Simulation → Kafka",
     "disabled": false,
-    "info": "Receives simulation tick envelopes via HTTP POST, validates schema, counts feed messages, and responds.\n\nEndpoint: POST /api/sim/tick\n\nKafka publishing is handled directly by the simulation service.\nORCE validates the envelope structure and provides flow monitoring.\n\nFor cluster with rdkafka: use facis-simulation-cluster.json."
+    "info": "Receives simulation tick envelopes via HTTP POST, validates schema, counts feed messages, and responds.\n\nEndpoint: POST /api/sim/tick\n\nKafka publishing is handled directly by the simulation service.\nORCE validates the envelope structure and provides flow monitoring.\n\nFlow Variants:\n  - facis-simulation.json:         THIS FILE — Validate only\n  - facis-simulation-mqtt.json:    MQTT output (no plugins needed)\n  - facis-simulation-cluster.json: rdkafka output (requires plugin)"
   },
   {
     "id": "http-in-tick",
@@ -95,7 +95,7 @@
     "type": "comment",
     "z": "facis-sim-flow",
     "name": "FACIS MS2: Simulation → ORCE → Kafka",
-    "info": "## Architecture\n\n1. Simulation Service generates correlated snapshots each tick\n2. POSTs unified envelope to ORCE via HTTP\n3. ORCE validates schema and counts feed messages\n4. Simulation Service publishes directly to Kafka\n\n## Cluster Deployment\nFor cluster with rdkafka Kafka nodes, use facis-simulation-cluster.json\n\n## Topics (9 total)\n- Smart Energy: meter, pv, weather, price, consumer\n- Smart City: light, traffic, event, weather",
+    "info": "## Architecture\n\n1. Simulation Service generates correlated snapshots each tick\n2. POSTs unified envelope to ORCE via HTTP\n3. ORCE validates schema and counts feed messages\n4. Simulation Service publishes directly to Kafka\n\n## Flow Variants\n- facis-simulation.json:         THIS — Validate only (sim handles Kafka)\n- facis-simulation-mqtt.json:    MQTT output (no plugins, NiFi routes to Kafka)\n- facis-simulation-cluster.json: rdkafka output (requires plugin)\n\n## Topics (9 total)\n- Smart Energy: meter, pv, weather, price, consumer\n- Smart City: light, traffic, event, weather",
     "x": 250,
     "y": 60,
     "wires": []

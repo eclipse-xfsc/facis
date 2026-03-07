@@ -200,6 +200,25 @@ docker compose -f docker-compose.yml -f docker-compose.cluster.yml up -d --build
 
 Key differences from local mode: speed factor is 60x (1 simulated hour per real minute), direct Kafka is disabled, all data flows through ORCE with rdkafka+mTLS.
 
+### 3.2.1 MQTT Flow Mode (No Plugins)
+
+If `node-red-contrib-rdkafka` cannot be installed (e.g., ARM, minimal images), use the MQTT flow variant instead. This uses only built-in Node-RED MQTT nodes and relies on the NiFi ConsumeMQTT pipeline to bridge messages into Kafka:
+
+```bash
+# Use base ORCE image (no rdkafka build needed)
+# Mount the MQTT flow as the active flow:
+docker compose up -d \
+  -e ORCE_FLOW_FILE=facis-simulation-mqtt.json
+
+# Or mount manually:
+# volumes:
+#   - ./orce/flows/facis-simulation-mqtt.json:/data/flows.json:ro
+```
+
+Data path: Simulation → ORCE → MQTT Broker → NiFi ConsumeMQTT → Kafka Bronze topics.
+
+The MQTT flow includes a health endpoint at `GET /api/orce/health` that reports MQTT connection status and publish statistics. Trade-off: one additional hop (MQTT → NiFi) adds slight latency but removes the rdkafka native dependency entirely.
+
 ### 3.3 Useful Docker Compose Commands
 
 ```bash
@@ -664,7 +683,7 @@ docker compose logs orce
 |-------|-----|
 | ORCE not running | `docker compose restart orce` or check K8s deployment. |
 | Wrong URL | Verify `orce.url` includes correct hostname and port. |
-| Flow not loaded | Check ORCE has `facis-simulation.json` (or cluster variant) mounted at `/data/flows.json`. |
+| Flow not loaded | Check ORCE has the correct flow mounted at `/data/flows.json`. Variants: `facis-simulation.json` (validate only), `facis-simulation-mqtt.json` (MQTT, no plugins), `facis-simulation-cluster.json` (rdkafka). |
 | Timeout too short | Increase `orce.timeoutSeconds` for large batches. |
 
 ---
