@@ -12,7 +12,8 @@ docs/
 ├── architecture/
 │   └── system-architecture.md        System architecture and data flow
 ├── deployment/
-│   └── deployment-operations.md      Deployment procedures and operations
+│   ├── deployment-operations.md      Deployment procedures and operations
+│   └── ops-runbook.md                Operations runbook (Helm, Docker, troubleshooting)
 ├── api/
 │   ├── rest-api.md                   REST API reference
 │   ├── mqtt-reference.md             MQTT topic and payload reference
