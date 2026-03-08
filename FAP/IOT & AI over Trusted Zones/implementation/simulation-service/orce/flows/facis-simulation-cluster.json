@@ -10,12 +10,12 @@
         "id": "kafka-broker-config",
         "type": "kafka-broker",
         "name": "FACIS Kafka Cluster",
-        "broker": "212.132.83.222:9093",
+        "broker": "kafka-broker-default-0.kafka-broker-default-headless.stackable.svc.cluster.local:9093",
         "clientid": "facis-orce",
         "securityProtocol": "ssl",
-        "sslCaLocation": "/certs/ca.crt",
-        "sslCertLocation": "/certs/client.crt",
-        "sslKeyLocation": "/certs/client.key"
+        "sslCaLocation": "/etc/kafka-certs/ca.crt",
+        "sslCertLocation": "/etc/kafka-certs/tls.crt",
+        "sslKeyLocation": "/etc/kafka-certs/tls.key"
     },
     {
         "id": "http-in-tick",

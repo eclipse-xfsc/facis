@@ -58,6 +58,9 @@ COPY src/ ./src/
 # Copy runtime configuration
 COPY config/ ./config/
 
+# Copy API documentation (OpenAPI spec)
+COPY docs/ ./docs/
+
 # Copy license (required by Apache-2.0)
 COPY LICENSE ./LICENSE
 

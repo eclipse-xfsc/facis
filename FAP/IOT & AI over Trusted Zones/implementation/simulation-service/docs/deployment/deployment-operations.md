@@ -175,58 +175,27 @@ The cluster override:
 
 ### 5.2 ORCE Kubernetes Deployment
 
-For deploying ORCE directly on the cluster (alternative to local Docker Compose):
+For deploying ORCE directly on the cluster (without Docker Compose), follow the dedicated [ORCE Cluster Deployment Guide](orce-cluster-deployment.md). That document covers the complete manual procedure including in-cluster registry provisioning, Kaniko image builds, ORCE customizations (rdkafka SSL patch, JSON Forms GUI Generator), simulation service deployment, and ORCE flow management via the admin API.
+
+Quick reference:
 
 ```bash
-kubectl apply -f k8s/orce-deployment.yaml
+kubectl apply -f k8s/orce/orce-deployment.yaml
 
 # Verify deployment
-kubectl get pods -l app=orce
-kubectl get svc orce
+kubectl -n orce get pods -l app=orce
+kubectl -n orce get svc orce
 ```
-
-The ORCE Kubernetes manifest deploys:
-- Deployment: `ecofacis/xfsc-orce:2.0.3`, ports 1880 (UI) and 8080 (API)
-- Service: LoadBalancer exposing both ports
-
-After deployment, import the cluster flow (`facis-simulation-cluster.json`) via the Node-RED UI and configure the rdkafka broker node with the Kafka bootstrap server and TLS certificate paths.
 
 ### 5.3 Simulation Kubernetes Deployment
 
-```yaml
-# k8s/simulation-deployment.yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: facis-simulation
-  labels:
-    app: facis-simulation
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: facis-simulation
-  template:
-    metadata:
-      labels:
-        app: facis-simulation
-    spec:
-      containers:
-        - name: simulation
-          image: <registry>/facis-simulation-service:latest
-          ports:
-            - containerPort: 8080
-              name: http
-          env:
-            - name: CONFIG_OVERLAY
-              value: "cluster"
-          livenessProbe:
-            httpGet:
-              path: /api/v1/health
-              port: 8080
-            initialDelaySeconds: 10
-            periodSeconds: 30
+The simulation service deploys alongside ORCE in the `orce` namespace. For the full procedure (including Kaniko builds and RBAC for ORCE-controlled scaling), see [ORCE Cluster Deployment Guide](orce-cluster-deployment.md) § 5.
+
+```bash
+kubectl apply -f k8s/simulation/simulation-deployment.yaml
 ```
+
+The manifest creates a Deployment (0 replicas by default), ClusterIP Service, and RBAC resources that allow ORCE to scale the simulation up and down via its dashboard buttons. The simulation uses the `cluster` config overlay which routes data through ORCE instead of publishing directly to Kafka.
 
 ## 6. Lakehouse Setup
 

@@ -13,6 +13,8 @@ docs/
 │   └── system-architecture.md        System architecture and data flow
 ├── deployment/
 │   ├── deployment-operations.md      Deployment procedures and operations
+│   ├── orce-cluster-deployment.md    ORCE manual registry-free cluster deployment
+│   ├── infrastructure-prerequisites.md  Platform requirements for the infrastructure team
 │   └── ops-runbook.md                Operations runbook (Helm, Docker, troubleshooting)
 ├── api/
 │   ├── rest-api.md                   REST API reference
