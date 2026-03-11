@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trusted Cloud - Sign In</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        [v-cloak] { display: none; }
+    </style>
+</head>
+<body>
+    <div id="app" v-cloak>
+        
+        <!--login page -->
+        <div class="login" v-show="route==='login'">
+            <div class="login-card">
+                <div class="cloud-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="300" height="60" viewBox="0 0 337 127" fill="none">
+                        <g clip-path="url(#clip0_9_76)">
+                        <mask id="mask0_9_76" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="337" height="128">
+                        <path d="M337 0H0V127.37H337V0Z" fill="white"/>
+                        </mask>
+                        <g mask="url(#mask0_9_76)">
+                        <path d="M22.7223 42.8521H59.7976V64.2795H21.5282V127.37H0V48.8411C0 22.0324 21.8387 0.297211 48.7721 0.297211H72.9539V21.2602C65.3117 21.308 57.6695 21.3557 50.0272 21.4008C42.9582 21.4486 36.0351 23.9377 30.9032 28.7698C30.5688 29.0908 30.2345 29.4146 29.9001 29.7595C25.068 34.7827 23.3565 40.2569 22.7223 42.8521Z" fill="#00018A"/>
+                        <path d="M227.807 113.322C218.538 122.323 206.101 127.37 193.149 127.37C180.197 127.37 167.555 121.989 158.584 113.288C156.838 111.597 155.211 109.774 153.73 107.848C147.33 99.5265 143.517 89.1458 143.517 77.9691C143.517 72.0278 141.734 66.5058 138.672 61.8992C133.423 54.0076 124.427 48.804 114.214 48.804C98.0326 48.804 84.9135 61.8621 84.9135 77.9691C84.9135 94.0735 98.0326 107.132 114.214 107.132C124.427 107.132 133.423 101.931 138.672 94.039C140.789 101.156 144.268 107.691 148.837 113.346C139.903 122.036 127.681 127.37 114.214 127.37C86.8028 127.37 64.582 105.253 64.582 77.9691C64.582 50.6854 86.8028 28.5681 114.214 28.5681C127.681 28.5681 139.903 33.9017 148.837 42.5894C150.607 44.293 152.247 46.1372 153.73 48.0902C160.091 56.3745 163.848 66.7446 163.848 77.9691C163.848 83.9077 165.629 89.4324 168.691 94.039C173.94 101.931 182.935 107.132 193.149 107.132C201.102 107.132 208.324 103.979 213.6 98.8366L227.807 113.322Z" fill="url(#paint0_linear_9_76)"/>
+                        <path d="M228.239 43.0432L213.862 57.3511C208.566 52.0652 201.234 48.804 193.149 48.804C182.935 48.804 173.942 54.0076 168.691 61.8992C166.587 54.8037 163.119 48.2813 158.586 42.6504C167.555 33.9495 179.778 28.5681 193.149 28.5681C206.52 28.5681 218.947 33.7823 228.239 43.0432Z" fill="url(#paint1_linear_9_76)"/>
+                        <path d="M254.743 28.5681H233.217V127.37H254.743V28.5681Z" fill="#00018A"/>
+                        <path d="M254.743 1.52588e-05H233.217V21.4247H254.743V1.52588e-05Z" fill="#B700FA"/>
+                        <path d="M261.916 127.37V105.943C271.174 106.025 279.259 106.001 285.835 105.943C303.786 105.776 311.68 105.324 313.344 101.18C313.917 99.7414 313.559 98.3589 313.344 97.6106C309.658 84.457 277.009 88.0499 265.503 70.2314C259.214 60.4822 259.286 44.5424 267.897 35.7114C274.379 29.0669 283.624 28.5787 287.031 28.5681H332.479V49.9954C324.454 50.0299 317.863 50.0193 313.344 49.9954C294.135 49.8999 284.914 49.5788 283.444 53.5671C283.109 54.4693 283.287 55.268 283.444 55.9473C284.818 62.0903 295.332 63.7089 307.363 67.8511C320.601 72.4099 327.217 74.684 331.282 79.7549C338.828 89.1458 338.985 105.335 331.282 115.466C325.529 123.024 317.422 127.37 304.972 127.37H261.916Z" fill="#00018A"/>
+                        </g>
+                        </g>
+                        <defs>
+                        <linearGradient id="paint0_linear_9_76" x1="64.582" y1="77.9691" x2="227.807" y2="77.9691" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#B503FA"/>
+                        <stop offset="1" stop-color="#4396FD"/>
+                        </linearGradient>
+                        <linearGradient id="paint1_linear_9_76" x1="98.3696" y1="45.2323" x2="192.61" y2="45.2323" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#B503FA"/>
+                        <stop offset="1" stop-color="#4396FD"/>
+                        </linearGradient>
+                        <clipPath id="clip0_9_76">
+                        <rect width="337" height="127" fill="white"/>
+                        </clipPath>
+                        </defs>
+                        </svg>
+                </div>
+
+                <!--<h1 class="title">Welcome to <span class="brand">Trusted Cloud</span></h1>-->
+                <p class="subtitle">Welcome to FACIS Decentralized Catalogue Manager</p>
+
+                <form class="login-form" @submit.prevent="signinButton">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input
+                            type="email"
+                            id="email"
+                            v-model="email"
+                            placeholder="Admin@Example.com"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="password-wrapper">
+                            <input
+                                :type="showPassword ? 'text' : 'password'"
+                                id="password"
+                                v-model="password"
+                                placeholder="••••••••••••••••••"
+                                required
+                            >
+                            <button
+                                type="button"
+                                class="toggle-password"
+                                @click="togglePassword"
+                            >
+                                <svg v-if="!showPassword" xmlns="http://www.w3.org/2000/svg" xmlns:serif="http://www.serif.com/" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#9CA3AF" width="20" height="20" viewBox="0 0 32 32" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;" version="1.1" xml:space="preserve" stroke="#9CA3AF" stroke-width="0.00032">
+
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.192"/>
+                                
+                                <g id="SVGRepo_iconCarrier">
+                                
+                                <path d="M5.112,18.784l-2.153,2.156c-0.585,0.586 -0.585,1.536 0.001,2.121c0.586,0.585 1.536,0.585 2.121,-0.001l2.666,-2.668c1.898,0.983 4.19,1.806 6.773,2.041l0,3.567c0,0.828 0.672,1.5 1.5,1.5c0.828,-0 1.5,-0.672 1.5,-1.5l0,-3.571c2.147,-0.201 4.091,-0.806 5.774,-1.571l3.199,3.202c0.585,0.586 1.535,0.586 2.121,0.001c0.586,-0.585 0.586,-1.535 0.001,-2.121l-2.579,-2.581c2.59,-1.665 4.091,-3.369 4.091,-3.369c0.546,-0.622 0.485,-1.57 -0.137,-2.117c-0.622,-0.546 -1.57,-0.485 -2.117,0.137c0,-0 -4.814,5.49 -11.873,5.49c-7.059,0 -11.873,-5.49 -11.873,-5.49c-0.547,-0.622 -1.495,-0.683 -2.117,-0.137c-0.622,0.547 -0.683,1.495 -0.137,2.117c0,0 1.175,1.334 3.239,2.794Z"/>
+                                
+                                <g id="Icon"/>
+                                
+                                </g>
+                                
+                                </svg>
+                                <svg v-else width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M10 4C4.5 4 2 10 2 10C2 10 4.5 16 10 16C15.5 16 18 10 18 10C18 10 15.5 4 10 4Z" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <circle cx="10" cy="10" r="3" stroke="#9CA3AF" stroke-width="1.5"/>
+                                </svg>
+                                
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <!--commented by alireza-->
+                        <!--<label class="remember-me">-->
+                        <!--    <input type="checkbox" v-model="rememberMe">-->
+                        <!--    <span>Remember me</span>-->
+                        <!--</label>-->
+                        <a href="#" class="forgot-password" @click.prevent="showForgotPasswordModal = true">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="sign-in-btn">
+                        Sign in
+                    </button>
+                    
+                    <span class="error-text text-red-600">{{ invalidCredentialsError }}</span>
+                    
+                </form>
+            </div>
+        </div>
+    
+        <!--<div class="signup" v-show="route==='signup'">-->
+        <!--    <div class="signup-card">-->
+        <!--        <div class="cloud-icon">-->
+        <!--            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 22 16" fill="none">-->
+        <!--            <path d="M5.5 16C3.98333 16 2.68767 15.475 1.613 14.425C0.538333 13.375 0.000666667 12.0917 0 10.575C0 9.275 0.391667 8.11667 1.175 7.1C1.95833 6.08333 2.98333 5.43333 4.25 5.15C4.66667 3.61667 5.5 2.375 6.75 1.425C8 0.475 9.41667 0 11 0C12.95 0 14.6043 0.679333 15.963 2.038C17.3217 3.39667 18.0007 5.05067 18 7C19.15 7.13333 20.1043 7.62933 20.863 8.488C21.6217 9.34667 22.0007 10.3507 22 11.5C22 12.75 21.5627 13.8127 20.688 14.688C19.8133 15.5633 18.7507 16.0007 17.5 16H5.5ZM5.5 14H17.5C18.2 14 18.7917 13.7583 19.275 13.275C19.7583 12.7917 20 12.2 20 11.5C20 10.8 19.7583 10.2083 19.275 9.725C18.7917 9.24167 18.2 9 17.5 9H16V7C16 5.61667 15.5123 4.43733 14.537 3.462C13.5617 2.48667 12.3827 1.99933 11 2C9.61733 2.00067 8.43833 2.48833 7.463 3.463C6.48767 4.43767 6 5.61667 6 7H5.5C4.53333 7 3.70833 7.34167 3.025 8.025C2.34167 8.70833 2 9.53333 2 10.5C2 11.4667 2.34167 12.2917 3.025 12.975C3.70833 13.6583 4.53333 14 5.5 14Z" fill="#215FE4"/>-->
+        <!--            </svg>-->
+        <!--        </div>-->
+
+        <!--        <h1 class="title">Create your <span class="brand">Trusted Cloud</span> account</h1>-->
+        <!--        <p class="subtitle">Please fill in your details to continue</p>-->
+
+        <!--        <form class="signup-form">-->
+        <!--            <div class="form-group">-->
+        <!--                <label for="signup-fullname">Full Name</label>-->
+        <!--                <input-->
+        <!--                    type="text"-->
+        <!--                    id="signup-fullname"-->
+        <!--                    v-model="fullName"-->
+        <!--                    placeholder="John Doe"-->
+        <!--                    required-->
+        <!--                >-->
+        <!--            </div>-->
+
+        <!--            <div class="form-group">-->
+        <!--                <label for="signup-email">Email Address</label>-->
+        <!--                <input-->
+        <!--                    type="email"-->
+        <!--                    id="signup-email"-->
+        <!--                    v-model="email"-->
+        <!--                    placeholder="Admin@Example.com"-->
+        <!--                    required-->
+        <!--                >-->
+        <!--            </div>-->
+
+        <!--            <div class="form-group">-->
+        <!--                <label for="signup-password">Password</label>-->
+        <!--                <div class="password-wrapper">-->
+        <!--                    <input-->
+        <!--                        :type="showPassword ? 'text' : 'password'"-->
+        <!--                        id="signup-password"-->
+        <!--                        v-model="password"-->
+        <!--                        placeholder="••••••••••••••••••"-->
+        <!--                        @blur="validatePassword"-->
+        <!--                        :class="{ 'error-input': passwordError }"-->
+        <!--                        required-->
+        <!--                    >-->
+        <!--                    <button-->
+        <!--                        type="button"-->
+        <!--                        class="toggle-password"-->
+        <!--                        @click="togglePassword"-->
+        <!--                    >-->
+        <!--                        <svg v-if="!showPassword" xmlns="http://www.w3.org/2000/svg" xmlns:serif="http://www.serif.com/" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#9CA3AF" width="20" height="20" viewBox="0 0 32 32" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;" version="1.1" xml:space="preserve" stroke="#9CA3AF" stroke-width="0.00032">-->
+
+        <!--                        <g id="SVGRepo_bgCarrier" stroke-width="0"/>-->
+                                
+        <!--                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.192"/>-->
+                                
+        <!--                        <g id="SVGRepo_iconCarrier">-->
+                                
+        <!--                        <path d="M5.112,18.784l-2.153,2.156c-0.585,0.586 -0.585,1.536 0.001,2.121c0.586,0.585 1.536,0.585 2.121,-0.001l2.666,-2.668c1.898,0.983 4.19,1.806 6.773,2.041l0,3.567c0,0.828 0.672,1.5 1.5,1.5c0.828,-0 1.5,-0.672 1.5,-1.5l0,-3.571c2.147,-0.201 4.091,-0.806 5.774,-1.571l3.199,3.202c0.585,0.586 1.535,0.586 2.121,0.001c0.586,-0.585 0.586,-1.535 0.001,-2.121l-2.579,-2.581c2.59,-1.665 4.091,-3.369 4.091,-3.369c0.546,-0.622 0.485,-1.57 -0.137,-2.117c-0.622,-0.546 -1.57,-0.485 -2.117,0.137c0,-0 -4.814,5.49 -11.873,5.49c-7.059,0 -11.873,-5.49 -11.873,-5.49c-0.547,-0.622 -1.495,-0.683 -2.117,-0.137c-0.622,0.547 -0.683,1.495 -0.137,2.117c0,0 1.175,1.334 3.239,2.794Z"/>-->
+                                
+        <!--                        <g id="Icon"/>-->
+                                
+        <!--                        </g>-->
+                                
+        <!--                        </svg>-->
+                                
+        <!--                        <svg v-else width="20" height="20" viewBox="0 0 20 20" fill="none">-->
+        <!--                            <path d="M10 4C4.5 4 2 10 2 10C2 10 4.5 16 10 16C15.5 16 18 10 18 10C18 10 15.5 4 10 4Z" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>-->
+        <!--                            <circle cx="10" cy="10" r="3" stroke="#9CA3AF" stroke-width="1.5"/>-->
+        <!--                        </svg>-->
+        <!--                    </button>-->
+        <!--                </div>-->
+        <!--                <span v-if="passwordError" class="error-message">{{ passwordError }}</span>-->
+        <!--            </div>-->
+
+        <!--            <div class="form-group">-->
+        <!--                <label for="signup-confirm-password">Confirm Password</label>-->
+        <!--                <div class="password-wrapper">-->
+        <!--                    <input-->
+        <!--                        :type="showConfirmPassword ? 'text' : 'password'"-->
+        <!--                        id="signup-confirm-password"-->
+        <!--                        v-model="confirmPassword"-->
+        <!--                        placeholder="••••••••••••••••••"-->
+        <!--                        @blur="validateConfirmPassword"-->
+        <!--                        :class="{ 'error-input': confirmPasswordError }"-->
+        <!--                        required-->
+        <!--                    >-->
+        <!--                    <button-->
+        <!--                        type="button"-->
+        <!--                        class="toggle-password"-->
+        <!--                        @click="toggleConfirmPassword"-->
+        <!--                    >-->
+        <!--                        <svg v-if="!showConfirmPassword" xmlns="http://www.w3.org/2000/svg" xmlns:serif="http://www.serif.com/" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#9CA3AF" width="20" height="20" viewBox="0 0 32 32" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;" version="1.1" xml:space="preserve" stroke="#9CA3AF" stroke-width="0.00032">-->
+
+        <!--                        <g id="SVGRepo_bgCarrier" stroke-width="0"/>-->
+                                
+        <!--                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.192"/>-->
+                                
+        <!--                        <g id="SVGRepo_iconCarrier">-->
+                                
+        <!--                        <path d="M5.112,18.784l-2.153,2.156c-0.585,0.586 -0.585,1.536 0.001,2.121c0.586,0.585 1.536,0.585 2.121,-0.001l2.666,-2.668c1.898,0.983 4.19,1.806 6.773,2.041l0,3.567c0,0.828 0.672,1.5 1.5,1.5c0.828,-0 1.5,-0.672 1.5,-1.5l0,-3.571c2.147,-0.201 4.091,-0.806 5.774,-1.571l3.199,3.202c0.585,0.586 1.535,0.586 2.121,0.001c0.586,-0.585 0.586,-1.535 0.001,-2.121l-2.579,-2.581c2.59,-1.665 4.091,-3.369 4.091,-3.369c0.546,-0.622 0.485,-1.57 -0.137,-2.117c-0.622,-0.546 -1.57,-0.485 -2.117,0.137c0,-0 -4.814,5.49 -11.873,5.49c-7.059,0 -11.873,-5.49 -11.873,-5.49c-0.547,-0.622 -1.495,-0.683 -2.117,-0.137c-0.622,0.547 -0.683,1.495 -0.137,2.117c0,0 1.175,1.334 3.239,2.794Z"/>-->
+                                
+        <!--                        <g id="Icon"/>-->
+                                
+        <!--                        </g>-->
+                                
+        <!--                        </svg>-->
+                                
+        <!--                        <svg v-else width="20" height="20" viewBox="0 0 20 20" fill="none">-->
+        <!--                            <path d="M10 4C4.5 4 2 10 2 10C2 10 4.5 16 10 16C15.5 16 18 10 18 10C18 10 15.5 4 10 4Z" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>-->
+        <!--                            <circle cx="10" cy="10" r="3" stroke="#9CA3AF" stroke-width="1.5"/>-->
+        <!--                        </svg>-->
+                                
+        <!--                    </button>-->
+        <!--                </div>-->
+        <!--                <span v-if="confirmPasswordError" class="error-message">{{ confirmPasswordError }}</span>-->
+        <!--            </div>-->
+
+                    <!--<div class="form-group">-->
+                    <!--    <label for="signup-role">Role</label>-->
+                    <!--    <input-->
+                    <!--        type="text"-->
+                    <!--        id="signup-role"-->
+                    <!--        v-model="role"-->
+                    <!--        placeholder="Enter your role"-->
+                    <!--        required-->
+                    <!--    >-->
+                    <!--</div>-->
+
+                    <!--<div class="form-group">-->
+                    <!--    <label class="terms-accept">-->
+                    <!--        <input type="checkbox" v-model="acceptTerms">-->
+                    <!--        <span>I agree to the Terms and Conditions</span>-->
+                    <!--    </label>-->
+                    <!--</div>-->
+
+        <!--            <button type="button" class="sign-up-btn" @click="signupButton()">-->
+        <!--                Sign up-->
+        <!--            </button>-->
+        <!--            <span class="error-text text-red-600">{{ signupFailedMessage }}</span>-->
+        <!--        </form>-->
+
+        <!--        <p class="signin-text">-->
+        <!--            Already have an account? <a href="#" class="signin-link" @click='login()'>Log in</a>-->
+        <!--        </p>-->
+        <!--    </div>-->
+        <!--</div>-->
+
+        <!-- Forgot Password Modal -->
+        <div v-if="showForgotPasswordModal && !showVerificationCode" class="modal-overlay">
+            <div class="modal-content">
+                <button class="modal-close" @click="showForgotPasswordModal = false">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M15 5L5 15M5 5L15 15" stroke="#6B7280" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+
+                <h2 class="modal-title">Enter your email to reset password</h2>
+
+                <form @submit.prevent="resetPassword">
+                    <div class="modal-form-group">
+                        <input
+                            type="email"
+                            v-model="resetEmail"
+                            placeholder="Email Address"
+                            required
+                        >
+                    </div>
+                    
+
+                    <button type="submit" class="modal-reset-btn">
+                        Reset password
+                    </button>
+
+                    <div class="error-text text-red-600">{{ invalidEmail }}</div>
+
+                    <button type="button" class="modal-cancel-btn" @click="showForgotPasswordModal = false">
+                        Cancel
+                    </button>
+                </form>
+            </div>
+        </div>
+
+         <!--Verification Code Modal -->
+        <div v-if="showVerificationCode && !showVerificationLoading" class="modal-overlay">
+            <div class="modal-content verification-modal">
+                <button class="modal-close" @click="closeVerificationModal">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M15 5L5 15M5 5L15 15" stroke="#6B7280" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+
+                <p class="verification-message">
+                    A verification code has been sent to your email. Please enter the code below
+                </p>
+
+                <div class="timer-text">{{ timerText }}</div>
+
+                <div class="error-text text-red-600">{{ expireCode }}</div>
+
+                <div class="error-text text-red-600">{{ invalidCode }}</div>
+
+                <form>
+                    <div class="verification-inputs">
+                        <input
+                            v-for="(digit, index) in verificationDigits"
+                            :key="index"
+                            :ref="el => { if (el) verificationInputs[index] = el }"
+                            type="text"
+                            inputmode="numeric"
+                            pattern="[0-9]*"
+                            maxlength="1"
+                            class="verification-digit"
+                            v-model="verificationDigits[index]"
+                            @input="handleDigitInput(index, $event)"
+                            @keydown="handleKeyDown(index, $event)"
+                            :disabled="timerSeconds === 0"
+                        >
+                    </div>
+
+                    <div class="resend-section">
+                        <span class="resend-text">Haven't received the code?</span>
+                        <button type="button" class="resend-link" @click="resendCode" :disabled="timerSeconds > 0">Resend code</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+         <!--Verification Loading Modal -->
+        <div v-if="showVerificationLoading" class="modal-overlay">
+            <div class="modal-content loading-modal">
+                <div :class="['loading-spinner', { 'success': showVerificationSuccess }]">
+                    <svg v-if="showVerificationSuccess" class="success-checkmark" width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <path d="M8 16L14 22L24 10" stroke="#2563eb" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+         <!--Set New Password Modal -->
+        <div v-if="showSetNewPassword" class="modal-overlay">
+            <div class="modal-content set-password-modal">
+                <h2 class="modal-title">Set New Password</h2>
+                <p class="modal-subtitle">New password must differ from the old one</p>
+
+                <form @submit.prevent="submitNewPassword">
+                    <div class="modal-form-group">
+                        <label class="input-label">Email Address</label>
+                        <input
+                            type="email"
+                            :value="resetEmail"
+                            readonly
+                            class="readonly-input"
+                        >
+                    </div>
+
+                    <div class="modal-form-group">
+                        <label class="input-label">New Password</label>
+                        <div class="password-wrapper">
+                            <input
+                                :type="showNewPassword ? 'text' : 'password'"
+                                v-model="newPassword"
+                                placeholder="••••••••••••••••••"
+                                required
+                            >
+                            <button
+                                type="button"
+                                class="toggle-password"
+                                @click="toggleNewPassword"
+                            >   
+                                <svg v-if="!showNewPassword" xmlns="http://www.w3.org/2000/svg" xmlns:serif="http://www.serif.com/" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#9CA3AF" width="20" height="20" viewBox="0 0 32 32" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;" version="1.1" xml:space="preserve" stroke="#9CA3AF" stroke-width="0.00032">
+
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.192"/>
+                                
+                                <g id="SVGRepo_iconCarrier">
+                                
+                                <path d="M5.112,18.784l-2.153,2.156c-0.585,0.586 -0.585,1.536 0.001,2.121c0.586,0.585 1.536,0.585 2.121,-0.001l2.666,-2.668c1.898,0.983 4.19,1.806 6.773,2.041l0,3.567c0,0.828 0.672,1.5 1.5,1.5c0.828,-0 1.5,-0.672 1.5,-1.5l0,-3.571c2.147,-0.201 4.091,-0.806 5.774,-1.571l3.199,3.202c0.585,0.586 1.535,0.586 2.121,0.001c0.586,-0.585 0.586,-1.535 0.001,-2.121l-2.579,-2.581c2.59,-1.665 4.091,-3.369 4.091,-3.369c0.546,-0.622 0.485,-1.57 -0.137,-2.117c-0.622,-0.546 -1.57,-0.485 -2.117,0.137c0,-0 -4.814,5.49 -11.873,5.49c-7.059,0 -11.873,-5.49 -11.873,-5.49c-0.547,-0.622 -1.495,-0.683 -2.117,-0.137c-0.622,0.547 -0.683,1.495 -0.137,2.117c0,0 1.175,1.334 3.239,2.794Z"/>
+                                
+                                <g id="Icon"/>
+                                
+                                </g>
+                                
+                                </svg>
+                                
+                                <svg v-else width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M10 4C4.5 4 2 10 2 10C2 10 4.5 16 10 16C15.5 16 18 10 18 10C18 10 15.5 4 10 4Z" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <circle cx="10" cy="10" r="3" stroke="#9CA3AF" stroke-width="1.5"/>
+                                </svg>
+                                
+                            </button>
+                            
+                        </div>
+                    </div>
+
+                    <div class="modal-form-group">
+                        <label class="input-label">Confirm Password</label>
+                        <div class="password-wrapper">
+                            <input
+                                :type="showConfirmNewPassword ? 'text' : 'password'"
+                                v-model="confirmNewPassword"
+                                placeholder="••••••••••••••••••"
+                                required
+                            >
+                            <button
+                                type="button"
+                                class="toggle-password"
+                                @click="toggleConfirmNewPassword"
+                            >
+                                <svg v-if="!showConfirmNewPassword" xmlns="http://www.w3.org/2000/svg" xmlns:serif="http://www.serif.com/" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#9CA3AF" width="20" height="20" viewBox="0 0 32 32" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;" version="1.1" xml:space="preserve" stroke="#9CA3AF" stroke-width="0.00032">
+
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.192"/>
+                                
+                                <g id="SVGRepo_iconCarrier">
+                                
+                                <path d="M5.112,18.784l-2.153,2.156c-0.585,0.586 -0.585,1.536 0.001,2.121c0.586,0.585 1.536,0.585 2.121,-0.001l2.666,-2.668c1.898,0.983 4.19,1.806 6.773,2.041l0,3.567c0,0.828 0.672,1.5 1.5,1.5c0.828,-0 1.5,-0.672 1.5,-1.5l0,-3.571c2.147,-0.201 4.091,-0.806 5.774,-1.571l3.199,3.202c0.585,0.586 1.535,0.586 2.121,0.001c0.586,-0.585 0.586,-1.535 0.001,-2.121l-2.579,-2.581c2.59,-1.665 4.091,-3.369 4.091,-3.369c0.546,-0.622 0.485,-1.57 -0.137,-2.117c-0.622,-0.546 -1.57,-0.485 -2.117,0.137c0,-0 -4.814,5.49 -11.873,5.49c-7.059,0 -11.873,-5.49 -11.873,-5.49c-0.547,-0.622 -1.495,-0.683 -2.117,-0.137c-0.622,0.547 -0.683,1.495 -0.137,2.117c0,0 1.175,1.334 3.239,2.794Z"/>
+                                
+                                <g id="Icon"/>
+                                
+                                </g>
+                                
+                                </svg>
+                                
+                                <svg v-else width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M10 4C4.5 4 2 10 2 10C2 10 4.5 16 10 16C15.5 16 18 10 18 10C18 10 15.5 4 10 4Z" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <circle cx="10" cy="10" r="3" stroke="#9CA3AF" stroke-width="1.5"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="modal-reset-btn">
+                        Reset password
+                    </button>
+                    <span class="error-text text-red-600">{{ newPasswordError }}</span>
+                </form>
+            </div>
+        </div>
+        
+        <div v-if="showsignupverification" class="modal-overlay">
+            <div class="modal-content verification-modal">
+                <button class="modal-close" @click="closeSignupVerificationModal">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M15 5L5 15M5 5L15 15" stroke="#6B7280" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+
+                <p class="verification-message">
+                    A verification code has been sent to your email. Please enter the code below
+                </p>
+
+                <div class="timer-text">{{ timerText }}</div>
+
+                <div v-if="signupSuccessMessage" class="success-text">{{ signupSuccessMessage }}</div>
+
+                <div class="error-text text-red-600">{{ expireCode }}</div>
+
+                <div class="error-text text-red-600">{{ invalidCode }}</div>
+
+                <form>
+                    <div class="verification-inputs">
+                        <input
+                            v-for="(digit, index) in signupVerificationDigits"
+                            :key="index"
+                            :ref="el => { if (el) signupVerificationInputs[index] = el }"
+                            type="text"
+                            inputmode="numeric"
+                            pattern="[0-9]*"
+                            maxlength="1"
+                            class="verification-digit"
+                            v-model="signupVerificationDigits[index]"
+                            @input="handleSignupDigitInput(index, $event)"
+                            @keydown="handleSignupKeyDown(index, $event)"
+                            :disabled="timerSeconds === 0"
+                        >
+                    </div>
+
+                    <div class="resend-section">
+                        <span class="resend-text">Haven't received the code?</span>
+                        <button type="button" class="resend-link" @click="resendSignupCode()" :disabled="timerSeconds > 0">Resend code</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <script src="../uibuilder/uibuilder.iife.min.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>

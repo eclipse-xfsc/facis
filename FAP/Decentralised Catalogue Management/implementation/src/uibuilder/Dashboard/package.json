@@ -1,0 +1,35 @@
+{
+  "name": "uib-blank",
+  "version": "2025-05-27",
+  "private": true,
+  "description": "FACIS Dashboard UI template.",
+  "browser": "./src/index.js",
+  "scripts": {
+    "build": "echo \"No build process specified\""
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.27.0",
+    "@stylistic/eslint-plugin": "^5.2.2",
+    "eslint": "^9.27.0",
+    "eslint-plugin-html": "^8.1.3",
+    "eslint-plugin-jsdoc": "^54.1.1",
+    "globals": "^16.1.0"
+  },
+  "keywords": ["facis", "node-red", "dcm"],
+  "author": "Julian Knight (Totally Information)",
+  "license": "Apache-2.0",
+  "homepage": "",
+  "bugs": "",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "browserslist": [
+    "> 0.5%",
+    "maintained versions",
+    "last 2 versions",
+    "not dead",
+    "not ie > 0"
+  ]
+}

@@ -1,0 +1,1568 @@
+{
+    "catalog": {
+        "catalogId": "localcat:astramotors:vehicles-and-parts",
+        "name": "AstraMotors Local Catalog — Vehicles, OEM Parts, Documentation",
+        "publisher": {
+            "companyId": "org:astramotors",
+            "legalName": "AstraMotors Mobility GmbH",
+            "country": "DE",
+            "website": "https://www.astramotors.example",
+            "contact": {
+                "email": "catalogue-support@astramotors.example",
+                "phone": "+49-30-555-0100",
+                "languages": [
+                    "en",
+                    "de"
+                ]
+            }
+        },
+        "createdAt": "2025-09-13T12:00:00Z",
+        "updatedAt": "2026-02-10T09:00:00Z",
+        "defaultLocale": "en",
+        "regions": [
+            "DE",
+            "AT",
+            "NL",
+            "SE",
+            "NO",
+            "CH",
+            "PL",
+            "CZ"
+        ],
+        "licenses": {
+            "publicDocs": "CC-BY-4.0",
+            "restrictedParts": "AstraMotors-Parts-Terms-v1"
+        },
+        "uiFacets": [
+            {
+                "key": "assetType",
+                "label": "Type"
+            },
+            {
+                "key": "modelCode",
+                "label": "Model"
+            },
+            {
+                "key": "powertrain",
+                "label": "Powertrain"
+            },
+            {
+                "key": "partCategory",
+                "label": "Part Category"
+            },
+            {
+                "key": "supplier",
+                "label": "Supplier"
+            },
+            {
+                "key": "stockLevel",
+                "label": "Stock"
+            },
+            {
+                "key": "status",
+                "label": "Lifecycle Status"
+            },
+            {
+                "key": "market",
+                "label": "Market"
+            }
+        ],
+        "savedSearches": [
+            {
+                "name": "Roadster performance parts",
+                "query": "assetType:part AND modelCode:RR AND tags:performance"
+            },
+            {
+                "name": "Low stock safety items",
+                "query": "assetType:part AND partCategory:safety AND stockLevel:low_stock"
+            },
+            {
+                "name": "OTA packages",
+                "query": "assetType:softwareRelease OR tags:ota"
+            }
+        ]
+    },
+    "companies": {
+        "org:astramotors": {
+            "name": "AstraMotors Mobility GmbH",
+            "did": "did:web:astramotors.example"
+        },
+        "org:bosch": {
+            "name": "Bosch Mobility Solutions"
+        },
+        "org:continental": {
+            "name": "Continental Automotive"
+        },
+        "org:lg": {
+            "name": "LG Energy Solution"
+        },
+        "org:zf": {
+            "name": "ZF Friedrichshafen AG"
+        },
+        "org:tuv": {
+            "name": "TÜV Rheinland"
+        }
+    },
+    "vehicles": [
+        {
+            "vehicleId": "veh:AX-E",
+            "brand": "AstraMotors",
+            "model": "AstraX E",
+            "modelCode": "AX-E",
+            "years": [
+                2025,
+                2026,
+                2027
+            ],
+            "powertrain": "BEV",
+            "drive": "FWD",
+            "wltpRangeKm": 520,
+            "batteryKWh": 78,
+            "markets": [
+                "DE",
+                "NL",
+                "SE",
+                "NO"
+            ],
+            "tags": [
+                "electric",
+                "fast-charge",
+                "adas",
+                "urban"
+            ]
+        },
+        {
+            "vehicleId": "veh:AX-H",
+            "brand": "AstraMotors",
+            "model": "AstraX Hybrid",
+            "modelCode": "AX-H",
+            "years": [
+                2024,
+                2025,
+                2026,
+                2027
+            ],
+            "powertrain": "PHEV",
+            "drive": "AWD",
+            "wltpRangeKm": 820,
+            "batteryKWh": 18,
+            "markets": [
+                "DE",
+                "AT",
+                "NO"
+            ],
+            "tags": [
+                "hybrid",
+                "family",
+                "tow",
+                "efficient"
+            ]
+        },
+        {
+            "vehicleId": "veh:CM-V",
+            "brand": "AstraMotors",
+            "model": "CargoMax Van",
+            "modelCode": "CM-V",
+            "years": [
+                2023,
+                2024,
+                2025,
+                2026
+            ],
+            "powertrain": "ICE-Diesel",
+            "drive": "FWD",
+            "markets": [
+                "DE",
+                "PL",
+                "CZ"
+            ],
+            "tags": [
+                "fleet",
+                "cargo",
+                "durable"
+            ]
+        },
+        {
+            "vehicleId": "veh:RR",
+            "brand": "AstraMotors",
+            "model": "Roadster R",
+            "modelCode": "RR",
+            "years": [
+                2026,
+                2027,
+                2028
+            ],
+            "powertrain": "BEV",
+            "drive": "RWD",
+            "wltpRangeKm": 420,
+            "batteryKWh": 90,
+            "markets": [
+                "DE",
+                "CH",
+                "SE"
+            ],
+            "tags": [
+                "performance",
+                "track",
+                "premium"
+            ]
+        },
+        {
+            "vehicleId": "veh:SN-X",
+            "brand": "AstraMotors",
+            "model": "Sentinel X",
+            "modelCode": "SN-X",
+            "years": [
+                2025,
+                2026,
+                2027
+            ],
+            "powertrain": "BEV",
+            "drive": "AWD",
+            "wltpRangeKm": 610,
+            "batteryKWh": 86,
+            "markets": [
+                "DE",
+                "NL",
+                "SE"
+            ],
+            "tags": [
+                "sedan",
+                "executive",
+                "adas",
+                "privacy"
+            ]
+        }
+    ],
+    "vehicleIndex": [
+        {
+            "vehicleId": "veh:AX-E",
+            "modelCode": "AX-E",
+            "partIds": [
+                "part:ELE-004-RR",
+                "part:BAT-002-AX-E",
+                "part:CHS-010-AX-E",
+                "part:PWT-007-SN-X",
+                "part:SAF-014-SN-X",
+                "part:INT-011-AX-E",
+                "part:BDY-018-RR",
+                "part:SUS-001-AX-E",
+                "part:ELE-021-AX-H",
+                "part:BRK-008-AX-H"
+            ]
+        },
+        {
+            "vehicleId": "veh:AX-H",
+            "modelCode": "AX-H",
+            "partIds": [
+                "part:ELE-021-AX-H",
+                "part:BRK-008-AX-H",
+                "part:PWT-012-AX-H",
+                "part:SUS-017-AX-H",
+                "part:INT-013-AX-H",
+                "part:SAF-014-SN-X",
+                "part:BRK-020-AX-H",
+                "part:BDY-009-AX-H",
+                "part:ELE-004-RR",
+                "part:INT-011-AX-E"
+            ]
+        },
+        {
+            "vehicleId": "veh:CM-V",
+            "modelCode": "CM-V",
+            "partIds": [
+                "part:SAF-015-CM-V",
+                "part:BDY-009-AX-H",
+                "part:PWT-012-AX-H",
+                "part:BRK-020-AX-H",
+                "part:ELE-006-CM-V",
+                "part:CHS-010-AX-E",
+                "part:BRK-016-CM-V",
+                "part:SAF-014-SN-X",
+                "part:ELE-004-RR",
+                "part:PWT-007-SN-X"
+            ]
+        },
+        {
+            "vehicleId": "veh:RR",
+            "modelCode": "RR",
+            "partIds": [
+                "part:ELE-004-RR",
+                "part:BDY-018-RR",
+                "part:BRK-003-RR",
+                "part:BRK-023-RR",
+                "part:PWT-007-SN-X",
+                "part:SAF-015-CM-V",
+                "part:CHS-019-RR",
+                "part:ELE-022-RR",
+                "part:INT-013-AX-H",
+                "part:CHS-010-AX-E"
+            ]
+        },
+        {
+            "vehicleId": "veh:SN-X",
+            "modelCode": "SN-X",
+            "partIds": [
+                "part:PWT-007-SN-X",
+                "part:SAF-014-SN-X",
+                "part:ELE-006-CM-V",
+                "part:INT-024-SN-X",
+                "part:SUS-017-AX-H",
+                "part:SAF-015-CM-V",
+                "part:ELE-021-AX-H",
+                "part:BRK-020-AX-H",
+                "part:CHS-019-RR",
+                "part:BAT-002-AX-E"
+            ]
+        }
+    ],
+    "assets": {
+        "parts": [
+            {
+                "assetId": "part:SUS-001-AX-E",
+                "assetType": "part",
+                "title": "Adaptive Damper",
+                "oemPartNumber": "SUS-001-AX-E",
+                "partCategory": "suspension",
+                "supplier": "org:astramotors",
+                "compatibleModelCodes": [
+                    "RR",
+                    "AX-E"
+                ],
+                "status": "deprecated",
+                "pricing": {
+                    "currency": "EUR",
+                    "listPrice": 708.83
+                },
+                "inventory": {
+                    "stockLevel": "low_stock",
+                    "qtyAvailable": 137
+                },
+                "specs": {
+                    "key": "specB",
+                    "value": "H"
+                },
+                "tags": [
+                    "oem",
+                    "suspension",
+                    "premium",
+                    "AX-E"
+                ],
+                "provenance": {
+                    "sourceCatalogueId": "catreg:autoparts-hub",
+                    "harvestId": "harv:2026-02-07:oem",
+                    "mapping": "deterministic_rdf",
+                    "confidence": 0.86
+                }
+            },
+            {
+                "assetId": "part:BAT-002-AX-E",
+                "assetType": "part",
+                "title": "Battery Cooling Pump",
+                "oemPartNumber": "BAT-002-AX-E",
+                "partCategory": "energy",
+                "supplier": "org:astramotors",
+                "compatibleModelCodes": [
+                    "AX-E",
+                    "SN-X",
+                    "AX-H"
+                ],
+                "status": "active",
+                "pricing": {
+                    "currency": "EUR",
+                    "listPrice": 1167.92
+                },
+                "inventory": {
+                    "stockLevel": "in_stock",
+                    "qtyAvailable": 164
+                },
+                "specs": {
+                    "key": "specC",
+                    "value": "L"
+                },
+                "tags": [
+                    "oem",
+                    "energy",
+                    "fleet",
+                    "AX-E"
+                ],
+                "provenance": {
+                    "sourceCatalogueId": "catreg:oem-global",
+                    "harvestId": "harv:2026-02-08:parts",
+                    "mapping": "deterministic_rdf",
+                    "confidence": 0.96
+                }
+            },
+            {
+                "assetId": "part:BRK-003-RR",
+                "assetType": "part",
+                "title": "Brake Disc",
+                "oemPartNumber": "BRK-003-RR",
+                "partCategory": "brakes",
+                "supplier": "org:lg",
+                "compatibleModelCodes": [
+                    "RR",
+                    "AX-H",
+                    "AX-E"
+                ],
+                "status": "active",
+                "pricing": {
+                    "currency": "EUR",
+                    "listPrice": 1913.6
+                },
+                "inventory": {
+                    "stockLevel": "in_stock",
+                    "qtyAvailable": 204
+                },
+                "specs": {
+                    "key": "specA",
+                    "value": "H"
+                },
+                "tags": [
+                    "oem",
+                    "brakes",
+                    "performance",
+                    "RR"
+                ],
+                "provenance": {
+                    "sourceCatalogueId": "catreg:oem-global",
+                    "harvestId": "harv:2026-02-07:oem",
+                    "mapping": "hybrid",
+                    "confidence": 0.88
+                }
+            },
+            {
+                "assetId": "part:ELE-004-RR",
+                "assetType": "part",
+                "title": "Rear Camera",
+                "oemPartNumber": "ELE-004-RR",
+                "partCategory": "electronics",
+                "supplier": "org:zf",
+                "compatibleModelCodes": [
+                    "RR",
+                    "CM-V"
+                ],
+                "status": "active",
+                "pricing": {
+                    "currency": "EUR",
+                    "listPrice": 1116.95
+                },
+                "inventory": {
+                    "stockLevel": "in_stock",
+                    "qtyAvailable": 64
+                },
+                "specs": {
+                    "key": "specB",
+                    "value": "M"
+                },
+                "tags": [
+                    "oem",
+                    "electronics",
+                    "adas",
+                    "RR"
+                ],
+                "provenance": {
+                    "sourceCatalogueId": "catreg:autoparts-hub",
+                    "harvestId": "harv:2026-02-08:parts",
+                    "mapping": "hybrid",
+                    "confidence": 0.95
+                }
+            },
+            {
+                "assetId": "part:ELE-005-AX-H",
+                "assetType": "part",
+                "title": "ECU Module",
+                "oemPartNumber": "ELE-005-AX-H",
+                "partCategory": "electronics",
+                "supplier": "org:bosch",
+                "compatibleModelCodes": [
+                    "AX-H",
+                    "SN-X"
+                ],
+                "status": "active",
+                "pricing": {
+                    "currency": "EUR",
+                    "listPrice": 537.53
+                },
+                "inventory": {
+                    "stockLevel": "backorder",
+                    "qtyAvailable": 18
+                },
+                "specs": {
+                    "key": "specA",
+                    "value": "M"
+                },
+                "tags": [
+                    "oem",
+                    "electronics",
+                    "premium",
+                    "AX-H"
+                ],
+                "provenance": {
+                    "sourceCatalogueId": "catreg:oem-global",
+                    "harvestId": "harv:2026-02-07:oem",
+                    "mapping": "deterministic_rdf",
+                    "confidence": 0.91
+                }
+            },
+            {
+                "assetId": "part:ELE-006-CM-V",
+                "assetType": "part",
+                "title": "Amplifier",
+                "oemPartNumber": "ELE-006-CM-V",
+                "partCategory": "electronics",
+                "supplier": "org:continental",
+                "compatibleModelCodes": [
+                    "CM-V",
+                    "SN-X",
+                    "AX-H"
+                ],
+                "status": "active",
+                "pricing": {
+                    "currency": "EUR",
+                    "listPrice": 179.09
+                },
+                "inventory": {
+                    "stockLevel": "in_stock",
+                    "qtyAvailable": 221
+                },
+                "specs": {
+                    "key": "specC",
+                    "value": "M"
+                },
+                "tags": [
+                    "oem",
+                    "electronics",
+                    "winter",
+                    "AX-H"
+                ],
+                "provenance": {
+                    "sourceCatalogueId": "catreg:autoparts-hub",
+                    "harvestId": "harv:2026-02-08:parts",
+                    "mapping": "hybrid",
+                    "confidence": 0.97
+                }
+            },
+            {
+                "assetId": "part:PWT-007-SN-X",
+                "assetType": "part",
+                "title": "Electric Motor",
+                "oemPartNumber": "PWT-007-SN-X",
+                "partCategory": "powertrain",
+                "supplier": "org:zf",
+                "compatibleModelCodes": [
+                    "SN-X",
+                    "RR"
+                ],
+                "status": "deprecated",
+                "pricing": {
+                    "currency": "EUR",
+                    "listPrice": 1924.28
+                },
+                "inventory": {
+                    "stockLevel": "low_stock",
+                    "qtyAvailable": 61
+                },
+                "specs": {
+                    "key": "specA",
+                    "value": "H"
+                },
+                "tags": [
+                    "oem",
+                    "powertrain",
+                    "performance",
+                    "SN-X"
+                ],
+                "provenance": {
+                    "sourceCatalogueId": "catreg:autoparts-hub",
+                    "harvestId": "harv:2026-02-07:oem",
+                    "mapping": "hybrid",
+                    "confidence": 0.86
+                }
+            },
+            {
+                "assetId": "part:BRK-008-AX-H",
+                "assetType": "part",
+                "title": "Brake Pad Set",
+                "oemPartNumber": "BRK-008-AX-H",
+                "partCategory": "brakes",
+                "supplier": "org:astramotors",
+                "compatibleModelCodes": [
+                    "AX-H",
+                    "AX-E"
+                ],
+                "status": "active",
+                "pricing": {
+                    "currency": "EUR",
+                    "listPrice": 1882.23
+                },
+                "inventory": {
+                    "stockLevel": "in_stock",
+                    "qtyAvailable": 140
+                },
+                "specs": {
+                    "key": "specB",
+                    "value": "H"
+                },
+                "tags": [
+                    "oem",
+                    "brakes",
+                    "premium",
+                    "AX-H"
+                ],
+                "provenance": {
+                    "sourceCatalogueId": "catreg:autoparts-hub",
+                    "harvestId": "harv:2026-02-08:parts",
+                    "mapping": "hybrid",
+                    "confidence": 0.9
+                }
+            },
+            {
+                "assetId": "part:BDY-009-AX-H",
+                "assetType": "part",
+                "title": "Matrix LED Headlamp",
+                "oemPartNumber": "BDY-009-AX-H",
+                "partCategory": "body",
+                "supplier": "org:zf",
+                "compatibleModelCodes": [
+                    "AX-H",
+                    "CM-V"
+                ],
+                "status": "active",
+                "pricing": {
+                    "currency": "EUR",
+                    "listPrice": 800.63
+                },
+                "inventory": {
+                    "stockLevel": "backorder",
+                    "qtyAvailable": 4
+                },
+                "specs": {
+                    "key": "specC",
+                    "value": "L"
+                },
+                "tags": [
+                    "oem",
+                    "body",
+                    "fleet",
+                    "AX-H"
+                ],
+                "provenance": {
+                    "sourceCatalogueId": "catreg:autoparts-hub",
+                    "harvestId": "harv:2026-02-08:parts",
+                    "mapping": "deterministic_rdf",
+                    "confidence": 0.84
+                }
+            },
+            {
+                "assetId": "part:CHS-010-AX-E",
+                "assetType": "part",
+                "title": "Wheel Bearing",
+                "oemPartNumber": "CHS-010-AX-E",
+                "partCategory": "chassis",
+                "supplier": "org:continental",
+                "compatibleModelCodes": [
+                    "AX-E",
+                    "CM-V",
+                    "RR"
+                ],
+                "status": "active",
+                "pricing": {
+                    "currency": "EUR",
+                    "listPrice": 1458.72
+                },
+                "inventory": {
+                    "stockLevel": "in_stock",
+                    "qtyAvailable": 113
+                },
+                "specs": {
+                    "key": "specB",
+                    "value": "M"
+                },
+                "tags": [
+                    "oem",
+                    "chassis",
+                    "performance",
+                    "RR"
+                ],
+                "provenance": {
+                    "sourceCatalogueId": "catreg:oem-global",
+                    "harvestId": "harv:2026-02-07:oem",
+                    "mapping": "hybrid",
+                    "confidence": 0.86
+                }
+            },
+            {
+                "assetId": "part:INT-011-AX-E",
+                "assetType": "part",
+                "title": "HEPA Cabin Filter",
+                "oemPartNumber": "INT-011-AX-E",
+                "partCategory": "interior",
+                "supplier": "org:bosch",
+                "compatibleModelCodes": [
+                    "AX-E",
+                    "AX-H"
+                ],
+                "status": "active",
+                "pricing": {
+                    "currency": "EUR",
+                    "listPrice": 92.65
+                },
+                "inventory": {
+                    "stockLevel": "low_stock",
+                    "qtyAvailable": 103
+                },
+                "specs": {
+                    "key": "specB",
+                    "value": "H"
+                },
+                "tags": [
+                    "oem",
+                    "interior",
+                    "winter",
+                    "AX-E"
+                ],
+                "provenance": {
+                    "sourceCatalogueId": "catreg:oem-global",
+                    "harvestId": "harv:2026-02-07:oem",
+                    "mapping": "hybrid",
+                    "confidence": 0.88
+                }
+            },
+            {
+                "assetId": "part:PWT-012-AX-H",
+                "assetType": "part",
+                "title": "Inverter",
+                "oemPartNumber": "PWT-012-AX-H",
+                "partCategory": "powertrain",
+                "supplier": "org:lg",
+                "compatibleModelCodes": [
+                    "AX-H",
+                    "CM-V"
+                ],
+                "status": "active",
+                "pricing": {
+                    "currency": "EUR",
+                    "listPrice": 1187.31
+                },
+                "inventory": {
+                    "stockLevel": "in_stock",
+                    "qtyAvailable": 132
+                },
+                "specs": {
+                    "key": "specB",
+                    "value": "M"
+                },
+                "tags": [
+                    "oem",
+                    "powertrain",
+                    "fleet",
+                    "AX-H"
+                ],
+                "provenance": {
+                    "sourceCatalogueId": "catreg:autoparts-hub",
+                    "harvestId": "harv:2026-02-07:oem",
+                    "mapping": "deterministic_rdf",
+                    "confidence": 0.98
+                }
+            },
+            {
+                "assetId": "part:INT-013-AX-H",
+                "assetType": "part",
+                "title": "Seat Frame",
+                "oemPartNumber": "INT-013-AX-H",
+                "partCategory": "interior",
+                "supplier": "org:astramotors",
+                "compatibleModelCodes": [
+                    "RR",
+                    "AX-H"
+                ],
+                "status": "active",
+                "pricing": {
+                    "currency": "EUR",
+                    "listPrice": 1692.36
+                },
+                "inventory": {
+                    "stockLevel": "in_stock",
+                    "qtyAvailable": 163
+                },
+                "specs": {
+                    "key": "specA",
+                    "value": "M"
+                },
+                "tags": [
+                    "oem",
+                    "interior",
+                    "performance",
+                    "AX-H"
+                ],
+                "provenance": {
+                    "sourceCatalogueId": "catreg:oem-global",
+                    "harvestId": "harv:2026-02-07:oem",
+                    "mapping": "hybrid",
+                    "confidence": 0.81
+                }
+            },
+            {
+                "assetId": "part:SAF-014-SN-X",
+                "assetType": "part",
+                "title": "Airbag Module",
+                "oemPartNumber": "SAF-014-SN-X",
+                "partCategory": "safety",
+                "supplier": "org:bosch",
+                "compatibleModelCodes": [
+                    "SN-X",
+                    "RR",
+                    "AX-E"
+                ],
+                "status": "active",
+                "pricing": {
+                    "currency": "EUR",
+                    "listPrice": 894.02
+                },
+                "inventory": {
+                    "stockLevel": "in_stock",
+                    "qtyAvailable": 265
+                },
+                "specs": {
+                    "key": "specB",
+                    "value": "M"
+                },
+                "tags": [
+                    "oem",
+                    "safety",
+                    "adas",
+                    "SN-X"
+                ],
+                "provenance": {
+                    "sourceCatalogueId": "catreg:autoparts-hub",
+                    "harvestId": "harv:2026-02-08:parts",
+                    "mapping": "hybrid",
+                    "confidence": 0.94
+                }
+            },
+            {
+                "assetId": "part:SAF-015-CM-V",
+                "assetType": "part",
+                "title": "Occupant Sensor",
+                "oemPartNumber": "SAF-015-CM-V",
+                "partCategory": "safety",
+                "supplier": "org:continental",
+                "compatibleModelCodes": [
+                    "CM-V",
+                    "RR"
+                ],
+                "status": "active",
+                "pricing": {
+                    "currency": "EUR",
+                    "listPrice": 1018.51
+                },
+                "inventory": {
+                    "stockLevel": "low_stock",
+                    "qtyAvailable": 54
+                },
+                "specs": {
+                    "key": "specC",
+                    "value": "M"
+                },
+                "tags": [
+                    "oem",
+                    "safety",
+                    "fleet",
+                    "CM-V"
+                ],
+                "provenance": {
+                    "sourceCatalogueId": "catreg:oem-global",
+                    "harvestId": "harv:2026-02-07:oem",
+                    "mapping": "deterministic_rdf",
+                    "confidence": 0.91
+                }
+            },
+            {
+                "assetId": "part:BRK-016-CM-V",
+                "assetType": "part",
+                "title": "Brake Caliper",
+                "oemPartNumber": "BRK-016-CM-V",
+                "partCategory": "brakes",
+                "supplier": "org:lg",
+                "compatibleModelCodes": [
+                    "CM-V",
+                    "AX-E"
+                ],
+                "status": "active",
+                "pricing": {
+                    "currency": "EUR",
+                    "listPrice": 885.68
+                },
+                "inventory": {
+                    "stockLevel": "in_stock",
+                    "qtyAvailable": 188
+                },
+                "specs": {
+                    "key": "specB",
+                    "value": "H"
+                },
+                "tags": [
+                    "oem",
+                    "brakes",
+                    "fleet",
+                    "CM-V"
+                ],
+                "provenance": {
+                    "sourceCatalogueId": "catreg:oem-global",
+                    "harvestId": "harv:2026-02-07:oem",
+                    "mapping": "hybrid",
+                    "confidence": 0.82
+                }
+            },
+            {
+                "assetId": "part:SUS-017-AX-H",
+                "assetType": "part",
+                "title": "Control Arm",
+                "oemPartNumber": "SUS-017-AX-H",
+                "partCategory": "suspension",
+                "supplier": "org:continental",
+                "compatibleModelCodes": [
+                    "AX-H",
+                    "SN-X"
+                ],
+                "status": "active",
+                "pricing": {
+                    "currency": "EUR",
+                    "listPrice": 318.41
+                },
+                "inventory": {
+                    "stockLevel": "in_stock",
+                    "qtyAvailable": 170
+                },
+                "specs": {
+                    "key": "specC",
+                    "value": "L"
+                },
+                "tags": [
+                    "oem",
+                    "suspension",
+                    "winter",
+                    "AX-H"
+                ],
+                "provenance": {
+                    "sourceCatalogueId": "catreg:autoparts-hub",
+                    "harvestId": "harv:2026-02-07:oem",
+                    "mapping": "deterministic_rdf",
+                    "confidence": 0.82
+                }
+            },
+            {
+                "assetId": "part:BDY-018-RR",
+                "assetType": "part",
+                "title": "Rear Spoiler",
+                "oemPartNumber": "BDY-018-RR",
+                "partCategory": "body",
+                "supplier": "org:zf",
+                "compatibleModelCodes": [
+                    "RR",
+                    "AX-E"
+                ],
+                "status": "active",
+                "pricing": {
+                    "currency": "EUR",
+                    "listPrice": 1479.68
+                },
+                "inventory": {
+                    "stockLevel": "in_stock",
+                    "qtyAvailable": 106
+                },
+                "specs": {
+                    "key": "specA",
+                    "value": "L"
+                },
+                "tags": [
+                    "oem",
+                    "body",
+                    "performance",
+                    "RR"
+                ],
+                "provenance": {
+                    "sourceCatalogueId": "catreg:autoparts-hub",
+                    "harvestId": "harv:2026-02-08:parts",
+                    "mapping": "hybrid",
+                    "confidence": 0.98
+                }
+            },
+            {
+                "assetId": "part:BRK-020-AX-H",
+                "assetType": "part",
+                "title": "ABS Wheel Sensor",
+                "oemPartNumber": "BRK-020-AX-H",
+                "partCategory": "brakes",
+                "supplier": "org:zf",
+                "compatibleModelCodes": [
+                    "AX-H",
+                    "SN-X",
+                    "CM-V"
+                ],
+                "status": "active",
+                "pricing": {
+                    "currency": "EUR",
+                    "listPrice": 160.52
+                },
+                "inventory": {
+                    "stockLevel": "low_stock",
+                    "qtyAvailable": 93
+                },
+                "specs": {
+                    "key": "specA",
+                    "value": "M"
+                },
+                "tags": [
+                    "oem",
+                    "brakes",
+                    "adas",
+                    "AX-H"
+                ],
+                "provenance": {
+                    "sourceCatalogueId": "catreg:oem-global",
+                    "harvestId": "harv:2026-02-08:parts",
+                    "mapping": "hybrid",
+                    "confidence": 0.83
+                }
+            },
+            {
+                "assetId": "part:ELE-021-AX-H",
+                "assetType": "part",
+                "title": "Head Unit",
+                "oemPartNumber": "ELE-021-AX-H",
+                "partCategory": "electronics",
+                "supplier": "org:astramotors",
+                "compatibleModelCodes": [
+                    "AX-H",
+                    "SN-X",
+                    "AX-E"
+                ],
+                "status": "deprecated",
+                "pricing": {
+                    "currency": "EUR",
+                    "listPrice": 1617.31
+                },
+                "inventory": {
+                    "stockLevel": "in_stock",
+                    "qtyAvailable": 183
+                },
+                "specs": {
+                    "key": "specB",
+                    "value": "M"
+                },
+                "tags": [
+                    "oem",
+                    "electronics",
+                    "adas",
+                    "AX-H"
+                ],
+                "provenance": {
+                    "sourceCatalogueId": "catreg:oem-global",
+                    "harvestId": "harv:2026-02-07:oem",
+                    "mapping": "hybrid",
+                    "confidence": 0.86
+                }
+            },
+            {
+                "assetId": "part:ELE-022-RR",
+                "assetType": "part",
+                "title": "DC/DC Converter",
+                "oemPartNumber": "ELE-022-RR",
+                "partCategory": "electronics",
+                "supplier": "org:bosch",
+                "compatibleModelCodes": [
+                    "RR",
+                    "SN-X"
+                ],
+                "status": "active",
+                "pricing": {
+                    "currency": "EUR",
+                    "listPrice": 799.77
+                },
+                "inventory": {
+                    "stockLevel": "low_stock",
+                    "qtyAvailable": 85
+                },
+                "specs": {
+                    "key": "specC",
+                    "value": "H"
+                },
+                "tags": [
+                    "oem",
+                    "electronics",
+                    "performance",
+                    "RR"
+                ],
+                "provenance": {
+                    "sourceCatalogueId": "catreg:autoparts-hub",
+                    "harvestId": "harv:2026-02-07:oem",
+                    "mapping": "hybrid",
+                    "confidence": 0.96
+                }
+            },
+            {
+                "assetId": "part:BRK-023-RR",
+                "assetType": "part",
+                "title": "Brake Pad Set",
+                "oemPartNumber": "BRK-023-RR",
+                "partCategory": "brakes",
+                "supplier": "org:bosch",
+                "compatibleModelCodes": [
+                    "RR",
+                    "SN-X",
+                    "AX-E"
+                ],
+                "status": "active",
+                "pricing": {
+                    "currency": "EUR",
+                    "listPrice": 1287.91
+                },
+                "inventory": {
+                    "stockLevel": "in_stock",
+                    "qtyAvailable": 120
+                },
+                "specs": {
+                    "key": "specC",
+                    "value": "H"
+                },
+                "tags": [
+                    "oem",
+                    "brakes",
+                    "performance",
+                    "RR"
+                ],
+                "provenance": {
+                    "sourceCatalogueId": "catreg:oem-global",
+                    "harvestId": "harv:2026-02-08:parts",
+                    "mapping": "deterministic_rdf",
+                    "confidence": 0.95
+                }
+            },
+            {
+                "assetId": "part:INT-024-SN-X",
+                "assetType": "part",
+                "title": "Ambient Light Kit",
+                "oemPartNumber": "INT-024-SN-X",
+                "partCategory": "interior",
+                "supplier": "org:continental",
+                "compatibleModelCodes": [
+                    "SN-X",
+                    "AX-H"
+                ],
+                "status": "active",
+                "pricing": {
+                    "currency": "EUR",
+                    "listPrice": 188.31
+                },
+                "inventory": {
+                    "stockLevel": "in_stock",
+                    "qtyAvailable": 242
+                },
+                "specs": {
+                    "key": "specB",
+                    "value": "L"
+                },
+                "tags": [
+                    "oem",
+                    "interior",
+                    "premium",
+                    "SN-X"
+                ],
+                "provenance": {
+                    "sourceCatalogueId": "catreg:autoparts-hub",
+                    "harvestId": "harv:2026-02-08:parts",
+                    "mapping": "hybrid",
+                    "confidence": 0.86
+                }
+            },
+            {
+                "assetId": "part:CHS-025-RR",
+                "assetType": "part",
+                "title": "TPMS Sensor Kit",
+                "oemPartNumber": "CHS-025-RR",
+                "partCategory": "chassis",
+                "supplier": "org:bosch",
+                "compatibleModelCodes": [
+                    "RR",
+                    "AX-E"
+                ],
+                "status": "active",
+                "pricing": {
+                    "currency": "EUR",
+                    "listPrice": 89.29
+                },
+                "inventory": {
+                    "stockLevel": "in_stock",
+                    "qtyAvailable": 270
+                },
+                "specs": {
+                    "key": "specA",
+                    "value": "M"
+                },
+                "tags": [
+                    "oem",
+                    "chassis",
+                    "performance",
+                    "RR"
+                ],
+                "provenance": {
+                    "sourceCatalogueId": "catreg:oem-global",
+                    "harvestId": "harv:2026-02-07:oem",
+                    "mapping": "hybrid",
+                    "confidence": 0.92
+                }
+            }
+        ],
+        "documents": [
+            {
+                "assetId": "doc:AX-E:owners-manual",
+                "assetType": "document",
+                "title": "Owner's Manual — AstraX E",
+                "format": "PDF",
+                "pages": 300,
+                "appliesToModelCode": "AX-E",
+                "visibility": "public",
+                "downloadUrl": "https://downloads.astramotors.example/docs/AX-E-owners-manual.pdf",
+                "tags": [
+                    "documentation",
+                    "owners-manual",
+                    "AX-E"
+                ]
+            },
+            {
+                "assetId": "doc:AX-H:owners-manual",
+                "assetType": "document",
+                "title": "Owner's Manual — AstraX Hybrid",
+                "format": "PDF",
+                "pages": 391,
+                "appliesToModelCode": "AX-H",
+                "visibility": "public",
+                "downloadUrl": "https://downloads.astramotors.example/docs/AX-H-owners-manual.pdf",
+                "tags": [
+                    "documentation",
+                    "owners-manual",
+                    "AX-H"
+                ]
+            },
+            {
+                "assetId": "doc:CM-V:owners-manual",
+                "assetType": "document",
+                "title": "Owner's Manual — CargoMax Van",
+                "format": "PDF",
+                "pages": 396,
+                "appliesToModelCode": "CM-V",
+                "visibility": "public",
+                "downloadUrl": "https://downloads.astramotors.example/docs/CM-V-owners-manual.pdf",
+                "tags": [
+                    "documentation",
+                    "owners-manual",
+                    "CM-V"
+                ]
+            },
+            {
+                "assetId": "doc:RR:owners-manual",
+                "assetType": "document",
+                "title": "Owner's Manual — Roadster R",
+                "format": "PDF",
+                "pages": 279,
+                "appliesToModelCode": "RR",
+                "visibility": "public",
+                "downloadUrl": "https://downloads.astramotors.example/docs/RR-owners-manual.pdf",
+                "tags": [
+                    "documentation",
+                    "owners-manual",
+                    "RR"
+                ]
+            },
+            {
+                "assetId": "doc:SN-X:owners-manual",
+                "assetType": "document",
+                "title": "Owner's Manual — Sentinel X",
+                "format": "PDF",
+                "pages": 270,
+                "appliesToModelCode": "SN-X",
+                "visibility": "public",
+                "downloadUrl": "https://downloads.astramotors.example/docs/SN-X-owners-manual.pdf",
+                "tags": [
+                    "documentation",
+                    "owners-manual",
+                    "SN-X"
+                ]
+            },
+            {
+                "assetId": "doc:workshop:common-procedures",
+                "assetType": "document",
+                "title": "Workshop Handbook — Common Procedures",
+                "format": "PDF",
+                "pages": 260,
+                "visibility": "restricted",
+                "downloadUrl": "https://downloads.astramotors.example/docs/workshop-common-procedures.pdf",
+                "tags": [
+                    "documentation",
+                    "workshop",
+                    "service"
+                ]
+            }
+        ],
+        "softwareReleases": [
+            {
+                "assetId": "sw:astraos:4.2.2:stable",
+                "assetType": "softwareRelease",
+                "title": "AstraOS OTA Package — Stable",
+                "version": "4.2.2",
+                "channel": "stable",
+                "compatibleModelCodes": [
+                    "AX-E",
+                    "RR",
+                    "SN-X"
+                ],
+                "accessUrl": "https://ota.astramotors.example/v1/releases",
+                "tags": [
+                    "software",
+                    "ota",
+                    "stable",
+                    "security-patch"
+                ]
+            },
+            {
+                "assetId": "sw:astraos:4.3.0:beta",
+                "assetType": "softwareRelease",
+                "title": "AstraOS OTA Package — Beta",
+                "version": "4.3.0",
+                "channel": "beta",
+                "compatibleModelCodes": [
+                    "AX-E",
+                    "AX-H",
+                    "CM-V",
+                    "RR",
+                    "SN-X"
+                ],
+                "accessUrl": "https://ota.astramotors.example/v1/releases",
+                "tags": [
+                    "software",
+                    "ota",
+                    "beta"
+                ]
+            },
+            {
+                "assetId": "sw:astraadas:2.9.0:workshop",
+                "assetType": "softwareRelease",
+                "title": "AstraADAS Calibration Package",
+                "version": "2.9.0",
+                "channel": "workshop",
+                "compatibleModelCodes": [
+                    "AX-E",
+                    "AX-H",
+                    "CM-V",
+                    "RR",
+                    "SN-X"
+                ],
+                "accessUrl": "https://ota.astramotors.example/v1/releases",
+                "tags": [
+                    "software",
+                    "adas",
+                    "calibration",
+                    "workshop"
+                ]
+            }
+        ],
+        "complianceArtifacts": [
+            {
+                "assetId": "cmp:unr155:csms-statement",
+                "assetType": "complianceArtifact",
+                "title": "Cybersecurity Compliance Statement (UN R155) — AstraMotors CSMS",
+                "standard": "UN R155",
+                "issuer": "org:astramotors",
+                "appliesToModelCodes": [
+                    "AX-E",
+                    "AX-H",
+                    "RR",
+                    "SN-X"
+                ],
+                "downloadUrl": "https://downloads.astramotors.example/compliance/unr155-csms.pdf",
+                "tags": [
+                    "compliance",
+                    "cybersecurity",
+                    "unr155",
+                    "csms",
+                    "audit"
+                ],
+                "provenance": {
+                    "sourceCatalogueId": "catreg:oem-global",
+                    "harvestId": "harv:2026-02-07:oem",
+                    "mapping": "ai_driven",
+                    "confidence": 0.92
+                }
+            },
+            {
+                "assetId": "cmp:euro6e:cargomax",
+                "assetType": "complianceArtifact",
+                "title": "Emissions Certificate (Euro 6e) — CargoMax Van",
+                "standard": "Euro 6e",
+                "issuer": "org:tuv",
+                "appliesToModelCodes": [
+                    "CM-V"
+                ],
+                "downloadUrl": "https://downloads.astramotors.example/compliance/euro6e-cargomax.pdf",
+                "tags": [
+                    "compliance",
+                    "emissions",
+                    "euro6e",
+                    "fleet"
+                ],
+                "provenance": {
+                    "sourceCatalogueId": "catreg:oem-global",
+                    "harvestId": "harv:2026-02-07:oem",
+                    "mapping": "hybrid",
+                    "confidence": 0.97
+                }
+            }
+        ],
+        "apis": [
+            {
+                "assetId": "api:parts-search",
+                "assetType": "api",
+                "title": "Parts Search API",
+                "baseUrl": "https://api.astramotors.example/parts/v1/search",
+                "auth": "OAuth2 client_credentials",
+                "features": [
+                    "full-text",
+                    "facets",
+                    "pagination",
+                    "compatibility-filter",
+                    "inventory-filter"
+                ],
+                "sampleQuery": {
+                    "q": "brake pad ceramic",
+                    "filters": {
+                        "modelCode": "RR",
+                        "stockLevel": "in_stock"
+                    },
+                    "page": 1,
+                    "pageSize": 20
+                },
+                "tags": [
+                    "api",
+                    "parts",
+                    "search",
+                    "facets",
+                    "inventory"
+                ],
+                "provenance": {
+                    "sourceCatalogueId": "catreg:oem-global",
+                    "harvestId": "harv:2026-02-07:oem",
+                    "mapping": "hybrid",
+                    "confidence": 0.99
+                }
+            }
+        ]
+    },
+    "provenance": {
+        "sources": [
+            {
+                "catalogueId": "catreg:oem-global",
+                "name": "OEM Global Catalogue",
+                "protocol": "DCAT_LD",
+                "entryPoint": "https://catalog.oem-global.example/dcat/catalog.jsonld"
+            },
+            {
+                "catalogueId": "catreg:autoparts-hub",
+                "name": "AutoParts Hub",
+                "protocol": "QUERY_ENDPOINT",
+                "entryPoint": "https://api.autoparts-hub.example/v1/query"
+            }
+        ],
+        "harvestRuns": [
+            {
+                "harvestId": "harv:2026-02-07:oem",
+                "catalogueId": "catreg:oem-global",
+                "endedAt": "2026-02-07T11:00:00Z",
+                "scope": "brand=AstraMotors",
+                "mapping": "hybrid",
+                "assetsMapped": 45,
+                "errors": 0
+            },
+            {
+                "harvestId": "harv:2026-02-08:parts",
+                "catalogueId": "catreg:autoparts-hub",
+                "endedAt": "2026-02-08T07:00:00Z",
+                "scope": "oem=ASTRA*",
+                "mapping": "deterministic_rdf",
+                "assetsMapped": 120,
+                "errors": 2
+            }
+        ],
+        "auditTrail": [
+            {
+                "eventId": "audit:0001",
+                "assetId": "api:warranty-claims",
+                "event": "TRANSFORM_OK",
+                "mapping": "hybrid",
+                "confidence": 0.98,
+                "ts": "2026-02-07T11:00:00Z"
+            },
+            {
+                "eventId": "audit:0002",
+                "assetId": "cmp:unr155:csms-statement",
+                "event": "TRANSFORM_OK",
+                "mapping": "ai_driven",
+                "confidence": 0.92,
+                "ts": "2026-02-07T11:00:00Z"
+            },
+            {
+                "eventId": "audit:0003",
+                "assetId": "part:SUS-001-AX-E",
+                "event": "VALIDATION_FAILED",
+                "mapping": "deterministic_rdf",
+                "error": "SHACL rule: oemPartNumber missing/invalid",
+                "ts": "2026-02-08T07:00:00Z"
+            },
+            {
+                "eventId": "audit:0004",
+                "assetId": "part:BAT-002-AX-E",
+                "event": "TRANSFORM_OK",
+                "mapping": "deterministic_rdf",
+                "confidence": 0.96,
+                "ts": "2026-02-08T07:00:00Z"
+            }
+        ]
+    },
+    "originalTransformedSamples": [
+        {
+            "assetId": "part:SUS-001-AX-E",
+            "original": {
+                "vendorField_part_no": "SUS-001-AX-E",
+                "vendorField_cat": "suspension",
+                "vendorBlob": "<raw description omitted>"
+            },
+            "transformed": {
+                "oemPartNumber": "SUS-001-AX-E",
+                "partCategory": "suspension",
+                "specs": {
+                    "key": "specB",
+                    "value": "H"
+                }
+            }
+        },
+        {
+            "assetId": "cmp:unr155:csms-statement",
+            "original": {
+                "docTitle": "UN R155 CSMS",
+                "issuer": "AstraMotors CSMS Office",
+                "rawPdf": "unr155-csms.pdf"
+            },
+            "transformed": {
+                "standard": "UN R155",
+                "issuer": "org:astramotors",
+                "appliesToModelCodes": [
+                    "AX-E",
+                    "AX-H",
+                    "RR",
+                    "SN-X"
+                ]
+            }
+        }
+    ]
+}
