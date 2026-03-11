@@ -5,8 +5,9 @@ Pydantic schema for photovoltaic system readings matching spec section 11.6.
 """
 
 from datetime import datetime
+from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, computed_field
 
 
 class PVReadings(BaseModel):
@@ -26,15 +27,35 @@ class PVReadings(BaseModel):
 class PVReading(BaseModel):
     """Complete PV reading payload matching spec section 11.6."""
 
+    type: Literal["pv_generation"] = Field(default="pv_generation", description="Feed type")
+    schema_version: str = Field(default="1.0", description="Schema version")
+    site_id: str = Field(default="", description="Site identifier for correlation")
     timestamp: datetime = Field(..., description="Reading timestamp in ISO 8601 format")
     system_id: str = Field(..., description="PV system identifier")
     readings: PVReadings = Field(..., description="PV system readings")
 
+    @computed_field
+    @property
+    def asset_id(self) -> str:
+        """Asset identifier (same as system_id)."""
+        return self.system_id
+
+    @computed_field
+    @property
+    def pv_power_kw(self) -> float:
+        """Current PV power output in kW."""
+        return self.readings.power_output_kw
+
     def to_json_payload(self) -> dict:
         """Convert to JSON payload matching spec structure."""
         return {
+            "type": self.type,
+            "schema_version": self.schema_version,
+            "site_id": self.site_id,
+            "asset_id": self.asset_id,
             "timestamp": self.timestamp.isoformat().replace("+00:00", "Z"),
-            "system_id": self.system_id,
+            "pv_system_id": self.system_id,
+            "pv_power_kw": round(self.pv_power_kw, 2),
             "readings": {
                 "power_output_kw": round(self.readings.power_output_kw, 2),
                 "daily_energy_kwh": round(self.readings.daily_energy_kwh, 1),

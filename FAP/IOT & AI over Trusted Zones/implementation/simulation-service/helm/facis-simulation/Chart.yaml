@@ -1,0 +1,28 @@
+apiVersion: v2
+name: facis-simulation
+description: >-
+  Deterministic IoT simulation service for the FACIS FAP IoT & AI demonstrator.
+  Generates correlated Smart Energy feeds (meter, PV, weather, price, consumer)
+  and publishes via MQTT, Kafka, REST, and Modbus TCP.
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+kubeVersion: ">=1.25.0"
+home: https://github.com/siemens-2/facis
+sources:
+  - https://github.com/siemens-2/facis
+maintainers:
+  - name: ATLAS IoT Lab GmbH
+    url: https://atlas-iot-lab.com
+keywords:
+  - facis
+  - iot
+  - simulation
+  - smart-energy
+  - mqtt
+  - kafka
+  - modbus
+  - eclipse
+annotations:
+  org.opencontainers.image.licenses: Apache-2.0
+  eclipse.org/project: facis

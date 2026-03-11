@@ -1,0 +1,43 @@
+{
+  "type": "record",
+  "name": "BronzeCityEvent",
+  "namespace": "cloud.facis.fap.iotai.bronze",
+  "doc": "Bronze layer raw ingest record for Smart City event feed. Stores the unmodified JSON payload as received from the simulation via Kafka topic sim.smart_city.event.",
+  "fields": [
+    {
+      "name": "ingest_timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Wall-clock time when NiFi ingested this record into the Bronze Iceberg table (UTC)."
+    },
+    {
+      "name": "source_topic",
+      "type": "string",
+      "default": "sim.smart_city.event",
+      "doc": "Kafka topic from which this record was consumed."
+    },
+    {
+      "name": "kafka_partition",
+      "type": "int",
+      "doc": "Kafka partition number."
+    },
+    {
+      "name": "kafka_offset",
+      "type": "long",
+      "doc": "Kafka offset within the partition."
+    },
+    {
+      "name": "kafka_key",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Kafka record key (zone_id for this feed)."
+    },
+    {
+      "name": "raw_payload",
+      "type": "string",
+      "doc": "Verbatim JSON payload as produced by the simulation service. No parsing or transformation applied."
+    }
+  ]
+}

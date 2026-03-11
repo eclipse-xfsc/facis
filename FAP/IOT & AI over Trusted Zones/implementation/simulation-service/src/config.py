@@ -51,6 +51,21 @@ class SimulationConfig(BaseModel):
         le=1000.0,
         description="Simulation speed factor (1.0 = real-time, 10.0 = 10x faster)",
     )
+    mode: str = Field(
+        default="normal",
+        description="Simulation mode: 'normal' for typical day, 'event' for anomalies/spikes",
+    )
+
+    @field_validator("mode")
+    @classmethod
+    def validate_mode(cls, v: str) -> str:
+        """Validate simulation mode."""
+        valid_modes = {"normal", "event"}
+        if v.lower() not in valid_modes:
+            raise ValueError(
+                f"Invalid mode '{v}'. Must be one of: {', '.join(sorted(valid_modes))}"
+            )
+        return v.lower()
 
     @field_validator("start_time")
     @classmethod
@@ -321,6 +336,138 @@ class MqttConfig(BaseModel):
 
 
 # =============================================================================
+# Smart City Configuration
+# =============================================================================
+
+
+class StreetlightConfig(BaseModel):
+    """Configuration for a single streetlight."""
+
+    id: str = Field(..., min_length=1, description="Unique streetlight identifier")
+    rated_power_w: float = Field(
+        default=150.0, ge=0.0, description="Rated power at 100% dimming in watts"
+    )
+
+
+class ZoneConfig(BaseModel):
+    """Configuration for a Smart City zone."""
+
+    id: str = Field(..., min_length=1, description="Unique zone identifier")
+    lights: list[StreetlightConfig] = Field(
+        default_factory=list, description="Streetlights in this zone"
+    )
+
+
+class SmartCityConfig(BaseModel):
+    """Smart City simulation configuration."""
+
+    city_id: str = Field(default="city-berlin", description="City identifier")
+    latitude: float = Field(default=52.52, ge=-90.0, le=90.0, description="City latitude")
+    longitude: float = Field(default=13.405, ge=-180.0, le=180.0, description="City longitude")
+    zones: list[ZoneConfig] = Field(
+        default_factory=lambda: [
+            ZoneConfig(
+                id="zone-001",
+                lights=[
+                    StreetlightConfig(id="light-001"),
+                    StreetlightConfig(id="light-002"),
+                    StreetlightConfig(id="light-003"),
+                ],
+            ),
+            ZoneConfig(
+                id="zone-002",
+                lights=[
+                    StreetlightConfig(id="light-004"),
+                    StreetlightConfig(id="light-005"),
+                    StreetlightConfig(id="light-006"),
+                ],
+            ),
+        ],
+        description="City zones with streetlights",
+    )
+
+
+# =============================================================================
+# Kafka Configuration
+# =============================================================================
+
+
+class KafkaConfig(BaseModel):
+    """Kafka producer configuration."""
+
+    bootstrap_servers: str = Field(
+        default="localhost:9092",
+        min_length=1,
+        description="Kafka bootstrap servers (comma-separated)",
+    )
+    client_id: str = Field(
+        default="facis-simulator",
+        min_length=1,
+        description="Kafka producer client identifier",
+    )
+    enabled: bool = Field(
+        default=True,
+        description="Whether Kafka publishing is enabled",
+    )
+    security_protocol: str = Field(
+        default="PLAINTEXT",
+        description="Security protocol: PLAINTEXT or SSL",
+    )
+    ssl_ca_location: str | None = Field(
+        default=None,
+        description="Path to CA certificate file for TLS",
+    )
+    ssl_certificate_location: str | None = Field(
+        default=None,
+        description="Path to client certificate file for TLS",
+    )
+    ssl_key_location: str | None = Field(
+        default=None,
+        description="Path to client private key file for TLS",
+    )
+
+    @field_validator("security_protocol")
+    @classmethod
+    def validate_security_protocol(cls, v: str) -> str:
+        """Validate security protocol."""
+        valid = {"PLAINTEXT", "SSL"}
+        if v.upper() not in valid:
+            raise ValueError(
+                f"Invalid security_protocol '{v}'. Must be one of: {', '.join(sorted(valid))}"
+            )
+        return v.upper()
+
+
+# =============================================================================
+# ORCE Configuration
+# =============================================================================
+
+
+class OrceConfig(BaseModel):
+    """ORCE (Orchestration Engine) webhook configuration."""
+
+    url: str = Field(
+        default="http://localhost:1880",
+        min_length=1,
+        description="ORCE base URL",
+    )
+    webhook_path: str = Field(
+        default="/api/sim/tick",
+        description="Webhook endpoint path for tick data",
+    )
+    enabled: bool = Field(
+        default=False,
+        description="Whether ORCE webhook publishing is enabled",
+    )
+    timeout_seconds: float = Field(
+        default=10.0,
+        ge=1.0,
+        le=60.0,
+        description="HTTP request timeout in seconds",
+    )
+
+
+# =============================================================================
 # HTTP Configuration
 # =============================================================================
 
@@ -445,6 +592,11 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
+    site_id: str = Field(
+        default="site-berlin-001",
+        min_length=1,
+        description="Site identifier for correlation across all feeds",
+    )
     simulation: SimulationConfig = Field(default_factory=SimulationConfig)
     meters: list[MeterConfig] = Field(
         default_factory=lambda: [MeterConfig(id="meter-001", base_load_kw=10.0, peak_load_kw=25.0)],
@@ -461,7 +613,10 @@ class Settings(BaseSettings):
         ],
         description="List of consumer device configurations",
     )
+    smart_city: SmartCityConfig = Field(default_factory=SmartCityConfig)
     mqtt: MqttConfig = Field(default_factory=MqttConfig)
+    kafka: KafkaConfig = Field(default_factory=KafkaConfig)
+    orce: OrceConfig = Field(default_factory=OrceConfig)
     http: HttpConfig = Field(default_factory=HttpConfig)
     modbus: ModbusConfig = Field(default_factory=ModbusConfig)
     logging: LoggingConfig = Field(default_factory=LoggingConfig)

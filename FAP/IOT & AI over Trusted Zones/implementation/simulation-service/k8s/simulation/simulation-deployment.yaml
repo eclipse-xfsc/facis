@@ -1,0 +1,158 @@
+# ──────────────────────────────────────────────────────────────────────
+# FACIS Simulation Service — Kubernetes Deployment
+#
+# Deterministic IoT simulator that sends tick envelopes to ORCE
+# (which then forwards to Kafka via rdkafka with mTLS).
+#
+# Data flow:  Simulation --HTTP POST--> ORCE --rdkafka--> Kafka
+#
+# Build & push (via Kaniko or Docker):
+#   docker build -t registry.orce.svc.cluster.local:5000/facis/simulation:1.0.0 .
+#   docker push registry.orce.svc.cluster.local:5000/facis/simulation:1.0.0
+# ──────────────────────────────────────────────────────────────────────
+
+# ── Deployment ─────────────────────────────────────────────────────────
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simulation
+  namespace: orce
+  labels:
+    app: simulation
+    component: iot-simulator
+spec:
+  replicas: 0                           # Start scaled down — ORCE buttons will scale up
+  selector:
+    matchLabels:
+      app: simulation
+  template:
+    metadata:
+      labels:
+        app: simulation
+        component: iot-simulator
+    spec:
+      serviceAccountName: simulation-sa
+      containers:
+        - name: simulation
+          image: registry.orce.svc.cluster.local:5000/facis/simulation:1.0.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+
+          env:
+            # Use cluster config (ORCE-based data path)
+            - name: FACIS_ENV
+              value: "cluster"
+
+            # ORCE endpoint (in-cluster)
+            - name: SIMULATOR_ORCE__URL
+              value: "http://orce.orce.svc.cluster.local:1880"
+            - name: SIMULATOR_ORCE__WEBHOOK_PATH
+              value: "/api/sim/tick"
+            - name: SIMULATOR_ORCE__ENABLED
+              value: "true"
+            - name: SIMULATOR_ORCE__TIMEOUT_SECONDS
+              value: "15"
+
+            # Kafka direct DISABLED — ORCE handles Kafka
+            - name: SIMULATOR_KAFKA__ENABLED
+              value: "false"
+
+            # Simulation speed: 60x (1 simulated hour per real minute)
+            - name: SIMULATOR_SIMULATION__SPEED_FACTOR
+              value: "60.0"
+            - name: SIMULATOR_SIMULATION__SEED
+              value: "12345"
+
+            # Logging
+            - name: SIMULATOR_LOGGING__LEVEL
+              value: "INFO"
+
+            # Timezone
+            - name: TZ
+              value: "Europe/Berlin"
+
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+
+          readinessProbe:
+            httpGet:
+              path: /api/v1/health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 3
+          livenessProbe:
+            httpGet:
+              path: /api/v1/health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 30
+            timeoutSeconds: 3
+---
+
+# ── Service ────────────────────────────────────────────────────────────
+apiVersion: v1
+kind: Service
+metadata:
+  name: simulation
+  namespace: orce
+  labels:
+    app: simulation
+spec:
+  selector:
+    app: simulation
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+  type: ClusterIP
+---
+
+# ── ServiceAccount (for ORCE to scale via kubectl) ─────────────────────
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: simulation-sa
+  namespace: orce
+---
+
+# ── Role: allow ORCE to scale the simulation deployment ───────────────
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: simulation-scaler
+  namespace: orce
+rules:
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    resourceNames: ["simulation"]
+    verbs: ["get", "patch"]
+  - apiGroups: ["apps"]
+    resources: ["deployments/scale"]
+    resourceNames: ["simulation"]
+    verbs: ["get", "patch", "update"]
+---
+
+# ── RoleBinding: bind to ORCE's default SA ─────────────────────────────
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: orce-can-scale-simulation
+  namespace: orce
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: orce
+roleRef:
+  kind: Role
+  name: simulation-scaler
+  apiGroup: rbac.authorization.k8s.io

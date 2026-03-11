@@ -1,0 +1,272 @@
+# ──────────────────────────────────────────────────────────────────────
+# FACIS ORCE Deployment — with Kafka (rdkafka) + GUI Generator (JSON Forms)
+#
+# Uses the custom FACIS ORCE image built from:
+#   simulation-service/orce/Dockerfile
+#
+# Build & push:
+#   docker build -t registry.facis.cloud/facis/orce:2.0.3-facis \
+#       -f orce/Dockerfile orce/
+#   docker push registry.facis.cloud/facis/orce:2.0.3-facis
+# ──────────────────────────────────────────────────────────────────────
+
+# ── PersistentVolumeClaim: ORCE data (flows, credentials, packages) ──
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: orce-data
+  namespace: orce
+  labels:
+    app: orce
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+
+# ── ConfigMap: ORCE flows ────────────────────────────────────────────
+# Mount simulation + DCM catalogue flows into the ORCE data volume.
+# To update flows: edit the files and run kubectl apply.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: orce-flows
+  namespace: orce
+  labels:
+    app: orce
+data:
+  # Flows are loaded from files — see volumeMounts below.
+  # Each flow file is mounted into /data/ and merged by Node-RED on startup.
+  # Add flow files via:
+  #   kubectl create configmap orce-flows --namespace orce \
+  #       --from-file=flows/facis-simulation.json \
+  #       --from-file=flows/facis-dcm-catalogue.json \
+  #       --dry-run=client -o yaml | kubectl apply -f -
+  placeholder: "true"
+---
+
+# ── ConfigMap: DCM JSON Schemas + UI Schemas ─────────────────────────
+# GUI Generator schema files served by the ORCE data provider flow.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: orce-dcm-schemas
+  namespace: orce
+  labels:
+    app: orce
+    component: dcm-gui-generator
+data:
+  # Schema files are loaded from the schemas/dcm/ directory.
+  # Mount via:
+  #   kubectl create configmap orce-dcm-schemas --namespace orce \
+  #       --from-file=schemas/dcm/ \
+  #       --dry-run=client -o yaml | kubectl apply -f -
+  placeholder: "true"
+---
+
+# ── Deployment ───────────────────────────────────────────────────────
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orce
+  namespace: orce
+  labels:
+    app: orce
+    component: orchestration-engine
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate                     # single-writer on PVC
+  selector:
+    matchLabels:
+      app: orce
+  template:
+    metadata:
+      labels:
+        app: orce
+        component: orchestration-engine
+    spec:
+      containers:
+        - name: orce
+          image: registry.facis.cloud/facis/orce:2.0.3-facis
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 1880
+              name: ui
+              protocol: TCP
+            - containerPort: 8080
+              name: api
+              protocol: TCP
+
+          # ── Environment ──────────────────────────────────────────
+          env:
+            # Node-RED core
+            - name: NODE_RED_CREDENTIAL_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: orce-secrets
+                  key: credential-secret
+            - name: TZ
+              value: "Europe/Berlin"
+
+            # Kafka connection (used by rdkafka nodes in flows)
+            - name: FACIS_KAFKA_BROKERS
+              value: "kafka-broker-default-0.kafka-broker-default-headless.stackable.svc.cluster.local:9093"
+            - name: FACIS_KAFKA_SECURITY_PROTOCOL
+              value: "ssl"
+            - name: FACIS_KAFKA_SSL_CA
+              value: "/etc/kafka-certs/ca.crt"
+            - name: FACIS_KAFKA_SSL_CERT
+              value: "/etc/kafka-certs/tls.crt"
+            - name: FACIS_KAFKA_SSL_KEY
+              value: "/etc/kafka-certs/tls.key"
+
+            # Trino connection (used by DCM GUI data provider flow)
+            - name: FACIS_TRINO_HOST
+              value: "https://trino-coordinator-default.default.svc.cluster.local:8443"
+            - name: FACIS_TRINO_USER
+              valueFrom:
+                secretKeyRef:
+                  name: orce-secrets
+                  key: trino-user
+            - name: FACIS_TRINO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: orce-secrets
+                  key: trino-password
+
+            # Keycloak OIDC (SSO for ORCE UI + Trino token refresh)
+            - name: FACIS_KEYCLOAK_URL
+              value: "https://identity.facis.cloud/realms/facis"
+            - name: FACIS_OIDC_CLIENT_ID
+              value: "facis-orce"
+            - name: FACIS_OIDC_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: orce-secrets
+                  key: oidc-client-secret
+
+            # GUI Generator settings
+            - name: FACIS_GUI_SCHEMAS_PATH
+              value: "/opt/dcm-schemas"
+
+          # ── Volume mounts ────────────────────────────────────────
+          volumeMounts:
+            # Node-RED user data (flows, credentials, node_modules)
+            - name: orce-data
+              mountPath: /data
+
+            # ORCE flow files (read-only ConfigMap)
+            - name: orce-flows
+              mountPath: /data/flows-configmap
+              readOnly: true
+
+            # DCM JSON Schemas + UI Schemas for GUI Generator
+            - name: dcm-schemas
+              mountPath: /opt/dcm-schemas
+              readOnly: true
+
+            # Kafka mTLS certificates
+            - name: kafka-certs
+              mountPath: /etc/kafka-certs
+              readOnly: true
+
+          # ── Resources ────────────────────────────────────────────
+          resources:
+            requests:
+              cpu: 200m
+              memory: 256Mi
+            limits:
+              cpu: "1"
+              memory: 768Mi
+
+          # ── Health checks ────────────────────────────────────────
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 1880
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 1880
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            timeoutSeconds: 5
+
+      # ── Volumes ────────────────────────────────────────────────────
+      volumes:
+        - name: orce-data
+          persistentVolumeClaim:
+            claimName: orce-data
+
+        - name: orce-flows
+          configMap:
+            name: orce-flows
+
+        - name: dcm-schemas
+          configMap:
+            name: orce-dcm-schemas
+
+        - name: kafka-certs
+          ephemeral:
+            volumeClaimTemplate:
+              metadata:
+                annotations:
+                  secrets.stackable.tech/class: tls
+                  secrets.stackable.tech/scope: pod
+              spec:
+                accessModes: ["ReadWriteOnce"]
+                storageClassName: secrets.stackable.tech
+                resources:
+                  requests:
+                    storage: 1
+---
+
+# ── Secret: ORCE credentials ────────────────────────────────────────
+# Create with:
+#   kubectl create secret generic orce-secrets --namespace orce \
+#       --from-literal=credential-secret='<random-32-char-string>' \
+#       --from-literal=trino-user='admin' \
+#       --from-literal=trino-password='<trino-password>' \
+#       --from-literal=oidc-client-secret='<keycloak-client-secret>'
+apiVersion: v1
+kind: Secret
+metadata:
+  name: orce-secrets
+  namespace: orce
+  labels:
+    app: orce
+type: Opaque
+stringData:
+  credential-secret: "REPLACE_WITH_RANDOM_SECRET"
+  trino-user: "admin"
+  trino-password: "REPLACE_WITH_TRINO_PASSWORD"
+  oidc-client-secret: "REPLACE_WITH_OIDC_SECRET"
+---
+
+# ── Service ──────────────────────────────────────────────────────────
+apiVersion: v1
+kind: Service
+metadata:
+  name: orce
+  namespace: orce
+  labels:
+    app: orce
+spec:
+  selector:
+    app: orce
+  ports:
+    - name: ui
+      port: 1880
+      targetPort: 1880
+      protocol: TCP
+    - name: api
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+  type: LoadBalancer

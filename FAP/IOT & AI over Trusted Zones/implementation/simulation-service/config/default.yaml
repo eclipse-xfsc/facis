@@ -17,6 +17,11 @@
 # =============================================================================
 
 # -----------------------------------------------------------------------------
+# Site Identification (shared across all feeds for correlation)
+# -----------------------------------------------------------------------------
+site_id: site-berlin-001
+
+# -----------------------------------------------------------------------------
 # Simulation Engine Settings
 # -----------------------------------------------------------------------------
 simulation:
@@ -32,6 +37,9 @@ simulation:
 
   # Speed factor (1.0 = real-time, 10.0 = 10x faster)
   speed_factor: 1.0
+
+  # Simulation mode: 'normal' for typical day, 'event' for anomalies/spikes
+  mode: normal
 
 # -----------------------------------------------------------------------------
 # Energy Meters
@@ -135,6 +143,31 @@ consumers:
         end_hour: 20
 
 # -----------------------------------------------------------------------------
+# Smart City Configuration
+# -----------------------------------------------------------------------------
+smart_city:
+  city_id: city-berlin
+  latitude: 52.52
+  longitude: 13.405
+  zones:
+    - id: zone-001
+      lights:
+        - id: light-001
+          rated_power_w: 150.0
+        - id: light-002
+          rated_power_w: 150.0
+        - id: light-003
+          rated_power_w: 150.0
+    - id: zone-002
+      lights:
+        - id: light-004
+          rated_power_w: 150.0
+        - id: light-005
+          rated_power_w: 150.0
+        - id: light-006
+          rated_power_w: 150.0
+
+# -----------------------------------------------------------------------------
 # MQTT Configuration
 # -----------------------------------------------------------------------------
 # Note: In Docker, use service name 'mqtt' instead of 'localhost'
@@ -146,6 +179,27 @@ mqtt:
   qos: 1
   # username: null  # Uncomment to enable authentication
   # password: null
+
+# -----------------------------------------------------------------------------
+# Kafka Configuration
+# -----------------------------------------------------------------------------
+kafka:
+  bootstrap_servers: kafka:9092
+  client_id: facis-simulator
+  enabled: true
+  security_protocol: PLAINTEXT
+  # ssl_ca_location: /certs/ca.crt
+  # ssl_certificate_location: /certs/client.crt
+  # ssl_key_location: /certs/client.key
+
+# -----------------------------------------------------------------------------
+# ORCE (Orchestration Engine) Configuration
+# -----------------------------------------------------------------------------
+orce:
+  url: http://orce:1880
+  webhook_path: /api/sim/tick
+  enabled: false
+  timeout_seconds: 10.0
 
 # -----------------------------------------------------------------------------
 # HTTP/REST API Configuration

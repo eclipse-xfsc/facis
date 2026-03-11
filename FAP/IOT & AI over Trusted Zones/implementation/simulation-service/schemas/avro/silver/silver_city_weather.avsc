@@ -1,0 +1,66 @@
+{
+  "type": "record",
+  "name": "SilverCityWeather",
+  "namespace": "cloud.facis.fap.iotai.silver",
+  "doc": "Silver layer harmonized schema for Smart City weather feed. Extracts typed fields from Bronze raw JSON, applies data quality filtering (non-null timestamps), and adds fog alert classification. Reference: setup_lakehouse.py Silver view definition.",
+  "fields": [
+    {
+      "name": "event_timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Original event timestamp from the simulation (UTC)."
+    },
+    {
+      "name": "ingest_timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Wall-clock time when NiFi ingested the source Bronze record (UTC)."
+    },
+    {
+      "name": "city_id",
+      "type": "string",
+      "doc": "City identifier for cross-feed correlation."
+    },
+    {
+      "name": "schema_version",
+      "type": "string",
+      "default": "1.0",
+      "doc": "Source schema version for forward compatibility."
+    },
+    {
+      "name": "fog_index",
+      "type": "double",
+      "doc": "Fog density index (0.0 = clear, 1.0 = dense fog)."
+    },
+    {
+      "name": "visibility",
+      "type": {
+        "type": "enum",
+        "name": "VisibilityLevel",
+        "namespace": "cloud.facis.fap.iotai.silver",
+        "symbols": ["GOOD", "MEDIUM", "POOR"],
+        "doc": "Visibility classification."
+      },
+      "doc": "Current visibility conditions."
+    },
+    {
+      "name": "sunrise_time",
+      "type": "string",
+      "doc": "Sunrise time in HH:MM format (local time)."
+    },
+    {
+      "name": "sunset_time",
+      "type": "string",
+      "doc": "Sunset time in HH:MM format (local time)."
+    },
+    {
+      "name": "is_fog_alert",
+      "type": "boolean",
+      "doc": "Derived field: true when fog_index > 0.6."
+    }
+  ]
+}

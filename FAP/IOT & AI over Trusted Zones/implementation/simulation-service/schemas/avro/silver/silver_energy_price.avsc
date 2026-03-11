@@ -1,0 +1,57 @@
+{
+  "type": "record",
+  "name": "SilverEnergyPrice",
+  "namespace": "cloud.facis.fap.iotai.silver",
+  "doc": "Silver layer harmonized schema for Smart Energy price feed. This feed has a flat structure at source; Silver adds metadata columns and standardises field naming. Reference: Spec section 12.2-12.3.",
+  "fields": [
+    {
+      "name": "event_timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Original event timestamp from the simulation (UTC)."
+    },
+    {
+      "name": "ingest_timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Wall-clock time when NiFi ingested the source Bronze record (UTC)."
+    },
+    {
+      "name": "site_id",
+      "type": "string",
+      "doc": "Logical site identifier for cross-feed correlation."
+    },
+    {
+      "name": "building_id",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Optional building identifier within the site."
+    },
+    {
+      "name": "schema_version",
+      "type": "string",
+      "default": "1.0",
+      "doc": "Source schema version for forward compatibility."
+    },
+    {
+      "name": "price_eur_per_kwh",
+      "type": "double",
+      "doc": "Energy spot price (EUR/kWh). EPEX day-ahead market simulation."
+    },
+    {
+      "name": "tariff_type",
+      "type": {
+        "type": "enum",
+        "name": "TariffType",
+        "namespace": "cloud.facis.fap.iotai.silver",
+        "symbols": ["NIGHT", "MORNING_PEAK", "MIDDAY", "EVENING_PEAK", "EVENING"],
+        "doc": "Tariff period classification based on time-of-day."
+      },
+      "doc": "Tariff period: NIGHT (00-06), MORNING_PEAK (06-09), MIDDAY (09-17), EVENING_PEAK (17-20), EVENING (20-00)."
+    }
+  ]
+}

@@ -5,8 +5,9 @@ Pydantic schema for Janitza meter readings.
 """
 
 from datetime import datetime
+from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, computed_field
 
 
 class MeterReadings(BaseModel):
@@ -29,15 +30,47 @@ class MeterReadings(BaseModel):
 class MeterReading(BaseModel):
     """Complete meter reading payload."""
 
+    type: Literal["energy_meter"] = Field(default="energy_meter", description="Feed type")
+    schema_version: str = Field(default="1.0", description="Schema version")
+    site_id: str = Field(default="", description="Site identifier for correlation")
     timestamp: datetime = Field(..., description="Reading timestamp in ISO 8601 format")
     meter_id: str = Field(..., description="Unique meter identifier")
     readings: MeterReadings = Field(..., description="Meter readings")
 
+    @computed_field
+    @property
+    def asset_id(self) -> str:
+        """Asset identifier (same as meter_id)."""
+        return self.meter_id
+
+    @computed_field
+    @property
+    def active_power_kw(self) -> float:
+        """Total active power across all phases in kW."""
+        total_w = (
+            self.readings.active_power_l1_w
+            + self.readings.active_power_l2_w
+            + self.readings.active_power_l3_w
+        )
+        return round(total_w / 1000.0, 3)
+
+    @computed_field
+    @property
+    def active_energy_kwh_total(self) -> float:
+        """Monotonic energy counter in kWh."""
+        return self.readings.total_energy_kwh
+
     def to_json_payload(self) -> dict:
         """Convert to JSON payload matching spec structure."""
         return {
+            "type": self.type,
+            "schema_version": self.schema_version,
+            "site_id": self.site_id,
+            "asset_id": self.asset_id,
             "timestamp": self.timestamp.isoformat().replace("+00:00", "Z"),
             "meter_id": self.meter_id,
+            "active_power_kw": self.active_power_kw,
+            "active_energy_kwh_total": round(self.active_energy_kwh_total, 2),
             "readings": {
                 "active_power_l1_w": round(self.readings.active_power_l1_w, 1),
                 "active_power_l2_w": round(self.readings.active_power_l2_w, 1),

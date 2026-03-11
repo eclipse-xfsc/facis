@@ -1,0 +1,65 @@
+{
+  "type": "record",
+  "name": "SilverStreetlight",
+  "namespace": "cloud.facis.fap.iotai.silver",
+  "doc": "Silver layer harmonized schema for Smart City streetlight feed. Extracts typed fields from Bronze raw JSON, applies data quality filtering (non-null timestamps, power_w >= 0), and adds derived energy estimate. Reference: setup_lakehouse.py Silver view definition.",
+  "fields": [
+    {
+      "name": "event_timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Original event timestamp from the simulation (UTC)."
+    },
+    {
+      "name": "ingest_timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Wall-clock time when NiFi ingested the source Bronze record (UTC)."
+    },
+    {
+      "name": "city_id",
+      "type": "string",
+      "doc": "City identifier for cross-feed correlation."
+    },
+    {
+      "name": "zone_id",
+      "type": "string",
+      "doc": "Zone identifier within the city."
+    },
+    {
+      "name": "light_id",
+      "type": "string",
+      "doc": "Unique streetlight identifier (e.g. light-zone-a-001)."
+    },
+    {
+      "name": "asset_id",
+      "type": "string",
+      "doc": "Canonical asset identifier (falls back to light_id via COALESCE)."
+    },
+    {
+      "name": "schema_version",
+      "type": "string",
+      "default": "1.0",
+      "doc": "Source schema version for forward compatibility."
+    },
+    {
+      "name": "dimming_level_pct",
+      "type": "double",
+      "doc": "Current dimming level as percentage (0.0–100.0)."
+    },
+    {
+      "name": "power_w",
+      "type": "double",
+      "doc": "Current power consumption in watts."
+    },
+    {
+      "name": "energy_wh_estimate",
+      "type": "double",
+      "doc": "Derived field: estimated energy in watt-hours for a 1-minute interval (power_w / 60.0)."
+    }
+  ]
+}

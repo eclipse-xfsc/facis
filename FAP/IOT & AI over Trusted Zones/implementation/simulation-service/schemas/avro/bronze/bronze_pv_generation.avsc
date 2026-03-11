@@ -1,0 +1,43 @@
+{
+  "type": "record",
+  "name": "BronzePvGeneration",
+  "namespace": "cloud.facis.fap.iotai.bronze",
+  "doc": "Bronze layer raw ingest record for Smart Energy PV generation feed. Stores the unmodified JSON payload as received from Kafka topic sim.smart_energy.pv.",
+  "fields": [
+    {
+      "name": "ingest_timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Wall-clock time when NiFi ingested this record into the Bronze Iceberg table (UTC)."
+    },
+    {
+      "name": "source_topic",
+      "type": "string",
+      "default": "sim.smart_energy.pv",
+      "doc": "Kafka topic from which this record was consumed."
+    },
+    {
+      "name": "kafka_partition",
+      "type": "int",
+      "doc": "Kafka partition number."
+    },
+    {
+      "name": "kafka_offset",
+      "type": "long",
+      "doc": "Kafka offset within the partition."
+    },
+    {
+      "name": "kafka_key",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Kafka record key (pv_system_id for this feed)."
+    },
+    {
+      "name": "raw_payload",
+      "type": "string",
+      "doc": "Verbatim JSON payload as produced by the simulation service. No parsing or transformation applied."
+    }
+  ]
+}

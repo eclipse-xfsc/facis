@@ -1,0 +1,15 @@
+{
+  "event_timestamp": 1741363200000,
+  "ingest_timestamp": 1741363201500,
+  "site_id": "site-berlin-001",
+  "building_id": null,
+  "pv_system_id": "pv-system-001",
+  "asset_id": "pv-system-001",
+  "schema_version": "1.0",
+  "pv_power_kw": 7.82,
+  "power_output_kw": 7.82,
+  "daily_energy_kwh": 28.5,
+  "irradiance_w_m2": 850.3,
+  "module_temperature_c": 42.1,
+  "efficiency_percent": 15.8
+}

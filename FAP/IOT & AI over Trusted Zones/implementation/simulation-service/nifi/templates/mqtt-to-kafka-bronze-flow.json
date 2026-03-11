@@ -1,0 +1,218 @@
+{
+  "$schema": "https://nifi.apache.org/schema/nifi-flow-v2.json",
+  "name": "FACIS MQTT → Kafka Bronze Pipeline",
+  "description": "Consumes MQTT messages from the FACIS simulation service and routes them to Kafka Bronze topics with ingestion metadata enrichment and dead-letter queue error handling.",
+  "version": "1.0.0",
+  "metadata": {
+    "project": "FACIS FAP IoT & AI Demonstrator",
+    "component": "MQTT-to-Kafka Bronze Ingestion",
+    "author": "ATLAS IoT Lab GmbH",
+    "license": "Apache-2.0",
+    "nifi_version": "2.x",
+    "created": "2026-03-07"
+  },
+  "environment": {
+    "local": {
+      "mqtt_broker": "tcp://mqtt:1883",
+      "kafka_bootstrap": "kafka:9092",
+      "kafka_security_protocol": "PLAINTEXT"
+    },
+    "cluster": {
+      "mqtt_broker": "tcp://facis-mqtt.stackable.svc.cluster.local:1883",
+      "kafka_bootstrap": "kafka-broker-default-bootstrap.stackable.svc.cluster.local:9093",
+      "kafka_security_protocol": "SSL",
+      "ssl_keystore": "/stackable/server_tls/keystore.p12",
+      "ssl_truststore": "/stackable/server_tls/truststore.p12",
+      "ssl_store_type": "PKCS12"
+    }
+  },
+  "topic_mapping": [
+    {
+      "mqtt_subscription": "facis/energy/meter/+",
+      "mqtt_qos": 1,
+      "kafka_topic": "energy.bronze.meter-readings",
+      "description": "Energy meter readings (3-phase power, voltage, current)"
+    },
+    {
+      "mqtt_subscription": "facis/prices/spot",
+      "mqtt_qos": 1,
+      "kafka_topic": "energy.bronze.prices",
+      "description": "Spot electricity prices"
+    },
+    {
+      "mqtt_subscription": "facis/weather/current",
+      "mqtt_qos": 0,
+      "kafka_topic": "energy.bronze.weather",
+      "description": "Weather conditions (temperature, irradiance, wind)"
+    },
+    {
+      "mqtt_subscription": "facis/energy/pv/+",
+      "mqtt_qos": 1,
+      "kafka_topic": "energy.bronze.pv-generation",
+      "description": "PV generation data (power output, efficiency)"
+    },
+    {
+      "mqtt_subscription": "facis/loads/+",
+      "mqtt_qos": 0,
+      "kafka_topic": "energy.bronze.consumer-states",
+      "description": "Consumer device load states"
+    },
+    {
+      "mqtt_subscription": "facis/city/light/+",
+      "mqtt_qos": 0,
+      "kafka_topic": "sim.smart_city.light",
+      "description": "Streetlight telemetry (dimming, power per zone)"
+    },
+    {
+      "mqtt_subscription": "facis/city/traffic/+",
+      "mqtt_qos": 0,
+      "kafka_topic": "sim.smart_city.traffic",
+      "description": "Traffic zone indices (congestion data)"
+    },
+    {
+      "mqtt_subscription": "facis/city/event/+",
+      "mqtt_qos": 1,
+      "kafka_topic": "sim.smart_city.event",
+      "description": "City events (accidents, emergencies, public events)"
+    },
+    {
+      "mqtt_subscription": "facis/city/weather",
+      "mqtt_qos": 0,
+      "kafka_topic": "sim.smart_city.weather",
+      "description": "City weather/visibility (fog index, sunrise/sunset)"
+    }
+  ],
+  "dead_letter_queue": {
+    "kafka_topic": "energy.bronze.dead-letter",
+    "description": "Messages that fail enrichment or Kafka publishing"
+  },
+  "metadata_enrichment": {
+    "description": "Each message is wrapped in a Bronze envelope before publishing to Kafka",
+    "envelope_schema": {
+      "ingest_timestamp": {
+        "type": "string",
+        "format": "ISO-8601 UTC",
+        "source": "NiFi ${now()} expression"
+      },
+      "source_system": {
+        "type": "string",
+        "value": "facis-simulation-service"
+      },
+      "source_topic": {
+        "type": "string",
+        "source": "NiFi ${mqtt.topic} attribute"
+      },
+      "payload": {
+        "type": "object",
+        "description": "Original MQTT JSON payload (unmodified)"
+      }
+    }
+  },
+  "processor_chain": {
+    "description": "Per-route pipeline (repeated 9 times, once per MQTT subscription)",
+    "processors": [
+      {
+        "order": 1,
+        "type": "org.apache.nifi.processors.mqtt.ConsumeMQTT",
+        "name_template": "MQTT: {mqtt_subscription}",
+        "properties": {
+          "Broker URI": "{mqtt_broker}",
+          "Client ID": "facis-nifi-mqtt-consumer-{route_name}",
+          "Topic Filter": "{mqtt_subscription}",
+          "Quality of Service(QoS)": "{mqtt_qos}",
+          "Max Queue Size": "10000"
+        },
+        "relationships_out": ["Message"],
+        "scheduling_period": "0 sec"
+      },
+      {
+        "order": 2,
+        "type": "org.apache.nifi.processors.attributes.UpdateAttribute",
+        "name_template": "Set Kafka Dest: {route_name}",
+        "properties": {
+          "kafka.destination": "{kafka_topic}"
+        },
+        "relationships_out": ["success"],
+        "auto_terminate": ["failure"]
+      },
+      {
+        "order": 3,
+        "type": "org.apache.nifi.processors.standard.ReplaceText",
+        "name_template": "Enrich: {route_name}",
+        "description": "Wraps original JSON in Bronze envelope with ingestion metadata",
+        "properties": {
+          "Replacement Strategy": "Regex Replace",
+          "Regular Expression": "(?s)(^.*$)",
+          "Replacement Value": "{\"ingest_timestamp\":\"${now():format('yyyy-MM-dd''T''HH:mm:ss.SSS''Z''','UTC')}\",\"source_system\":\"facis-simulation-service\",\"source_topic\":\"${mqtt.topic}\",\"payload\":$1}",
+          "Evaluation Mode": "Entire text"
+        },
+        "relationships_out": ["success"],
+        "auto_terminate": ["failure"]
+      },
+      {
+        "order": 4,
+        "type": "org.apache.nifi.kafka.processors.PublishKafka",
+        "name_template": "Kafka: {kafka_topic}",
+        "properties": {
+          "Kafka Connection Service": "{kafka_connection_service_id}",
+          "Topic Name": "{kafka_topic}",
+          "Use Transactions": "false",
+          "Delivery Guarantee": "DELIVERY_REPLICATED",
+          "Attributes to Send as Headers (Regex)": "mqtt\\..*",
+          "Message Key Field": "${mqtt.topic}",
+          "Compression Type": "lz4",
+          "Max Request Size": "1 MB"
+        },
+        "relationships_out": ["success", "failure"],
+        "auto_terminate": ["success"]
+      }
+    ],
+    "connections": [
+      {"from": 1, "to": 2, "relationships": ["Message"]},
+      {"from": 2, "to": 3, "relationships": ["success"]},
+      {"from": 3, "to": 4, "relationships": ["success"]},
+      {"from": 4, "to": "DLQ", "relationships": ["failure"]}
+    ]
+  },
+  "controller_services": [
+    {
+      "type": "org.apache.nifi.ssl.StandardSSLContextService",
+      "name": "MQTT-Kafka Stackable TLS",
+      "required": "cluster mode only",
+      "properties": {
+        "Keystore Filename": "{ssl_keystore}",
+        "Keystore Password": "{ssl_store_password}",
+        "Keystore Type": "{ssl_store_type}",
+        "Truststore Filename": "{ssl_truststore}",
+        "Truststore Password": "{ssl_store_password}",
+        "Truststore Type": "{ssl_store_type}"
+      }
+    },
+    {
+      "type": "org.apache.nifi.kafka.service.Kafka3ConnectionService",
+      "name": "MQTT-Kafka Bronze Connection",
+      "properties": {
+        "bootstrap.servers": "{kafka_bootstrap}",
+        "security.protocol": "{kafka_security_protocol}",
+        "SSL Context Service": "{ssl_context_service_id}"
+      }
+    }
+  ],
+  "back_pressure": {
+    "object_threshold": 10000,
+    "data_size_threshold": "1 GB"
+  },
+  "monitoring": {
+    "bulletin_level": "WARN",
+    "expected_throughput": {
+      "messages_per_second": 50,
+      "max_latency_ms": 500,
+      "description": "5 routes × 10 messages/sec per route at 1x simulation speed"
+    },
+    "alerts": [
+      "Queue depth > 5000 on any connection",
+      "DLQ receives > 0 messages in 5-minute window",
+      "ConsumeMQTT shows DISCONNECTED status"
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+FACIS Simulation Service has been deployed!
+
+Release:   {{ .Release.Name }}
+Namespace: {{ .Release.Namespace }}
+Version:   {{ .Chart.AppVersion }}
+
+1. Get the application URL:
+{{- if .Values.ingress.enabled }}
+  {{- range .Values.ingress.hosts }}
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .host }}
+  {{- end }}
+{{- else }}
+  export POD_NAME=$(kubectl get pods -n {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "facis-simulation.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
+  kubectl -n {{ .Release.Namespace }} port-forward $POD_NAME 8080:{{ .Values.http.port }}
+  echo "REST API:  http://localhost:8080/api/v1/health"
+  echo "Swagger:   http://localhost:8080/docs"
+{{- end }}
+
+2. Check simulation status:
+  curl http://localhost:8080/api/v1/status
+
+3. Configuration:
+  Seed:           {{ .Values.simulation.seed }}
+  Speed Factor:   {{ .Values.simulation.speedFactor }}x
+  MQTT Broker:    {{ .Values.mqtt.host }}:{{ .Values.mqtt.port }}
+  Kafka:          {{ if .Values.kafka.enabled }}{{ .Values.kafka.bootstrapServers }}{{ else }}disabled{{ end }}
+  Modbus:         {{ if .Values.modbus.enabled }}port {{ .Values.modbus.port }}{{ else }}disabled{{ end }}

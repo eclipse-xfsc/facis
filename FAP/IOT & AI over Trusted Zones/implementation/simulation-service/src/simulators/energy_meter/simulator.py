@@ -54,6 +54,8 @@ class EnergyMeterSimulator(BaseTimeSeriesGenerator[MeterReading]):
         rng: DeterministicRNG,
         interval: IntervalMinutes = IntervalMinutes.FIFTEEN_MINUTES,
         config: MeterConfig | None = None,
+        site_id: str = "",
+        mode: str = "normal",
     ) -> None:
         """
         Initialize the energy meter simulator.
@@ -63,12 +65,16 @@ class EnergyMeterSimulator(BaseTimeSeriesGenerator[MeterReading]):
             rng: Deterministic random number generator.
             interval: Time interval for readings.
             config: Meter configuration. Uses defaults if None.
+            site_id: Site identifier for correlation.
+            mode: Simulation mode ('normal' or 'event').
         """
         super().__init__(entity_id, rng, interval)
 
         if config is None:
             config = MeterConfig(meter_id=entity_id)
         self._config = config
+        self._site_id = site_id
+        self._mode = mode
 
         # Energy state tracking per entity
         self._energy_states: dict[str, EnergyState] = {}
@@ -133,6 +139,13 @@ class EnergyMeterSimulator(BaseTimeSeriesGenerator[MeterReading]):
             self._config.base_power_kw
             + (self._config.peak_power_kw - self._config.base_power_kw) * load_factor
         )
+
+        # Event mode: inject power spike at 10:00-10:20
+        if self._mode == "event":
+            minute_of_day = timestamp.hour * 60 + timestamp.minute
+            if 600 <= minute_of_day < 620:  # 10:00-10:20
+                total_power_kw *= 2.0
+
         total_power_w = total_power_kw * 1000
 
         # Distribute power across phases with realistic imbalance
@@ -193,6 +206,7 @@ class EnergyMeterSimulator(BaseTimeSeriesGenerator[MeterReading]):
         )
 
         return MeterReading(
+            site_id=self._site_id,
             timestamp=timestamp,
             meter_id=self._entity_id,
             readings=readings,
@@ -294,6 +308,7 @@ class EnergyMeterSimulator(BaseTimeSeriesGenerator[MeterReading]):
 
             readings.append(
                 MeterReading(
+                    site_id=self._site_id,
                     timestamp=reading.timestamp,
                     meter_id=reading.meter_id,
                     readings=updated_readings,
@@ -348,6 +363,7 @@ class EnergyMeterSimulator(BaseTimeSeriesGenerator[MeterReading]):
             )
 
             yield MeterReading(
+                site_id=self._site_id,
                 timestamp=reading.timestamp,
                 meter_id=reading.meter_id,
                 readings=updated_readings,

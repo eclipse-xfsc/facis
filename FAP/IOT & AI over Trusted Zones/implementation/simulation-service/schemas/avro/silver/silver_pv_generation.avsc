@@ -1,0 +1,81 @@
+{
+  "type": "record",
+  "name": "SilverPvGeneration",
+  "namespace": "cloud.facis.fap.iotai.silver",
+  "doc": "Silver layer harmonized schema for Smart Energy PV generation readings. Nested fields from readings.* are flattened to top-level columns. Reference: Spec section 12.2-12.3.",
+  "fields": [
+    {
+      "name": "event_timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Original event timestamp from the simulation (UTC)."
+    },
+    {
+      "name": "ingest_timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Wall-clock time when NiFi ingested the source Bronze record (UTC)."
+    },
+    {
+      "name": "site_id",
+      "type": "string",
+      "doc": "Logical site identifier for cross-feed correlation."
+    },
+    {
+      "name": "building_id",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Optional building identifier within the site."
+    },
+    {
+      "name": "pv_system_id",
+      "type": "string",
+      "doc": "PV system identifier (e.g. pv-system-001)."
+    },
+    {
+      "name": "asset_id",
+      "type": "string",
+      "doc": "Canonical asset identifier (typically same as pv_system_id)."
+    },
+    {
+      "name": "schema_version",
+      "type": "string",
+      "default": "1.0",
+      "doc": "Source schema version for forward compatibility."
+    },
+    {
+      "name": "pv_power_kw",
+      "type": "double",
+      "doc": "Current PV power output (kW). Top-level summary field."
+    },
+    {
+      "name": "power_output_kw",
+      "type": "double",
+      "doc": "PV power output (kW). Flattened from readings.power_output_kw."
+    },
+    {
+      "name": "daily_energy_kwh",
+      "type": "double",
+      "doc": "Cumulative daily energy production (kWh). Flattened from readings.daily_energy_kwh."
+    },
+    {
+      "name": "irradiance_w_m2",
+      "type": "double",
+      "doc": "Solar irradiance at panel surface (W/m2). Flattened from readings.irradiance_w_m2."
+    },
+    {
+      "name": "module_temperature_c",
+      "type": "double",
+      "doc": "PV module temperature (deg C, NOCT model). Flattened from readings.module_temperature_c."
+    },
+    {
+      "name": "efficiency_percent",
+      "type": "double",
+      "doc": "Current conversion efficiency (%). Flattened from readings.efficiency_percent."
+    }
+  ]
+}

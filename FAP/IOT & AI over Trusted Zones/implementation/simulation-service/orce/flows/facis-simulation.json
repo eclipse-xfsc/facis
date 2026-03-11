@@ -1,0 +1,103 @@
+[
+  {
+    "id": "facis-sim-flow",
+    "type": "tab",
+    "label": "FACIS Simulation → Kafka",
+    "disabled": false,
+    "info": "Receives simulation tick envelopes via HTTP POST, validates schema, counts feed messages, and responds.\n\nEndpoint: POST /api/sim/tick\n\nKafka publishing is handled directly by the simulation service.\nORCE validates the envelope structure and provides flow monitoring.\n\nFlow Variants:\n  - facis-simulation.json:         THIS FILE — Validate only\n  - facis-simulation-mqtt.json:    MQTT output (no plugins needed)\n  - facis-simulation-cluster.json: rdkafka output (requires plugin)"
+  },
+  {
+    "id": "http-in-tick",
+    "type": "http in",
+    "z": "facis-sim-flow",
+    "name": "POST /api/sim/tick",
+    "url": "/api/sim/tick",
+    "method": "post",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 150,
+    "y": 200,
+    "wires": [["validate-schema"]]
+  },
+  {
+    "id": "validate-schema",
+    "type": "function",
+    "z": "facis-sim-flow",
+    "name": "Validate Schema",
+    "func": "const p = msg.payload;\n\nconst required = ['type', 'schema_version', 'timestamp', 'site_id', 'smart_energy', 'smart_city'];\nconst missing = required.filter(f => p[f] === undefined);\n\nif (missing.length > 0) {\n    msg.statusCode = 400;\n    msg.payload = { error: 'Missing fields: ' + missing.join(', ') };\n    return [null, msg];\n}\n\nif (p.type !== 'sim.tick') {\n    msg.statusCode = 400;\n    msg.payload = { error: 'Invalid type: ' + p.type + ', expected sim.tick' };\n    return [null, msg];\n}\n\nflow.set('last_tick', p.timestamp);\nflow.set('tick_count', (flow.get('tick_count') || 0) + 1);\n\nreturn [msg, null];",
+    "outputs": 2,
+    "timeout": "",
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 380,
+    "y": 200,
+    "wires": [["count-messages"], ["http-response-error"]]
+  },
+  {
+    "id": "http-response-error",
+    "type": "http response",
+    "z": "facis-sim-flow",
+    "name": "400 Error",
+    "statusCode": "",
+    "headers": {},
+    "x": 590,
+    "y": 280,
+    "wires": []
+  },
+  {
+    "id": "count-messages",
+    "type": "function",
+    "z": "facis-sim-flow",
+    "name": "Count & Respond",
+    "func": "const envelope = msg.payload;\nconst ts = envelope.timestamp;\n\nconst counts = {\n    meters: (envelope.smart_energy.meters || []).length,\n    pv: (envelope.smart_energy.pv || []).length,\n    weather: envelope.smart_energy.weather ? 1 : 0,\n    price: envelope.smart_energy.price ? 1 : 0,\n    consumers: (envelope.smart_energy.consumers || []).length,\n    lights: (envelope.smart_city.streetlights || []).length,\n    traffic: (envelope.smart_city.traffic_readings || []).length,\n    events: (envelope.smart_city.events || []).length,\n    city_weather: envelope.smart_city.visibility ? 1 : 0\n};\n\nconst total = Object.values(counts).reduce((a, b) => a + b, 0);\n\nmsg.payload = {\n    status: 'accepted',\n    timestamp: ts,\n    messages_count: total,\n    feeds: counts,\n    tick_number: flow.get('tick_count') || 0\n};\nmsg.statusCode = 200;\n\nconst debugMsg = {\n    payload: {\n        tick: flow.get('tick_count'),\n        timestamp: ts,\n        mode: envelope.mode,\n        total_messages: total\n    }\n};\n\nreturn [msg, debugMsg];",
+    "outputs": 2,
+    "timeout": "",
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 600,
+    "y": 200,
+    "wires": [["http-response-ok"], ["debug-tick"]]
+  },
+  {
+    "id": "http-response-ok",
+    "type": "http response",
+    "z": "facis-sim-flow",
+    "name": "200 OK",
+    "statusCode": "",
+    "headers": {},
+    "x": 810,
+    "y": 180,
+    "wires": []
+  },
+  {
+    "id": "debug-tick",
+    "type": "debug",
+    "z": "facis-sim-flow",
+    "name": "Tick Monitor",
+    "active": true,
+    "tosidebar": true,
+    "console": true,
+    "tostatus": true,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "payload.timestamp",
+    "statusType": "msg",
+    "x": 810,
+    "y": 240,
+    "wires": []
+  },
+  {
+    "id": "comment-architecture",
+    "type": "comment",
+    "z": "facis-sim-flow",
+    "name": "FACIS MS2: Simulation → ORCE → Kafka",
+    "info": "## Architecture\n\n1. Simulation Service generates correlated snapshots each tick\n2. POSTs unified envelope to ORCE via HTTP\n3. ORCE validates schema and counts feed messages\n4. Simulation Service publishes directly to Kafka\n\n## Flow Variants\n- facis-simulation.json:         THIS — Validate only (sim handles Kafka)\n- facis-simulation-mqtt.json:    MQTT output (no plugins, NiFi routes to Kafka)\n- facis-simulation-cluster.json: rdkafka output (requires plugin)\n\n## Topics (9 total)\n- Smart Energy: meter, pv, weather, price, consumer\n- Smart City: light, traffic, event, weather",
+    "x": 250,
+    "y": 60,
+    "wires": []
+  }
+]

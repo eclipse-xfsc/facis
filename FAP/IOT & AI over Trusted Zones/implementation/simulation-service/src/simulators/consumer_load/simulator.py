@@ -44,6 +44,8 @@ class ConsumerLoadSimulator(BaseTimeSeriesGenerator[ConsumerLoadReading]):
         rng: DeterministicRNG,
         interval: IntervalMinutes = IntervalMinutes.FIFTEEN_MINUTES,
         config: ConsumerLoadConfig | None = None,
+        site_id: str = "",
+        mode: str = "normal",
     ) -> None:
         """
         Initialize the consumer load simulator.
@@ -53,12 +55,16 @@ class ConsumerLoadSimulator(BaseTimeSeriesGenerator[ConsumerLoadReading]):
             rng: Deterministic random number generator.
             interval: Time interval for readings.
             config: Device configuration. Uses defaults if None.
+            site_id: Site identifier for correlation.
+            mode: Simulation mode ('normal' or 'event').
         """
         super().__init__(entity_id, rng, interval)
 
         if config is None:
             config = ConsumerLoadConfig(device_id=entity_id)
         self._config = config
+        self._site_id = site_id
+        self._mode = mode
 
     @property
     def config(self) -> ConsumerLoadConfig:
@@ -86,10 +92,18 @@ class ConsumerLoadSimulator(BaseTimeSeriesGenerator[ConsumerLoadReading]):
         # Calculate device state based on schedule and duty cycle
         state = calculate_device_state(timestamp, self._config, ts_rng)
 
+        # Event mode: force device ON during evening peak (17:00-19:00)
+        # to demonstrate cost impact of running during expensive hours
+        if self._mode == "event":
+            minute_of_day = timestamp.hour * 60 + timestamp.minute
+            if 1020 <= minute_of_day < 1140:  # 17:00-19:00
+                state = DeviceState.ON
+
         # Calculate power based on state
         power = calculate_device_power(state, self._config, ts_rng)
 
         return ConsumerLoadReading(
+            site_id=self._site_id,
             timestamp=timestamp,
             device_id=self._entity_id,
             device_type=self._config.device_type,
@@ -137,6 +151,8 @@ class IndustrialOvenSimulator(ConsumerLoadSimulator):
         interval: IntervalMinutes = IntervalMinutes.FIFTEEN_MINUTES,
         rated_power_kw: float = 3.0,
         duty_cycle_pct: float = 70.0,
+        site_id: str = "",
+        mode: str = "normal",
     ) -> None:
         """
         Initialize the industrial oven simulator.
@@ -147,6 +163,8 @@ class IndustrialOvenSimulator(ConsumerLoadSimulator):
             interval: Time interval for readings.
             rated_power_kw: Oven rated power (default 3 kW).
             duty_cycle_pct: Duty cycle during operation (default 70%).
+            site_id: Site identifier for correlation.
+            mode: Simulation mode ('normal' or 'event').
         """
         config = ConsumerLoadConfig(
             device_id=entity_id,
@@ -156,4 +174,4 @@ class IndustrialOvenSimulator(ConsumerLoadSimulator):
             power_variance_pct=5.0,
             operate_on_weekends=False,
         )
-        super().__init__(entity_id, rng, interval, config)
+        super().__init__(entity_id, rng, interval, config, site_id=site_id, mode=mode)

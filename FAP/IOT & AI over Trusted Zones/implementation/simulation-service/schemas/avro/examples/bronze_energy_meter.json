@@ -1,0 +1,8 @@
+{
+  "ingest_timestamp": 1741363200000,
+  "source_topic": "sim.smart_energy.meter",
+  "kafka_partition": 0,
+  "kafka_offset": 42817,
+  "kafka_key": "janitza-umg96rm-001",
+  "raw_payload": "{\"timestamp\":\"2026-03-07T12:00:00Z\",\"site_id\":\"site-berlin-001\",\"meter_id\":\"janitza-umg96rm-001\",\"asset_id\":\"janitza-umg96rm-001\",\"schema_version\":\"1.0\",\"type\":\"smart_energy.meter\",\"active_power_kw\":12.45,\"active_energy_kwh_total\":54321.67,\"readings\":{\"active_power_l1_w\":4200.3,\"active_power_l2_w\":4100.1,\"active_power_l3_w\":4149.6,\"voltage_l1_v\":230.5,\"voltage_l2_v\":229.8,\"voltage_l3_v\":231.2,\"current_l1_a\":18.9,\"current_l2_a\":18.5,\"current_l3_a\":18.7,\"power_factor\":0.97,\"frequency_hz\":50.01,\"total_energy_kwh\":54321.67}}"
+}

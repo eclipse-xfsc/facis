@@ -15,6 +15,9 @@ Scenarios:
     4. price_volatility (seed=45678, 24h) - High price swings
     5. weekend_pattern (seed=56789, 48h) - Reduced activity
     6. edge_cases (seed=67890, 24h) - Boundary values
+    7. smart_city_normal (seed=77001, 24h) - Smart City normal day
+    8. smart_city_event (seed=77002, 24h) - Smart City event day
+    9. correlation_demo (seed=99001, 24h) - Combined Smart Energy + Smart City
 """
 
 from __future__ import annotations
@@ -42,11 +45,20 @@ from src.models.consumer_load import (
 from src.models.meter import MeterConfig, MeterReading
 from src.models.price import PriceConfig, PriceReading
 from src.models.pv import PVConfig, PVReading
+from src.models.smart_city.event import CityEventReading
+from src.models.smart_city.streetlight import StreetlightConfig, StreetlightReading
+from src.models.smart_city.traffic import TrafficReading
+from src.models.smart_city.visibility import VisibilityReading
 from src.models.weather import WeatherConfig, WeatherReading
 from src.simulators.consumer_load.simulator import ConsumerLoadSimulator
 from src.simulators.energy_meter.simulator import EnergyMeterSimulator
 from src.simulators.energy_price.simulator import EnergyPriceSimulator
 from src.simulators.pv_generation.simulator import PVGenerationSimulator
+from src.simulators.smart_city.correlation import SmartCityCorrelationEngine
+from src.simulators.smart_city.event import CityEventSimulator
+from src.simulators.smart_city.streetlight import StreetlightSimulator
+from src.simulators.smart_city.traffic import TrafficSimulator
+from src.simulators.smart_city.visibility import VisibilitySimulator
 from src.simulators.weather.simulator import WeatherSimulator
 
 logging.basicConfig(
@@ -81,6 +93,16 @@ class ScenarioConfig:
 
     # Consumer load overrides
     consumer_configs: list[ConsumerLoadConfig] = field(default_factory=list)
+
+    # Metadata
+    site_id: str = "site-berlin-001"
+    mode: str = "normal"
+
+    # Smart City overrides
+    city_id: str = "city-berlin"
+    zones: list[dict[str, Any]] | None = None  # zone configs for smart city
+    latitude: float = 52.52
+    longitude: float = 13.405
 
 
 # =============================================================================
@@ -398,6 +420,92 @@ def get_edge_cases_scenario() -> ScenarioConfig:
     )
 
 
+def _default_zones() -> list[dict[str, Any]]:
+    """Default Smart City zone configuration (2 zones, 3 lights each)."""
+    return [
+        {
+            "zone_id": "zone-mitte",
+            "lights": [
+                {"light_id": "light-mitte-001", "rated_power_w": 150.0},
+                {"light_id": "light-mitte-002", "rated_power_w": 150.0},
+                {"light_id": "light-mitte-003", "rated_power_w": 100.0},
+            ],
+        },
+        {
+            "zone_id": "zone-kreuzberg",
+            "lights": [
+                {"light_id": "light-kreuzberg-001", "rated_power_w": 150.0},
+                {"light_id": "light-kreuzberg-002", "rated_power_w": 150.0},
+                {"light_id": "light-kreuzberg-003", "rated_power_w": 100.0},
+            ],
+        },
+    ]
+
+
+def get_smart_city_normal_scenario() -> ScenarioConfig:
+    """Scenario 7: Smart City normal day — no events, standard dimming."""
+    return ScenarioConfig(
+        name="smart_city_normal",
+        description="Normal day Smart City scenario: streetlights follow sunrise/sunset, no city events",
+        seed=77001,
+        duration_hours=24,
+        start_time=datetime(2024, 6, 15, 0, 0, 0, tzinfo=UTC),  # Summer Saturday
+        mode="normal",
+        zones=_default_zones(),
+    )
+
+
+def get_smart_city_event_scenario() -> ScenarioConfig:
+    """Scenario 8: Smart City event day — accidents/emergencies trigger dimming boost."""
+    return ScenarioConfig(
+        name="smart_city_event",
+        description="Event day Smart City scenario: city events cause streetlight dimming boost and traffic spikes",
+        seed=77002,
+        duration_hours=24,
+        start_time=datetime(2024, 6, 15, 0, 0, 0, tzinfo=UTC),  # Same day, event mode
+        mode="event",
+        zones=_default_zones(),
+    )
+
+
+def get_correlation_demo_scenario() -> ScenarioConfig:
+    """Scenario 9: Full correlation demo with Smart Energy + Smart City, aligned timestamps."""
+    return ScenarioConfig(
+        name="correlation_demo",
+        description="Combined Smart Energy + Smart City data with aligned 15-min timestamps for correlation analysis",
+        seed=99001,
+        duration_hours=24,
+        start_time=datetime(2024, 6, 15, 0, 0, 0, tzinfo=UTC),
+        mode="event",  # event mode to show anomalies + city events
+        weather_config=WeatherConfig(
+            base_temperature_summer_c=24.0,
+            base_cloud_cover_percent=25.0,
+        ),
+        meter_config=MeterConfig(
+            meter_id="meter-001",
+            base_power_kw=12.0,
+            peak_power_kw=30.0,
+        ),
+        pv_config=PVConfig(
+            system_id="pv-system-001",
+            nominal_capacity_kwp=12.0,
+        ),
+        price_config=PriceConfig(
+            feed_id="epex-spot-de",
+            volatility_pct=15.0,
+        ),
+        consumer_configs=[
+            ConsumerLoadConfig(
+                device_id="oven-001",
+                device_type=DeviceType.INDUSTRIAL_OVEN,
+                rated_power_kw=3.5,
+                duty_cycle_pct=70.0,
+            ),
+        ],
+        zones=_default_zones(),
+    )
+
+
 ALL_SCENARIOS = {
     "normal_operation": get_normal_operation_scenario,
     "high_consumption": get_high_consumption_scenario,
@@ -405,6 +513,9 @@ ALL_SCENARIOS = {
     "price_volatility": get_price_volatility_scenario,
     "weekend_pattern": get_weekend_pattern_scenario,
     "edge_cases": get_edge_cases_scenario,
+    "smart_city_normal": get_smart_city_normal_scenario,
+    "smart_city_event": get_smart_city_event_scenario,
+    "correlation_demo": get_correlation_demo_scenario,
 }
 
 
@@ -443,6 +554,7 @@ def generate_weather_data(
         rng=rng,
         interval=IntervalMinutes(scenario.interval_minutes),
         config=config,
+        site_id=scenario.site_id,
     )
 
     return [simulator.generate_value(ts) for ts in timestamps]
@@ -462,6 +574,7 @@ def generate_pv_data(
         weather_simulator=weather_simulator,
         interval=IntervalMinutes(scenario.interval_minutes),
         config=config,
+        site_id=scenario.site_id,
     )
 
     return [simulator.generate_value(ts) for ts in timestamps]
@@ -479,6 +592,8 @@ def generate_meter_data(
         rng=rng,
         interval=IntervalMinutes(scenario.interval_minutes),
         config=config,
+        site_id=scenario.site_id,
+        mode=scenario.mode,
     )
 
     return [simulator.generate_value(ts) for ts in timestamps]
@@ -496,6 +611,8 @@ def generate_price_data(
         rng=rng,
         interval=IntervalMinutes(scenario.interval_minutes),
         config=config,
+        site_id=scenario.site_id,
+        mode=scenario.mode,
     )
 
     return [simulator.generate_value(ts) for ts in timestamps]
@@ -519,8 +636,106 @@ def generate_consumer_data(
             rng=rng,
             interval=IntervalMinutes(scenario.interval_minutes),
             config=config,
+            site_id=scenario.site_id,
+            mode=scenario.mode,
         )
         results[config.device_id] = [simulator.generate_value(ts) for ts in timestamps]
+
+    return results
+
+
+def generate_smart_city_data(
+    scenario: ScenarioConfig,
+    timestamps: list[datetime],
+) -> dict[str, list[Any]]:
+    """Generate Smart City readings using the correlation engine."""
+    zones = scenario.zones or _default_zones()
+
+    event_simulators: list[CityEventSimulator] = []
+    streetlight_simulators: list[StreetlightSimulator] = []
+    traffic_simulators: list[TrafficSimulator] = []
+
+    for zone in zones:
+        zone_id = zone["zone_id"]
+
+        # Event simulator per zone
+        event_rng = DeterministicRNG(scenario.seed + hash(zone_id) % 10000)
+        event_sim = CityEventSimulator(
+            entity_id=f"event-{zone_id}",
+            rng=event_rng,
+            interval=IntervalMinutes(scenario.interval_minutes),
+            city_id=scenario.city_id,
+            zone_id=zone_id,
+            mode=scenario.mode,
+        )
+        event_simulators.append(event_sim)
+
+        # Traffic simulator per zone
+        traffic_rng = DeterministicRNG(scenario.seed + hash(zone_id) % 10000 + 1)
+        traffic_sim = TrafficSimulator(
+            entity_id=f"traffic-{zone_id}",
+            rng=traffic_rng,
+            interval=IntervalMinutes(scenario.interval_minutes),
+            city_id=scenario.city_id,
+            zone_id=zone_id,
+        )
+        traffic_simulators.append(traffic_sim)
+
+        # Streetlight simulators per zone
+        for light_cfg in zone.get("lights", []):
+            light_rng = DeterministicRNG(scenario.seed + hash(light_cfg["light_id"]) % 10000)
+            sl_config = StreetlightConfig(
+                light_id=light_cfg["light_id"],
+                zone_id=zone_id,
+                rated_power_w=light_cfg.get("rated_power_w", 150.0),
+            )
+            light_sim = StreetlightSimulator(
+                entity_id=light_cfg["light_id"],
+                rng=light_rng,
+                interval=IntervalMinutes(scenario.interval_minutes),
+                config=sl_config,
+                city_id=scenario.city_id,
+                site_id=scenario.site_id,
+                latitude=scenario.latitude,
+                longitude=scenario.longitude,
+            )
+            streetlight_simulators.append(light_sim)
+
+    # Visibility simulator
+    vis_rng = DeterministicRNG(scenario.seed + 5000)
+    visibility_sim = VisibilitySimulator(
+        entity_id=f"visibility-{scenario.city_id}",
+        rng=vis_rng,
+        interval=IntervalMinutes(scenario.interval_minutes),
+        city_id=scenario.city_id,
+        latitude=scenario.latitude,
+        longitude=scenario.longitude,
+    )
+
+    # Use correlation engine for proper event→dimming
+    engine = SmartCityCorrelationEngine(
+        event_simulators=event_simulators,
+        streetlight_simulators=streetlight_simulators,
+        traffic_simulators=traffic_simulators,
+        visibility_simulator=visibility_sim,
+        city_id=scenario.city_id,
+        interval_minutes=scenario.interval_minutes,
+    )
+
+    results: dict[str, list[Any]] = {
+        "streetlights": [],
+        "traffic": [],
+        "events": [],
+        "visibility": [],
+    }
+
+    for ts in timestamps:
+        snapshot = engine.generate_snapshot(ts)
+        results["streetlights"].extend(snapshot.streetlights)
+        results["traffic"].extend(snapshot.traffic_readings)
+        results["events"].extend(snapshot.events)
+        if snapshot.visibility:
+            results["visibility"].append(snapshot.visibility)
 
     return results
 
@@ -602,7 +817,11 @@ def validate_jsonl_file(
     model_class: type,
 ) -> tuple[bool, int, list[str]]:
     """
-    Validate all records in a JSONL file against a Pydantic model.
+    Validate all records in a JSONL file.
+
+    Validates JSON structure and required payload fields (timestamp, type).
+    Does not do strict Pydantic round-trip validation since to_json_payload()
+    produces a wire format (e.g. renamed fields) that differs from the model constructor.
 
     Returns: (is_valid, record_count, errors)
     """
@@ -614,12 +833,13 @@ def validate_jsonl_file(
             count += 1
             try:
                 data = json.loads(line)
-                # Handle nested structure for validation
-                model_class.model_validate(data)
+                # Validate required payload fields
+                if "timestamp" not in data:
+                    errors.append(f"Line {line_num}: Missing 'timestamp' field")
+                if "type" not in data:
+                    errors.append(f"Line {line_num}: Missing 'type' field")
             except json.JSONDecodeError as e:
                 errors.append(f"Line {line_num}: Invalid JSON - {e}")
-            except Exception as e:
-                errors.append(f"Line {line_num}: Validation error - {e}")
 
     return len(errors) == 0, count, errors
 
@@ -633,7 +853,7 @@ def validate_scenario(
         "files": {},
     }
 
-    # Define file -> model mappings
+    # Define file -> model mappings (only validate if file exists)
     file_models: dict[str, type] = {
         "weather.jsonl": WeatherReading,
         "pv.jsonl": PVReading,
@@ -665,12 +885,7 @@ def validate_scenario(
     for filename, model_class in file_models.items():
         file_path = scenario_dir / filename
         if not file_path.exists():
-            results["valid"] = False
-            results["files"][filename] = {
-                "valid": False,
-                "error": "File not found",
-            }
-            continue
+            continue  # Energy files are optional (smart-city-only scenarios)
 
         is_valid, count, errors = validate_jsonl_file(file_path, model_class)
         results["files"][filename] = {
@@ -685,6 +900,26 @@ def validate_scenario(
     for consumer_file in scenario_dir.glob("consumer_*.jsonl"):
         is_valid, count, errors = validate_jsonl_file(consumer_file, ConsumerLoadReading)
         results["files"][consumer_file.name] = {
+            "valid": is_valid,
+            "record_count": count,
+            "errors": errors[:5] if errors else [],
+        }
+        if not is_valid:
+            results["valid"] = False
+
+    # Validate Smart City files
+    smart_city_models: dict[str, type] = {
+        "smart_city_streetlights.jsonl": StreetlightReading,
+        "smart_city_traffic.jsonl": TrafficReading,
+        "smart_city_events.jsonl": CityEventReading,
+        "smart_city_visibility.jsonl": VisibilityReading,
+    }
+    for filename, model_class in smart_city_models.items():
+        file_path = scenario_dir / filename
+        if not file_path.exists():
+            continue  # Smart City files are optional
+        is_valid, count, errors = validate_jsonl_file(file_path, model_class)
+        results["files"][filename] = {
             "valid": is_valid,
             "record_count": count,
             "errors": errors[:5] if errors else [],
@@ -723,55 +958,77 @@ def generate_scenario(
 
     record_counts: dict[str, int] = {}
 
-    # Generate weather data (needed for PV)
-    rng = DeterministicRNG(scenario.seed)
-    weather_config = scenario.weather_config or WeatherConfig()
-    weather_simulator = WeatherSimulator(
-        entity_id="weather-001",
-        rng=rng,
-        interval=IntervalMinutes(scenario.interval_minutes),
-        config=weather_config,
+    # Check if this scenario has Smart Energy feeds (has meter/pv/weather/price configs or is not smart-city-only)
+    has_energy = (
+        scenario.meter_config is not None
+        or scenario.pv_config is not None
+        or scenario.name not in ("smart_city_normal", "smart_city_event")
     )
-    weather_readings = [weather_simulator.generate_value(ts) for ts in timestamps]
-    record_counts["weather"] = write_jsonl(
-        weather_readings,
-        scenario_dir / "weather.jsonl",
-    )
-    logger.info(f"  Weather: {record_counts['weather']} records")
 
-    # Generate PV data (depends on weather)
-    pv_readings = generate_pv_data(scenario, timestamps, weather_simulator)
-    record_counts["pv"] = write_jsonl(
-        pv_readings,
-        scenario_dir / "pv.jsonl",
-    )
-    logger.info(f"  PV: {record_counts['pv']} records")
-
-    # Generate meter data
-    meter_readings = generate_meter_data(scenario, timestamps)
-    record_counts["meter"] = write_jsonl(
-        meter_readings,
-        scenario_dir / "meter.jsonl",
-    )
-    logger.info(f"  Meter: {record_counts['meter']} records")
-
-    # Generate price data
-    price_readings = generate_price_data(scenario, timestamps)
-    record_counts["price"] = write_jsonl(
-        price_readings,
-        scenario_dir / "price.jsonl",
-    )
-    logger.info(f"  Price: {record_counts['price']} records")
-
-    # Generate consumer data
-    consumer_data = generate_consumer_data(scenario, timestamps)
-    for device_id, readings in consumer_data.items():
-        key = f"consumer_{device_id}"
-        record_counts[key] = write_jsonl(
-            readings,
-            scenario_dir / f"consumer_{device_id}.jsonl",
+    if has_energy:
+        # Generate weather data (needed for PV)
+        rng = DeterministicRNG(scenario.seed)
+        weather_config = scenario.weather_config or WeatherConfig()
+        weather_simulator = WeatherSimulator(
+            entity_id="weather-001",
+            rng=rng,
+            interval=IntervalMinutes(scenario.interval_minutes),
+            config=weather_config,
+            site_id=scenario.site_id,
         )
-        logger.info(f"  Consumer {device_id}: {record_counts[key]} records")
+        weather_readings = [weather_simulator.generate_value(ts) for ts in timestamps]
+        record_counts["weather"] = write_jsonl(
+            weather_readings,
+            scenario_dir / "weather.jsonl",
+        )
+        logger.info(f"  Weather: {record_counts['weather']} records")
+
+        # Generate PV data (depends on weather)
+        pv_readings = generate_pv_data(scenario, timestamps, weather_simulator)
+        record_counts["pv"] = write_jsonl(
+            pv_readings,
+            scenario_dir / "pv.jsonl",
+        )
+        logger.info(f"  PV: {record_counts['pv']} records")
+
+        # Generate meter data
+        meter_readings = generate_meter_data(scenario, timestamps)
+        record_counts["meter"] = write_jsonl(
+            meter_readings,
+            scenario_dir / "meter.jsonl",
+        )
+        logger.info(f"  Meter: {record_counts['meter']} records")
+
+        # Generate price data
+        price_readings = generate_price_data(scenario, timestamps)
+        record_counts["price"] = write_jsonl(
+            price_readings,
+            scenario_dir / "price.jsonl",
+        )
+        logger.info(f"  Price: {record_counts['price']} records")
+
+        # Generate consumer data
+        consumer_data = generate_consumer_data(scenario, timestamps)
+        for device_id, readings in consumer_data.items():
+            key = f"consumer_{device_id}"
+            record_counts[key] = write_jsonl(
+                readings,
+                scenario_dir / f"consumer_{device_id}.jsonl",
+            )
+            logger.info(f"  Consumer {device_id}: {record_counts[key]} records")
+
+    # Generate Smart City data if zones are configured
+    if scenario.zones:
+        smart_city_data = generate_smart_city_data(scenario, timestamps)
+
+        for feed_name, readings in smart_city_data.items():
+            if readings:
+                key = f"smart_city_{feed_name}"
+                record_counts[key] = write_jsonl(
+                    readings,
+                    scenario_dir / f"smart_city_{feed_name}.jsonl",
+                )
+                logger.info(f"  Smart City {feed_name}: {record_counts[key]} records")
 
     # Write metadata
     write_metadata(

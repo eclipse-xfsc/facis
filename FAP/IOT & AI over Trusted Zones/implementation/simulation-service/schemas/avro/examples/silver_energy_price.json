@@ -1,0 +1,9 @@
+{
+  "event_timestamp": 1741363200000,
+  "ingest_timestamp": 1741363201500,
+  "site_id": "site-berlin-001",
+  "building_id": null,
+  "schema_version": "1.0",
+  "price_eur_per_kwh": 0.102,
+  "tariff_type": "MIDDAY"
+}

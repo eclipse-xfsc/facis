@@ -1,0 +1,8 @@
+{
+  "ingest_timestamp": 1741363200000,
+  "source_topic": "sim.smart_energy.consumer",
+  "kafka_partition": 0,
+  "kafka_offset": 19842,
+  "kafka_key": "industrial-oven-001",
+  "raw_payload": "{\"timestamp\":\"2026-03-07T12:00:00Z\",\"site_id\":\"site-berlin-001\",\"device_id\":\"industrial-oven-001\",\"asset_id\":\"industrial-oven-001\",\"schema_version\":\"1.0\",\"type\":\"smart_energy.consumer\",\"device_type\":\"INDUSTRIAL_OVEN\",\"device_state\":\"ON\",\"device_power_kw\":4.85}"
+}

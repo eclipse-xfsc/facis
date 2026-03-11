@@ -1,0 +1,12 @@
+{
+  "event_timestamp": 1741363200000,
+  "ingest_timestamp": 1741363201500,
+  "site_id": "site-berlin-001",
+  "building_id": null,
+  "device_id": "industrial-oven-001",
+  "asset_id": "industrial-oven-001",
+  "schema_version": "1.0",
+  "device_type": "INDUSTRIAL_OVEN",
+  "device_state": "ON",
+  "device_power_kw": 4.85
+}

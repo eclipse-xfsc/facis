@@ -1,0 +1,50 @@
+{
+  "type": "record",
+  "name": "SilverTraffic",
+  "namespace": "cloud.facis.fap.iotai.silver",
+  "doc": "Silver layer harmonized schema for Smart City traffic feed. Extracts typed fields from Bronze raw JSON, applies data quality filtering (non-null timestamps, traffic_index in [0,1]), and adds congestion classification. Reference: setup_lakehouse.py Silver view definition.",
+  "fields": [
+    {
+      "name": "event_timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Original event timestamp from the simulation (UTC)."
+    },
+    {
+      "name": "ingest_timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Wall-clock time when NiFi ingested the source Bronze record (UTC)."
+    },
+    {
+      "name": "city_id",
+      "type": "string",
+      "doc": "City identifier for cross-feed correlation."
+    },
+    {
+      "name": "zone_id",
+      "type": "string",
+      "doc": "Zone identifier within the city."
+    },
+    {
+      "name": "schema_version",
+      "type": "string",
+      "default": "1.0",
+      "doc": "Source schema version for forward compatibility."
+    },
+    {
+      "name": "traffic_index",
+      "type": "double",
+      "doc": "Normalized traffic density index (0.0 = free flow, 1.0 = gridlock)."
+    },
+    {
+      "name": "is_congested",
+      "type": "boolean",
+      "doc": "Derived field: true when traffic_index > 0.7."
+    }
+  ]
+}
