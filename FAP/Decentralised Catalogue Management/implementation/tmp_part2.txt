@@ -1,0 +1,115 @@
+<!-- View Modal (component) -->
+        <view-modal
+          :visible="isViewModal"
+          :current-view-tab="currentViewTab"
+          :transformation-summary="transformationSummary"
+          :validation="validation"
+          :audit-mini="auditMini"
+          :audit-rows="auditRows"
+          :audit-search="auditSearch"
+          :original-json-lines="originalJsonLines"
+          :local-json-lines="localJsonLines"
+          @close="isViewModal = false"
+          @update:current-view-tab="currentViewTab = $event"
+          @update:audit-search="auditSearch = $event"
+        ></view-modal>
+
+        <!-- Register Remote Catalogue Modal (component) -->
+        <register-catalog-modal
+          :visible="showRegisterRemoteCatalogModal"
+          :remote-catalog-form="remoteCatalogForm"
+          :is-editing-remote-catalog="isEditingRemoteCatalog"
+          :is-saving-remote-catalog="isSavingRemoteCatalog"
+          :register-remote-catalog-error="registerRemoteCatalogError"
+          :update-remote-catalog-error="updateRemoteCatalogError"
+          @close="closeRegisterRemoteCatalogModal"
+          @save="saveRemoteCatalog"
+          @test-connection="testRemoteCatalogConnection"
+        ></register-catalog-modal>
+
+        <!-- Invite User Modal (component) -->
+        <invite-modal
+          :visible="isInviteModal"
+          :invite-form="inviteForm"
+          @close="closeInviteModal"
+          @send-invite="sendInvite"
+        ></invite-modal>
+
+        <!-- Manage User Modal (component) -->
+        <manage-user-modal
+          :visible="manageUserModal"
+          :manage-form="manageForm"
+          @close="closeManageUserModal"
+          @send-manage="sendManageUser"
+        ></manage-user-modal>
+
+        <!-- Schema Edit Modal (component) -->
+        <schema-modal
+          :visible="isRegisterSchemaEditModal"
+          modal-title="Schema Details"
+          :register-schema-form="registerSchemaForm"
+          :schema-summaries="schemaSummaries"
+          @close="closeRegisterSchemaEditModal"
+          @save="saveRegisterSchemaEdit"
+          @remove-catalog="removeRemoteCatalog"
+          @add-catalog="addFirstCatalogFromSearch"
+        ></schema-modal>
+
+        <!-- Schema New Modal (component) -->
+        <schema-modal
+          :visible="isRegisterSchemaNewModal"
+          modal-title="Register Remote Schema"
+          :register-schema-form="registerSchemaForm"
+          :schema-summaries="schemaSummaries"
+          @close="closeRegisterSchemaNewModal"
+          @save="saveRegisterSchemaNew"
+          @remove-catalog="removeRemoteCatalog"
+          @add-catalog="addFirstCatalogFromSearch"
+        ></schema-modal>
+
+        <!-- Harvest Wizard Modal (component) -->
+        <harvest-wizard-modal
+          :visible="showHarvestWizard"
+          :harvest-wizard-step="harvestWizardStep"
+          :harvest-wizard-search="harvestWizardSearch"
+          :harvest-wizard-pagination="harvestWizardPagination"
+          :harvest-wizard-selected-rows="harvestWizardSelectedRows"
+          :is-wizard-all-selected="isWizardAllSelected"
+          :pagination="pagination"
+          :page-window-fn="pageWindow"
+          :harvest-scope="harvestScope"
+          :lifecycle-mapping="lifecycleMapping"
+          :wizard-selected-count="wizardSelectedCount"
+          :overview-scope-lines="overviewScopeLines"
+          :overview-lifecycle-lines="overviewLifecycleLines"
+          :overview-mapping-counts="overviewMappingCounts"
+          :is-all-assets-selected="isAllAssetsSelected"
+          :show-include-new-assets-toggle="showIncludeNewAssetsToggle"
+          @close="closeHarvestWizard"
+          @next-step="nextHarvestWizardStep"
+          @prev-step="prevHarvestWizardStep"
+          @start-harvest="startHarvest"
+          @update:harvest-wizard-search="harvestWizardSearch = $event"
+          @update:harvest-wizard-selected-rows="harvestWizardSelectedRows = $event"
+          @run-wizard-search="runHarvestWizardSearch"
+          @toggle-wizard-select-all="toggleWizardSelectAll"
+          @toggle-scope-option="toggleScopeOption"
+          @toggle-lifecycle-card="toggleLifecycleCard"
+          @page-change="handlePageChange"
+        ></harvest-wizard-modal>
+
+        <!-- Access Info Modal (component) -->
+        <access-info-modal
+          :visible="showAccessInformation"
+          @close="closeAccessInformation"
+        ></access-info-modal>
+
+        <!-- Manage Menu (component) -->
+        <manage-menu
+          :manage-menu="manageMenu"
+          @close="closeManageMenu"
+          @delete-user="deleteUser"
+          @edit-user="openManageUserModal"
+        ></manage-menu>
+
+    </div>
