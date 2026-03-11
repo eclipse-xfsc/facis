@@ -1,0 +1,956 @@
+[
+    {
+        "id": "f493f135546b9b7b",
+        "type": "tab",
+        "label": "DCM-Requests",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "41afb911059aba8d",
+        "type": "bcrypt",
+        "z": "f493f135546b9b7b",
+        "name": "Hash New Password",
+        "action": "encrypt",
+        "field": "auth.password",
+        "hash": "payload",
+        "target": "hashedPassword",
+        "assignment": "assign",
+        "match": "match",
+        "outputs": 1,
+        "rounds": "12",
+        "x": 522.5,
+        "y": 1100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "de6b641a59e233a1",
+        "type": "function",
+        "z": "f493f135546b9b7b",
+        "name": "Find Reset Code",
+        "func": "msg.collection = \"reset_password_codes\";\nmsg.operation = \"findOne\";\n\nmsg.payload = {\n    email: msg.auth.email,\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 502.5,
+        "y": 760,
+        "wires": [
+            [
+                "e7ce59002fd445ff"
+            ]
+        ]
+    },
+    {
+        "id": "505137a6b497a014",
+        "type": "function",
+        "z": "f493f135546b9b7b",
+        "name": "check if user exists",
+        "func": "msg.collection = \"users\"\nmsg.operation = \"findOne\"\nmsg.payload = {\n    email : msg.auth.email\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 617.5,
+        "y": 360,
+        "wires": [
+            [
+                "6614744819601998"
+            ]
+        ]
+    },
+    {
+        "id": "ff67c953ab865f87",
+        "type": "function",
+        "z": "f493f135546b9b7b",
+        "name": "Save New Password",
+        "func": "msg.collection = \"users\";\nmsg.operation = \"updateOne\";\n\nmsg.payload = [\n    {email : msg.auth.email},\n    {$set: { password: msg.auth.password}},\n]\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 877.5,
+        "y": 1100,
+        "wires": [
+            [
+                "29bd13e452ecb46e"
+            ]
+        ]
+    },
+    {
+        "id": "030980d392a3416f",
+        "type": "change",
+        "z": "f493f135546b9b7b",
+        "name": "Expired Reset Code Response",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"action\":\"resetPassword\",\"status\":\"expired\",\"message\":\"The reset Code Is Expired. Please request a new password reset to continue.\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1280,
+        "y": 900,
+        "wires": [
+            [
+                "84b6a55555b8892c",
+                "0dc2b11a002155d3"
+            ]
+        ]
+    },
+    {
+        "id": "0e8e57c05ec3a66e",
+        "type": "switch",
+        "z": "f493f135546b9b7b",
+        "name": "check if code isn't expired",
+        "property": "payload.status",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "valid",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "expired",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1542.5,
+        "y": 745,
+        "wires": [
+            [
+                "a49da1a30844ddbe"
+            ],
+            [
+                "030980d392a3416f"
+            ]
+        ]
+    },
+    {
+        "id": "84b6a55555b8892c",
+        "type": "link out",
+        "z": "f493f135546b9b7b",
+        "name": "ForgetPassword-failed-response2-out",
+        "mode": "link",
+        "links": [
+            "61d7358530b235d7"
+        ],
+        "x": 1762.5,
+        "y": 805,
+        "wires": []
+    },
+    {
+        "id": "414af55cc826c91b",
+        "type": "change",
+        "z": "f493f135546b9b7b",
+        "name": "Invalid Email Response",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"action\":\"resetPassword\",\"status\":\"invalidEmail\",\"message\":\"Invalid email\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1323.5,
+        "y": 460,
+        "wires": [
+            [
+                "8cbab5c951a832f6",
+                "7845cbd83fb828d7"
+            ]
+        ]
+    },
+    {
+        "id": "8cbab5c951a832f6",
+        "type": "link out",
+        "z": "f493f135546b9b7b",
+        "name": "ForgetPassword-failed-response1-out",
+        "mode": "link",
+        "links": [
+            "61d7358530b235d7"
+        ],
+        "x": 1489.5,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "7afc90865af30b4c",
+        "type": "switch",
+        "z": "f493f135546b9b7b",
+        "name": "if user exists",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            },
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1302.5,
+        "y": 360,
+        "wires": [
+            [
+                "b711bad753c6dfb8",
+                "ca03281fcc39efdb"
+            ],
+            [
+                "414af55cc826c91b"
+            ]
+        ]
+    },
+    {
+        "id": "567aa08895f87b2e",
+        "type": "function",
+        "z": "f493f135546b9b7b",
+        "name": "Prepare Email",
+        "func": "\nmsg.to = msg.auth.email;\n\nmsg.resetCode = Math.floor(100000 + Math.random() * 900000);  // generates 6-digit code\nmsg.topic = \"DCM Platform Password Reset Code – Action Required\";\nmsg.payload =\n    `Hello,\n\nWe received a request to reset your DCM Platform account password.\n\nYour 6-digit verification code is:\n${msg.resetCode}\n\nPlease enter this code on the password reset page. \nFor your security, this code will expire in 5 minutes.\n\nIf you did not request a password reset, simply ignore this message.\nYour account remains secure.\n\n— DCM Platform Security Team\n`;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2477.5,
+        "y": 360,
+        "wires": [
+            [
+                "2db31806d996af18",
+                "41643b63d3d14b30"
+            ]
+        ]
+    },
+    {
+        "id": "2db31806d996af18",
+        "type": "function",
+        "z": "f493f135546b9b7b",
+        "name": "Save Reset Password Temporarily",
+        "func": "msg.collection = \"reset_password_codes\";\nmsg.operation = \"insertOne\";\n\nconst codeExpiry = new Date(Date.now() + 2 * 60 * 1000); // 2 minutes from now (UTC)\n\nmsg.payload = {\n  email: msg.auth.email,\n  code: msg.resetCode,\n  expiry: codeExpiry,\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2814.5,
+        "y": 370,
+        "wires": [
+            [
+                "1b6f233a5d2ebaf5",
+                "ea3a522d273cd778"
+            ]
+        ]
+    },
+    {
+        "id": "913556d7597246e9",
+        "type": "change",
+        "z": "f493f135546b9b7b",
+        "name": "Invalid Reset Code Response",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"action\":\"resetPassword\",\"status\":\"invalidCode\",\"message\":\"The Reset Password Code Is Invalid.\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2052.5,
+        "y": 825,
+        "wires": [
+            [
+                "3460328d91d8d898",
+                "e154caade55a739e"
+            ]
+        ]
+    },
+    {
+        "id": "460ee79c828cf0d9",
+        "type": "function",
+        "z": "f493f135546b9b7b",
+        "name": "Delete Reset Code From DB",
+        "func": "msg.collection = \"reset_password_codes\";\nmsg.operation = \"deleteOne\";\n\nmsg.payload = {\n    email: msg.auth.email\n}\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2952.5,
+        "y": 725,
+        "wires": [
+            [
+                "fb5388cdd0ae0fa1"
+            ]
+        ]
+    },
+    {
+        "id": "3460328d91d8d898",
+        "type": "link out",
+        "z": "f493f135546b9b7b",
+        "name": "ForgetPassword-failed-response3-out",
+        "mode": "link",
+        "links": [
+            "61d7358530b235d7"
+        ],
+        "x": 2255,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "96c7440f03c177f3",
+        "type": "change",
+        "z": "f493f135546b9b7b",
+        "name": "Valid Reset Code Response",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"status\":\"validCode\",\"action\":\"resetPassword\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2532.5,
+        "y": 745,
+        "wires": [
+            [
+                "bdb8e13f94478419",
+                "1f20341b7c2fb318",
+                "460ee79c828cf0d9",
+                "86eafe65dba67602"
+            ]
+        ]
+    },
+    {
+        "id": "bdb8e13f94478419",
+        "type": "link out",
+        "z": "f493f135546b9b7b",
+        "name": "ForgetPassword-success-response2-out",
+        "mode": "link",
+        "links": [
+            "61d7358530b235d7"
+        ],
+        "x": 2768.5,
+        "y": 805,
+        "wires": []
+    },
+    {
+        "id": "15ae253bde1dd73c",
+        "type": "function",
+        "z": "f493f135546b9b7b",
+        "name": "Save Code & Check Expiry",
+        "func": "msg.mainCode = msg.payload.code;\n\nif (msg.payload === null) {\n    // expired\n    msg.payload.status = \"expired\";\n} else {\n    // still valid\n    msg.payload.status = \"valid\";\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1176.5,
+        "y": 760,
+        "wires": [
+            [
+                "0e8e57c05ec3a66e"
+            ]
+        ]
+    },
+    {
+        "id": "b711bad753c6dfb8",
+        "type": "change",
+        "z": "f493f135546b9b7b",
+        "name": "Valid Email Response",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"action\":\"resetPassword\",\"status\":\"validEmail\",\"message\":\"valid email\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1319.5,
+        "y": 260,
+        "wires": [
+            [
+                "83caac5fa50be4d8",
+                "1be4cabda9cc2928"
+            ]
+        ]
+    },
+    {
+        "id": "83caac5fa50be4d8",
+        "type": "link out",
+        "z": "f493f135546b9b7b",
+        "name": "ForgetPassword-success-response1-out",
+        "mode": "link",
+        "links": [
+            "61d7358530b235d7"
+        ],
+        "x": 1515,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "f1f2cf06547e1180",
+        "type": "change",
+        "z": "f493f135546b9b7b",
+        "name": "Set New Password Response",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"status\":\"success\",\"action\":\"setNewPassword\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1507.5,
+        "y": 1100,
+        "wires": [
+            [
+                "e74d7e07c8e64446",
+                "06a7207ba89bda7e"
+            ]
+        ]
+    },
+    {
+        "id": "e74d7e07c8e64446",
+        "type": "link out",
+        "z": "f493f135546b9b7b",
+        "name": "ForgetPassword-success-response3-out",
+        "mode": "link",
+        "links": [
+            "61d7358530b235d7"
+        ],
+        "x": 1817.5,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "a49da1a30844ddbe",
+        "type": "switch",
+        "z": "f493f135546b9b7b",
+        "name": "Check Code Match",
+        "property": "auth.code",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "mainCode",
+                "vt": "msg"
+            },
+            {
+                "t": "neq",
+                "v": "mainCode",
+                "vt": "msg"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 2022.5,
+        "y": 745,
+        "wires": [
+            [
+                "96c7440f03c177f3"
+            ],
+            [
+                "913556d7597246e9"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "1f20341b7c2fb318",
+        "type": "debug",
+        "z": "f493f135546b9b7b",
+        "name": "Valid Reset Code Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2872.5,
+        "y": 605,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "06a7207ba89bda7e",
+        "type": "debug",
+        "z": "f493f135546b9b7b",
+        "name": "Set New Password Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1947.5,
+        "y": 1140,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "41643b63d3d14b30",
+        "type": "e-mail",
+        "z": "f493f135546b9b7b",
+        "d": true,
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "authtype": "BASIC",
+        "saslformat": true,
+        "token": "oauth2Response.access_token",
+        "secure": true,
+        "tls": true,
+        "name": "",
+        "dname": "Send Email",
+        "x": 2797.5,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "0a9c210f8bc199d3",
+        "type": "link in",
+        "z": "f493f135546b9b7b",
+        "name": "ForgetPassword1-in",
+        "links": [
+            "25412a0e349949d5"
+        ],
+        "x": 237.5,
+        "y": 640,
+        "wires": [
+            [
+                "505137a6b497a014"
+            ]
+        ]
+    },
+    {
+        "id": "b4aea03c618fb024",
+        "type": "link in",
+        "z": "f493f135546b9b7b",
+        "name": "ForgetPassword3-in",
+        "links": [
+            "bb892a51523348fd"
+        ],
+        "x": 237.5,
+        "y": 680,
+        "wires": [
+            [
+                "de6b641a59e233a1"
+            ]
+        ]
+    },
+    {
+        "id": "8f6169bbceba5a5a",
+        "type": "link in",
+        "z": "f493f135546b9b7b",
+        "name": "ForgetPassword4-in",
+        "links": [
+            "0bdaa70a03c7b33a"
+        ],
+        "x": 237.5,
+        "y": 720,
+        "wires": [
+            [
+                "ff67c953ab865f87"
+            ]
+        ]
+    },
+    {
+        "id": "86439bb7b068bdaa",
+        "type": "link in",
+        "z": "f493f135546b9b7b",
+        "name": "ForgetPassword2-in",
+        "links": [
+            "9d978c2465d70536"
+        ],
+        "x": 1689.5,
+        "y": 240,
+        "wires": [
+            [
+                "ca03281fcc39efdb"
+            ]
+        ]
+    },
+    {
+        "id": "16a8eee984a79cae",
+        "type": "function",
+        "z": "f493f135546b9b7b",
+        "name": "Delete TempResetCode (cancel reset code)",
+        "func": "msg.collection = \"reset_password_codes\";\nmsg.operation = \"deleteOne\";\n\nmsg.payload = {\n    email : msg.auth.email\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 1240,
+        "wires": [
+            [
+                "9692bb017744f14d"
+            ]
+        ]
+    },
+    {
+        "id": "1df25dab29c53fb2",
+        "type": "link in",
+        "z": "f493f135546b9b7b",
+        "name": "forgetpassword5-in",
+        "links": [
+            "d2e64c61e511b4cd"
+        ],
+        "x": 237.5,
+        "y": 760,
+        "wires": [
+            [
+                "16a8eee984a79cae"
+            ]
+        ]
+    },
+    {
+        "id": "0dc2b11a002155d3",
+        "type": "debug",
+        "z": "f493f135546b9b7b",
+        "name": "Expired Reset Code Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1562.5,
+        "y": 905,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "7845cbd83fb828d7",
+        "type": "debug",
+        "z": "f493f135546b9b7b",
+        "name": "Invalid Email Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1324.5,
+        "y": 545,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "1be4cabda9cc2928",
+        "type": "debug",
+        "z": "f493f135546b9b7b",
+        "name": "Valid Email Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1323.5,
+        "y": 170,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "86eafe65dba67602",
+        "type": "debug",
+        "z": "f493f135546b9b7b",
+        "name": "Set New Password Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2725,
+        "y": 920,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "e154caade55a739e",
+        "type": "debug",
+        "z": "f493f135546b9b7b",
+        "name": "Invalid Reset Code Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2052.5,
+        "y": 905,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "ca03281fcc39efdb",
+        "type": "function",
+        "z": "f493f135546b9b7b",
+        "name": "Delete Reset Code From DB",
+        "func": "msg.collection = \"reset_password_codes\";\nmsg.operation = \"deleteMany\";\n\nmsg.payload = {\n    email : msg.auth.email\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1759.5,
+        "y": 360,
+        "wires": [
+            [
+                "efd90b267d91f717"
+            ]
+        ]
+    },
+    {
+        "id": "9692bb017744f14d",
+        "type": "debug",
+        "z": "f493f135546b9b7b",
+        "name": "Cancel Verification Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 925,
+        "y": 1240,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "1b6f233a5d2ebaf5",
+        "type": "debug",
+        "z": "f493f135546b9b7b",
+        "name": "Reset Password Request Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3197.5,
+        "y": 360,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "6614744819601998",
+        "type": "mongodb4",
+        "z": "f493f135546b9b7b",
+        "clientNode": "ad5bea80de70463c",
+        "mode": "collection",
+        "collection": "",
+        "operation": "",
+        "output": "toArray",
+        "maxTimeMS": "0",
+        "handleDocId": false,
+        "name": "",
+        "x": 942.5,
+        "y": 360,
+        "wires": [
+            [
+                "7afc90865af30b4c"
+            ]
+        ]
+    },
+    {
+        "id": "efd90b267d91f717",
+        "type": "mongodb4",
+        "z": "f493f135546b9b7b",
+        "clientNode": "ad5bea80de70463c",
+        "mode": "collection",
+        "collection": "",
+        "operation": "",
+        "output": "toArray",
+        "maxTimeMS": "0",
+        "handleDocId": false,
+        "name": "",
+        "x": 2137.5,
+        "y": 360,
+        "wires": [
+            [
+                "567aa08895f87b2e"
+            ]
+        ]
+    },
+    {
+        "id": "e7ce59002fd445ff",
+        "type": "mongodb4",
+        "z": "f493f135546b9b7b",
+        "clientNode": "ad5bea80de70463c",
+        "mode": "collection",
+        "collection": "",
+        "operation": "",
+        "output": "toArray",
+        "maxTimeMS": "0",
+        "handleDocId": false,
+        "name": "",
+        "x": 822.5,
+        "y": 760,
+        "wires": [
+            [
+                "15ae253bde1dd73c"
+            ]
+        ]
+    },
+    {
+        "id": "29bd13e452ecb46e",
+        "type": "mongodb4",
+        "z": "f493f135546b9b7b",
+        "clientNode": "ad5bea80de70463c",
+        "mode": "collection",
+        "collection": "",
+        "operation": "",
+        "output": "toArray",
+        "maxTimeMS": "0",
+        "handleDocId": false,
+        "name": "",
+        "x": 1182.5,
+        "y": 1100,
+        "wires": [
+            [
+                "f1f2cf06547e1180"
+            ]
+        ]
+    },
+    {
+        "id": "fb5388cdd0ae0fa1",
+        "type": "mongodb4",
+        "z": "f493f135546b9b7b",
+        "clientNode": "ad5bea80de70463c",
+        "mode": "collection",
+        "collection": "",
+        "operation": "",
+        "output": "toArray",
+        "maxTimeMS": "0",
+        "handleDocId": false,
+        "name": "",
+        "x": 3322.5,
+        "y": 740,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ea3a522d273cd778",
+        "type": "mongodb4",
+        "z": "f493f135546b9b7b",
+        "clientNode": "ad5bea80de70463c",
+        "mode": "collection",
+        "collection": "",
+        "operation": "",
+        "output": "toArray",
+        "maxTimeMS": "0",
+        "handleDocId": false,
+        "name": "",
+        "x": 3302.5,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ad5bea80de70463c",
+        "type": "mongodb4-client",
+        "name": "",
+        "protocol": "mongodb",
+        "hostname": "",
+        "port": "",
+        "dbName": "asalDCM",
+        "appName": "",
+        "authSource": "",
+        "authMechanism": "DEFAULT",
+        "tls": false,
+        "tlsCAFile": "",
+        "tlsCertificateKeyFile": "",
+        "tlsInsecure": false,
+        "connectTimeoutMS": "30000",
+        "socketTimeoutMS": "0",
+        "minPoolSize": "0",
+        "maxPoolSize": "100",
+        "maxIdleTimeMS": "0",
+        "uri": "mongodb+srv://asal:SKjT26pL19zg8037@db-mongodb-leanea-f9f0367b.mongo.ondigitalocean.com/asalDCM?tls=true&authSource=admin&replicaSet=db-mongodb-leanea",
+        "advanced": "{}",
+        "uriTabActive": "tab-uri-advanced"
+    }
+]

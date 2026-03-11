@@ -1,0 +1,189 @@
+[
+    {
+        "id": "f10514b54313a655",
+        "type": "tab",
+        "label": "Configuration",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "3e5d28c9c3814ebf",
+        "type": "http in",
+        "z": "f10514b54313a655",
+        "name": "POST /ai",
+        "url": "/ai",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 142.5,
+        "y": 100,
+        "wires": [
+            [
+                "81091af46b0e6402",
+                "0b801ed80e100ed0"
+            ]
+        ]
+    },
+    {
+        "id": "e296d0fcee1a3bf2",
+        "type": "http response",
+        "z": "f10514b54313a655",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1117.5,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "840eebb8e1b7aafe",
+        "type": "json",
+        "z": "f10514b54313a655",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": true,
+        "x": 1117.5,
+        "y": 100,
+        "wires": [
+            [
+                "a878e2ddea604b9c"
+            ]
+        ]
+    },
+    {
+        "id": "a878e2ddea604b9c",
+        "type": "browser-js",
+        "z": "f10514b54313a655",
+        "name": "",
+        "code": ";(function(){\n  const myFlow = msg.payload;\n  const jsonText = JSON.stringify(myFlow, null, 2);\n  const importAsNew = true;\n  RED.view.importNodes(jsonText, importAsNew);\n  RED.view.focus();\n})();\n",
+        "x": 1442.5,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "81091af46b0e6402",
+        "type": "function",
+        "z": "f10514b54313a655",
+        "name": "function 2",
+        "func": "// capture the prompt from the old msg\nconst savedPrompt = msg.payload && msg.payload.prompt;\n\nmsg = {};\n\n// add your key\nmsg.key = \"eyJ0eXAiOiJKV1QiLCJraWQiOiI1M2QwYzE1Yi05YTlkLTRmMDUtODIyYS0wMmFlZjQ3ZjVmMzkiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJpb25vc2Nsb3VkIiwiaWF0IjoxNzUwNjc4NDI0LCJjbGllbnQiOiJVU0VSIiwiaWRlbnRpdHkiOnsiY29udHJhY3ROdW1iZXIiOjM1NjY2NTMzLCJpc1BhcmVudCI6ZmFsc2UsInByaXZpbGVnZXMiOlsiQUNDRVNTX0FORF9NQU5BR0VfQUlfTU9ERUxfSFVCIl0sInV1aWQiOiJiNGQyZTVjYS1mYWFhLTRkZmMtOWNhMC1jMmExNmQ0YTk2NjciLCJyZXNlbGxlcklkIjoxLCJyZWdEb21haW4iOiJpb25vcy5kZSIsInJvbGUiOiJ1c2VyIn0sImV4cCI6MTc4MjIxNDQyNH0.cXPbQ6ze5w740s4T3H1MKBPmT0_qp9O7IXcAycr3KfBwi8uz-6r0kVMtHZRBgaexgWSljr5zIASjiQC9ljeToeLTGsoezxiDKC70Tl57DJaj0cJoz_rzSy921X5huQKzhHfVU2DgHsCwzhzKjgzS0PhVaGzR2NxQLDc1sIfaTZtZGKcDmqz2AdYlEBl2gyBgB7DZvPbzChlK-WmkqqxjuvvFeINdkbZPnNrqojPPP--im7gyFrAWW5aeeb_7JOjh-YXrY4ykaHoA-Od7zni1gvvvg8e100ZFNx-VPbufbhqb5zjdFygAe5u1OaJkuN0vnR2VqMp3ryAO6dp2n5WITA\";\n\n// restore the prompt into payload\nmsg.payload = savedPrompt;\n\n// return the new, minimal msg object\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 457.5,
+        "y": 100,
+        "wires": [
+            [
+                "06d8867026e67289"
+            ]
+        ]
+    },
+    {
+        "id": "06d8867026e67289",
+        "type": "prompt-node",
+        "z": "f10514b54313a655",
+        "name": "",
+        "model": "mistralai/Mixtral-8x7B-Instruct-v0.1",
+        "useMsgKey": true,
+        "x": 780,
+        "y": 100,
+        "wires": [
+            [
+                "840eebb8e1b7aafe"
+            ]
+        ]
+    },
+    {
+        "id": "a12013de476bba1b",
+        "type": "delay",
+        "z": "f10514b54313a655",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "13",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 777.5,
+        "y": 340,
+        "wires": [
+            [
+                "e296d0fcee1a3bf2"
+            ]
+        ]
+    },
+    {
+        "id": "0b801ed80e100ed0",
+        "type": "function",
+        "z": "f10514b54313a655",
+        "name": "function 1",
+        "func": "msg.payload = { status: \"success\", message: \"Valid prompt\" };\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 462.5,
+        "y": 340,
+        "wires": [
+            [
+                "a12013de476bba1b"
+            ]
+        ]
+    },
+    {
+        "id": "d65bbd9517c838b9",
+        "type": "inject",
+        "z": "f10514b54313a655",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 557.5,
+        "y": 560,
+        "wires": [
+            [
+                "4492d5883c839f1c"
+            ]
+        ]
+    },
+    {
+        "id": "4492d5883c839f1c",
+        "type": "debug",
+        "z": "f10514b54313a655",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1037.5,
+        "y": 560,
+        "wires": []
+    }
+]

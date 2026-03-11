@@ -1,0 +1,1330 @@
+[
+    {
+        "id": "6927eb851cc094a4",
+        "type": "tab",
+        "label": "DCM-Dashboard",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "50202cf15479e1bd",
+        "type": "uibuilder",
+        "z": "6927eb851cc094a4",
+        "name": "",
+        "topic": "",
+        "url": "Dashboard",
+        "okToGo": true,
+        "fwdInMessages": false,
+        "allowScripts": false,
+        "allowStyles": false,
+        "copyIndex": true,
+        "templateFolder": "blank",
+        "extTemplate": "",
+        "showfolder": false,
+        "reload": false,
+        "sourceFolder": "src",
+        "deployedVersion": "7.4.3",
+        "showMsgUib": false,
+        "title": "",
+        "descr": "",
+        "editurl": "vscode://vscode-remote/ssh-remote+hub.leanea.com/data/uibuilder/Dashboard/?windowId=_blank",
+        "x": 362.5,
+        "y": 600,
+        "wires": [
+            [
+                "648a59521df90db6",
+                "32af4bca1ddc808b"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "1320340df737c22e",
+        "type": "link in",
+        "z": "6927eb851cc094a4",
+        "name": "dashboard-linkin",
+        "links": [
+            "16527ad6204c3522",
+            "5358c6051f25584b",
+            "af5ac4519861a306",
+            "6dc6bf3d3e49cffc",
+            "b86628d7335814f4",
+            "281a1775383f292f",
+            "7ade33a33e59ae9a",
+            "45717c651815e7b6",
+            "d0a026c3144e520a",
+            "16401b1b989df2ee"
+        ],
+        "x": 145,
+        "y": 600,
+        "wires": [
+            [
+                "50202cf15479e1bd"
+            ]
+        ]
+    },
+    {
+        "id": "648a59521df90db6",
+        "type": "debug",
+        "z": "6927eb851cc094a4",
+        "name": "Dashboard Incoming Requests",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 790,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "55ed8ea3edfa93a7",
+        "type": "switch",
+        "z": "6927eb851cc094a4",
+        "name": "if token exists",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            },
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 2082.5,
+        "y": 600,
+        "wires": [
+            [
+                "8afa52834c9440d7"
+            ],
+            [
+                "473eb76a9a3d72ec"
+            ]
+        ]
+    },
+    {
+        "id": "8afa52834c9440d7",
+        "type": "function",
+        "z": "6927eb851cc094a4",
+        "name": "save user data",
+        "func": "// save logged in user's data \nmsg.userData = msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2437.5,
+        "y": 600,
+        "wires": [
+            [
+                "c84266be9231743a"
+            ]
+        ]
+    },
+    {
+        "id": "473eb76a9a3d72ec",
+        "type": "change",
+        "z": "6927eb851cc094a4",
+        "name": "Not LoggedIn Respone",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"state\":\"notLoggedIn\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1577.5,
+        "y": 800,
+        "wires": [
+            [
+                "16527ad6204c3522",
+                "af9079209e5e8845"
+            ]
+        ]
+    },
+    {
+        "id": "16527ad6204c3522",
+        "type": "link out",
+        "z": "6927eb851cc094a4",
+        "name": "link out 68",
+        "mode": "link",
+        "links": [
+            "1320340df737c22e"
+        ],
+        "x": 1775,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "c84266be9231743a",
+        "type": "switch",
+        "z": "6927eb851cc094a4",
+        "name": "check request type",
+        "property": "type",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "logOut",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "getDashboard",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "registerRemoteCatalog",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "getCatalogRegistry",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "updateRemoteCatalog",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "inviteUser",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "getAdminTools",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 7,
+        "x": 2762.5,
+        "y": 600,
+        "wires": [
+            [
+                "cf3ff7a9d63aa3d9"
+            ],
+            [
+                "99353466f4351297"
+            ],
+            [
+                "985c939251233bb3"
+            ],
+            [
+                "198ae095cc4afa63"
+            ],
+            [
+                "62d2859a384b3982"
+            ],
+            [
+                "f963b2cc14a99eee"
+            ],
+            [
+                "063334ac61546c2c"
+            ]
+        ]
+    },
+    {
+        "id": "985c939251233bb3",
+        "type": "function",
+        "z": "6927eb851cc094a4",
+        "name": "Register Remote Catalog",
+        "func": "// Generates a unique ID by combining the current timestamp (base‑36 encoded)\n// with a random 12‑character alphanumeric string.\n\nconst chars = 'abcdefghijklmnopqrstuvwxyz0123456789';\nlet randomPart = '';\n\nfor (let i = 0; i < 12; i++) {\n  randomPart += chars[Math.floor(Math.random() * chars.length)];\n}\n\nconst id = Date.now().toString(36) + randomPart;\n\n\nmsg.uniqueId = id\nmsg.operation = \"insertOne\";\nmsg.collection = \"cr_catalogues\";\n\nmsg.payload = {\n    catalog: msg.data,\n    uniqueId: id         \n};\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3167.5,
+        "y": 540,
+        "wires": [
+            [
+                "d84a11ab3fbd63de"
+            ]
+        ]
+    },
+    {
+        "id": "99353466f4351297",
+        "type": "function",
+        "z": "6927eb851cc094a4",
+        "name": "user access response",
+        "func": "// user access reponse after login\nmsg.response = {\n    userAccess: msg.userData.access\n}\n\ndelete msg.payload;\ndelete msg.auth;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3157.5,
+        "y": 420,
+        "wires": [
+            [
+                "5358c6051f25584b",
+                "94c0765903c2e430"
+            ]
+        ]
+    },
+    {
+        "id": "5358c6051f25584b",
+        "type": "link out",
+        "z": "6927eb851cc094a4",
+        "name": "link out 69",
+        "mode": "link",
+        "links": [
+            "1320340df737c22e"
+        ],
+        "x": 3375,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "94c0765903c2e430",
+        "type": "debug",
+        "z": "6927eb851cc094a4",
+        "name": "user access response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3482.5,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "7720f6a23b6fb66c",
+        "type": "switch",
+        "z": "6927eb851cc094a4",
+        "name": "check token exists",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "hasToken",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "hasNotToken",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1057.5,
+        "y": 600,
+        "wires": [
+            [
+                "888086b205c8122b"
+            ],
+            [
+                "473eb76a9a3d72ec"
+            ]
+        ]
+    },
+    {
+        "id": "32af4bca1ddc808b",
+        "type": "function",
+        "z": "6927eb851cc094a4",
+        "name": "Initial Token Check",
+        "func": "if (msg.auth && msg.auth.userToken) {\n    msg.payload = \"hasToken\"\n} else {\n    msg.payload = \"hasNotToken\";\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 722.5,
+        "y": 600,
+        "wires": [
+            [
+                "7720f6a23b6fb66c"
+            ]
+        ]
+    },
+    {
+        "id": "994dfbba77762e0a",
+        "type": "mongodb4",
+        "z": "6927eb851cc094a4",
+        "clientNode": "ad5bea80de70463c",
+        "mode": "collection",
+        "collection": "",
+        "operation": "",
+        "output": "toArray",
+        "maxTimeMS": "0",
+        "handleDocId": false,
+        "name": "",
+        "x": 1737.5,
+        "y": 600,
+        "wires": [
+            [
+                "55ed8ea3edfa93a7"
+            ]
+        ]
+    },
+    {
+        "id": "d84a11ab3fbd63de",
+        "type": "mongodb4",
+        "z": "6927eb851cc094a4",
+        "clientNode": "ad5bea80de70463c",
+        "mode": "collection",
+        "collection": "",
+        "operation": "",
+        "output": "toArray",
+        "maxTimeMS": "0",
+        "handleDocId": false,
+        "name": "",
+        "x": 3477.5,
+        "y": 540,
+        "wires": [
+            [
+                "29bed402bf76fca7"
+            ]
+        ]
+    },
+    {
+        "id": "af9079209e5e8845",
+        "type": "debug",
+        "z": "6927eb851cc094a4",
+        "name": "Not LoggedIn Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1892.5,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "888086b205c8122b",
+        "type": "function",
+        "z": "6927eb851cc094a4",
+        "name": "check token",
+        "func": "msg.collection = \"users\"\nmsg.operation = \"findOne\"\n\nmsg.payload = {\n    \"session.token\": msg.auth.userToken\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1417.5,
+        "y": 600,
+        "wires": [
+            [
+                "994dfbba77762e0a"
+            ]
+        ]
+    },
+    {
+        "id": "198ae095cc4afa63",
+        "type": "function",
+        "z": "6927eb851cc094a4",
+        "name": "get catalog registry data",
+        "func": "// send all the remote catalogs \n\nmsg.operation = \"find\";\nmsg.collection = \"cr_catalogues\";\n\nmsg.payload = [\n    {},\n    {projection: { catalog: 1, uniqueId: 1, _id: 0}}\n];\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3167.5,
+        "y": 760,
+        "wires": [
+            [
+                "ac3d27814aa08143"
+            ]
+        ]
+    },
+    {
+        "id": "a5e9f148b7e08489",
+        "type": "function",
+        "z": "6927eb851cc094a4",
+        "name": "response",
+        "func": "msg.response = {\n    action: \"getCatalogRegistry\",\n    status: \"success\",\n    catalogs: msg.payload\n}\n\ndelete msg.payload;\ndelete msg.userData;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3797.5,
+        "y": 760,
+        "wires": [
+            [
+                "af5ac4519861a306",
+                "245d9e19934fd1f1"
+            ]
+        ]
+    },
+    {
+        "id": "af5ac4519861a306",
+        "type": "link out",
+        "z": "6927eb851cc094a4",
+        "name": "link out 9",
+        "mode": "link",
+        "links": [
+            "1320340df737c22e"
+        ],
+        "x": 4035,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "245d9e19934fd1f1",
+        "type": "debug",
+        "z": "6927eb851cc094a4",
+        "name": "Get Catalog Register Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 4250,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "ac3d27814aa08143",
+        "type": "mongodb4",
+        "z": "6927eb851cc094a4",
+        "clientNode": "ad5bea80de70463c",
+        "mode": "collection",
+        "collection": "",
+        "operation": "",
+        "output": "toArray",
+        "maxTimeMS": "0",
+        "handleDocId": false,
+        "name": "",
+        "x": 3472.5,
+        "y": 760,
+        "wires": [
+            [
+                "a5e9f148b7e08489"
+            ]
+        ]
+    },
+    {
+        "id": "29bed402bf76fca7",
+        "type": "function",
+        "z": "6927eb851cc094a4",
+        "name": "response",
+        "func": "// front-end saves generated unique id for each catalog\n// it will be saved in catalog data for later catalog updates\n\nmsg.response = {\n    action: \"registerRemoteCatalog\",\n    status: \"success\",\n    uniqueId: msg.uniqueId\n}\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3792.5,
+        "y": 540,
+        "wires": [
+            [
+                "6dc6bf3d3e49cffc",
+                "a3d0231a0e1d2cc0"
+            ]
+        ]
+    },
+    {
+        "id": "6dc6bf3d3e49cffc",
+        "type": "link out",
+        "z": "6927eb851cc094a4",
+        "name": "link out 12",
+        "mode": "link",
+        "links": [
+            "1320340df737c22e"
+        ],
+        "x": 4085,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "a3d0231a0e1d2cc0",
+        "type": "debug",
+        "z": "6927eb851cc094a4",
+        "name": "Regitser Remote Catalog Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 4200,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "62d2859a384b3982",
+        "type": "function",
+        "z": "6927eb851cc094a4",
+        "name": "update remote catalog",
+        "func": "// Converts a flat patch object into dot‑notation paths\n// so fields are updated inside the `catalog` subdocument\n\nconst patch = msg.data.patch;\nconst update = Object.fromEntries(\n  Object.entries(patch).map(([key, value]) => [\n    `catalog.${key}`,\n    value\n  ])\n);\n\n\nmsg.operation = \"updateOne\";\nmsg.collection = \"cr_catalogues\";\n\nmsg.payload = [\n  { uniqueId: msg.data.uniqueId },\n  { $set: update }\n];\n\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3167.5,
+        "y": 980,
+        "wires": [
+            [
+                "c64384443b6e84b7"
+            ]
+        ]
+    },
+    {
+        "id": "97dd38e0c6d228a3",
+        "type": "function",
+        "z": "6927eb851cc094a4",
+        "name": "Response",
+        "func": "msg.response = {\n    action: \"updateRemoteCatalog\",\n    status: \"success\",\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3817.5,
+        "y": 980,
+        "wires": [
+            [
+                "27833290f9ce5742",
+                "b86628d7335814f4"
+            ]
+        ]
+    },
+    {
+        "id": "b86628d7335814f4",
+        "type": "link out",
+        "z": "6927eb851cc094a4",
+        "name": "link out 2",
+        "mode": "link",
+        "links": [
+            "1320340df737c22e"
+        ],
+        "x": 4065,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "27833290f9ce5742",
+        "type": "debug",
+        "z": "6927eb851cc094a4",
+        "name": "Update remote catalog response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 4270,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "c64384443b6e84b7",
+        "type": "mongodb4",
+        "z": "6927eb851cc094a4",
+        "clientNode": "ad5bea80de70463c",
+        "mode": "collection",
+        "collection": "",
+        "operation": "",
+        "output": "toArray",
+        "maxTimeMS": "0",
+        "handleDocId": false,
+        "name": "",
+        "x": 3482.5,
+        "y": 980,
+        "wires": [
+            [
+                "97dd38e0c6d228a3"
+            ]
+        ]
+    },
+    {
+        "id": "f963b2cc14a99eee",
+        "type": "function",
+        "z": "6927eb851cc094a4",
+        "name": "Validate Email",
+        "func": "const email = msg.data.email;\n\n// define regex pattern\nconst emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/;\n\n// ==========================================\n// step 1: check format \n// ==========================================\nif (!email || typeof email !== 'string' || !emailRegex.test(email)) {\n    msg.validEmailFormat = false;\n    msg.validEmailDomain = false;\n    msg.error = \"Invalid email format\";\n    return msg;\n}\n\nmsg.validEmailFormat = true;\n\n// ==========================================\n// Check domian (DNs MX Check)\n// ==========================================\nconst domain = email.split('@')[1];\n\nreturn new Promise((resolve) => {\n    dns.resolveMx(domain, (err, records) => {\n        msg.validEmailDomain = !err && records && records.length > 0;\n        msg.mxRecords = records || [];\n        if (err) {\n            msg.dnsError = err.message;\n            msg.error = \"Invalid email domain\"\n        }\n\n        resolve(msg);\n    });\n});\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "dns",
+                "module": "dns"
+            }
+        ],
+        "x": 3157.5,
+        "y": 1260,
+        "wires": [
+            [
+                "2dc5ff75283064ac"
+            ]
+        ]
+    },
+    {
+        "id": "789e5e42d72616b4",
+        "type": "inject",
+        "z": "6927eb851cc094a4",
+        "name": "Invite User Request",
+        "props": [
+            {
+                "p": "data",
+                "v": "{\"profile\":{\"firstName\":\"Hossein\",\"lastName\":\"Esmaili\"},\"email\":\"hossein@gmail.com\",\"expiresIn\":\"7\",\"access\":[\"schema_registry\",\"local_catalogue\",\"admin_tools\",\"catalogue_registry\",\"harvester\"]}",
+                "vt": "json"
+            },
+            {
+                "p": "type",
+                "v": "inviteUser",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 2742.5,
+        "y": 1260,
+        "wires": [
+            [
+                "f963b2cc14a99eee"
+            ]
+        ]
+    },
+    {
+        "id": "387c57018d034934",
+        "type": "change",
+        "z": "6927eb851cc094a4",
+        "name": "Error Response",
+        "rules": [
+            {
+                "t": "set",
+                "p": "response",
+                "pt": "msg",
+                "to": "{\"action\":\"validateEmail\",\"status\":\"failed\",\"message\":\"Invalid Email\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 3492.5,
+        "y": 1380,
+        "wires": [
+            [
+                "e66b6924c4230627",
+                "d0a026c3144e520a"
+            ]
+        ]
+    },
+    {
+        "id": "2dc5ff75283064ac",
+        "type": "switch",
+        "z": "6927eb851cc094a4",
+        "name": "check validation",
+        "property": "validEmailDomain",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 3492.5,
+        "y": 1260,
+        "wires": [
+            [
+                "810ffa5dbe08ce05"
+            ],
+            [
+                "387c57018d034934"
+            ]
+        ]
+    },
+    {
+        "id": "d0a026c3144e520a",
+        "type": "link out",
+        "z": "6927eb851cc094a4",
+        "name": "link out 18",
+        "mode": "link",
+        "links": [
+            "1320340df737c22e"
+        ],
+        "x": 3730,
+        "y": 1360,
+        "wires": []
+    },
+    {
+        "id": "e66b6924c4230627",
+        "type": "debug",
+        "z": "6927eb851cc094a4",
+        "name": "Invalid Email Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3837.5,
+        "y": 1440,
+        "wires": []
+    },
+    {
+        "id": "810ffa5dbe08ce05",
+        "type": "function",
+        "z": "6927eb851cc094a4",
+        "name": "Check Duplicate User",
+        "func": "msg.collection = \"users\"\nmsg.operation = \"findOne\"\n\nmsg.payload = {\n    email : msg.data.email\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3917.5,
+        "y": 1280,
+        "wires": [
+            [
+                "d9e8bda475feac5a"
+            ]
+        ]
+    },
+    {
+        "id": "d9e8bda475feac5a",
+        "type": "mongodb4",
+        "z": "6927eb851cc094a4",
+        "clientNode": "ad5bea80de70463c",
+        "mode": "collection",
+        "collection": "",
+        "operation": "",
+        "output": "toArray",
+        "maxTimeMS": "0",
+        "handleDocId": false,
+        "name": "",
+        "x": 4252.5,
+        "y": 1280,
+        "wires": [
+            [
+                "9d115e5f50fbc13a",
+                "ae2d46e2d1af28cd"
+            ]
+        ]
+    },
+    {
+        "id": "9d115e5f50fbc13a",
+        "type": "switch",
+        "z": "6927eb851cc094a4",
+        "name": "check querty result",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "null"
+            },
+            {
+                "t": "nnull"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 4572.5,
+        "y": 1280,
+        "wires": [
+            [
+                "265eb1d9e77c31bd"
+            ],
+            [
+                "08be2b0744d17fc1"
+            ]
+        ]
+    },
+    {
+        "id": "08be2b0744d17fc1",
+        "type": "change",
+        "z": "6927eb851cc094a4",
+        "name": "Failed Response",
+        "rules": [
+            {
+                "t": "set",
+                "p": "response",
+                "pt": "msg",
+                "to": "{\"action\":\"inviteUser\",\"status\":\"failed\",\"message\":\"User already exists\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 4577.5,
+        "y": 1400,
+        "wires": [
+            [
+                "45717c651815e7b6",
+                "d0418c966a9dd890"
+            ]
+        ]
+    },
+    {
+        "id": "45717c651815e7b6",
+        "type": "link out",
+        "z": "6927eb851cc094a4",
+        "name": "link out 10",
+        "mode": "link",
+        "links": [
+            "1320340df737c22e"
+        ],
+        "x": 4770,
+        "y": 1380,
+        "wires": []
+    },
+    {
+        "id": "d0418c966a9dd890",
+        "type": "debug",
+        "z": "6927eb851cc094a4",
+        "d": true,
+        "name": "Duplicate EMail Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 4605,
+        "y": 1520,
+        "wires": []
+    },
+    {
+        "id": "265eb1d9e77c31bd",
+        "type": "function",
+        "z": "6927eb851cc094a4",
+        "name": "Store Invited User Data",
+        "func": "// Generates a unique ID by combining the current timestamp (base‑36 encoded)\n// with a random 12‑character alphanumeric string.\n\nconst chars = 'abcdefghijklmnopqrstuvwxyz0123456789';\nlet randomPart = '';\n\nfor (let i = 0; i < 12; i++) {\n  randomPart += chars[Math.floor(Math.random() * chars.length)];\n}\n\nconst id = Date.now().toString(36) + randomPart;\n\nmsg.userUniqueId = id;\n// user data \nconst data = {\n    uniqueId: id,\n    profile: msg.data.profile,\n    email: msg.data.email,\n    access: msg.data.access,\n    expiresIn: msg.data.expiresIn,\n    invitationStatus: \"pending\",\n    createdAt: new Date(),\n    updatedAt: new Date(),\n    password: \"111111\"\n\n}\n\nmsg.collection = \"users\"\nmsg.operation = \"insertOne\"\n\nmsg.payload = {\n  ...data\n\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 4940,
+        "y": 1280,
+        "wires": [
+            [
+                "a414e9adb4d6deb3",
+                "4a447315b043b7bd"
+            ]
+        ]
+    },
+    {
+        "id": "a414e9adb4d6deb3",
+        "type": "mongodb4",
+        "z": "6927eb851cc094a4",
+        "clientNode": "ad5bea80de70463c",
+        "mode": "collection",
+        "collection": "",
+        "operation": "",
+        "output": "toArray",
+        "maxTimeMS": "0",
+        "handleDocId": false,
+        "name": "",
+        "x": 5272.5,
+        "y": 1280,
+        "wires": [
+            [
+                "2c27a95fbb10e104"
+            ]
+        ]
+    },
+    {
+        "id": "2c27a95fbb10e104",
+        "type": "function",
+        "z": "6927eb851cc094a4",
+        "name": "Send Invitation Email",
+        "func": "const {profile, email, expiresIn, message} = msg.data;\nmsg.to = email;\n\nmsg.topic = \"DCM federated catalogue system\";\nmsg.payload =\n    `Hello ${profile.firstName} ${profile.lastName},\n\n${message},\n\nUse the link below to join us by providing a strong password:\n\nhttps://hub.leanea.com/alireza-dcm/join\n\n— DCM Security Team\n`;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 5617.5,
+        "y": 1280,
+        "wires": [
+            [
+                "616e75f137fd551e",
+                "62adca21df157cca"
+            ]
+        ]
+    },
+    {
+        "id": "616e75f137fd551e",
+        "type": "function",
+        "z": "6927eb851cc094a4",
+        "name": "Response",
+        "func": "msg.response = {\n    status: \"success\",\n    action: \"inviteUser\",\n    uniqueId: msg.userUniqueId \n}\n\ndelete msg.auth\ndelete msg.payload\ndelete msg.collection\ndelete msg.operation\ndelete msg.userData\ndelete msg.userUniqueId\ndelete msg.to\ndelete msg.topic\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 5972.5,
+        "y": 1440,
+        "wires": [
+            [
+                "281a1775383f292f",
+                "b28edaf75322d94a"
+            ]
+        ]
+    },
+    {
+        "id": "b28edaf75322d94a",
+        "type": "debug",
+        "z": "6927eb851cc094a4",
+        "name": "Invite User response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 6462.5,
+        "y": 1420,
+        "wires": []
+    },
+    {
+        "id": "281a1775383f292f",
+        "type": "link out",
+        "z": "6927eb851cc094a4",
+        "name": "link out 11",
+        "mode": "link",
+        "links": [
+            "1320340df737c22e"
+        ],
+        "x": 6190,
+        "y": 1400,
+        "wires": []
+    },
+    {
+        "id": "62adca21df157cca",
+        "type": "e-mail",
+        "z": "6927eb851cc094a4",
+        "d": true,
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "authtype": "BASIC",
+        "saslformat": true,
+        "token": "oauth2Response.access_token",
+        "secure": true,
+        "tls": true,
+        "name": "",
+        "dname": "Send Email",
+        "x": 5942.5,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "063334ac61546c2c",
+        "type": "function",
+        "z": "6927eb851cc094a4",
+        "name": "Get Admin Tools Data",
+        "func": "msg.collection = \"users\"\nmsg.operation = \"find\"\n\nmsg.payload = [\n    {},\n    {projection: { profile: 1, uniqueId: 1, email: 1, access: 1, expiresIn: 1, _id: 0 }}\n];\n\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3137.5,
+        "y": 1700,
+        "wires": [
+            [
+                "826b0f47810e9921"
+            ]
+        ]
+    },
+    {
+        "id": "826b0f47810e9921",
+        "type": "mongodb4",
+        "z": "6927eb851cc094a4",
+        "clientNode": "ad5bea80de70463c",
+        "mode": "collection",
+        "collection": "",
+        "operation": "",
+        "output": "toArray",
+        "maxTimeMS": "0",
+        "handleDocId": false,
+        "name": "",
+        "x": 3477.5,
+        "y": 1700,
+        "wires": [
+            [
+                "50d0a755ce0d02a9"
+            ]
+        ]
+    },
+    {
+        "id": "f07871b07a97af9e",
+        "type": "debug",
+        "z": "6927eb851cc094a4",
+        "name": "Admin Tools Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 4180,
+        "y": 1760,
+        "wires": []
+    },
+    {
+        "id": "50d0a755ce0d02a9",
+        "type": "function",
+        "z": "6927eb851cc094a4",
+        "name": "response",
+        "func": "msg.response = {\n    action: \"getAdminTools\",\n    status: \"success\",\n    users: msg.payload\n}\n\ndelete msg.payload;\ndelete msg.auth\ndelete msg.collection\ndelete msg.operation\ndelete msg.userData\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3802.5,
+        "y": 1700,
+        "wires": [
+            [
+                "16401b1b989df2ee",
+                "f07871b07a97af9e"
+            ]
+        ]
+    },
+    {
+        "id": "16401b1b989df2ee",
+        "type": "link out",
+        "z": "6927eb851cc094a4",
+        "name": "link out 14",
+        "mode": "link",
+        "links": [
+            "1320340df737c22e"
+        ],
+        "x": 4052.5,
+        "y": 1660,
+        "wires": []
+    },
+    {
+        "id": "cf3ff7a9d63aa3d9",
+        "type": "function",
+        "z": "6927eb851cc094a4",
+        "name": "logout",
+        "func": "msg.collection = \"users\"\nmsg.operation = \"updateOne\"\n\nmsg.payload = [\n    { \"session.token\": msg.auth.userToken },\n    { $unset: { \"session.token\": \"\", \"session.expiresAt\": \"\" } },\n    { upsert: false }\n];\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 3122.5,
+        "y": 180,
+        "wires": [
+            [
+                "4a6c36d065652391"
+            ]
+        ]
+    },
+    {
+        "id": "4a6c36d065652391",
+        "type": "mongodb4",
+        "z": "6927eb851cc094a4",
+        "clientNode": "ad5bea80de70463c",
+        "mode": "collection",
+        "collection": "",
+        "operation": "",
+        "output": "toArray",
+        "maxTimeMS": "0",
+        "handleDocId": false,
+        "name": "",
+        "x": 3442.5,
+        "y": 180,
+        "wires": [
+            [
+                "e3fa72be9248b5bc"
+            ]
+        ]
+    },
+    {
+        "id": "e3fa72be9248b5bc",
+        "type": "change",
+        "z": "6927eb851cc094a4",
+        "name": "response",
+        "rules": [
+            {
+                "t": "set",
+                "p": "response",
+                "pt": "msg",
+                "to": "{\"action\":\"logOut\",\"status\":\"success\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 3747.5,
+        "y": 180,
+        "wires": [
+            [
+                "7ade33a33e59ae9a",
+                "0db840d31a6459f9"
+            ]
+        ]
+    },
+    {
+        "id": "7ade33a33e59ae9a",
+        "type": "link out",
+        "z": "6927eb851cc094a4",
+        "name": "link out 19",
+        "mode": "link",
+        "links": [
+            "1320340df737c22e"
+        ],
+        "x": 3970,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "0db840d31a6459f9",
+        "type": "debug",
+        "z": "6927eb851cc094a4",
+        "name": "logout response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 4082.5,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "4a447315b043b7bd",
+        "type": "debug",
+        "z": "6927eb851cc094a4",
+        "name": "debug 16",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 5177.5,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "ae2d46e2d1af28cd",
+        "type": "debug",
+        "z": "6927eb851cc094a4",
+        "name": "debug 17",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 4522.5,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "ad5bea80de70463c",
+        "type": "mongodb4-client",
+        "name": "",
+        "protocol": "mongodb",
+        "hostname": "",
+        "port": "",
+        "dbName": "asalDCM",
+        "appName": "",
+        "authSource": "",
+        "authMechanism": "DEFAULT",
+        "tls": false,
+        "tlsCAFile": "",
+        "tlsCertificateKeyFile": "",
+        "tlsInsecure": false,
+        "connectTimeoutMS": "30000",
+        "socketTimeoutMS": "0",
+        "minPoolSize": "0",
+        "maxPoolSize": "100",
+        "maxIdleTimeMS": "0",
+        "uri": "mongodb+srv://asal:SKjT26pL19zg8037@db-mongodb-leanea-f9f0367b.mongo.ondigitalocean.com/asalDCM?tls=true&authSource=admin&replicaSet=db-mongodb-leanea",
+        "advanced": "{}",
+        "uriTabActive": "tab-uri-advanced"
+    }
+]

@@ -1,0 +1,798 @@
+[
+    {
+        "id": "ec575add68cf29e3",
+        "type": "tab",
+        "label": "DCM-Login",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "7426defac5391bdb",
+        "type": "uibuilder",
+        "z": "ec575add68cf29e3",
+        "name": "",
+        "topic": "",
+        "url": "login",
+        "okToGo": true,
+        "fwdInMessages": false,
+        "allowScripts": false,
+        "allowStyles": false,
+        "copyIndex": true,
+        "templateFolder": "blank",
+        "extTemplate": "",
+        "showfolder": false,
+        "reload": false,
+        "sourceFolder": "src",
+        "deployedVersion": "7.4.3",
+        "showMsgUib": false,
+        "title": "",
+        "descr": "",
+        "editurl": "vscode://vscode-remote/ssh-remote+hub.leanea.com/data/uibuilder/login/?windowId=_blank",
+        "x": 382.5,
+        "y": 420,
+        "wires": [
+            [
+                "4fc41a903e02d86e"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "d7ca33f09737a532",
+        "type": "function",
+        "z": "ec575add68cf29e3",
+        "name": "check if user already exists",
+        "func": "msg.collection = \"users\"\nmsg.operation = \"findOne\"\nmsg.payload = {\n    email : msg.auth.email\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 1180,
+        "wires": [
+            [
+                "7b9a13795aa4d7d2"
+            ]
+        ]
+    },
+    {
+        "id": "96c61955153bf323",
+        "type": "switch",
+        "z": "ec575add68cf29e3",
+        "name": "if user exists",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            },
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1017.5,
+        "y": 1180,
+        "wires": [
+            [
+                "64f64d0efed5c525"
+            ],
+            [
+                "8f9c5e6dae7c3edf"
+            ]
+        ]
+    },
+    {
+        "id": "8f9c5e6dae7c3edf",
+        "type": "change",
+        "z": "ec575add68cf29e3",
+        "name": "Invalid Credentials (Email) Response",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"action\":\"login\",\"status\":\"invalidCredentials\",\"message\":\"Invalid email or password\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1070,
+        "y": 1320,
+        "wires": [
+            [
+                "32a7957833a18e17",
+                "b90a651e03212bfb"
+            ]
+        ]
+    },
+    {
+        "id": "64f64d0efed5c525",
+        "type": "switch",
+        "z": "ec575add68cf29e3",
+        "name": "If Passwords Match",
+        "property": "auth.password",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "payload.password",
+                "vt": "msg"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1562.5,
+        "y": 1180,
+        "wires": [
+            [
+                "592942dea82c478b"
+            ],
+            [
+                "ce088bd6d3dbb0d3"
+            ]
+        ]
+    },
+    {
+        "id": "592942dea82c478b",
+        "type": "function",
+        "z": "ec575add68cf29e3",
+        "name": "create token and expiray - update clientId",
+        "func": "const token = Date.now().toString(36) + Math.random().toString(36).substring(2, 10);\n// const expiresAt = new Date(Date.now() + 3600 * 1000);\nconst expiresAt = new Date(Date.now() + 604800000);\n\nmsg.auth.userToken = token;\nmsg.auth.expiresAt = expiresAt;\n\nmsg.collection = \"users\"\nmsg.operation = \"updateOne\"\nmsg.payload = [\n    { email: msg.auth.email }, \n    {\n        $set: {\n            session: {\n            token: token,\n            expiresAt: expiresAt,\n            clientId: msg.auth.clientId\n            }\n            \n        }\n    },\n    { upsert: false }\n];\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2120,
+        "y": 1180,
+        "wires": [
+            [
+                "c06fa49265abc11d"
+            ]
+        ]
+    },
+    {
+        "id": "ce088bd6d3dbb0d3",
+        "type": "change",
+        "z": "ec575add68cf29e3",
+        "name": "Invalid Credentials (Password) Response ",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"action\":\"login\",\"status\":\"invalidCredentials\",\"message\":\"Invalid email or password\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1620,
+        "y": 1300,
+        "wires": [
+            [
+                "5ee58e06e6c1ba97",
+                "444d68acbe43e08f"
+            ]
+        ]
+    },
+    {
+        "id": "29a5d8f8b3abb938",
+        "type": "link out",
+        "z": "ec575add68cf29e3",
+        "name": "LoginSuccessResponse-out",
+        "mode": "link",
+        "links": [
+            "61d7358530b235d7"
+        ],
+        "x": 3105,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "121a1607d131580a",
+        "type": "change",
+        "z": "ec575add68cf29e3",
+        "name": "response",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"action\":\"login\",\"status\":\"success\",\"message\":\"logged in successfully\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2877.5,
+        "y": 1180,
+        "wires": [
+            [
+                "29a5d8f8b3abb938",
+                "00dc5eecf39ddadd"
+            ]
+        ]
+    },
+    {
+        "id": "5ee58e06e6c1ba97",
+        "type": "link out",
+        "z": "ec575add68cf29e3",
+        "name": "LoginFailedResponse2-out",
+        "mode": "link",
+        "links": [
+            "61d7358530b235d7"
+        ],
+        "x": 1865,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "32a7957833a18e17",
+        "type": "link out",
+        "z": "ec575add68cf29e3",
+        "name": "LoginFailedResponse1-out",
+        "mode": "link",
+        "links": [
+            "61d7358530b235d7"
+        ],
+        "x": 1285,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "b90a651e03212bfb",
+        "type": "debug",
+        "z": "ec575add68cf29e3",
+        "name": "Invalid Credentials (Email) Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1070,
+        "y": 1440,
+        "wires": []
+    },
+    {
+        "id": "444d68acbe43e08f",
+        "type": "debug",
+        "z": "ec575add68cf29e3",
+        "name": "Invalid Credentials (Passwrod) Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1620,
+        "y": 1420,
+        "wires": []
+    },
+    {
+        "id": "00dc5eecf39ddadd",
+        "type": "debug",
+        "z": "ec575add68cf29e3",
+        "name": "Login Success Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3222.5,
+        "y": 1220,
+        "wires": []
+    },
+    {
+        "id": "61d7358530b235d7",
+        "type": "link in",
+        "z": "ec575add68cf29e3",
+        "name": "login-linkin",
+        "links": [
+            "32a7957833a18e17",
+            "5ee58e06e6c1ba97",
+            "29a5d8f8b3abb938",
+            "83caac5fa50be4d8",
+            "8cbab5c951a832f6",
+            "bdb8e13f94478419",
+            "3460328d91d8d898",
+            "84b6a55555b8892c",
+            "e74d7e07c8e64446"
+        ],
+        "x": 185,
+        "y": 420,
+        "wires": [
+            [
+                "7426defac5391bdb"
+            ]
+        ]
+    },
+    {
+        "id": "7b9a13795aa4d7d2",
+        "type": "mongodb4",
+        "z": "ec575add68cf29e3",
+        "clientNode": "ad5bea80de70463c",
+        "mode": "collection",
+        "collection": "",
+        "operation": "",
+        "output": "toArray",
+        "maxTimeMS": "0",
+        "handleDocId": false,
+        "name": "",
+        "x": 697.5,
+        "y": 1180,
+        "wires": [
+            [
+                "96c61955153bf323"
+            ]
+        ]
+    },
+    {
+        "id": "c06fa49265abc11d",
+        "type": "mongodb4",
+        "z": "ec575add68cf29e3",
+        "clientNode": "ad5bea80de70463c",
+        "mode": "collection",
+        "collection": "",
+        "operation": "",
+        "output": "toArray",
+        "maxTimeMS": "0",
+        "handleDocId": false,
+        "name": "",
+        "x": 2517.5,
+        "y": 1180,
+        "wires": [
+            [
+                "121a1607d131580a"
+            ]
+        ]
+    },
+    {
+        "id": "737206959568cd81",
+        "type": "switch",
+        "z": "ec575add68cf29e3",
+        "name": "type of Requests",
+        "property": "auth.type",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "login",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "resetPassword",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "resendResetPassword",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "sendResetCode",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "setNewPassword",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "cancelResetPassword",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 6,
+        "x": 1322.5,
+        "y": 200,
+        "wires": [
+            [
+                "e223750371da46ed"
+            ],
+            [
+                "25412a0e349949d5"
+            ],
+            [
+                "9d978c2465d70536"
+            ],
+            [
+                "bb892a51523348fd"
+            ],
+            [
+                "0bdaa70a03c7b33a"
+            ],
+            [
+                "d2e64c61e511b4cd"
+            ]
+        ]
+    },
+    {
+        "id": "25412a0e349949d5",
+        "type": "link out",
+        "z": "ec575add68cf29e3",
+        "name": "link out 3",
+        "mode": "link",
+        "links": [
+            "0a9c210f8bc199d3"
+        ],
+        "x": 1610,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "bb892a51523348fd",
+        "type": "link out",
+        "z": "ec575add68cf29e3",
+        "name": "link out 4",
+        "mode": "link",
+        "links": [
+            "b4aea03c618fb024"
+        ],
+        "x": 1610,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "e223750371da46ed",
+        "type": "link out",
+        "z": "ec575add68cf29e3",
+        "name": "link out 5",
+        "mode": "link",
+        "links": [
+            "e77226ac7f2a756e"
+        ],
+        "x": 1610,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "9d978c2465d70536",
+        "type": "link out",
+        "z": "ec575add68cf29e3",
+        "name": "link out 6",
+        "mode": "link",
+        "links": [
+            "86439bb7b068bdaa"
+        ],
+        "x": 1610,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "d2e64c61e511b4cd",
+        "type": "link out",
+        "z": "ec575add68cf29e3",
+        "name": "link out 7",
+        "mode": "link",
+        "links": [
+            "1df25dab29c53fb2"
+        ],
+        "x": 1610,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "e77226ac7f2a756e",
+        "type": "link in",
+        "z": "ec575add68cf29e3",
+        "name": "link in 2",
+        "links": [
+            "e223750371da46ed"
+        ],
+        "x": 145,
+        "y": 1180,
+        "wires": [
+            [
+                "d7ca33f09737a532"
+            ]
+        ]
+    },
+    {
+        "id": "0bdaa70a03c7b33a",
+        "type": "link out",
+        "z": "ec575add68cf29e3",
+        "name": "link out 8",
+        "mode": "link",
+        "links": [
+            "8f6169bbceba5a5a"
+        ],
+        "x": 1610,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "7aafabf23d3cc0f5",
+        "type": "debug",
+        "z": "ec575add68cf29e3",
+        "name": "Redirect To Dashboard Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2720,
+        "y": 520,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "4fc41a903e02d86e",
+        "type": "function",
+        "z": "ec575add68cf29e3",
+        "name": "Initial Token Check",
+        "func": "if (msg.auth && msg.auth.userToken) {\n    msg.payload = \"hasToken\"\n} else {\n    msg.payload = \"hasNotToken\";\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 742.5,
+        "y": 500,
+        "wires": [
+            [
+                "3f4bd293b45fe58f"
+            ]
+        ]
+    },
+    {
+        "id": "3f4bd293b45fe58f",
+        "type": "switch",
+        "z": "ec575add68cf29e3",
+        "name": "check token exists",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "hasNotToken",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "hasToken",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1082.5,
+        "y": 500,
+        "wires": [
+            [
+                "737206959568cd81"
+            ],
+            [
+                "0d3db315cd3dbace"
+            ]
+        ]
+    },
+    {
+        "id": "0d3db315cd3dbace",
+        "type": "function",
+        "z": "ec575add68cf29e3",
+        "name": "check token match",
+        "func": "msg.collection = \"users\"\nmsg.operation = \"findOne\"\n\nmsg.payload = {\n    \"session.token\": msg.auth.userToken\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1487.5,
+        "y": 620,
+        "wires": [
+            [
+                "d216a17bf2e91f9d"
+            ]
+        ]
+    },
+    {
+        "id": "ba2ae979af2f5e80",
+        "type": "switch",
+        "z": "ec575add68cf29e3",
+        "name": "Check If Token Exists",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            },
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 2112.5,
+        "y": 620,
+        "wires": [
+            [
+                "bc547fe6c888b95b"
+            ],
+            [
+                "3e416adfdbf5b614"
+            ]
+        ]
+    },
+    {
+        "id": "bc547fe6c888b95b",
+        "type": "change",
+        "z": "ec575add68cf29e3",
+        "name": "redirect to dashboard response",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"action\":\"login\",\"status\":\"redirect\",\"message\":\"User Already Logged In\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2505,
+        "y": 580,
+        "wires": [
+            [
+                "d03635183bc5b6fa",
+                "7aafabf23d3cc0f5"
+            ]
+        ]
+    },
+    {
+        "id": "d03635183bc5b6fa",
+        "type": "link out",
+        "z": "ec575add68cf29e3",
+        "name": "TokenCheck1-out",
+        "mode": "link",
+        "links": [],
+        "x": 2720,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "a85c982583a2af4b",
+        "type": "link out",
+        "z": "ec575add68cf29e3",
+        "name": "TokenCheck2-out",
+        "mode": "link",
+        "links": [],
+        "x": 2670,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "799f72abfb7f3aa0",
+        "type": "debug",
+        "z": "ec575add68cf29e3",
+        "name": "No Token Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2665,
+        "y": 780,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "3e416adfdbf5b614",
+        "type": "change",
+        "z": "ec575add68cf29e3",
+        "name": "No Token Response",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"state\":\"notLoggedIn\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2457.5,
+        "y": 720,
+        "wires": [
+            [
+                "a85c982583a2af4b",
+                "799f72abfb7f3aa0"
+            ]
+        ]
+    },
+    {
+        "id": "d216a17bf2e91f9d",
+        "type": "mongodb4",
+        "z": "ec575add68cf29e3",
+        "clientNode": "ad5bea80de70463c",
+        "mode": "collection",
+        "collection": "",
+        "operation": "",
+        "output": "toArray",
+        "maxTimeMS": "0",
+        "handleDocId": false,
+        "name": "",
+        "x": 1797.5,
+        "y": 600,
+        "wires": [
+            [
+                "ba2ae979af2f5e80"
+            ]
+        ]
+    },
+    {
+        "id": "ad5bea80de70463c",
+        "type": "mongodb4-client",
+        "name": "",
+        "protocol": "mongodb",
+        "hostname": "",
+        "port": "",
+        "dbName": "asalDCM",
+        "appName": "",
+        "authSource": "",
+        "authMechanism": "DEFAULT",
+        "tls": false,
+        "tlsCAFile": "",
+        "tlsCertificateKeyFile": "",
+        "tlsInsecure": false,
+        "connectTimeoutMS": "30000",
+        "socketTimeoutMS": "0",
+        "minPoolSize": "0",
+        "maxPoolSize": "100",
+        "maxIdleTimeMS": "0",
+        "uri": "mongodb+srv://asal:SKjT26pL19zg8037@db-mongodb-leanea-f9f0367b.mongo.ondigitalocean.com/asalDCM?tls=true&authSource=admin&replicaSet=db-mongodb-leanea",
+        "advanced": "{}",
+        "uriTabActive": "tab-uri-advanced"
+    }
+]
