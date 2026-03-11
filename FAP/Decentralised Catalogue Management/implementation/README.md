@@ -1,6 +1,6 @@
 # DCM Platform
 
-A flow-based backend application for the **DCM (Data Catalogue Management)** platform, built on **ORCE** with a Vue 3 frontend.
+A flow-based backend application for the **DCM (Decentralised Catalogue Management)** platform, built on **ORCE** with a Vue 3 frontend.
 
 ---
 
