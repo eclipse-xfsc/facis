@@ -1,8 +1,0 @@
-# Production environment configuration
-# Inherits from default.yaml with overrides
-
-simulation:
-  time_acceleration: 1  # Real-time
-
-logging:
-  level: WARNING
