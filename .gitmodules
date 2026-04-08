@@ -1,0 +1,12 @@
+[submodule "DCS/implementation"]
+	path = DCS/implementation
+	url = https://github.com/eclipse-xfsc/facis-dcs.git
+[submodule "FAP/Decentralised Catalogue Management/implementation"]
+	path = FAP/Decentralised Catalogue Management/implementation
+	url = https://github.com/eclipse-xfsc/facis-fap-decentralized-catalogue-management.git
+[submodule "FAP/IOT & AI over Trusted Zones/implementation"]
+	path = FAP/IOT & AI over Trusted Zones/implementation
+	url = https://github.com/eclipse-xfsc/facis-fap-iot-ai.git
+[submodule "FAP/Partner Onboarding (Reference FAP)/implementation"]
+	path = FAP/Partner Onboarding (Reference FAP)/implementation
+	url = https://github.com/eclipse-xfsc/facis-fap-partner-onboarding.git
