@@ -10,3 +10,6 @@
 [submodule "FAP/Partner Onboarding (Reference FAP)/implementation"]
 	path = FAP/Partner Onboarding (Reference FAP)/implementation
 	url = https://github.com/eclipse-xfsc/facis-fap-partner-onboarding.git
+[submodule "PoC/aviation-poc/implementation"]
+	path = PoC/aviation-poc/implementation
+	url = https://github.com/eclipse-xfsc/facis-poc-federation-aviation.git
