@@ -13,3 +13,6 @@
 [submodule "PoC/aviation-poc/implementation"]
 	path = PoC/aviation-poc/implementation
 	url = https://github.com/eclipse-xfsc/facis-poc-federation-aviation.git
+[submodule "FAP/Principal Credential Issuance/implementation"]
+	path = FAP/Principal Credential Issuance/implementation
+	url = https://github.com/eclipse-xfsc/facis-fap-principal-credential-issuance.git
