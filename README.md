@@ -5,9 +5,14 @@ The FACIS landing page act as an entry-point for all open-source components, spe
 
 FACIS combines innovative technologies such as **Federation Architecture Patterns (FAPs)**, **machine-readable Service Level Agreements (SLAs)**, and **low-code orchestration engines**. These along with strong governance frameworks, improves scalability, security, and compliance with regulations, while enabling organizations to retain control of their data. 
 
- FACIS is an **open-source and collaborative project** that promotes transparency, inclusiveness, and innovation across the European digital ecosystem. 
+FACIS is an **open-source and collaborative project** that promotes transparency, inclusiveness, and innovation across the European digital ecosystem. 
 
 Code-related deliverables are published via GitHub, while non-code results- such as frameworks, rulebooks and other supporting materials are and will be made available on the FACIS website : [https://www.facis.eu/results/](https://www.facis.eu/results/)
+
+## Funding & Intiative
+FACIS is part of the Important Projects of Common European Interest – Cloud Infrastructure and Services (8ra/IPCEI-CIS) initiative. 8ra/IPCEI-CIS aims to establish a Multi-Provider Cloud-Edge Continuum across Europe – a cloud ecosystem designed to revolutionize data processing in the next generation of cloud and edge infrastructure and services. The initiative represents a united European effort and stands under a common governance mandated by the community of industrial partners and member states.<br><br>
+**Funding ID:** 13IPC035A <br>
+**More info:** [https://8ra.com/ipcei-cis/](https://8ra.com/ipcei-cis/)
 
 ---
 
@@ -29,6 +34,7 @@ This repository is responsible for implementing the standarized templates/ bluep
 | *FAP 1: Partner onboarding* | contains technical specification and implementation. | [`eclipse-xfsc/facis/fap1`](https://github.com/eclipse-xfsc/facis/tree/main/FAP/Partner%20Onboarding%20(Reference%20FAP)) |
 | *FAP 2: Decentralized Catalogue Managment* | Enables trusted service discovery across federated infrastructures. | [`eclipse-xfsc/facis/fap2`](https://github.com/eclipse-xfsc/facis/tree/main/FAP/Decentralised%20Catalogue%20Management) |
 |*FAP 3: IOT & AI pipeline over trusted services* | integrates sensing data with IoT and AI based data analysis for dashboard visualization. | [`eclipse-xfsc/facis/fap3`](https://github.com/eclipse-xfsc/facis/tree/main/FAP/IOT%20%26%20AI%20over%20Trusted%20Zones) |
+|*FAP 4: Principal Credential Issuance* | help organizations create and give out digital credentials to their employees in a safe and simple way. | [`eclipse-xfsc/facis/fap4`](https://github.com/eclipse-xfsc/facis/tree/main/FAP/Principal%20Credential%20Issuance) |
 
 #### 2. FACIS Proof-Of-Concepts (PoC) 
 | PoC | Description | Repository Link |
