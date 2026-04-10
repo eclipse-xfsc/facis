@@ -104,6 +104,8 @@ FACIS is part of the Important Projects of Common European Interest – Cloud In
 **Funding ID:** 13IPC035A <br>
 **More info:** [https://8ra.com/ipcei-cis/](https://8ra.com/ipcei-cis/)
 
+![FACIS Funding](https://github.com/eclipse-xfsc/facis/blob/main/assets/Funding_logo.png)
+
 ---
 
 ## License  
