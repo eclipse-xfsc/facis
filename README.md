@@ -9,11 +9,6 @@ FACIS is an **open-source and collaborative project** that promotes transparency
 
 Code-related deliverables are published via GitHub, while non-code results- such as frameworks, rulebooks and other supporting materials are and will be made available on the FACIS website : [https://www.facis.eu/results/](https://www.facis.eu/results/)
 
-## Funding & Intiative
-FACIS is part of the Important Projects of Common European Interest – Cloud Infrastructure and Services (8ra/IPCEI-CIS) initiative. 8ra/IPCEI-CIS aims to establish a Multi-Provider Cloud-Edge Continuum across Europe – a cloud ecosystem designed to revolutionize data processing in the next generation of cloud and edge infrastructure and services. The initiative represents a united European effort and stands under a common governance mandated by the community of industrial partners and member states.<br><br>
-**Funding ID:** 13IPC035A <br>
-**More info:** [https://8ra.com/ipcei-cis/](https://8ra.com/ipcei-cis/)
-
 ---
 
 ## FACIS Key Deliverables Repository
@@ -101,6 +96,15 @@ To contribute, you need to sign the **Eclipse Contributor Agreement (ECA)** and 
 - FACIS GitHub:  [eclipse-xfsc/facis](https://github.com/eclipse-xfsc/facis)
 - Eclipse XFSC Developer Hub: [eclipse-xfsc.github.io](https://eclipse-xfsc.github.io/landingpage/)  
 - GitHub Repositories: [github.com/eclipse-xfsc](https://github.com/eclipse-xfsc)  
+
+---
+
+## Funding & Initiative
+FACIS is part of the Important Projects of Common European Interest – Cloud Infrastructure and Services (8ra/IPCEI-CIS) initiative. 8ra/IPCEI-CIS aims to establish a Multi-Provider Cloud-Edge Continuum across Europe – a cloud ecosystem designed to revolutionize data processing in the next generation of cloud and edge infrastructure and services. The initiative represents a united European effort and stands under a common governance mandated by the community of industrial partners and member states.<br><br>
+**Funding ID:** 13IPC035A <br>
+**More info:** [https://8ra.com/ipcei-cis/](https://8ra.com/ipcei-cis/)
+
+![FACIS Funding](https://github.com/eclipse-xfsc/facis/blob/main/assets/Funding_logo.png)
 
 ---
 
