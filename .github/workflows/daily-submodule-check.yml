@@ -1,0 +1,33 @@
+name: Daily Submodule Update
+
+on:
+  # schedule:
+  #   - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.check.outputs.changed }}
+      summary: ${{ steps.check.outputs.summary }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+    
+      - name: Check for submodule updates
+        id: check
+        run: |
+          git submodule update --remote
+
+          if git diff --quiet; then
+            echo "All submodules are already up to date."
+          else
+            echo "Changes detected in the following submodules:"
+            git diff --submodule=short
+            echo "Submodules updated successfully."
+          fi    
