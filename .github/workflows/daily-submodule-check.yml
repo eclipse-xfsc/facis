@@ -25,9 +25,61 @@ jobs:
           git submodule update --remote
 
           if git diff --quiet; then
+            echo "changed=false" >> $GITHUB_OUTPUT
             echo "All submodules are already up to date."
           else
-            echo "Changes detected in the following submodules:"
-            git diff --submodule=short
-            echo "Submodules updated successfully."
-          fi    
+            echo "changed=true" >> $GITHUB_OUTPUT
+            SUMMARY=$(git diff --submodule=short)
+            echo "summary<<EOF" >> $GITHUB_OUTPUT
+            echo "$SUMMARY" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          fi
+
+  update:
+    needs: check
+    if: needs.check.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+      
+      - name: Update submodules
+        run: git submodule update --remote
+      
+      - name: Create Pull Request to main
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: update submodules to latest commits"
+          branch: chore/update-submodules
+          delete-branch: true
+          title: "chore: daily submodule update"
+          body: |
+            ## Submodule Updates
+
+            Automated daily check found new commits in one or more submodules.
+
+            **Changes detected:**
+            ```
+            ${{ needs.check.outputs.summary }}
+            ```
+
+            ---
+            *Automated by [Daily Submodule Update](.github/workflows/daily-submodule-check.yml)*
+          labels: |
+            dependencies
+            automated
