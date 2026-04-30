@@ -2,7 +2,7 @@ name: Daily Submodule Update
 
 on:
   schedule:
-    - cron: '0 6 * * *'
+    - cron: '0 4 * * *'
   workflow_dispatch:
 
 jobs:
@@ -18,7 +18,7 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 0
-    
+
       - name: Check for submodule updates
         id: check
         run: |
@@ -41,8 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pull-requests: write
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
@@ -55,30 +54,12 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-      
+
       - name: Update submodules
         run: git submodule update --remote
-      
-      - name: Create Pull Request to main
-        uses: peter-evans/create-pull-request@v8
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "chore: update submodules to latest commits"
-          branch: chore/update-submodules
-          delete-branch: true
-          title: "chore: daily submodule update"
-          body: |
-            ## Submodule Updates
 
-            Automated daily check found new commits in one or more submodules.
-
-            **Changes detected:**
-            ```
-            ${{ needs.check.outputs.summary }}
-            ```
-
-            ---
-            *Automated by [Daily Submodule Update](.github/workflows/daily-submodule-check.yml)*
-          labels: |
-            dependencies
-            automated
+      - name: Commit and push to main
+        run: |
+          git add .
+          git commit -m "chore: update submodules to latest commits"
+          git push origin main
