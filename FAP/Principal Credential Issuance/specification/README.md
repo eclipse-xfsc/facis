@@ -1,15 +1,30 @@
+![Version](https://img.shields.io/badge/version-1.0-blue)
+[![License](https://img.shields.io/badge/license-CC--BY--4.0-orange)](http://creativecommons.org/licenses/by/4.0/)
+
 # Software Requirements Specification
 
-## Federation Architecture Pattern Principal Credential Issuance (FAP PCI)
-
-Version 1.0 (February 2026)
-
-Published by eco – Association of the Internet Industry (eco – Verband der Internetwirtschaft e.V.) Lichtstrasse 43h 50825 Cologne, Germany
-
-Copyright © eco Association of the Internet Industry (eco – Verband der Internetwirtschaft e.V.)
-
+## Federation Architecture Pattern - Principal Credential Issuance (FAP PCI)
 
 ---
+
+**Version:** 1.0  
+**Date:** February 2026  
+
+---
+
+### Copyright
+
+© eco – Association of the Internet Industry  
+(eco – Verband der Internetwirtschaft e.V.)  
+
+---
+
+## Conformance Language
+
+The key words MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD, SHOULD NOT, RECOMMENDED, MAY, and OPTIONAL in this document are to be interpreted as described in [RFC 2119](https://rfc-editor.org/rfc/rfc2119).
+
+---
+
 
 ## Table of Contents
 
@@ -53,16 +68,10 @@ Copyright © eco Association of the Internet Industry (eco – Verband der Inter
 &nbsp;&nbsp;&nbsp;&nbsp;[Appendix A: Glossary](12_appendices.md#appendix-a-glossary)  
 &nbsp;&nbsp;&nbsp;&nbsp;[Appendix B: Tenant-specific Ingress Rule](12_appendices.md#appendix-b-tenant-specific-ingress-rule)  
 
----
 
-## Conformance Language
-
-The key words MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD, SHOULD NOT, RECOMMENDED, MAY, and OPTIONAL in this document are to be interpreted as described in [RFC 21191](https://rfc-editor.org/rfc/rfc2119).
 
 ---
 
 ## License
 
 This work is licensed under the [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/).
-
-© eco – Association of the Internet Industry (eco – Verband der Internetwirtschaft e.V.)
