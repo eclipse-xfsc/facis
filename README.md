@@ -68,7 +68,7 @@ A Modular Deployment Service integrated with the visual orchestration Engine tha
 
 | Component | Description | Repository Link |
 |-----------|-------------|:-----------------:|
-| *Federated Catalogue* | The Federated Catalogue under XFSC has been enhanced to align with FACIS requirements, improving the way metadata objects are managed and verified.  | **Documentation:**[`docs/federated-catalogue`](https://github.com/eclipse-xfsc/docs/tree/main/federated-catalogue) <br><br> **Implementation:**[`implementation/federated-catalogue`](https://github.com/eclipse-xfsc/federated-catalogue) |
+| *Federated Catalogue* | The Federated Catalogue under XFSC has been enhanced to align with FACIS requirements, improving the way metadata objects are managed and verified.  | **Documentation:**[`docs/federated-catalogue`](https://github.com/eclipse-xfsc/docs/blob/main/federated-catalogue/src/docs/CAT%20Enhancement/CAT_Enhancement_Specifications%20v1.0.pdf) <br><br> **Implementation:**[`implementation/federated-catalogue`](https://github.com/eclipse-xfsc/federated-catalogue) |
 
 
 ## Deployment Docs (T-system Kubernetes)
