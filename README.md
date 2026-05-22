@@ -12,7 +12,30 @@ Code-related deliverables are published via GitHub, while non-code results- such
 ---
 
 ## FACIS Key Deliverables Repository
-This repository serve as the central-entry point for all the FACIS components. The table provides a high-level view of the core components and their goals.
+This repository serve as the central-entry point for all the FACIS components. 
+```mermaid
+graph TD
+    classDef parent fill:#003399,color:#fff,font-weight:bold
+    classDef component fill:#1a1a2e,stroke:#003399,stroke-width:2px,color:#fff
+    classDef submodule fill:#16213e,stroke:#6c8ebf,stroke-width:1px,color:#dae8fc
+
+    FACIS[facis]:::parent
+    FACIS --> SLA[SLA \n Service Level Agreements]:::component
+    FACIS --> DCS[DCS \n Digital Contracting Services]:::component
+    FACIS --> FAP[FAP \n Federation Architecture \nPatterns]:::component
+    FACIS --> POC[PoC \n Proof of Concepts]:::component
+    FACIS --> DEM[Demonstrators]:::component
+
+    FAP --> FAP1[Partner Onboarding]:::submodule
+    FAP --> FAP2[DCM \n decentralized catalogue\n Management]:::submodule
+    FAP --> FAP3[IoT & AI]:::submodule
+    FAP --> FAP4[PCI \n Principal Credential\n Issuance]:::submodule
+
+    POC --> POC1[Aviation PoC]:::submodule
+
+    DEM --> DEM1[Zero Trust Demonstrators]:::submodule
+```
+The table provides a high-level view of the core components and their goals.
 | Component | Primary Goal | Repository Link |
 |-----------|--------------|:-----------------:|
 | *FAP (Federation Architecture Pattern)* | Standardized Blueprints for building federated services to connect different companies securely. | [`eclipse-xfsc/facis-fap`](https://github.com/eclipse-xfsc/facis/tree/main/FAP) |
