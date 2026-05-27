@@ -1,4 +1,4 @@
-[← Standards & Protocols](10_standards_protocols.md) | [↑ Table of Contents](README.md) | [Requirements Traceability Matrix →](12_requirements_traceability_matrix.md)
+[← Standards & Protocols](10_standards_protocols.md) | [↑ Table of Contents](../README.md) | [Requirements Traceability Matrix →](12_requirements_traceability_matrix.md)
 
 ---
 
@@ -47,4 +47,4 @@
 
 ---
 
-[← Standards & Protocols](10_standards_protocols.md) | [↑ Table of Contents](README.md) | [Requirements Traceability Matrix →](12_requirements_traceability_matrix.md)
+[← Standards & Protocols](10_standards_protocols.md) | [↑ Table of Contents](../README.md) | [Requirements Traceability Matrix →](12_requirements_traceability_matrix.md)

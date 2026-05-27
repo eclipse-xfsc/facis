@@ -1,4 +1,4 @@
-[← Technical Architecture](06_technical_architecture.md) | [↑ Table of Contents](README.md) | [Security & Trust →](08_security_trust.md)
+[← Technical Architecture](06_technical_architecture.md) | [↑ Table of Contents](../README.md) | [Security & Trust →](08_security_trust.md)
 
 ---
 
@@ -114,7 +114,7 @@ Even though data lakes are flexible, dimensional modeling (Kimball-style) remain
 - Store data in open formats (Parquet, Delta) for high-performance queries
 
 
-![image 6](assets/images/imageFile6.png)
+![image 5](assets/images/imageFile5.png)
 
 <p align="center"><em>Figure 5 Star Schema for Sensor Measurements (Example)</em></p>
 
@@ -159,4 +159,4 @@ The data model must support multiple access pattern. Logical views or APIs tailo
 
 ---
 
-[← Technical Architecture](06_technical_architecture.md) | [↑ Table of Contents](README.md) | [Security & Trust →](08_security_trust.md)
+[← Technical Architecture](06_technical_architecture.md) | [↑ Table of Contents](../README.md) | [Security & Trust →](08_security_trust.md)

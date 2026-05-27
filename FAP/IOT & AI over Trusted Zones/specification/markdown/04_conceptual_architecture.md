@@ -1,4 +1,4 @@
-[← Scope](03_scope.md) | [↑ Table of Contents](README.md) | [Functional Requirements →](05_functional_requirements.md)
+[← Scope](03_scope.md) | [↑ Table of Contents](../README.md) | [Functional Requirements →](05_functional_requirements.md)
 
 ---
 
@@ -8,13 +8,13 @@ The system follows a federated architecture with clear separation between data c
 
 Cloud trust zones, with dataspace connectors mediating secure data exchange through the Eclipse Dataspace Protocol.
 
-![image 3](assets/images/imageFile3.png)
+![image 2](assets/images/imageFile2.png)
 
 <p align="center"><em>Figure 2 Overview IoT Data Connector</em></p>
 
 The conceptual architecture of the data lake follows a typical data lakehouse architecture and supports as well streaming (Kafka) as batch (HTTPS / SFTP) data ingestion and processing.
 
-![image 4](assets/images/imageFile4.png)
+![image 3](assets/images/imageFile3.png)
 <p align="center"><em>Figure 3 Overview Data Lakehouse</em></p>
 
 
@@ -55,4 +55,4 @@ control plane). Ingest services land data to bronze layer, with Governance servi
 
 ---
 
-[← Scope](03_scope.md) | [↑ Table of Contents](README.md) | [Functional Requirements →](05_functional_requirements.md)
+[← Scope](03_scope.md) | [↑ Table of Contents](../README.md) | [Functional Requirements →](05_functional_requirements.md)

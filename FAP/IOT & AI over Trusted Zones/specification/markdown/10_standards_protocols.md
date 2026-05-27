@@ -1,4 +1,4 @@
-[← Deployment & Operations](09_deployment_operations.md) | [↑ Table of Contents](README.md) | [Validation & Acceptance Criteria →](11_validation_acceptance_criteria.md)
+[← Deployment & Operations](09_deployment_operations.md) | [↑ Table of Contents](../README.md) | [Validation & Acceptance Criteria →](11_validation_acceptance_criteria.md)
 
 ---
 
@@ -25,4 +25,4 @@
 
 ---
 
-[← Deployment & Operations](09_deployment_operations.md) | [↑ Table of Contents](README.md) | [Validation & Acceptance Criteria →](11_validation_acceptance_criteria.md)
+[← Deployment & Operations](09_deployment_operations.md) | [↑ Table of Contents](../README.md) | [Validation & Acceptance Criteria →](11_validation_acceptance_criteria.md)

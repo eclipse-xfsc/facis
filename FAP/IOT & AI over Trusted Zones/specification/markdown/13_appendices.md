@@ -1,4 +1,4 @@
-[← Requirements Traceability Matrix](12_requirements_traceability_matrix.md) | [↑ Table of Contents](README.md)
+[← Requirements Traceability Matrix](12_requirements_traceability_matrix.md) | [↑ Table of Contents](../README.md)
 
 ---
 
@@ -44,4 +44,4 @@ This specification realizes the FAP IoT & AI objectives by providing:
 
 ---
 
-[← Requirements Traceability Matrix](12_requirements_traceability_matrix.md) | [↑ Table of Contents](README.md)
+[← Requirements Traceability Matrix](12_requirements_traceability_matrix.md) | [↑ Table of Contents](../README.md)

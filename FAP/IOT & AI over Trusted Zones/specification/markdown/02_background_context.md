@@ -1,4 +1,4 @@
-[← Executive Summary](01_executive_summary.md) | [↑ Table of Contents](README.md) | [Scope →](03_scope.md)
+[← Executive Summary](01_executive_summary.md) | [↑ Table of Contents](../README.md) | [Scope →](03_scope.md)
 
 ---
 
@@ -46,4 +46,4 @@ Solution: The LLM-powered dashboard layer could enable natural language queries 
 
 ---
 
-[← Executive Summary](01_executive_summary.md) | [↑ Table of Contents](README.md) | [Scope →](03_scope.md)
+[← Executive Summary](01_executive_summary.md) | [↑ Table of Contents](../README.md) | [Scope →](03_scope.md)

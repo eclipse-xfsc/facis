@@ -1,4 +1,4 @@
-[← Interfaces & Data Models](07_interfaces_data_models.md) | [↑ Table of Contents](README.md) | [Deployment & Operations →](09_deployment_operations.md)
+[← Interfaces & Data Models](07_interfaces_data_models.md) | [↑ Table of Contents](../README.md) | [Deployment & Operations →](09_deployment_operations.md)
 
 ---
 
@@ -57,4 +57,4 @@
 
 ---
 
-[← Interfaces & Data Models](07_interfaces_data_models.md) | [↑ Table of Contents](README.md) | [Deployment & Operations →](09_deployment_operations.md)
+[← Interfaces & Data Models](07_interfaces_data_models.md) | [↑ Table of Contents](../README.md) | [Deployment & Operations →](09_deployment_operations.md)

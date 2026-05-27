@@ -1,4 +1,4 @@
-[← Background & Context](02_background_context.md) | [↑ Table of Contents](README.md) | [Conceptual Architecture →](04_conceptual_architecture.md)
+[← Background & Context](02_background_context.md) | [↑ Table of Contents](../README.md) | [Conceptual Architecture →](04_conceptual_architecture.md)
 
 ---
 
@@ -124,4 +124,4 @@ The following capabilities and features are explicitly out of scope for this FAP
 
 ---
 
-[← Background & Context](02_background_context.md) | [↑ Table of Contents](README.md) | [Conceptual Architecture →](04_conceptual_architecture.md)
+[← Background & Context](02_background_context.md) | [↑ Table of Contents](../README.md) | [Conceptual Architecture →](04_conceptual_architecture.md)

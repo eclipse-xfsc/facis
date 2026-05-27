@@ -1,10 +1,10 @@
-[← Functional Requirements](05_functional_requirements.md) | [↑ Table of Contents](README.md) | [Interfaces & Data Models →](07_interfaces_data_models.md)
+[← Functional Requirements](05_functional_requirements.md) | [↑ Table of Contents](../README.md) | [Interfaces & Data Models →](07_interfaces_data_models.md)
 
 ---
 
 ## 6. Technical Architecture
 
-![image 5](assets/images/imageFile5.png)
+![image 4](assets/images/imageFile4.png)
 
 <p align="center"><em>Figure 4 IoT Data Connector Sequence</em></p>
 
@@ -99,4 +99,4 @@ The AI processing layer SHALL be implemented as an orchestration service that re
 
 ---
 
-[← Functional Requirements](05_functional_requirements.md) | [↑ Table of Contents](README.md) | [Interfaces & Data Models →](07_interfaces_data_models.md)
+[← Functional Requirements](05_functional_requirements.md) | [↑ Table of Contents](../README.md) | [Interfaces & Data Models →](07_interfaces_data_models.md)

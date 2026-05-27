@@ -1,4 +1,4 @@
-[↑ Table of Contents](README.md) | [Background & Context →](02_background_context.md)
+[↑ Table of Contents](../README.md) | [Background & Context →](02_background_context.md)
 
 ---
 
@@ -42,7 +42,7 @@ For the AI supported Dashboard the AI integration will leverage open standards f
 
 via SQL queries or REST APIs) are retrieved and embedded into prompts and sent to an OpenAI-compatible endpoint. This approach maintains data sovereignty by processing data minimally and on-demand, with outputs governed by the same policies as the underlying datasets. Data outputs will leverage the same open standards and visualize either directly via LLM and/or through a use case optimized method.
 
-![image 2](assets/images/imageFile2.png)
+![image 1](assets/images/imageFile1.png)
 
 <p align="center"><em>Figure 1 FAP IoT & AI: Architecture Overview</em></p>
 
@@ -50,4 +50,4 @@ The purpose of this tender is to commission software development services for Lo
 
 ---
 
-[↑ Table of Contents](README.md) | [Background & Context →](02_background_context.md)
+[↑ Table of Contents](../README.md) | [Background & Context →](02_background_context.md)

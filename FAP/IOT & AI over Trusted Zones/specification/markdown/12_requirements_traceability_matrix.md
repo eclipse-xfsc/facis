@@ -1,4 +1,4 @@
-[← Validation & Acceptance Criteria](11_validation_acceptance_criteria.md) | [↑ Table of Contents](README.md) | [Appendices →](13_appendices.md)
+[← Validation & Acceptance Criteria](11_validation_acceptance_criteria.md) | [↑ Table of Contents](../README.md) | [Appendices →](13_appendices.md)
 
 ---
 
@@ -27,4 +27,4 @@ Once the requirements highlighted in Table 7 are fulfilled, all other requiremen
 
 ---
 
-[← Validation & Acceptance Criteria](11_validation_acceptance_criteria.md) | [↑ Table of Contents](README.md) | [Appendices →](13_appendices.md)
+[← Validation & Acceptance Criteria](11_validation_acceptance_criteria.md) | [↑ Table of Contents](../README.md) | [Appendices →](13_appendices.md)

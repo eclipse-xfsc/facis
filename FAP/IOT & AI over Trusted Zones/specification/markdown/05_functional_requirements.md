@@ -1,4 +1,4 @@
-[← Conceptual Architecture](04_conceptual_architecture.md) | [↑ Table of Contents](README.md) | [Technical Architecture →](06_technical_architecture.md)
+[← Conceptual Architecture](04_conceptual_architecture.md) | [↑ Table of Contents](../README.md) | [Technical Architecture →](06_technical_architecture.md)
 
 ---
 
@@ -319,4 +319,4 @@ Acceptance Criteria:
 
 ---
 
-[← Conceptual Architecture](04_conceptual_architecture.md) | [↑ Table of Contents](README.md) | [Technical Architecture →](06_technical_architecture.md)
+[← Conceptual Architecture](04_conceptual_architecture.md) | [↑ Table of Contents](../README.md) | [Technical Architecture →](06_technical_architecture.md)

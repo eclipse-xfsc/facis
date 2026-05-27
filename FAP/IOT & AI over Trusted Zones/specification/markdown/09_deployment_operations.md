@@ -1,4 +1,4 @@
-[← Security & Trust](08_security_trust.md) | [↑ Table of Contents](README.md) | [Standards & Protocols →](10_standards_protocols.md)
+[← Security & Trust](08_security_trust.md) | [↑ Table of Contents](../README.md) | [Standards & Protocols →](10_standards_protocols.md)
 
 ---
 
@@ -78,4 +78,4 @@ The client will provide all technical base line resources as pre-configured Kube
 
 ---
 
-[← Security & Trust](08_security_trust.md) | [↑ Table of Contents](README.md) | [Standards & Protocols →](10_standards_protocols.md)
+[← Security & Trust](08_security_trust.md) | [↑ Table of Contents](../README.md) | [Standards & Protocols →](10_standards_protocols.md)
