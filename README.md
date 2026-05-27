@@ -12,7 +12,30 @@ Code-related deliverables are published via GitHub, while non-code results- such
 ---
 
 ## FACIS Key Deliverables Repository
-This repository serve as the central-entry point for all the FACIS components. The table provides a high-level view of the core components and their goals.
+This repository serve as the central-entry point for all the FACIS components. 
+```mermaid
+graph TD
+    classDef parent fill:#003399,color:#fff,font-weight:bold
+    classDef component fill:#1a1a2e,stroke:#003399,stroke-width:2px,color:#fff
+    classDef submodule fill:#16213e,stroke:#6c8ebf,stroke-width:1px,color:#dae8fc
+
+    FACIS[facis]:::parent
+    FACIS --> SLA[SLA \n Service Level Agreements]:::component
+    FACIS --> DCS[DCS \n Digital Contracting Services]:::component
+    FACIS --> FAP[FAP \n Federation Architecture \nPatterns]:::component
+    FACIS --> POC[PoC \n Proof of Concepts]:::component
+    FACIS --> DEM[Demonstrators]:::component
+
+    FAP --> FAP1[Partner Onboarding]:::submodule
+    FAP --> FAP2[DCM \n decentralized catalogue\n Management]:::submodule
+    FAP --> FAP3[IoT & AI]:::submodule
+    FAP --> FAP4[PCI \n Principal Credential\n Issuance]:::submodule
+
+    POC --> POC1[Aviation PoC]:::submodule
+
+    DEM --> DEM1[Zero Trust Demonstrators]:::submodule
+```
+The table provides a high-level view of the core components and their goals.
 | Component | Primary Goal | Repository Link |
 |-----------|--------------|:-----------------:|
 | *FAP (Federation Architecture Pattern)* | Standardized Blueprints for building federated services to connect different companies securely. | [`eclipse-xfsc/facis-fap`](https://github.com/eclipse-xfsc/facis/tree/main/FAP) |
@@ -61,14 +84,14 @@ A Modular Deployment Service integrated with the visual orchestration Engine tha
 | *ESB Catalogue* | Federated Catalogue - core component of XFSC for resource discovery, allow visual query self-descriptions within ORCE environments.  | [`eclipse-xfsc/easy-stack-builder-catalogue`](https://github.com/eclipse-xfsc/smartdeployment/tree/main/Easy%20Stack%20Builder%20(ESB)/Catalogue) |
 | *ESB OCM-Wstack* | Enhances the participant’s interaction with the SSI-based ecosystem in a trustful and secure fashion. | [`eclipse-xfsc/easy-stack-builder-ocm-wstack`](https://github.com/eclipse-xfsc/smartdeployment/tree/main/Easy%20Stack%20Builder%20(ESB)/OCM-WStack) |
 | *ESB PCM* | The user manages their credentials themselves, which supports decentralized architecture. |  [`eclipse-xfsc/easy-stack-builder-pcm`](https://github.com/eclipse-xfsc/smartdeployment/tree/main/Easy%20Stack%20Builder%20(ESB)/PCM) |
-| *ESB TSA* | - | *Coming Soon.* |
+| *ESB TSA* | Kubernetes-based deployment workspace for provisioning a Trust Services Agent environment while reusing shared OCM platform services from another namespace. | [`eclipse-xfsc/easy-stack-builder-tsa`](https://github.com/eclipse-xfsc/smartdeployment/tree/main/Easy%20Stack%20Builder%20(ESB)/TSA) |
 | *AI Flow Builder* | - | [`eclipse-xfsc/ai-flow-builder`](https://github.com/eclipse-xfsc/smartdeployment/tree/main/AI%20Flow%20Builder) |
 
 ## FACIS - XFSC Catalogue Enhancements
 
 | Component | Description | Repository Link |
 |-----------|-------------|:-----------------:|
-| *Federated Catalogue* | The Federated Catalogue under XFSC has been enhanced to align with FACIS requirements, improving the way metadata objects are managed and verified.  | **Documentation:**[`docs/federated-catalogue`](https://github.com/eclipse-xfsc/docs/tree/main/federated-catalogue) <br><br> **Implementation:**[`implementation/federated-catalogue`](https://github.com/eclipse-xfsc/federated-catalogue) |
+| *Federated Catalogue* | The Federated Catalogue under XFSC has been enhanced to align with FACIS requirements, improving the way metadata objects are managed and verified.  | **Documentation:**[`docs/federated-catalogue`](https://github.com/eclipse-xfsc/docs/blob/main/federated-catalogue/src/docs/CAT%20Enhancement/CAT_Enhancement_Specifications%20v1.0.pdf) <br><br> **Implementation:**[`implementation/federated-catalogue`](https://github.com/eclipse-xfsc/federated-catalogue) |
 
 
 ## Deployment Docs (T-system Kubernetes)
