@@ -23,7 +23,10 @@ flowchart TD
     classDef poc fill:#7b341e,color:#fff2eb,stroke:#ff9f68,stroke-width:1.5px;
     classDef dem fill:#8b5a00,color:#fff4d6,stroke:#ffcc66,stroke-width:1.5px;
 
+    
     FACIS[FACIS]:::parent
+
+  
     FACIS --> SLA[SLA \n Service Level Agreements]:::component
     FACIS --> DCS[DCS \n Digital Contracting Services]:::component
     FACIS --> FAP[FAP \n Federation Architecture \nPatterns]:::component
@@ -36,9 +39,12 @@ flowchart TD
     FAP --> FAP3[IoT & AI]:::pattern
     FAP --> FAP4[PCI \n Principal Credential\n Issuance]:::pattern
 
+    FAP2 ---> |Deployment|ORCE[Orchestration Engine]:::parent
+    
     POC --> POC1[Aviation PoC]:::poc
 
     DEM --> DEM1[Zero Trust Demonstrators]:::dem
+
 ```
 The table provides a high-level view of the core components and their goals.
 | Component | Primary Goal | Repository Link |
@@ -90,6 +96,7 @@ A Modular Deployment Service integrated with the visual orchestration Engine tha
 | *ESB OCM-Wstack* | Enhances the participant’s interaction with the SSI-based ecosystem in a trustful and secure fashion. | [`eclipse-xfsc/easy-stack-builder-ocm-wstack`](https://github.com/eclipse-xfsc/smartdeployment/tree/main/Easy%20Stack%20Builder%20(ESB)/OCM-WStack) |
 | *ESB PCM* | The user manages their credentials themselves, which supports decentralized architecture. |  [`eclipse-xfsc/easy-stack-builder-pcm`](https://github.com/eclipse-xfsc/smartdeployment/tree/main/Easy%20Stack%20Builder%20(ESB)/PCM) |
 | *ESB TSA* | Kubernetes-based deployment workspace for provisioning a Trust Services Agent environment while reusing shared OCM platform services from another namespace. | [`eclipse-xfsc/easy-stack-builder-tsa`](https://github.com/eclipse-xfsc/smartdeployment/tree/main/Easy%20Stack%20Builder%20(ESB)/TSA) |
+| *ESB AAS* | An automated Authentication and Authorization Stack workspace that deploys an AAS instance to a Kubernetes cluster. | [`eclipse-xfsc/easy-stack-builder-aas`](https://github.com/eclipse-xfsc/smartdeployment/tree/main/Easy%20Stack%20Builder%20(ESB)/AAS) |
 | *AI Flow Builder* | - | [`eclipse-xfsc/ai-flow-builder`](https://github.com/eclipse-xfsc/smartdeployment/tree/main/AI%20Flow%20Builder) |
 
 ## FACIS - XFSC Catalogue Enhancements
