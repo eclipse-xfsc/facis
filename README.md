@@ -13,39 +13,12 @@ Code-related deliverables are published via GitHub, while non-code results- such
 
 ## FACIS Key Deliverables Repository
 This repository serve as the central-entry point for all the FACIS components. 
-```mermaid
-%%{init: {'flowchart': {'curve': 'linear'}}}%%
-flowchart TD
-    classDef parent fill:#3b3b98,color:#fff,stroke:#8f94fb,stroke-width:1.5px,font-weight:bold;
-    classDef component fill:#0d5c4f,color:#d7fff5,stroke:#2ec4b6,stroke-width:1.5px;
-    classDef submodule fill:#16213e,stroke:#6c8ebf,stroke-width:1px,color:#dae8fc
-    classDef pattern fill:#114b8b,color:#e8f1ff,stroke:#5fa8ff,stroke-width:1.5px;
-    classDef poc fill:#7b341e,color:#fff2eb,stroke:#ff9f68,stroke-width:1.5px;
-    classDef dem fill:#8b5a00,color:#fff4d6,stroke:#ffcc66,stroke-width:1.5px;
+<br><br>
 
-    
-    FACIS[FACIS]:::parent
+![architecture_diagram](https://github.com/Jessia2597/facis/blob/main/assets/architecture_diagram.png)
 
-  
-    FACIS --> SLA[SLA \n Service Level Agreements]:::component
-    FACIS --> DCS[DCS \n Digital Contracting Services]:::component
-    FACIS --> FAP[FAP \n Federation Architecture \nPatterns]:::component
-    FACIS --> POC[PoC \n Proof of Concepts]:::component
-    FACIS --> DEM[Demonstrators]:::component
-    FACIS --> CAT[XFSC \nCatalogue \nEnhnacement]:::component
 
-    FAP --> FAP1[Partner Onboarding]:::pattern
-    FAP --> FAP2[DCM \n decentralized catalogue\n Management]:::pattern
-    FAP --> FAP3[IoT & AI]:::pattern
-    FAP --> FAP4[PCI \n Principal Credential\n Issuance]:::pattern
-
-    FAP2 ---> |Deployment|ORCE[Orchestration Engine]:::parent
-    
-    POC --> POC1[Aviation PoC]:::poc
-
-    DEM --> DEM1[Zero Trust Demonstrators]:::dem
-
-```
+<br><br>
 The table provides a high-level view of the core components and their goals.
 | Component | Primary Goal | Repository Link |
 |-----------|--------------|:-----------------:|
