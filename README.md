@@ -116,6 +116,23 @@ A Modular Deployment Service integrated with the visual orchestration Engine tha
 ## Installation and Usage  
 All outcomes of the FACIS project will be provided as **open-source**. Organizations and developers can access these tools through the **official FACIS website** and the related GitHub repositories.  
 
+### Important - This repository uses Git Submodules
+This repository contains *git submodules*. A plain `git clone` will result in **empty subdirectories**. You must use one of the approaches below.
+
+#### Fresh Clone (recommended)
+
+```bash
+git clone --recurse-submodules https://github.com/eclipse-xfsc/facis.git
+cd facis
+```
+
+#### Already Cloned Without Submodules
+
+If you already ran a plain `git clone`, initialize and pull all submodules:
+
+```bash
+git submodule update --init --recursive
+```
 ---
 
 ## Contributing  
