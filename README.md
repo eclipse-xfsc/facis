@@ -15,7 +15,7 @@ Code-related deliverables are published via GitHub, while non-code results- such
 This repository serve as the central-entry point for all the FACIS components. 
 <br><br>
 
-![architecture_diagram](https://github.com/Jessia2597/facis/blob/main/assets/architecture_diagram.png)
+![architecture_diagram](https://github.com/eclipse-xfsc/facis/blob/main/assets/architecture_diagram.png)
 
 
 <br><br>
