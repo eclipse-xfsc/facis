@@ -13,28 +13,12 @@ Code-related deliverables are published via GitHub, while non-code results- such
 
 ## FACIS Key Deliverables Repository
 This repository serve as the central-entry point for all the FACIS components. 
-```mermaid
-graph TD
-    classDef parent fill:#003399,color:#fff,font-weight:bold
-    classDef component fill:#1a1a2e,stroke:#003399,stroke-width:2px,color:#fff
-    classDef submodule fill:#16213e,stroke:#6c8ebf,stroke-width:1px,color:#dae8fc
+<br><br>
 
-    FACIS[facis]:::parent
-    FACIS --> SLA[SLA \n Service Level Agreements]:::component
-    FACIS --> DCS[DCS \n Digital Contracting Services]:::component
-    FACIS --> FAP[FAP \n Federation Architecture \nPatterns]:::component
-    FACIS --> POC[PoC \n Proof of Concepts]:::component
-    FACIS --> DEM[Demonstrators]:::component
+![architecture_diagram](https://github.com/eclipse-xfsc/facis/blob/main/assets/architecture_diagram.png)
 
-    FAP --> FAP1[Partner Onboarding]:::submodule
-    FAP --> FAP2[DCM \n decentralized catalogue\n Management]:::submodule
-    FAP --> FAP3[IoT & AI]:::submodule
-    FAP --> FAP4[PCI \n Principal Credential\n Issuance]:::submodule
 
-    POC --> POC1[Aviation PoC]:::submodule
-
-    DEM --> DEM1[Zero Trust Demonstrators]:::submodule
-```
+<br><br>
 The table provides a high-level view of the core components and their goals.
 | Component | Primary Goal | Repository Link |
 |-----------|--------------|:-----------------:|
@@ -85,6 +69,7 @@ A Modular Deployment Service integrated with the visual orchestration Engine tha
 | *ESB OCM-Wstack* | Enhances the participant’s interaction with the SSI-based ecosystem in a trustful and secure fashion. | [`eclipse-xfsc/easy-stack-builder-ocm-wstack`](https://github.com/eclipse-xfsc/smartdeployment/tree/main/Easy%20Stack%20Builder%20(ESB)/OCM-WStack) |
 | *ESB PCM* | The user manages their credentials themselves, which supports decentralized architecture. |  [`eclipse-xfsc/easy-stack-builder-pcm`](https://github.com/eclipse-xfsc/smartdeployment/tree/main/Easy%20Stack%20Builder%20(ESB)/PCM) |
 | *ESB TSA* | Kubernetes-based deployment workspace for provisioning a Trust Services Agent environment while reusing shared OCM platform services from another namespace. | [`eclipse-xfsc/easy-stack-builder-tsa`](https://github.com/eclipse-xfsc/smartdeployment/tree/main/Easy%20Stack%20Builder%20(ESB)/TSA) |
+| *ESB AAS* | An automated Authentication and Authorization Stack workspace that deploys an AAS instance to a Kubernetes cluster. | [`eclipse-xfsc/easy-stack-builder-aas`](https://github.com/eclipse-xfsc/smartdeployment/tree/main/Easy%20Stack%20Builder%20(ESB)/AAS) |
 | *AI Flow Builder* | - | [`eclipse-xfsc/ai-flow-builder`](https://github.com/eclipse-xfsc/smartdeployment/tree/main/AI%20Flow%20Builder) |
 
 ## FACIS - XFSC Catalogue Enhancements
@@ -104,6 +89,23 @@ A Modular Deployment Service integrated with the visual orchestration Engine tha
 ## Installation and Usage  
 All outcomes of the FACIS project will be provided as **open-source**. Organizations and developers can access these tools through the **official FACIS website** and the related GitHub repositories.  
 
+### Important - This repository uses Git Submodules
+This repository contains *git submodules*. A plain `git clone` will result in **empty subdirectories**. You must use one of the approaches below.
+
+#### Fresh Clone (recommended)
+
+```bash
+git clone --recurse-submodules https://github.com/eclipse-xfsc/facis.git
+cd facis
+```
+
+#### Already Cloned Without Submodules
+
+If you already ran a plain `git clone`, initialize and pull all submodules:
+
+```bash
+git submodule update --init --recursive
+```
 ---
 
 ## Contributing  
