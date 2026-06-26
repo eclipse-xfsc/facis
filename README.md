@@ -51,7 +51,7 @@ This repository is responsible for implementing the standarized templates/ bluep
 
 
 #### 4. Orchestration and Smart Deployment Tools
-These repositories contains the source code to deploy and manage the federation services according to the FAPs.
+These repositories contains the source code to deploy and manage the FAPs.
 
 ##### 4.1 Orchestration Engine 
 | Component | Description | Repository Link |
@@ -60,7 +60,7 @@ These repositories contains the source code to deploy and manage the federation 
 | *scenarios/aw40-demonstrator* | - | [`eclipse-xfsc/aw40-demonstrator`](https://github.com/eclipse-xfsc/orchestration-engine/tree/main/scenarios/aw40-demonstrator) |
 
 ##### 4.2 ESB: Easy Stack Builder 
-A Modular Deployment Service integrated with the visual orchestration Engine that enables users to create and execute backend deployment and policy logic through drag and drop nodes.
+A Modular Deployment Service integrated with the visual Orchestration Engine that enables users to create and execute backend deployment and policy logic through drag and drop nodes.
 | Tool | Description | Repository Link |
 |------|--------------|:-----------------:|
 | *ESB* | The reference repository for the Easy Stack Builder | [`eclipse-xfsc/easy-stack-builder`](https://github.com/eclipse-xfsc/smartdeployment/tree/main/Easy%20Stack%20Builder%20(ESB)) |
