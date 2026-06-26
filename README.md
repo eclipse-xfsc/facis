@@ -15,7 +15,7 @@ Code-related deliverables are published via GitHub, while non-code results- such
 This repository serve as the central-entry point for all the FACIS components. 
 <br><br>
 
-![architecture_diagram](https://github.com/eclipse-xfsc/facis/blob/main/assets/architecture_diagram.png)
+![architecture_diagram](assets/facis_architecture_diagram.png)
 
 
 <br><br>
@@ -129,7 +129,7 @@ FACIS is part of the Important Projects of Common European Interest – Cloud In
 **Funding ID:** 13IPC035A <br>
 **More info:** [https://8ra.com/ipcei-cis/](https://8ra.com/ipcei-cis/)
 
-![FACIS Funding](https://github.com/eclipse-xfsc/facis/blob/main/assets/Funding_logo.png)
+![FACIS Funding](assets/Funding_logo.png)
 
 ---
 
