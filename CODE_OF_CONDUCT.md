@@ -5,7 +5,7 @@ January 1, 2023
 
 ## Our Pledge
 
-In the interest of fostering an open and welcoming environment, we as community members, contributors, Committers¹, and Project Leads (collectively "Contributors") pledge to make participation in our projects and our community a harassment-free and inclusive experience for everyone.
+In the interest of fostering an open and welcoming environment, we as community members, contributors, Committers[^1], and Project Leads (collectively "Contributors") pledge to make participation in our projects and our community a harassment-free and inclusive experience for everyone.
 
 This Community Code of Conduct ("Code") outlines our behavior expectations as members of our community in all Eclipse Foundation activities, both offline and online. It is not intended to govern scenarios or behaviors outside of the scope of Eclipse Foundation activities. Nor is it intended to replace or supersede the protections offered to all our community members under the law. Please follow both the spirit and letter of this Code and encourage other Contributors to follow these principles into our work. Failure to read or acknowledge this Code does not excuse a Contributor from compliance with the Code.
 
@@ -89,4 +89,7 @@ The Eclipse Foundation Board of Directors may amend this Code from time to time 
 
 ## Attribution
 
-This Code was inspired by the Contributor Covenant, version 1.4, available here.
+This Code was inspired by the [Contributor Covenant](https://www.contributor-covenant.org/), version 1.4, available [here](https://www.contributor-covenant.org/version/1/4/code-of-conduct/).
+
+
+[^1]: Capitalized terms used herein without definition shall have the meanings assigned to them in the Bylaws.

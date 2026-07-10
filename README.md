@@ -1,3 +1,5 @@
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![Submodule Check](https://github.com/eclipse-xfsc/facis/actions/workflows/daily-submodule-check.yml/badge.svg)](https://github.com/eclipse-xfsc/facis/actions/workflows/daily-submodule-check.yml)
 # FACIS: Federation Architecture for Composed Infrastructure Services
 
 ## Introduction  
@@ -13,12 +15,7 @@ Code-related deliverables are published via GitHub, while non-code results- such
 
 ## FACIS Key Deliverables Repository
 This repository serve as the central-entry point for all the FACIS components. 
-<br><br>
 
-![architecture_diagram](assets/facis_architecture_diagram.png)
-
-
-<br><br>
 The table provides a high-level view of the core components and their goals.
 | Component | Primary Goal | Repository Link |
 |-----------|--------------|:-----------------:|
