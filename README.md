@@ -131,7 +131,7 @@ FACIS is part of the Important Projects of Common European Interest – Cloud In
 ---
 
 ## License  
-This project is released under the **Apache 2.0 License**.  
+This project is released under the **[Apache 2.0 License](LICENSE)**.  
 
 ---
 
