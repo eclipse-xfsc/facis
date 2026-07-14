@@ -1,3 +1,5 @@
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![Submodule Check](https://github.com/eclipse-xfsc/facis/actions/workflows/daily-submodule-check.yml/badge.svg)](https://github.com/eclipse-xfsc/facis/actions/workflows/daily-submodule-check.yml)
 # FACIS: Federation Architecture for Composed Infrastructure Services
 
 ## Introduction  
@@ -13,12 +15,7 @@ Code-related deliverables are published via GitHub, while non-code results- such
 
 ## FACIS Key Deliverables Repository
 This repository serve as the central-entry point for all the FACIS components. 
-<br><br>
 
-![architecture_diagram](https://github.com/eclipse-xfsc/facis/blob/main/assets/architecture_diagram.png)
-
-
-<br><br>
 The table provides a high-level view of the core components and their goals.
 | Component | Primary Goal | Repository Link |
 |-----------|--------------|:-----------------:|
@@ -51,7 +48,7 @@ This repository is responsible for implementing the standarized templates/ bluep
 
 
 #### 4. Orchestration and Smart Deployment Tools
-These repositories contains the source code to deploy and manage the federation services according to the FAPs.
+These repositories contains the source code to deploy and manage the FAPs.
 
 ##### 4.1 Orchestration Engine 
 | Component | Description | Repository Link |
@@ -60,7 +57,7 @@ These repositories contains the source code to deploy and manage the federation 
 | *scenarios/aw40-demonstrator* | - | [`eclipse-xfsc/aw40-demonstrator`](https://github.com/eclipse-xfsc/orchestration-engine/tree/main/scenarios/aw40-demonstrator) |
 
 ##### 4.2 ESB: Easy Stack Builder 
-A Modular Deployment Service integrated with the visual orchestration Engine that enables users to create and execute backend deployment and policy logic through drag and drop nodes.
+A Modular Deployment Service integrated with the visual Orchestration Engine that enables users to create and execute backend deployment and policy logic through drag and drop nodes.
 | Tool | Description | Repository Link |
 |------|--------------|:-----------------:|
 | *ESB* | The reference repository for the Easy Stack Builder | [`eclipse-xfsc/easy-stack-builder`](https://github.com/eclipse-xfsc/smartdeployment/tree/main/Easy%20Stack%20Builder%20(ESB)) |
@@ -129,12 +126,12 @@ FACIS is part of the Important Projects of Common European Interest – Cloud In
 **Funding ID:** 13IPC035A <br>
 **More info:** [https://8ra.com/ipcei-cis/](https://8ra.com/ipcei-cis/)
 
-![FACIS Funding](https://github.com/eclipse-xfsc/facis/blob/main/assets/Funding_logo.png)
+![FACIS Funding](assets/Funding_logo.png)
 
 ---
 
 ## License  
-This project is released under the **Apache 2.0 License**.  
+This project is released under the **[Apache 2.0 License](LICENSE)**.  
 
 ---
 
