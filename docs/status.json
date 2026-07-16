@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-16T10:36:25.880213+00:00",
+  "generatedAt": "2026-07-16T12:23:19.882624+00:00",
   "repos": [
     {
       "key": "root",
@@ -14,6 +14,7 @@
       "contributorCount": 11,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-16T06:54:12Z",
+      "currentlyFailingWorkflows": [],
       "ciRecentFailureCount": 0,
       "ciFailuresByDay": [
         0,
@@ -67,12 +68,15 @@
       "repo": "facis-dcs",
       "url": "https://github.com/eclipse-xfsc/facis-dcs",
       "exists": true,
-      "health": "yellow",
+      "health": "red",
       "lastCommitDate": "2026-06-10T13:43:10Z",
       "daysSinceLastCommit": 35,
       "contributorCount": 11,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-16T09:40:33Z",
+      "currentlyFailingWorkflows": [
+        "Code Quality Check"
+      ],
       "ciRecentFailureCount": 4,
       "ciFailuresByDay": [
         0,
@@ -157,6 +161,7 @@
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-14T08:44:26Z",
+      "currentlyFailingWorkflows": [],
       "ciRecentFailureCount": 0,
       "ciFailuresByDay": [
         0,
@@ -216,6 +221,7 @@
       "contributorCount": 7,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-15T21:42:33Z",
+      "currentlyFailingWorkflows": [],
       "ciRecentFailureCount": 1,
       "ciFailuresByDay": [
         0,
@@ -278,10 +284,11 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-06-08T11:05:16Z",
-      "daysSinceLastCommit": 37,
+      "daysSinceLastCommit": 38,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-11T23:34:33Z",
+      "currentlyFailingWorkflows": [],
       "ciRecentFailureCount": 0,
       "ciFailuresByDay": [
         0,
@@ -337,10 +344,11 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-04-13T11:43:50Z",
-      "daysSinceLastCommit": 93,
+      "daysSinceLastCommit": 94,
       "contributorCount": 2,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-10T19:34:10Z",
+      "currentlyFailingWorkflows": [],
       "ciRecentFailureCount": 0,
       "ciFailuresByDay": [
         0,
@@ -400,6 +408,7 @@
       "contributorCount": 1,
       "ciLastRunStatus": null,
       "ciLastRunAt": null,
+      "currentlyFailingWorkflows": [],
       "ciRecentFailureCount": 0,
       "ciFailuresByDay": [
         0,

@@ -136,6 +136,23 @@ def collect_repo(entry, previous):
     if run_list and last_run_status is None:
         last_run_status = "pending"
 
+    today_date = datetime.now(timezone.utc).date()
+    today_runs = [
+        r for r in run_list if parse_gh_date(r["created_at"]).date() == today_date
+    ]
+
+    latest_per_workflow_today = {}
+    for r in today_runs:
+        wf_id = r.get("workflow_id")
+        if wf_id not in latest_per_workflow_today:
+            latest_per_workflow_today[wf_id] = r
+
+    currently_failing_workflows = [
+        r.get("name")
+        for r in latest_per_workflow_today.values()
+        if r.get("conclusion") == "failure"
+    ]
+
     one_week_ago = datetime.now(timezone.utc) - timedelta(days=7)
     recent_runs = [
         r for r in run_list if parse_gh_date(r["created_at"]) >= one_week_ago
@@ -181,8 +198,8 @@ def collect_repo(entry, previous):
 
     if info is None:
         health = "unknown"
-    elif last_run_status == "failure":
-        health = "red"  # currently broken: the LAST run actually failed
+    elif currently_failing_workflows:
+        health = "red"  # at least one workflow's latest run today is failing
     elif (
         last_run_status is None or recent_failures >= 2 or governance_score < len(keys)
     ):
@@ -215,6 +232,7 @@ def collect_repo(entry, previous):
         "contributorCount": contributor_count,
         "ciLastRunStatus": last_run_status,
         "ciLastRunAt": last_run_at,
+        "currentlyFailingWorkflows": currently_failing_workflows,
         "ciRecentFailureCount": recent_failures,
         "ciFailuresByDay": failures_by_day,
         "failedRuns": failed_run_details,

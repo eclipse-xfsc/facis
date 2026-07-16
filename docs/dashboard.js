@@ -51,6 +51,9 @@ function trendBadge(t) {
 }
 
 function ciStatusText(r) {
+  if (r.currentlyFailingWorkflows && r.currentlyFailingWorkflows.length) {
+    return `\u274C Failed \u2014 ${r.currentlyFailingWorkflows.join(', ')}`;
+  }
   if (r.ciLastRunStatus === 'success') return `\u2705 Passed ${r.ciLastRunAt ? `(${timeAgo(r.ciLastRunAt)})` : ''}`;
   if (r.ciLastRunStatus === 'failure') return `\u274C Failed ${r.ciLastRunAt ? `(${timeAgo(r.ciLastRunAt)})` : ''}`;
   if (r.ciLastRunStatus === 'pending') return '\u23F3 Pending';
@@ -137,9 +140,10 @@ function renderCard(r) {
   if (r.daysSinceLastCommit != null && r.daysSinceLastCommit > 90) {
     alerts.push(`Last commit: ${r.daysSinceLastCommit} days ago \u26A0\uFE0F (stale)`);
   }
-  if (r.ciLastRunStatus === 'failure') {
-    alerts.push(`Latest CI run failed`);
+  if (r.currentlyFailingWorkflows && r.currentlyFailingWorkflows.length) {
+    alerts.push(`Currently failing: ${r.currentlyFailingWorkflows.join(', ')}`);
   }
+
 
   const govChips = Object.entries(r.governanceFiles || {}).map(([k, present]) => `
     <span class="chip ${present ? 'yes' : 'no'}">${present ? '\u2713' : '\u2717'} ${GOV_LABEL[k]}</span>
