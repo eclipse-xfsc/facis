@@ -1,0 +1,450 @@
+{
+  "generatedAt": "2026-07-16T10:36:25.880213+00:00",
+  "repos": [
+    {
+      "key": "root",
+      "label": "FACIS",
+      "owner": "eclipse-xfsc",
+      "repo": "facis",
+      "url": "https://github.com/eclipse-xfsc/facis",
+      "exists": true,
+      "health": "green",
+      "lastCommitDate": "2026-07-14T09:01:02Z",
+      "daysSinceLastCommit": 2,
+      "contributorCount": 11,
+      "ciLastRunStatus": "success",
+      "ciLastRunAt": "2026-07-16T06:54:12Z",
+      "ciRecentFailureCount": 0,
+      "ciFailuresByDay": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "failedRuns": [],
+      "openIssueCount": 0,
+      "openHumanPRCount": 0,
+      "needsReviewPRCount": 0,
+      "releaseCount": 0,
+      "latestRelease": null,
+      "governanceScore": 3,
+      "governanceFiles": {
+        "license": true,
+        "contributing": true,
+        "readme": true
+      },
+      "trends": {
+        "contributorCount": {
+          "previous": 11,
+          "current": 11,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "openIssueCount": {
+          "previous": 0,
+          "current": 0,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "ciRecentFailureCount": {
+          "previous": 0,
+          "current": 0,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        }
+      }
+    },
+    {
+      "key": "dcs",
+      "label": "DCS",
+      "owner": "eclipse-xfsc",
+      "repo": "facis-dcs",
+      "url": "https://github.com/eclipse-xfsc/facis-dcs",
+      "exists": true,
+      "health": "yellow",
+      "lastCommitDate": "2026-06-10T13:43:10Z",
+      "daysSinceLastCommit": 35,
+      "contributorCount": 11,
+      "ciLastRunStatus": "success",
+      "ciLastRunAt": "2026-07-16T09:40:33Z",
+      "ciRecentFailureCount": 4,
+      "ciFailuresByDay": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        1
+      ],
+      "failedRuns": [
+        {
+          "workflowName": "Code Quality Check",
+          "branch": "development",
+          "date": "2026-07-16T09:40:32Z",
+          "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/29488005706"
+        },
+        {
+          "workflowName": "BDD on kind",
+          "branch": "development",
+          "date": "2026-07-14T15:16:35Z",
+          "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/29344618301"
+        },
+        {
+          "workflowName": "BDD on kind",
+          "branch": "development",
+          "date": "2026-07-14T12:32:15Z",
+          "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/29332856177"
+        },
+        {
+          "workflowName": "BDD on kind",
+          "branch": "development",
+          "date": "2026-07-14T11:55:46Z",
+          "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/29330617724"
+        }
+      ],
+      "openIssueCount": 0,
+      "openHumanPRCount": 1,
+      "needsReviewPRCount": 0,
+      "releaseCount": 0,
+      "latestRelease": null,
+      "governanceScore": 3,
+      "governanceFiles": {
+        "license": true,
+        "contributing": true,
+        "readme": true
+      },
+      "trends": {
+        "contributorCount": {
+          "previous": 11,
+          "current": 11,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "openIssueCount": {
+          "previous": 0,
+          "current": 0,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "ciRecentFailureCount": {
+          "previous": 4,
+          "current": 4,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        }
+      }
+    },
+    {
+      "key": "dcm",
+      "label": "DCM",
+      "owner": "eclipse-xfsc",
+      "repo": "facis-fap-decentralized-catalogue-management",
+      "url": "https://github.com/eclipse-xfsc/facis-fap-decentralized-catalogue-management",
+      "exists": true,
+      "health": "green",
+      "lastCommitDate": "2026-05-12T12:27:35Z",
+      "daysSinceLastCommit": 64,
+      "contributorCount": 4,
+      "ciLastRunStatus": "success",
+      "ciLastRunAt": "2026-07-14T08:44:26Z",
+      "ciRecentFailureCount": 0,
+      "ciFailuresByDay": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "failedRuns": [],
+      "openIssueCount": 5,
+      "openHumanPRCount": 1,
+      "needsReviewPRCount": 0,
+      "releaseCount": 0,
+      "latestRelease": null,
+      "governanceScore": 3,
+      "governanceFiles": {
+        "license": true,
+        "contributing": true,
+        "readme": true
+      },
+      "trends": {
+        "contributorCount": {
+          "previous": 4,
+          "current": 4,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "openIssueCount": {
+          "previous": 5,
+          "current": 5,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "ciRecentFailureCount": {
+          "previous": 0,
+          "current": 0,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        }
+      }
+    },
+    {
+      "key": "iot-ai",
+      "label": "IoT & AI",
+      "owner": "eclipse-xfsc",
+      "repo": "facis-fap-iot-ai",
+      "url": "https://github.com/eclipse-xfsc/facis-fap-iot-ai",
+      "exists": true,
+      "health": "green",
+      "lastCommitDate": "2026-05-13T12:29:38Z",
+      "daysSinceLastCommit": 63,
+      "contributorCount": 7,
+      "ciLastRunStatus": "success",
+      "ciLastRunAt": "2026-07-15T21:42:33Z",
+      "ciRecentFailureCount": 1,
+      "ciFailuresByDay": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "failedRuns": [
+        {
+          "workflowName": "pip in /. - Update #1456533216",
+          "branch": "main",
+          "date": "2026-07-11T12:11:48Z",
+          "url": "https://github.com/eclipse-xfsc/facis-fap-iot-ai/actions/runs/29152220987"
+        }
+      ],
+      "openIssueCount": 0,
+      "openHumanPRCount": 1,
+      "needsReviewPRCount": 0,
+      "releaseCount": 0,
+      "latestRelease": null,
+      "governanceScore": 3,
+      "governanceFiles": {
+        "license": true,
+        "contributing": true,
+        "readme": true
+      },
+      "trends": {
+        "contributorCount": {
+          "previous": 7,
+          "current": 7,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "openIssueCount": {
+          "previous": 0,
+          "current": 0,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "ciRecentFailureCount": {
+          "previous": 1,
+          "current": 1,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        }
+      }
+    },
+    {
+      "key": "partner-onboarding",
+      "label": "Partner Onboarding",
+      "owner": "eclipse-xfsc",
+      "repo": "facis-fap-partner-onboarding",
+      "url": "https://github.com/eclipse-xfsc/facis-fap-partner-onboarding",
+      "exists": true,
+      "health": "green",
+      "lastCommitDate": "2026-06-08T11:05:16Z",
+      "daysSinceLastCommit": 37,
+      "contributorCount": 4,
+      "ciLastRunStatus": "success",
+      "ciLastRunAt": "2026-07-11T23:34:33Z",
+      "ciRecentFailureCount": 0,
+      "ciFailuresByDay": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "failedRuns": [],
+      "openIssueCount": 0,
+      "openHumanPRCount": 0,
+      "needsReviewPRCount": 0,
+      "releaseCount": 0,
+      "latestRelease": null,
+      "governanceScore": 3,
+      "governanceFiles": {
+        "license": true,
+        "contributing": true,
+        "readme": true
+      },
+      "trends": {
+        "contributorCount": {
+          "previous": 4,
+          "current": 4,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "openIssueCount": {
+          "previous": 0,
+          "current": 0,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "ciRecentFailureCount": {
+          "previous": 0,
+          "current": 0,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        }
+      }
+    },
+    {
+      "key": "aviation-poc",
+      "label": "Aviation PoC",
+      "owner": "eclipse-xfsc",
+      "repo": "facis-poc-federation-aviation",
+      "url": "https://github.com/eclipse-xfsc/facis-poc-federation-aviation",
+      "exists": true,
+      "health": "green",
+      "lastCommitDate": "2026-04-13T11:43:50Z",
+      "daysSinceLastCommit": 93,
+      "contributorCount": 2,
+      "ciLastRunStatus": "success",
+      "ciLastRunAt": "2026-07-10T19:34:10Z",
+      "ciRecentFailureCount": 0,
+      "ciFailuresByDay": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "failedRuns": [],
+      "openIssueCount": 0,
+      "openHumanPRCount": 0,
+      "needsReviewPRCount": 0,
+      "releaseCount": 0,
+      "latestRelease": null,
+      "governanceScore": 3,
+      "governanceFiles": {
+        "license": true,
+        "contributing": true,
+        "readme": true
+      },
+      "trends": {
+        "contributorCount": {
+          "previous": 2,
+          "current": 2,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "openIssueCount": {
+          "previous": 0,
+          "current": 0,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "ciRecentFailureCount": {
+          "previous": 0,
+          "current": 0,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        }
+      }
+    },
+    {
+      "key": "credential-issuance",
+      "label": "Principal Credential Issuance",
+      "owner": "eclipse-xfsc",
+      "repo": "facis-fap-principal-credential-issuance",
+      "url": "https://github.com/eclipse-xfsc/facis-fap-principal-credential-issuance",
+      "exists": true,
+      "health": "yellow",
+      "lastCommitDate": "2026-03-18T21:15:31Z",
+      "daysSinceLastCommit": 119,
+      "contributorCount": 1,
+      "ciLastRunStatus": null,
+      "ciLastRunAt": null,
+      "ciRecentFailureCount": 0,
+      "ciFailuresByDay": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "failedRuns": [],
+      "openIssueCount": 0,
+      "openHumanPRCount": 0,
+      "needsReviewPRCount": 0,
+      "releaseCount": 0,
+      "latestRelease": null,
+      "governanceScore": 2,
+      "governanceFiles": {
+        "license": false,
+        "contributing": true,
+        "readme": true
+      },
+      "trends": {
+        "contributorCount": {
+          "previous": 1,
+          "current": 1,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "openIssueCount": {
+          "previous": 0,
+          "current": 0,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "ciRecentFailureCount": {
+          "previous": 0,
+          "current": 0,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        }
+      }
+    }
+  ]
+}
