@@ -44,7 +44,7 @@ REPOS = [
 ]
 
 TOKEN = os.environ.get("GITHUB_TOKEN")
-STATUS_PATH = "docs/status.json"
+STATUS_PATH = "dashboard/status.json"
 
 
 def gh(path):
@@ -136,20 +136,20 @@ def collect_repo(entry, previous):
     if run_list and last_run_status is None:
         last_run_status = "pending"
 
-    today_date = datetime.now(timezone.utc).date()
-    today_runs = [
-        r for r in run_list if parse_gh_date(r["created_at"]).date() == today_date
+    one_day_ago = datetime.now(timezone.utc) - timedelta(hours=24)
+    recent_24h_runs = [
+        r for r in run_list if parse_gh_date(r["created_at"]) >= one_day_ago
     ]
 
-    latest_per_workflow_today = {}
-    for r in today_runs:
+    latest_per_workflow_recent = {}
+    for r in recent_24h_runs:
         wf_id = r.get("workflow_id")
-        if wf_id not in latest_per_workflow_today:
-            latest_per_workflow_today[wf_id] = r
+        if wf_id not in latest_per_workflow_recent:
+            latest_per_workflow_recent[wf_id] = r
 
     currently_failing_workflows = [
         r.get("name")
-        for r in latest_per_workflow_today.values()
+        for r in latest_per_workflow_recent.values()
         if r.get("conclusion") == "failure"
     ]
 
