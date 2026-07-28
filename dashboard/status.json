@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-27T13:53:40.469638+00:00",
+  "generatedAt": "2026-07-28T08:26:20.651618+00:00",
   "repos": [
     {
       "key": "root",
@@ -13,7 +13,7 @@
       "daysSinceLastCommit": 13,
       "contributorCount": 11,
       "ciLastRunStatus": "success",
-      "ciLastRunAt": "2026-07-27T05:14:56Z",
+      "ciLastRunAt": "2026-07-28T05:00:58Z",
       "currentlyFailingWorkflows": [],
       "ciRecentFailureCount": 0,
       "ciFailuresByDay": [
@@ -72,8 +72,8 @@
       "lastCommitDate": "2026-06-10T13:43:10Z",
       "daysSinceLastCommit": 47,
       "contributorCount": 11,
-      "ciLastRunStatus": "success",
-      "ciLastRunAt": "2026-07-27T12:16:54Z",
+      "ciLastRunStatus": "pending",
+      "ciLastRunAt": "2026-07-28T08:23:03Z",
       "currentlyFailingWorkflows": [],
       "ciRecentFailureCount": 0,
       "ciFailuresByDay": [
@@ -113,11 +113,11 @@
           "sentiment": "neutral"
         },
         "ciRecentFailureCount": {
-          "previous": 4,
+          "previous": 0,
           "current": 0,
-          "delta": -4,
-          "direction": "down",
-          "sentiment": "good"
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
         }
       }
     },
@@ -197,11 +197,11 @@
       "currentlyFailingWorkflows": [],
       "ciRecentFailureCount": 2,
       "ciFailuresByDay": [
-        1,
         0,
         0,
         0,
         1,
+        0,
         0,
         0
       ],
@@ -246,11 +246,11 @@
           "sentiment": "neutral"
         },
         "ciRecentFailureCount": {
-          "previous": 1,
+          "previous": 2,
           "current": 2,
-          "delta": 1,
-          "direction": "up",
-          "sentiment": "bad"
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
         }
       }
     },
@@ -383,7 +383,7 @@
       "exists": true,
       "health": "yellow",
       "lastCommitDate": "2026-03-18T21:15:31Z",
-      "daysSinceLastCommit": 130,
+      "daysSinceLastCommit": 131,
       "contributorCount": 1,
       "ciLastRunStatus": null,
       "ciLastRunAt": null,
