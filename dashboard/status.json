@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-28T08:26:20.651618+00:00",
+  "generatedAt": "2026-07-29T08:32:35.505802+00:00",
   "repos": [
     {
       "key": "root",
@@ -10,10 +10,10 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-07-14T09:01:02Z",
-      "daysSinceLastCommit": 13,
+      "daysSinceLastCommit": 14,
       "contributorCount": 11,
       "ciLastRunStatus": "success",
-      "ciLastRunAt": "2026-07-28T05:00:58Z",
+      "ciLastRunAt": "2026-07-29T05:01:52Z",
       "currentlyFailingWorkflows": [],
       "ciRecentFailureCount": 0,
       "ciFailuresByDay": [
@@ -68,24 +68,99 @@
       "repo": "facis-dcs",
       "url": "https://github.com/eclipse-xfsc/facis-dcs",
       "exists": true,
-      "health": "green",
+      "health": "red",
       "lastCommitDate": "2026-06-10T13:43:10Z",
-      "daysSinceLastCommit": 47,
+      "daysSinceLastCommit": 48,
       "contributorCount": 11,
-      "ciLastRunStatus": "pending",
-      "ciLastRunAt": "2026-07-28T08:23:03Z",
-      "currentlyFailingWorkflows": [],
-      "ciRecentFailureCount": 0,
+      "ciLastRunStatus": "failure",
+      "ciLastRunAt": "2026-07-29T08:30:42Z",
+      "currentlyFailingWorkflows": [
+        "Code Quality Check"
+      ],
+      "ciRecentFailureCount": 12,
       "ciFailuresByDay": [
         0,
         0,
         0,
         0,
         0,
-        0,
-        0
+        7,
+        5
       ],
-      "failedRuns": [],
+      "failedRuns": [
+        {
+          "workflowName": "Code Quality Check",
+          "branch": "development",
+          "date": "2026-07-29T08:30:42Z",
+          "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/30435799269"
+        },
+        {
+          "workflowName": "Code Quality Check",
+          "branch": "development",
+          "date": "2026-07-29T08:25:45Z",
+          "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/30435470708"
+        },
+        {
+          "workflowName": "Code Quality Check",
+          "branch": "development",
+          "date": "2026-07-29T08:04:19Z",
+          "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/30434037116"
+        },
+        {
+          "workflowName": "BDD on kind",
+          "branch": "development",
+          "date": "2026-07-29T08:04:18Z",
+          "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/30434036599"
+        },
+        {
+          "workflowName": "Code Quality Check",
+          "branch": "development",
+          "date": "2026-07-29T03:39:15Z",
+          "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/30420144068"
+        },
+        {
+          "workflowName": "Code Quality Check",
+          "branch": "development",
+          "date": "2026-07-28T21:19:05Z",
+          "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/30400160535"
+        },
+        {
+          "workflowName": "BDD on kind",
+          "branch": "development",
+          "date": "2026-07-28T21:19:05Z",
+          "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/30400160420"
+        },
+        {
+          "workflowName": "BDD on kind",
+          "branch": "development",
+          "date": "2026-07-28T20:09:10Z",
+          "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/30395071170"
+        },
+        {
+          "workflowName": "Code Quality Check",
+          "branch": "development",
+          "date": "2026-07-28T20:09:10Z",
+          "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/30395070976"
+        },
+        {
+          "workflowName": "Code Quality Check",
+          "branch": "development",
+          "date": "2026-07-28T19:58:24Z",
+          "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/30394257725"
+        },
+        {
+          "workflowName": "BDD on kind",
+          "branch": "development",
+          "date": "2026-07-28T18:09:02Z",
+          "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/30386117983"
+        },
+        {
+          "workflowName": "Code Quality Check",
+          "branch": "development",
+          "date": "2026-07-28T18:09:01Z",
+          "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/30386117248"
+        }
+      ],
       "openIssueCount": 0,
       "openHumanPRCount": 1,
       "needsReviewPRCount": 0,
@@ -114,10 +189,10 @@
         },
         "ciRecentFailureCount": {
           "previous": 0,
-          "current": 0,
-          "delta": 0,
-          "direction": "stable",
-          "sentiment": "neutral"
+          "current": 12,
+          "delta": 12,
+          "direction": "up",
+          "sentiment": "bad"
         }
       }
     },
@@ -130,7 +205,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-05-12T12:27:35Z",
-      "daysSinceLastCommit": 76,
+      "daysSinceLastCommit": 77,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-21T08:46:18Z",
@@ -188,19 +263,19 @@
       "repo": "facis-fap-iot-ai",
       "url": "https://github.com/eclipse-xfsc/facis-fap-iot-ai",
       "exists": true,
-      "health": "yellow",
+      "health": "green",
       "lastCommitDate": "2026-05-13T12:29:38Z",
-      "daysSinceLastCommit": 75,
+      "daysSinceLastCommit": 76,
       "contributorCount": 7,
       "ciLastRunStatus": "failure",
       "ciLastRunAt": "2026-07-25T12:12:28Z",
       "currentlyFailingWorkflows": [],
-      "ciRecentFailureCount": 2,
+      "ciRecentFailureCount": 1,
       "ciFailuresByDay": [
         0,
         0,
-        0,
         1,
+        0,
         0,
         0,
         0
@@ -211,12 +286,6 @@
           "branch": "dependabot/github_actions/actions/setup-python-7",
           "date": "2026-07-25T12:12:28Z",
           "url": "https://github.com/eclipse-xfsc/facis-fap-iot-ai/actions/runs/30157584346"
-        },
-        {
-          "workflowName": "CI",
-          "branch": "nf1-followon-issuance-hub-nf6-catalogue",
-          "date": "2026-07-21T13:06:46Z",
-          "url": "https://github.com/eclipse-xfsc/facis-fap-iot-ai/actions/runs/29832987466"
         }
       ],
       "openIssueCount": 0,
@@ -247,10 +316,10 @@
         },
         "ciRecentFailureCount": {
           "previous": 2,
-          "current": 2,
-          "delta": 0,
-          "direction": "stable",
-          "sentiment": "neutral"
+          "current": 1,
+          "delta": -1,
+          "direction": "down",
+          "sentiment": "good"
         }
       }
     },
@@ -263,7 +332,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-06-08T11:05:16Z",
-      "daysSinceLastCommit": 49,
+      "daysSinceLastCommit": 50,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-25T23:36:02Z",
@@ -323,7 +392,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-04-13T11:43:50Z",
-      "daysSinceLastCommit": 105,
+      "daysSinceLastCommit": 106,
       "contributorCount": 2,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-24T19:34:25Z",
@@ -383,7 +452,7 @@
       "exists": true,
       "health": "yellow",
       "lastCommitDate": "2026-03-18T21:15:31Z",
-      "daysSinceLastCommit": 131,
+      "daysSinceLastCommit": 132,
       "contributorCount": 1,
       "ciLastRunStatus": null,
       "ciLastRunAt": null,
