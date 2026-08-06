@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-05T08:28:50.731869+00:00",
+  "generatedAt": "2026-08-06T08:27:08.302072+00:00",
   "repos": [
     {
       "key": "root",
@@ -10,10 +10,10 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-08-04T05:01:31Z",
-      "daysSinceLastCommit": 1,
+      "daysSinceLastCommit": 2,
       "contributorCount": 11,
       "ciLastRunStatus": "success",
-      "ciLastRunAt": "2026-08-05T05:01:04Z",
+      "ciLastRunAt": "2026-08-06T05:01:26Z",
       "currentlyFailingWorkflows": [],
       "ciRecentFailureCount": 0,
       "ciFailuresByDay": [
@@ -70,16 +70,16 @@
       "exists": true,
       "health": "yellow",
       "lastCommitDate": "2026-07-31T15:03:30Z",
-      "daysSinceLastCommit": 4,
+      "daysSinceLastCommit": 5,
       "contributorCount": 12,
-      "ciLastRunStatus": "failure",
-      "ciLastRunAt": "2026-08-01T00:49:57Z",
+      "ciLastRunStatus": "pending",
+      "ciLastRunAt": "2026-08-06T08:03:19Z",
       "currentlyFailingWorkflows": [],
-      "ciRecentFailureCount": 12,
+      "ciRecentFailureCount": 11,
       "ciFailuresByDay": [
-        0,
-        10,
+        9,
         2,
+        0,
         0,
         0,
         0,
@@ -151,16 +151,10 @@
           "branch": "development",
           "date": "2026-07-31T07:34:25Z",
           "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/30613288646"
-        },
-        {
-          "workflowName": "BDD on kind",
-          "branch": "development",
-          "date": "2026-07-31T06:03:16Z",
-          "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/30608510457"
         }
       ],
       "openIssueCount": 0,
-      "openHumanPRCount": 0,
+      "openHumanPRCount": 1,
       "needsReviewPRCount": 0,
       "releaseCount": 0,
       "latestRelease": null,
@@ -187,10 +181,10 @@
         },
         "ciRecentFailureCount": {
           "previous": 12,
-          "current": 12,
-          "delta": 0,
-          "direction": "stable",
-          "sentiment": "neutral"
+          "current": 11,
+          "delta": -1,
+          "direction": "down",
+          "sentiment": "good"
         }
       }
     },
@@ -203,7 +197,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-08-03T17:00:52Z",
-      "daysSinceLastCommit": 1,
+      "daysSinceLastCommit": 2,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-21T08:46:18Z",
@@ -263,7 +257,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-07-31T08:21:27Z",
-      "daysSinceLastCommit": 5,
+      "daysSinceLastCommit": 6,
       "contributorCount": 7,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-08-01T12:14:06Z",
@@ -271,8 +265,8 @@
       "ciRecentFailureCount": 1,
       "ciFailuresByDay": [
         0,
-        0,
         1,
+        0,
         0,
         0,
         0,
@@ -330,7 +324,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-06-08T11:05:16Z",
-      "daysSinceLastCommit": 57,
+      "daysSinceLastCommit": 58,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-25T23:36:02Z",
@@ -390,7 +384,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-04-13T11:43:50Z",
-      "daysSinceLastCommit": 113,
+      "daysSinceLastCommit": 114,
       "contributorCount": 2,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-24T19:34:25Z",
@@ -450,7 +444,7 @@
       "exists": true,
       "health": "yellow",
       "lastCommitDate": "2026-03-18T21:15:31Z",
-      "daysSinceLastCommit": 139,
+      "daysSinceLastCommit": 140,
       "contributorCount": 1,
       "ciLastRunStatus": null,
       "ciLastRunAt": null,
