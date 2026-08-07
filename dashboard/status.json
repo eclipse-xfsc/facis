@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-07T07:07:55.450589+00:00",
+  "generatedAt": "2026-08-07T12:54:38.175704+00:00",
   "repos": [
     {
       "key": "root",
@@ -50,7 +50,7 @@
           "current": 1,
           "delta": 0,
           "direction": "stable",
-          "sentiment": "neutral"
+          "sentiment": "bad"
         },
         "ciRecentFailureCount": {
           "previous": 0,
@@ -68,18 +68,16 @@
       "repo": "facis-dcs",
       "url": "https://github.com/eclipse-xfsc/facis-dcs",
       "exists": true,
-      "health": "red",
+      "health": "yellow",
       "lastCommitDate": "2026-07-31T15:03:30Z",
       "daysSinceLastCommit": 6,
       "contributorCount": 12,
-      "ciLastRunStatus": "failure",
-      "ciLastRunAt": "2026-08-06T08:03:19Z",
-      "currentlyFailingWorkflows": [
-        "BDD on kind"
-      ],
-      "ciRecentFailureCount": 12,
+      "ciLastRunStatus": "pending",
+      "ciLastRunAt": "2026-08-07T12:27:39Z",
+      "currentlyFailingWorkflows": [],
+      "ciRecentFailureCount": 4,
       "ciFailuresByDay": [
-        2,
+        3,
         0,
         0,
         0,
@@ -111,54 +109,6 @@
           "branch": "main",
           "date": "2026-07-31T15:04:00Z",
           "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/30641291199"
-        },
-        {
-          "workflowName": "BDD on kind",
-          "branch": "development",
-          "date": "2026-07-31T10:40:20Z",
-          "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/30624349970"
-        },
-        {
-          "workflowName": "BDD on kind",
-          "branch": "development",
-          "date": "2026-07-31T09:59:06Z",
-          "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/30621921517"
-        },
-        {
-          "workflowName": "Code Quality Check",
-          "branch": "development",
-          "date": "2026-07-31T09:50:02Z",
-          "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/30621364327"
-        },
-        {
-          "workflowName": "BDD on kind",
-          "branch": "development",
-          "date": "2026-07-31T09:50:02Z",
-          "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/30621364270"
-        },
-        {
-          "workflowName": "Code Quality Check",
-          "branch": "development",
-          "date": "2026-07-31T09:31:55Z",
-          "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/30620273761"
-        },
-        {
-          "workflowName": "BDD on kind",
-          "branch": "development",
-          "date": "2026-07-31T09:31:55Z",
-          "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/30620273712"
-        },
-        {
-          "workflowName": "BDD on kind",
-          "branch": "development",
-          "date": "2026-07-31T08:08:30Z",
-          "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/30615258057"
-        },
-        {
-          "workflowName": "BDD on kind",
-          "branch": "development",
-          "date": "2026-07-31T07:34:25Z",
-          "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/30613288646"
         }
       ],
       "openIssueCount": 0,
@@ -188,10 +138,10 @@
           "sentiment": "neutral"
         },
         "ciRecentFailureCount": {
-          "previous": 11,
-          "current": 12,
-          "delta": 1,
-          "direction": "up",
+          "previous": 4,
+          "current": 4,
+          "delta": 0,
+          "direction": "stable",
           "sentiment": "bad"
         }
       }
@@ -208,7 +158,7 @@
       "daysSinceLastCommit": 3,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
-      "ciLastRunAt": "2026-07-21T08:46:18Z",
+      "ciLastRunAt": "2026-07-01T19:35:09Z",
       "currentlyFailingWorkflows": [],
       "ciRecentFailureCount": 0,
       "ciFailuresByDay": [
@@ -245,7 +195,7 @@
           "current": 5,
           "delta": 0,
           "direction": "stable",
-          "sentiment": "neutral"
+          "sentiment": "bad"
         },
         "ciRecentFailureCount": {
           "previous": 0,
@@ -265,10 +215,10 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-07-31T08:21:27Z",
-      "daysSinceLastCommit": 6,
+      "daysSinceLastCommit": 7,
       "contributorCount": 7,
-      "ciLastRunStatus": "success",
-      "ciLastRunAt": "2026-08-06T12:42:46Z",
+      "ciLastRunStatus": "startup_failure",
+      "ciLastRunAt": "2026-08-01T00:43:09Z",
       "currentlyFailingWorkflows": [],
       "ciRecentFailureCount": 1,
       "ciFailuresByDay": [
@@ -319,7 +269,7 @@
           "current": 1,
           "delta": 0,
           "direction": "stable",
-          "sentiment": "neutral"
+          "sentiment": "bad"
         }
       }
     },
@@ -332,10 +282,10 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-06-08T11:05:16Z",
-      "daysSinceLastCommit": 59,
+      "daysSinceLastCommit": 60,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
-      "ciLastRunAt": "2026-07-25T23:36:02Z",
+      "ciLastRunAt": "2026-06-08T11:05:18Z",
       "currentlyFailingWorkflows": [],
       "ciRecentFailureCount": 0,
       "ciFailuresByDay": [
@@ -392,10 +342,10 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-04-13T11:43:50Z",
-      "daysSinceLastCommit": 115,
+      "daysSinceLastCommit": 116,
       "contributorCount": 2,
       "ciLastRunStatus": "success",
-      "ciLastRunAt": "2026-07-24T19:34:25Z",
+      "ciLastRunAt": "2026-04-13T11:43:52Z",
       "currentlyFailingWorkflows": [],
       "ciRecentFailureCount": 0,
       "ciFailuresByDay": [

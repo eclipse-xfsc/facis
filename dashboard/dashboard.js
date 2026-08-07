@@ -69,6 +69,14 @@ function weekTrendText(counts) {
   return '<b><span class="trend neutral">\u2192 Stable</span></b>';
 }
 
+function ciTrendText(t) {
+  if (!t) return '<b>Not enough data</b>';
+  if (t.direction === 'down') return '<b><span class="trend good">\u2193 Improving</span></b>';
+  if (t.direction === 'up') return '<b><span class="trend bad">\u2191 Worsening</span></b>';
+    return `<b><span class="trend ${t.sentiment}">\u2192 Stable</span></b>`;
+}
+
+
 function failureColor(count, max) {
   if (count === 0) return '#9aa0a8';
   const t = count / max;
@@ -171,7 +179,7 @@ function renderCard(r) {
           <div class="section-title">Quality</div>
           <div class="row"><span>CI Status</span><b>${ciStatusText(r)}</b></div>
           <div class="row"><span>Historical</span><b class="${(r.ciRecentFailureCount ?? 0) > 0 ? 'value-bad' : ''}">${r.ciRecentFailureCount ?? 0} failures in 7d</b></div>
-          <div class="row"><span>Trend</span>${weekTrendText(r.ciFailuresByDay)}</div>
+          <div class="row"><span>Trend</span>${ciTrendText(r.trends?.ciRecentFailureCount)}</div>
           ${renderTrendLine(r.ciFailuresByDay, r.key)}
         </div>
 

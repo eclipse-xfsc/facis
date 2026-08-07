@@ -95,13 +95,15 @@ def compute_trend(current, previous, goal):
         return None
     delta = current - previous
     if delta == 0:
+        sentiment = "bad" if goal == "down" and current > 0 else "neutral"
         return {
             "previous": previous,
             "current": current,
             "delta": 0,
             "direction": "stable",
-            "sentiment": "neutral",
+            "sentiment": sentiment,
         }
+
     direction = "up" if delta > 0 else "down"
     is_good = (direction == "up" and goal == "up") or (
         direction == "down" and goal == "down"
@@ -130,7 +132,13 @@ def collect_repo(entry, previous):
     if commits and len(commits) > 0:
         last_commit_date = commits[0]["commit"]["committer"]["date"]
 
-    run_list = (runs or {}).get("workflow_runs", [])
+    def is_relevant_run(r):
+        if r.get("event") == "schedule":
+            return True
+        return (r.get("actor") or {}).get("type") != "Bot"
+
+    run_list = [r for r in (runs or {}).get("workflow_runs", []) if is_relevant_run(r)]
+
     last_run_status = run_list[0]["conclusion"] if run_list else None
     last_run_at = run_list[0]["created_at"] if run_list else None
     if run_list and last_run_status is None:
@@ -163,9 +171,8 @@ def collect_repo(entry, previous):
     for r in recent_runs:
         if r.get("conclusion") == "failure":
             run_date = parse_gh_date(r["created_at"]).date()
-            day_index = 6 - (today - run_date).days
-            if 0 <= day_index <= 6:
-                failures_by_day[day_index] += 1
+            day_index = max(0, min(6, 6 - (today - run_date).days))
+            failures_by_day[day_index] += 1
 
     failed_run_details = [
         {
@@ -198,8 +205,8 @@ def collect_repo(entry, previous):
 
     if info is None:
         health = "unknown"
-    elif currently_failing_workflows:
-        health = "red"  # at least one workflow's latest run today is failing
+    elif last_run_status == "failure" or currently_failing_workflows:
+        health = "red"  # the last relevant run failed, or another workflow is currently failing
     elif (
         last_run_status is None or recent_failures >= 2 or governance_score < len(keys)
     ):
