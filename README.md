@@ -16,6 +16,8 @@ Code-related deliverables are published via GitHub, while non-code results- such
 ## FACIS Key Deliverables Repository
 This repository serve as the central-entry point for all the FACIS components. 
 
+![FACIS Overview Diagram](assets/facis-overview.png)
+
 The table provides a high-level view of the core components and their goals.
 | Component | Primary Goal | Repository Link |
 |-----------|--------------|:-----------------:|
