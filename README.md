@@ -46,7 +46,7 @@ This repository is responsible for implementing the standarized templates/ bluep
 #### 3. Demonstrators
 | Demonstrators | Description | Repository Link |
 |-----|-------------|:-----------------:|
-| *zero Trust Demonstrators* | showes how Two Trust Zones interact through the TRAIN framework to securely exchange digital services between participants.  | [`eclipse-xfsc/demonstrators/zero-trust-demonstrators`](https://github.com/eclipse-xfsc/facis/tree/main/Demonstrators) |
+| *Zero Trust Demonstrators* | showes how Two Trust Zones interact through the TRAIN framework to securely exchange digital services between participants.  | [`eclipse-xfsc/demonstrators/zero-trust-demonstrators`](https://github.com/eclipse-xfsc/facis/tree/main/Demonstrators) |
 
 
 #### 4. Orchestration and Smart Deployment Tools
@@ -69,7 +69,7 @@ A Modular Deployment Service integrated with the visual Orchestration Engine tha
 | *ESB PCM* | The user manages their credentials themselves, which supports decentralized architecture. |  [`eclipse-xfsc/easy-stack-builder-pcm`](https://github.com/eclipse-xfsc/smartdeployment/tree/main/Easy%20Stack%20Builder%20(ESB)/PCM) |
 | *ESB TSA* | Kubernetes-based deployment workspace for provisioning a Trust Services Agent environment while reusing shared OCM platform services from another namespace. | [`eclipse-xfsc/easy-stack-builder-tsa`](https://github.com/eclipse-xfsc/smartdeployment/tree/main/Easy%20Stack%20Builder%20(ESB)/TSA) |
 | *ESB AAS* | An automated Authentication and Authorization Stack workspace that deploys an AAS instance to a Kubernetes cluster. | [`eclipse-xfsc/easy-stack-builder-aas`](https://github.com/eclipse-xfsc/smartdeployment/tree/main/Easy%20Stack%20Builder%20(ESB)/AAS) |
-| *AI Flow Builder* | - | [`eclipse-xfsc/ai-flow-builder`](https://github.com/eclipse-xfsc/smartdeployment/tree/main/AI%20Flow%20Builder) |
+
 
 ## FACIS - XFSC Catalogue Enhancements
 
