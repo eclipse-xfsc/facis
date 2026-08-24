@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-23T06:05:52.144706+00:00",
+  "generatedAt": "2026-08-24T06:10:07.962056+00:00",
   "repos": [
     {
       "key": "root",
@@ -9,23 +9,29 @@
       "url": "https://github.com/eclipse-xfsc/facis",
       "exists": true,
       "health": "yellow",
-      "lastCommitDate": "2026-08-22T06:05:07Z",
+      "lastCommitDate": "2026-08-23T06:05:52Z",
       "daysSinceLastCommit": 1,
       "contributorCount": 11,
       "ciLastRunStatus": "pending",
-      "ciLastRunAt": "2026-08-23T06:05:10Z",
+      "ciLastRunAt": "2026-08-24T06:09:34Z",
       "currentlyFailingWorkflows": [],
-      "ciRecentFailureCount": 2,
+      "ciRecentFailureCount": 3,
       "ciFailuresByDay": [
         0,
         0,
         0,
-        0,
+        1,
         1,
         1,
         0
       ],
       "failedRuns": [
+        {
+          "workflowName": "Federation Dashboard",
+          "branch": "main",
+          "date": "2026-08-23T06:05:10Z",
+          "url": "https://github.com/eclipse-xfsc/facis/actions/runs/32622005125"
+        },
         {
           "workflowName": "Federation Dashboard",
           "branch": "main",
@@ -66,8 +72,8 @@
           "sentiment": "bad"
         },
         "ciRecentFailureCount": {
-          "previous": 1,
-          "current": 2,
+          "previous": 2,
+          "current": 3,
           "delta": 1,
           "direction": "up",
           "sentiment": "bad"
@@ -83,7 +89,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-08-19T13:10:10Z",
-      "daysSinceLastCommit": 3,
+      "daysSinceLastCommit": 4,
       "contributorCount": 12,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-08-19T13:10:16Z",
@@ -143,7 +149,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-08-03T17:00:52Z",
-      "daysSinceLastCommit": 19,
+      "daysSinceLastCommit": 20,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-01T19:35:09Z",
@@ -203,7 +209,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-07-31T08:21:27Z",
-      "daysSinceLastCommit": 22,
+      "daysSinceLastCommit": 23,
       "contributorCount": 7,
       "ciLastRunStatus": "startup_failure",
       "ciLastRunAt": "2026-08-01T00:43:09Z",
@@ -263,7 +269,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-06-08T11:05:16Z",
-      "daysSinceLastCommit": 75,
+      "daysSinceLastCommit": 76,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-06-08T11:05:18Z",
@@ -323,7 +329,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-04-13T11:43:50Z",
-      "daysSinceLastCommit": 131,
+      "daysSinceLastCommit": 132,
       "contributorCount": 2,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-04-13T11:43:52Z",
@@ -383,7 +389,7 @@
       "exists": true,
       "health": "yellow",
       "lastCommitDate": "2026-03-18T21:15:31Z",
-      "daysSinceLastCommit": 157,
+      "daysSinceLastCommit": 158,
       "contributorCount": 1,
       "ciLastRunStatus": null,
       "ciLastRunAt": null,
