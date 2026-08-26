@@ -56,7 +56,6 @@ These repositories contains the source code to deploy and manage the FAPs.
 | Component | Description | Repository Link |
 |-----------|-------------|:-----------------:|
 | *Orchestration Engine* | Core Orchestration Engine- Manages federated service flows and monitors performance. | [`eclipse-xfsc/orchestration-engine`](https://github.com/eclipse-xfsc/orchestration-engine) |
-| *scenarios/aw40-demonstrator* | - | [`eclipse-xfsc/aw40-demonstrator`](https://github.com/eclipse-xfsc/orchestration-engine/tree/main/scenarios/aw40-demonstrator) |
 
 ##### 4.2 ESB: Easy Stack Builder 
 A Modular Deployment Service integrated with the visual Orchestration Engine that enables users to create and execute backend deployment and policy logic through drag and drop nodes.
