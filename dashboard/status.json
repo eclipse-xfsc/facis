@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-27T17:15:09.220760+00:00",
+  "generatedAt": "2026-08-28T18:07:51.633846+00:00",
   "repos": [
     {
       "key": "root",
@@ -9,19 +9,19 @@
       "url": "https://github.com/eclipse-xfsc/facis",
       "exists": true,
       "health": "yellow",
-      "lastCommitDate": "2026-08-27T08:58:55Z",
+      "lastCommitDate": "2026-08-28T09:01:46Z",
       "daysSinceLastCommit": 0,
       "contributorCount": 11,
       "ciLastRunStatus": "success",
-      "ciLastRunAt": "2026-08-27T08:58:19Z",
+      "ciLastRunAt": "2026-08-28T09:01:12Z",
       "currentlyFailingWorkflows": [],
-      "ciRecentFailureCount": 6,
+      "ciRecentFailureCount": 5,
       "ciFailuresByDay": [
         1,
         1,
         1,
-        1,
         2,
+        0,
         0,
         0
       ],
@@ -55,12 +55,6 @@
           "branch": "main",
           "date": "2026-08-22T06:04:30Z",
           "url": "https://github.com/eclipse-xfsc/facis/actions/runs/32556005041"
-        },
-        {
-          "workflowName": "Federation Dashboard",
-          "branch": "main",
-          "date": "2026-08-21T06:06:28Z",
-          "url": "https://github.com/eclipse-xfsc/facis/actions/runs/32453075235"
         }
       ],
       "openIssueCount": 1,
@@ -91,10 +85,10 @@
         },
         "ciRecentFailureCount": {
           "previous": 6,
-          "current": 6,
-          "delta": 0,
-          "direction": "stable",
-          "sentiment": "bad"
+          "current": 5,
+          "delta": -1,
+          "direction": "down",
+          "sentiment": "good"
         }
       }
     },
@@ -105,14 +99,18 @@
       "repo": "facis-dcs",
       "url": "https://github.com/eclipse-xfsc/facis-dcs",
       "exists": true,
-      "health": "green",
+      "health": "red",
       "lastCommitDate": "2026-08-19T13:10:10Z",
-      "daysSinceLastCommit": 8,
+      "daysSinceLastCommit": 9,
       "contributorCount": 12,
-      "ciLastRunStatus": "success",
-      "ciLastRunAt": "2026-08-19T13:10:16Z",
-      "currentlyFailingWorkflows": [],
-      "ciRecentFailureCount": 0,
+      "ciLastRunStatus": "failure",
+      "ciLastRunAt": "2026-08-28T12:51:10Z",
+      "currentlyFailingWorkflows": [
+        "Docker and Helm",
+        "Call Eclipse Dash License Scanner (Go)",
+        ".github/workflows/sbom.yml"
+      ],
+      "ciRecentFailureCount": 3,
       "ciFailuresByDay": [
         0,
         0,
@@ -120,14 +118,33 @@
         0,
         0,
         0,
-        0
+        3
       ],
-      "failedRuns": [],
+      "failedRuns": [
+        {
+          "workflowName": "Docker and Helm",
+          "branch": "qa-ready-2026-08-24",
+          "date": "2026-08-28T12:51:10Z",
+          "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/33172801315"
+        },
+        {
+          "workflowName": "Call Eclipse Dash License Scanner (Go)",
+          "branch": "qa-ready-2026-08-24",
+          "date": "2026-08-28T12:51:10Z",
+          "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/33172801167"
+        },
+        {
+          "workflowName": ".github/workflows/sbom.yml",
+          "branch": "main",
+          "date": "2026-08-28T12:51:10Z",
+          "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/33172801019"
+        }
+      ],
       "openIssueCount": 0,
-      "openHumanPRCount": 0,
+      "openHumanPRCount": 1,
       "needsReviewPRCount": 0,
-      "releaseCount": 0,
-      "latestRelease": null,
+      "releaseCount": 1,
+      "latestRelease": "qa-ready-2026-08-24",
       "governanceScore": 3,
       "governanceFiles": {
         "license": true,
@@ -151,10 +168,10 @@
         },
         "ciRecentFailureCount": {
           "previous": 0,
-          "current": 0,
-          "delta": 0,
-          "direction": "stable",
-          "sentiment": "neutral"
+          "current": 3,
+          "delta": 3,
+          "direction": "up",
+          "sentiment": "bad"
         }
       }
     },
@@ -167,7 +184,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-08-03T17:00:52Z",
-      "daysSinceLastCommit": 24,
+      "daysSinceLastCommit": 25,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-01T19:35:09Z",
@@ -227,7 +244,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-07-31T08:21:27Z",
-      "daysSinceLastCommit": 27,
+      "daysSinceLastCommit": 28,
       "contributorCount": 7,
       "ciLastRunStatus": "startup_failure",
       "ciLastRunAt": "2026-08-01T00:43:09Z",
@@ -287,7 +304,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-06-08T11:05:16Z",
-      "daysSinceLastCommit": 80,
+      "daysSinceLastCommit": 81,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-06-08T11:05:18Z",
@@ -347,7 +364,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-04-13T11:43:50Z",
-      "daysSinceLastCommit": 136,
+      "daysSinceLastCommit": 137,
       "contributorCount": 2,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-04-13T11:43:52Z",
@@ -407,7 +424,7 @@
       "exists": true,
       "health": "yellow",
       "lastCommitDate": "2026-03-18T21:15:31Z",
-      "daysSinceLastCommit": 161,
+      "daysSinceLastCommit": 162,
       "contributorCount": 1,
       "ciLastRunStatus": null,
       "ciLastRunAt": null,
@@ -467,7 +484,7 @@
       "exists": true,
       "health": "yellow",
       "lastCommitDate": "2026-07-31T11:06:02Z",
-      "daysSinceLastCommit": 27,
+      "daysSinceLastCommit": 28,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-26T10:15:00Z",
@@ -527,10 +544,10 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-08-27T09:55:34Z",
-      "daysSinceLastCommit": 0,
+      "daysSinceLastCommit": 1,
       "contributorCount": 13,
       "ciLastRunStatus": "success",
-      "ciLastRunAt": "2026-08-27T13:12:33Z",
+      "ciLastRunAt": "2026-08-28T17:35:32Z",
       "currentlyFailingWorkflows": [],
       "ciRecentFailureCount": 0,
       "ciFailuresByDay": [
@@ -570,11 +587,11 @@
           "sentiment": "bad"
         },
         "ciRecentFailureCount": {
-          "previous": 2,
+          "previous": 0,
           "current": 0,
-          "delta": -2,
-          "direction": "down",
-          "sentiment": "good"
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
         }
       }
     }
