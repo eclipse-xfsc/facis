@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-29T06:03:31.641374+00:00",
+  "generatedAt": "2026-08-30T06:04:07.377622+00:00",
   "repos": [
     {
       "key": "root",
@@ -9,17 +9,17 @@
       "url": "https://github.com/eclipse-xfsc/facis",
       "exists": true,
       "health": "yellow",
-      "lastCommitDate": "2026-08-28T09:01:46Z",
-      "daysSinceLastCommit": 0,
+      "lastCommitDate": "2026-08-29T06:03:31Z",
+      "daysSinceLastCommit": 1,
       "contributorCount": 11,
       "ciLastRunStatus": "pending",
-      "ciLastRunAt": "2026-08-29T06:03:03Z",
+      "ciLastRunAt": "2026-08-30T06:03:30Z",
       "currentlyFailingWorkflows": [],
-      "ciRecentFailureCount": 5,
+      "ciRecentFailureCount": 4,
       "ciFailuresByDay": [
         2,
-        1,
         2,
+        0,
         0,
         0,
         0,
@@ -49,12 +49,6 @@
           "branch": "main",
           "date": "2026-08-23T06:05:10Z",
           "url": "https://github.com/eclipse-xfsc/facis/actions/runs/32622005125"
-        },
-        {
-          "workflowName": "Federation Dashboard",
-          "branch": "main",
-          "date": "2026-08-22T06:04:30Z",
-          "url": "https://github.com/eclipse-xfsc/facis/actions/runs/32556005041"
         }
       ],
       "openIssueCount": 1,
@@ -85,10 +79,10 @@
         },
         "ciRecentFailureCount": {
           "previous": 5,
-          "current": 5,
-          "delta": 0,
-          "direction": "stable",
-          "sentiment": "bad"
+          "current": 4,
+          "delta": -1,
+          "direction": "down",
+          "sentiment": "good"
         }
       }
     },
@@ -101,23 +95,19 @@
       "exists": true,
       "health": "red",
       "lastCommitDate": "2026-08-19T13:10:10Z",
-      "daysSinceLastCommit": 9,
+      "daysSinceLastCommit": 10,
       "contributorCount": 12,
       "ciLastRunStatus": "failure",
       "ciLastRunAt": "2026-08-28T12:51:10Z",
-      "currentlyFailingWorkflows": [
-        "Docker and Helm",
-        "Call Eclipse Dash License Scanner (Go)",
-        ".github/workflows/sbom.yml"
-      ],
+      "currentlyFailingWorkflows": [],
       "ciRecentFailureCount": 3,
       "ciFailuresByDay": [
         0,
         0,
         0,
         0,
-        0,
         3,
+        0,
         0
       ],
       "failedRuns": [
@@ -167,10 +157,10 @@
           "sentiment": "neutral"
         },
         "ciRecentFailureCount": {
-          "previous": 0,
+          "previous": 3,
           "current": 3,
-          "delta": 3,
-          "direction": "up",
+          "delta": 0,
+          "direction": "stable",
           "sentiment": "bad"
         }
       }
@@ -184,7 +174,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-08-03T17:00:52Z",
-      "daysSinceLastCommit": 25,
+      "daysSinceLastCommit": 26,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-01T19:35:09Z",
@@ -244,7 +234,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-07-31T08:21:27Z",
-      "daysSinceLastCommit": 28,
+      "daysSinceLastCommit": 29,
       "contributorCount": 7,
       "ciLastRunStatus": "startup_failure",
       "ciLastRunAt": "2026-08-01T00:43:09Z",
@@ -304,7 +294,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-06-08T11:05:16Z",
-      "daysSinceLastCommit": 81,
+      "daysSinceLastCommit": 82,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-06-08T11:05:18Z",
@@ -364,7 +354,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-04-13T11:43:50Z",
-      "daysSinceLastCommit": 137,
+      "daysSinceLastCommit": 138,
       "contributorCount": 2,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-04-13T11:43:52Z",
@@ -424,7 +414,7 @@
       "exists": true,
       "health": "yellow",
       "lastCommitDate": "2026-03-18T21:15:31Z",
-      "daysSinceLastCommit": 163,
+      "daysSinceLastCommit": 164,
       "contributorCount": 1,
       "ciLastRunStatus": null,
       "ciLastRunAt": null,
