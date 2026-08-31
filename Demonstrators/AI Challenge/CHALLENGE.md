@@ -4,7 +4,7 @@
 A first-class suite that cannot be sold costs the airline about **EUR 10,000 per leg**. Pulling a cabin control unit costs about **EUR 3,800** plus **EUR 1,450** for a shop test - and far too many such removals come back *no fault found*: money spent, defect still on the aircraft. The planning assumption in `data/economics.json` is a **1-in-3** NFF share; in the shipped history the fleet-wide share is **0.21** and it differs strongly per fault family (the CAN fault: **0.47**) - part of your job is to use the number that is actually defensible for your case. *(All figures synthetic.)*
 
 ## Your mission
-Build the complete **five-agent maintenance workflow** with the tool of your track - one working flow per participant (pairs are fine). Your endpoint receives a `case_id` + `seat_id` (contract v1.1) and must handle **any** of the open cases in `data/cases_seed.json`:
+Build the complete **five-agent maintenance workflow** with the tool of your choice - one working flow per participant (pairs are fine). Your endpoint receives a `case_id` + `seat_id` (contract v1.1) and must handle **any** of the open cases in `data/cases_seed.json`:
 
 | Case | Seat | Fault code | Symptom family |
 |---|---|---|---|

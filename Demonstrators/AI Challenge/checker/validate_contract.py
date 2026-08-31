@@ -3,7 +3,7 @@
 Offline contract validator - The Airbus AI Challenge, powered by FACIS (contract v1.1).
 
     python3 validate_contract.py result.json [expected_case_id]
-    python3 validate_contract.py https://.../api/ai-challenge/<name>/run [case_id] [seat_id]
+    python3 validate_contract.py https://.../api/airbus-challenge/<name>/run [case_id] [seat_id]
 
 URL mode POSTs {"case_id": ..., "seat_id": ...} (or {} if omitted) to your endpoint.
 Checks: five ordered stages, complete final_submission, non-empty grounded evidence_ids,

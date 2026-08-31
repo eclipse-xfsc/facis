@@ -3,7 +3,7 @@
 Your flow is one **HTTP POST** endpoint, served from your own laptop. The reviewer (or the offline validator) calls it with a JSON body naming the case to solve:
 
 ```
-POST /api/ai-challenge/<your-name>/run
+POST /api/airbus-challenge/<your-name>/run
 { "case_id": "CASE-2026-0002", "seat_id": "D-AXFB-1K" }
 ```
 
@@ -32,9 +32,9 @@ Use a clear decision string in `nff_assessment.decision`. Recommended vocabulary
 - Two runs on the same case should be substantially consistent.
 
 ## Endpoint naming & where it runs
-Path convention: `/api/ai-challenge/<team-or-name>/run` - lowercase, paths are case-sensitive.
+Path convention: `/api/airbus-challenge/<team-or-name>/run` - lowercase, paths are case-sensitive.
 - **ORCE track:** the flow runs LOCALLY in your own Docker Node-RED (`http://localhost:1880/...`). No cloud deployment is provided - test with the offline validator or curl, and demo live from your laptop.
-- **Open / Neura:** serve it from your own machine as well (`http://localhost:<port>/...`). Nothing is deployed to any cloud - the whole challenge runs offline; only model API calls (if you use a hosted LLM) leave your laptop.
+- **Open (any other stack):** serve it from your own machine as well (`http://localhost:<port>/...`). Nothing is deployed to any cloud - the whole challenge runs offline; only model API calls (if you use a hosted LLM) leave your laptop.
 
 ## Reference examples
 - `final_submission.sample.json` - a complete good response for the reference case.

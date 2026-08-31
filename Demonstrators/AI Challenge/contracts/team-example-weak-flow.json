@@ -11,7 +11,7 @@
     "type": "http in",
     "z": "team_example_low_tab",
     "name": "Start Team Example Low run",
-    "url": "/api/ai-challenge/team-example-weak/run",
+    "url": "/api/airbus-challenge/team-example-weak/run",
     "method": "post",
     "upload": false,
     "swaggerDoc": "",

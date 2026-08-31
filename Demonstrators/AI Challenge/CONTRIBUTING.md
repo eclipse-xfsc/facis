@@ -1,11 +1,13 @@
 # How to submit
 
+Pull Requests target the **eclipse-xfsc/facis** repository; every path below is relative to `Demonstrators/AI Challenge/`.
+
 ## Where
 Your work lives in your track's folder:
 ```
-tracks/<open|orce|neura>/submissions/<your-name-or-pair>/
+tracks/<open|orce>/submissions/<your-name-or-pair>/
     README.md          what you built, how to run it, endpoint URL if deployed
-    flow export        ORCE: exported flow tab JSON - Neura: app export - Open: source code
+    flow export        ORCE: exported flow tab JSON - Open: source code / app export
     result.json        one full response of your flow (trace + final_submission)
 ```
 

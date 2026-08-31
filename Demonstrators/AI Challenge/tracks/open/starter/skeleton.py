@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Open-track starter: a contract-valid five-stage skeleton (stdlib only).
-Run:  python3 skeleton.py   ->  POST http://localhost:8080/api/ai-challenge/starter/run
+Run:  python3 skeleton.py   ->  POST http://localhost:8080/api/airbus-challenge/starter/run
 It answers ANY case with placeholder logic - replace each agent_N() with real work over ../../data/.
 """
 import json, time
