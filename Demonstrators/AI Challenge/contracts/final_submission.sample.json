@@ -1,0 +1,211 @@
+{
+ "team_id": "TEAM-SAMPLE",
+ "run_id": "sample-0001",
+ "trace": [
+  {
+   "stage": "diagnosis",
+   "agent": 1,
+   "status": "complete",
+   "output": {
+    "fault_code": "F-25-2140",
+    "leading_cause": "CAN connector DA-CON-3390 (harness path, ref. SB-25-2140-R1)",
+    "confidence": 0.95,
+    "evidence": [
+     "bite:F-25-2140x30",
+     "telemetry:can-error-vibration-share=0.97",
+     "TSM-25-21-55"
+    ],
+    "trend": {
+     "monotonic_degradation": false,
+     "vibration_phase_share": 0.973
+    }
+   }
+  },
+  {
+   "stage": "nff_assessment",
+   "agent": 2,
+   "status": "complete",
+   "output": {
+    "nff_risk": 0.47,
+    "decision": "CONNECTOR_TASK",
+    "reproducible_on_ground": false,
+    "decision_rule": "OPS-NFF-01: not reproducible - TSM-mandated task before any removal",
+    "history": {
+     "similar_cases": 19,
+     "nff_cases": 9
+    },
+    "citations": [
+     "OPS-NFF-POLICY",
+     "TSM-25-21-55",
+     "maintenance_history.csv"
+    ]
+   }
+  },
+  {
+   "stage": "repair_plan",
+   "agent": 3,
+   "status": "complete",
+   "output": {
+    "task_card_id": "TASK-25-21-CAN-RESEAT",
+    "task_duration_min": 55,
+    "buffer_min": 30,
+    "station": "FRA",
+    "flight_id_before": "FD4018",
+    "slot_start": "2026-09-05T18:30:00Z",
+    "slot_end": "2026-09-05T19:55:00Z",
+    "parts": [
+     {
+      "part_number": "DA-CON-3390",
+      "qty": 1,
+      "source": "ON_HAND"
+     }
+    ],
+    "technicians": [
+     {
+      "technician_id": "TECH-1003",
+      "role": "LEAD",
+      "skills_matched": [
+       "ATA25-CABIN",
+       "AVIONICS-CAN"
+      ]
+     },
+     {
+      "technician_id": "TECH-1002",
+      "role": "CERTIFYING",
+      "authorisation": "B1"
+     }
+    ],
+    "qualified_technician": true,
+    "feasible": true,
+    "blockers": [],
+    "note": "certifying signature at certifier shift start when outside the work slot (simplification)"
+   }
+  },
+  {
+   "stage": "execution",
+   "agent": 4,
+   "status": "complete",
+   "output": {
+    "work_order_id": "WO-90001",
+    "task_card_id": "TASK-25-21-CAN-RESEAT",
+    "station": "FRA",
+    "outcome": "CONFIRMED_FAULT",
+    "functional_test_passed": true,
+    "measurement": {
+     "name": "termination_resistance",
+     "value": 60.1,
+     "unit": "ohm",
+     "nominal": 60
+    },
+    "root_cause": "connector locking clip not engaged (SB-25-2140-R1)",
+    "steps": [
+     {
+      "step_no": 1,
+      "text": "Isolate suite power, attach warning tag",
+      "status": "DONE"
+     },
+     {
+      "step_no": 2,
+      "text": "Execute TASK-25-21-CAN-RESEAT",
+      "status": "DONE"
+     },
+     {
+      "step_no": 3,
+      "text": "Functional test per task card",
+      "status": "DONE"
+     }
+    ],
+    "termination_measurement_ohms": 60.1
+   }
+  },
+  {
+   "stage": "outcome_learning",
+   "agent": 5,
+   "status": "complete",
+   "output": {
+    "nff_avoided": true,
+    "saving_eur": 5029.17,
+    "cost_actual_eur": 220.83,
+    "cost_counterfactual_remove_now_eur": 5250,
+    "cost_model": {
+     "labour_eur": 100.83,
+     "part_eur": 120.0,
+     "removal_eur": 3800,
+     "shop_test_eur": 1450
+    },
+    "feedback": "Decision rule 'OPS-NFF-01: not reproducible - TSM-mandated task before any removal' held; update detector to flag this signature earlier."
+   }
+  }
+ ],
+ "final_submission": {
+  "team_id": "TEAM-SAMPLE",
+  "case_id": "CASE-2026-0002",
+  "seat_id": "D-AXFB-1K",
+  "diagnosis": {
+   "fault_code": "F-25-2140",
+   "leading_cause": "CAN connector DA-CON-3390 (harness path, ref. SB-25-2140-R1)",
+   "confidence": 0.95
+  },
+  "nff_assessment": {
+   "nff_risk": 0.47,
+   "decision": "CONNECTOR_TASK"
+  },
+  "evidence_ids": [
+   "bite:F-25-2140x30",
+   "telemetry:can-error-vibration-share=0.97",
+   "TSM-25-21-55",
+   "OPS-NFF-POLICY",
+   "TSM-25-21-55",
+   "maintenance_history.csv"
+  ],
+  "repair_plan": {
+   "task_card_id": "TASK-25-21-CAN-RESEAT",
+   "task_duration_min": 55,
+   "buffer_min": 30,
+   "station": "FRA",
+   "flight_id_before": "FD4018",
+   "slot_start": "2026-09-05T18:30:00Z",
+   "slot_end": "2026-09-05T19:55:00Z",
+   "parts": [
+    {
+     "part_number": "DA-CON-3390",
+     "qty": 1,
+     "source": "ON_HAND"
+    }
+   ],
+   "technicians": [
+    {
+     "technician_id": "TECH-1003",
+     "role": "LEAD",
+     "skills_matched": [
+      "ATA25-CABIN",
+      "AVIONICS-CAN"
+     ]
+    },
+    {
+     "technician_id": "TECH-1002",
+     "role": "CERTIFYING",
+     "authorisation": "B1"
+    }
+   ],
+   "qualified_technician": true,
+   "feasible": true,
+   "blockers": [],
+   "note": "certifying signature at certifier shift start when outside the work slot (simplification)"
+  },
+  "execution": {
+   "outcome": "CONFIRMED_FAULT",
+   "functional_test_passed": true,
+   "termination_measurement_ohms": 60.1
+  },
+  "outcome_learning": {
+   "nff_avoided": true,
+   "saving_eur": 5029.17
+  },
+  "integrations": {
+   "ai_iot": false,
+   "dcm": false,
+   "partner_onboarding": false
+  }
+ }
+}

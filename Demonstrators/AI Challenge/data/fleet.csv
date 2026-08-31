@@ -1,0 +1,7 @@
+registration,msn,aircraft_type,base_station,cabin_config,first_class_supplier,entry_into_service,operator
+D-AXFA,MSN0812,A350-941,FRA,F8/C48/W28/Y183,Diehl-like (synthetic),2021-12-27,FACIS Demo Airways
+D-AXFB,MSN0847,A350-941,FRA,F8/C48/W28/Y183,Diehl-like (synthetic),2024-12-12,FACIS Demo Airways
+D-AXFC,MSN0903,A350-941,MUC,F8/C48/W28/Y183,Diehl-like (synthetic),2025-06-07,FACIS Demo Airways
+D-AXFD,MSN0951,A350-1041,FRA,F8/C56/W32/Y217,Diehl-like (synthetic),2021-06-01,FACIS Demo Airways
+D-AXFE,MSN1007,A350-1041,MUC,F8/C56/W32/Y217,Diehl-like (synthetic),2024-01-12,FACIS Demo Airways
+D-AXFF,MSN1044,A350-1041,FRA,F8/C56/W32/Y217,Diehl-like (synthetic),2024-03-14,FACIS Demo Airways

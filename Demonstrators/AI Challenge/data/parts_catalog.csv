@@ -1,0 +1,10 @@
+part_number,description,unit_price_eur,lead_time_days,ata_chapter,rotable
+DA-SCU-4410,"Seat Control Unit (SCU), suite",4200,5,25-21,True
+DA-ACT-2201,"Recline actuator, backrest",1850,3,25-21,True
+DA-ACT-2205,Legrest actuator,1620,3,25-21,True
+DA-HRN-7712,"Seat harness, CAN segment A",480,10,25-21,False
+DA-CON-3390,"Connector kit, SCU-to-harness",120,2,25-21,False
+DA-IFE-9002,"IFE seat box (SEB), suite",6100,7,23-34,True
+DA-PSU-5150,Seat power supply unit / USB-PD module,940,4,25-21,True
+DA-DIV-1180,Privacy divider drive module,1310,6,25-21,True
+DA-CSH-0450,"Cushion set, suite",780,14,25-21,False

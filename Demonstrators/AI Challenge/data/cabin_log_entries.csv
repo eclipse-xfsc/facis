@@ -1,0 +1,44 @@
+log_id,flight_id,registration,seat_id,suite,reported_at,reported_by,text,pax_impact
+CL-501,FD4008,D-AXFA,D-AXFA-1A,1A,2026-09-05T21:12:00Z,Purser,"Suite 1A: cosmetic scuff on the table edge, no function impact.",reduced comfort
+CL-502,FD4009,D-AXFA,D-AXFA-1A,1A,2026-09-06T07:12:00Z,CSD,"1A cushion cover loose, cosmetic only.",no impact
+CL-503,FD4010,D-AXFA,D-AXFA-1A,1A,2026-09-06T16:42:00Z,CSD,"Suite 1A: cosmetic scuff on the table edge, no function impact.",pax reseated
+CL-504,FD4012,D-AXFA,D-AXFA-1K,1K,2026-09-07T13:42:00Z,Purser,"1K cushion cover loose, cosmetic only.",seat unusable
+CL-505,FD4005,D-AXFA,D-AXFA-2A,2A,2026-09-03T16:00:00Z,Cabin crew F,"Seat 2A backrest jerky, would not go flat for the night service.",seat unusable
+CL-506,FD4006,D-AXFA,D-AXFA-2A,2A,2026-09-04T07:30:00Z,Cabin crew F,"Seat 2A backrest jerky, would not go flat for the night service.",pax reseated
+CL-507,FD4007,D-AXFA,D-AXFA-2A,2A,2026-09-04T22:18:00Z,CSD,"Suite 2A: backrest moves very slowly, pax complained twice during cruise.",pax reseated
+CL-508,FD4011,D-AXFA,D-AXFA-4A,4A,2026-09-07T03:42:00Z,Cabin crew F,"4A cushion cover loose, cosmetic only.",seat unusable
+CL-509,FD4012,D-AXFA,D-AXFA-4A,4A,2026-09-07T13:42:00Z,Purser,"Suite 4A: cosmetic scuff on the table edge, no function impact.",seat unusable
+CL-510,FD4023,D-AXFB,D-AXFB-1A,1A,2026-09-09T01:42:00Z,Cabin crew F,"Suite 1A: cosmetic scuff on the table edge, no function impact.",no impact
+CL-511,FD4017,D-AXFB,D-AXFB-1K,1K,2026-09-05T03:00:00Z,Purser,"Suite 1K controls dead for approx. 2 min after take-off, then normal again.",pax reseated
+CL-512,FD4018,D-AXFB,D-AXFB-1K,1K,2026-09-05T18:30:00Z,Purser,"Suite 1K controls dead for approx. 2 min after take-off, then normal again.",seat unusable
+CL-513,FD4014,D-AXFB,D-AXFB-3A,3A,2026-09-02T19:00:00Z,Purser,"3A cushion cover loose, cosmetic only.",no impact
+CL-514,FD4015,D-AXFB,D-AXFB-3A,3A,2026-09-03T10:30:00Z,Purser,"Suite 3A: cosmetic scuff on the table edge, no function impact.",seat unusable
+CL-515,FD4031,D-AXFC,D-AXFC-2A,2A,2026-09-04T21:24:00Z,CSD,"2A recline stops halfway, motor sounds loud. Reset via cabin panel no effect.",pax reseated
+CL-516,FD4032,D-AXFC,D-AXFC-2A,2A,2026-09-05T12:24:00Z,Purser,"Seat 2A backrest jerky, would not go flat for the night service.",reduced comfort
+CL-517,FD4033,D-AXFC,D-AXFC-2A,2A,2026-09-06T07:54:00Z,Cabin crew F,"Seat 2A backrest jerky, would not go flat for the night service.",pax reseated
+CL-518,FD4029,D-AXFC,D-AXFC-3A,3A,2026-09-03T18:36:00Z,Purser,"3A screen off after 6 hrs cruise, seat box very warm to the touch.",seat unusable
+CL-519,FD4030,D-AXFC,D-AXFC-3A,3A,2026-09-04T07:24:00Z,Purser,"3A screen off after 6 hrs cruise, seat box very warm to the touch.",no impact
+CL-520,FD4028,D-AXFC,D-AXFC-4A,4A,2026-09-03T06:36:00Z,Purser,"4A cushion cover loose, cosmetic only.",pax reseated
+CL-521,FD4045,D-AXFD,D-AXFD-1K,1K,2026-09-06T05:42:00Z,CSD,"1K divider stuck approx. 20 cm out, cabin crew secured it manually.",pax reseated
+CL-522,FD4046,D-AXFD,D-AXFD-1K,1K,2026-09-06T16:12:00Z,Cabin crew F,"1K divider stuck approx. 20 cm out, cabin crew secured it manually.",reduced comfort
+CL-523,FD4047,D-AXFD,D-AXFD-2A,2A,2026-09-07T06:30:00Z,Cabin crew F,"2A cushion cover loose, cosmetic only.",no impact
+CL-524,FD4048,D-AXFD,D-AXFD-2A,2A,2026-09-07T18:54:00Z,CSD,"2A cushion cover loose, cosmetic only.",pax reseated
+CL-525,FD4041,D-AXFD,D-AXFD-4K,4K,2026-09-03T22:18:00Z,CSD,"4K: USB dead, no light on the port.",reduced comfort
+CL-526,FD4042,D-AXFD,D-AXFD-4K,4K,2026-09-04T11:42:00Z,Cabin crew F,"4K: USB dead, no light on the port.",no impact
+CL-527,FD4043,D-AXFD,D-AXFD-4K,4K,2026-09-04T21:42:00Z,Cabin crew F,"USB socket 4K not charging, pax used the spare seat.",pax reseated
+CL-528,FD4053,D-AXFE,D-AXFE-1A,1A,2026-09-04T08:48:00Z,Cabin crew F,"1A divider stuck approx. 20 cm out, cabin crew secured it manually.",pax reseated
+CL-529,FD4054,D-AXFE,D-AXFE-1A,1A,2026-09-04T22:06:00Z,Purser,"1A divider stuck approx. 20 cm out, cabin crew secured it manually.",pax reseated
+CL-530,FD4055,D-AXFE,D-AXFE-1A,1A,2026-09-05T11:06:00Z,CSD,"1A divider stuck approx. 20 cm out, cabin crew secured it manually.",seat unusable
+CL-531,FD4055,D-AXFE,D-AXFE-1K,1K,2026-09-05T11:06:00Z,Purser,"1K cushion cover loose, cosmetic only.",pax reseated
+CL-532,FD4054,D-AXFE,D-AXFE-3K,3K,2026-09-04T22:06:00Z,Purser,"3K cushion cover loose, cosmetic only.",reduced comfort
+CL-533,FD4055,D-AXFE,D-AXFE-3K,3K,2026-09-05T11:06:00Z,Cabin crew F,"3K cushion cover loose, cosmetic only.",reduced comfort
+CL-534,FD4056,D-AXFE,D-AXFE-3K,3K,2026-09-06T09:54:00Z,Cabin crew F,"3K cushion cover loose, cosmetic only.",seat unusable
+CL-535,FD4064,D-AXFF,D-AXFF-1A,1A,2026-09-03T12:00:00Z,Cabin crew F,"Suite 1A: cosmetic scuff on the table edge, no function impact.",no impact
+CL-536,FD4065,D-AXFF,D-AXFF-1A,1A,2026-09-04T02:18:00Z,Cabin crew F,"1A cushion cover loose, cosmetic only.",reduced comfort
+CL-537,FD4066,D-AXFF,D-AXFF-1A,1A,2026-09-04T16:12:00Z,CSD,"Suite 1A: cosmetic scuff on the table edge, no function impact.",seat unusable
+CL-538,FD4067,D-AXFF,D-AXFF-2K,2K,2026-09-05T08:42:00Z,Cabin crew F,"2K cushion cover loose, cosmetic only.",reduced comfort
+CL-539,FD4068,D-AXFF,D-AXFF-2K,2K,2026-09-06T04:12:00Z,CSD,"2K cushion cover loose, cosmetic only.",seat unusable
+CL-540,FD4069,D-AXFF,D-AXFF-2K,2K,2026-09-06T18:12:00Z,CSD,"Suite 2K: cosmetic scuff on the table edge, no function impact.",reduced comfort
+CL-541,FD4068,D-AXFF,D-AXFF-3A,3A,2026-09-06T04:12:00Z,CSD,"Suite 3A: cosmetic scuff on the table edge, no function impact.",no impact
+CL-542,FD4069,D-AXFF,D-AXFF-3A,3A,2026-09-06T18:12:00Z,Cabin crew F,"Suite 3A: cosmetic scuff on the table edge, no function impact.",reduced comfort
+CL-543,FD4070,D-AXFF,D-AXFF-3A,3A,2026-09-07T19:12:00Z,Purser,"3A cushion cover loose, cosmetic only.",seat unusable

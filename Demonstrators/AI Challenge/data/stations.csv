@@ -1,0 +1,8 @@
+iata,name,utc_offset_h,line_maintenance,base_maintenance,mro_partner,federation_member
+FRA,Frankfurt Main,2,True,True,FACIS-MRO-Alpha,True
+MUC,Munich,2,True,True,FACIS-MRO-Alpha,True
+SIN,Singapore Changi,8,True,False,FACIS-MRO-Delta,True
+JFK,New York JFK,-4,True,False,FACIS-MRO-Bravo,True
+GRU,Sao Paulo Guarulhos,-3,False,False,FACIS-MRO-Bravo,True
+HND,Tokyo Haneda,9,True,False,FACIS-MRO-Delta,True
+JNB,Johannesburg OR Tambo,2,False,False,FACIS-MRO-Charlie,True

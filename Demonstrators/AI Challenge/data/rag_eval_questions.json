@@ -1,0 +1,167 @@
+[
+  {
+    "id": "Q01",
+    "question": "What is the thermal cutout current of the backrest actuator?",
+    "expected_answer": "4.5 A",
+    "expected_docs": [
+      "AMM-25-21-11"
+    ]
+  },
+  {
+    "id": "Q02",
+    "question": "Which CAN error rate per hour is the caution threshold?",
+    "expected_answer": "more than 20 per hour",
+    "expected_docs": [
+      "AMM-25-21-11"
+    ]
+  },
+  {
+    "id": "Q03",
+    "question": "Before removing the SCU on fault F-25-2140, which steps are mandatory?",
+    "expected_answer": "BITE phase correlation, connector inspection, wiggle test, termination measurement, connector kit replacement first",
+    "expected_docs": [
+      "TSM-25-21-55"
+    ]
+  },
+  {
+    "id": "Q04",
+    "question": "Is a suite sellable when the privacy divider does not stow?",
+    "expected_answer": "No, category A deferral, one day repair interval",
+    "expected_docs": [
+      "TSM-25-21-88",
+      "MEL-25-21-02"
+    ]
+  },
+  {
+    "id": "Q05",
+    "question": "What is the deferral category for an intermittent seat control fault that is not reproducible on the ground?",
+    "expected_answer": "Category C, 10 days, suite stays sellable with cabin log entry and monitoring",
+    "expected_docs": [
+      "MEL-25-21-02"
+    ]
+  },
+  {
+    "id": "Q06",
+    "question": "Which part number is the connector kit for the suite CAN segment?",
+    "expected_answer": "DA-CON-3390",
+    "expected_docs": [
+      "TSM-25-21-55",
+      "TASK-25-21-CAN-RESEAT"
+    ]
+  },
+  {
+    "id": "Q07",
+    "question": "How long does the CAN connector re-seat task card take?",
+    "expected_answer": "approximately 55 minutes",
+    "expected_docs": [
+      "TASK-25-21-CAN-RESEAT"
+    ]
+  },
+  {
+    "id": "Q08",
+    "question": "What is the acceptance value for the CAN bus termination measurement?",
+    "expected_answer": "60 ohm plus/minus 6 ohm",
+    "expected_docs": [
+      "TASK-25-21-CAN-RESEAT",
+      "TSM-25-21-55"
+    ]
+  },
+  {
+    "id": "Q09",
+    "question": "What torque is required for the actuator mounting bolts?",
+    "expected_answer": "18 Nm, lock-wired",
+    "expected_docs": [
+      "TASK-25-21-ACT-REPLACE"
+    ]
+  },
+  {
+    "id": "Q10",
+    "question": "When does a removal request need a second opinion from the component owner?",
+    "expected_answer": "when the NFF risk score is above 0.6",
+    "expected_docs": [
+      "OPS-NFF-01"
+    ]
+  },
+  {
+    "id": "Q11",
+    "question": "Which three conditions justify a removal?",
+    "expected_answer": "reproducible on ground, monotonic degradation over at least three legs, or cabin-safety relevant and not clearable by task card",
+    "expected_docs": [
+      "OPS-NFF-01"
+    ]
+  },
+  {
+    "id": "Q12",
+    "question": "What is the assumed cost of a shop test that finds nothing?",
+    "expected_answer": "approximately EUR 1,450",
+    "expected_docs": [
+      "OPS-NFF-01"
+    ]
+  },
+  {
+    "id": "Q13",
+    "question": "How much buffer must a ground slot have on top of the task duration?",
+    "expected_answer": "30 minutes",
+    "expected_docs": [
+      "OPS-GT-01"
+    ]
+  },
+  {
+    "id": "Q14",
+    "question": "Which firmware version adds per-flight-phase error burst counters?",
+    "expected_answer": "3.5.0",
+    "expected_docs": [
+      "SB-25-2140-R1"
+    ]
+  },
+  {
+    "id": "Q15",
+    "question": "What is the root cause described in the service bulletin for F-25-2140?",
+    "expected_answer": "insufficient retention of the connector locking clip under vibration",
+    "expected_docs": [
+      "SB-25-2140-R1"
+    ]
+  },
+  {
+    "id": "Q16",
+    "question": "At what SEB temperature does the thermal shutdown occur?",
+    "expected_answer": "above 78 C",
+    "expected_docs": [
+      "TSM-23-34-20"
+    ]
+  },
+  {
+    "id": "Q17",
+    "question": "Does an inoperative IFE at one suite make the suite unsellable?",
+    "expected_answer": "No, it is a passenger-experience item, category D deferral",
+    "expected_docs": [
+      "TSM-23-34-20",
+      "MEL-25-21-02"
+    ]
+  },
+  {
+    "id": "Q18",
+    "question": "What current increase over 200 actuation cycles marks a wear candidate?",
+    "expected_answer": "more than 0.8 A",
+    "expected_docs": [
+      "TSM-25-21-40"
+    ]
+  },
+  {
+    "id": "Q19",
+    "question": "Which authorisation must sign off the divider functional check?",
+    "expected_answer": "B1 certifying staff",
+    "expected_docs": [
+      "TSM-25-21-88",
+      "TASK-25-21-CAN-RESEAT"
+    ]
+  },
+  {
+    "id": "Q20",
+    "question": "What must happen if a cleared fault returns within 10 flight hours?",
+    "expected_answer": "it is a repeat defect and must not be closed as no-fault-found",
+    "expected_docs": [
+      "AMM-25-21-11"
+    ]
+  }
+]
