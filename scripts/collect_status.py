@@ -41,6 +41,18 @@ REPOS = [
         "repo": "facis-fap-principal-credential-issuance",
         "label": "Principal Credential Issuance",
     },
+    {
+        "key": "smart-deployment",
+        "owner": "eclipse-xfsc",
+        "repo": "smartdeployment",
+        "label": "ESB",
+    },
+    {
+        "key": "federated-catalogue",
+        "owner": "eclipse-xfsc",
+        "repo": "federated-catalogue",
+        "label": "Federated Catalogue",
+    },
 ]
 
 TOKEN = os.environ.get("GITHUB_TOKEN")

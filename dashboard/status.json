@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-01T06:04:39.005897+00:00",
+  "generatedAt": "2026-09-01T10:59:43.366244+00:00",
   "repos": [
     {
       "key": "root",
@@ -8,16 +8,16 @@
       "repo": "facis",
       "url": "https://github.com/eclipse-xfsc/facis",
       "exists": true,
-      "health": "yellow",
-      "lastCommitDate": "2026-08-31T16:35:35Z",
+      "health": "green",
+      "lastCommitDate": "2026-09-01T06:04:39Z",
       "daysSinceLastCommit": 0,
       "contributorCount": 11,
-      "ciLastRunStatus": "pending",
+      "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-09-01T06:04:09Z",
       "currentlyFailingWorkflows": [],
-      "ciRecentFailureCount": 2,
+      "ciRecentFailureCount": 0,
       "ciFailuresByDay": [
-        2,
+        0,
         0,
         0,
         0,
@@ -25,20 +25,7 @@
         0,
         0
       ],
-      "failedRuns": [
-        {
-          "workflowName": "pages build and deployment",
-          "branch": "main",
-          "date": "2026-08-25T08:17:38Z",
-          "url": "https://github.com/eclipse-xfsc/facis/actions/runs/32825868167"
-        },
-        {
-          "workflowName": "Federation Dashboard",
-          "branch": "main",
-          "date": "2026-08-25T06:06:31Z",
-          "url": "https://github.com/eclipse-xfsc/facis/actions/runs/32815534676"
-        }
-      ],
+      "failedRuns": [],
       "openIssueCount": 1,
       "openHumanPRCount": 1,
       "needsReviewPRCount": 0,
@@ -66,9 +53,9 @@
           "sentiment": "bad"
         },
         "ciRecentFailureCount": {
-          "previous": 3,
-          "current": 2,
-          "delta": -1,
+          "previous": 2,
+          "current": 0,
+          "delta": -2,
           "direction": "down",
           "sentiment": "good"
         }
@@ -160,10 +147,10 @@
           "sentiment": "neutral"
         },
         "ciRecentFailureCount": {
-          "previous": 3,
+          "previous": 5,
           "current": 5,
-          "delta": 2,
-          "direction": "up",
+          "delta": 0,
+          "direction": "stable",
           "sentiment": "bad"
         }
       }
@@ -237,7 +224,7 @@
       "exists": true,
       "health": "red",
       "lastCommitDate": "2026-07-31T08:21:27Z",
-      "daysSinceLastCommit": 31,
+      "daysSinceLastCommit": 32,
       "contributorCount": 7,
       "ciLastRunStatus": "startup_failure",
       "ciLastRunAt": "2026-09-01T00:47:34Z",
@@ -289,10 +276,10 @@
           "sentiment": "neutral"
         },
         "ciRecentFailureCount": {
-          "previous": 0,
+          "previous": 1,
           "current": 1,
-          "delta": 1,
-          "direction": "up",
+          "delta": 0,
+          "direction": "stable",
           "sentiment": "bad"
         }
       }
@@ -474,6 +461,142 @@
           "delta": 0,
           "direction": "stable",
           "sentiment": "neutral"
+        }
+      }
+    },
+    {
+      "key": "smart-deployment",
+      "label": "ESB",
+      "owner": "eclipse-xfsc",
+      "repo": "smartdeployment",
+      "url": "https://github.com/eclipse-xfsc/smartdeployment",
+      "exists": true,
+      "health": "yellow",
+      "lastCommitDate": "2026-07-31T11:06:02Z",
+      "daysSinceLastCommit": 31,
+      "contributorCount": 4,
+      "ciLastRunStatus": "success",
+      "ciLastRunAt": "2026-07-26T10:15:00Z",
+      "currentlyFailingWorkflows": [],
+      "ciRecentFailureCount": 0,
+      "ciFailuresByDay": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "failedRuns": [],
+      "openIssueCount": 0,
+      "openHumanPRCount": 3,
+      "needsReviewPRCount": 0,
+      "releaseCount": 0,
+      "latestRelease": null,
+      "governanceScore": 2,
+      "governanceFiles": {
+        "license": false,
+        "contributing": true,
+        "readme": true
+      },
+      "trends": {
+        "contributorCount": {
+          "previous": 4,
+          "current": 4,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "openIssueCount": {
+          "previous": 0,
+          "current": 0,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "ciRecentFailureCount": {
+          "previous": 0,
+          "current": 0,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        }
+      }
+    },
+    {
+      "key": "federated-catalogue",
+      "label": "Federated Catalogue",
+      "owner": "eclipse-xfsc",
+      "repo": "federated-catalogue",
+      "url": "https://github.com/eclipse-xfsc/federated-catalogue",
+      "exists": true,
+      "health": "red",
+      "lastCommitDate": "2026-08-27T09:55:34Z",
+      "daysSinceLastCommit": 5,
+      "contributorCount": 13,
+      "ciLastRunStatus": "success",
+      "ciLastRunAt": "2026-09-01T00:15:17Z",
+      "currentlyFailingWorkflows": [
+        "Call Eclipse Dash License Scanner",
+        "Trigger Remote SBOM Workflow"
+      ],
+      "ciRecentFailureCount": 2,
+      "ciFailuresByDay": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2
+      ],
+      "failedRuns": [
+        {
+          "workflowName": "Call Eclipse Dash License Scanner",
+          "branch": "main",
+          "date": "2026-09-01T00:13:29Z",
+          "url": "https://github.com/eclipse-xfsc/federated-catalogue/actions/runs/33453881229"
+        },
+        {
+          "workflowName": "Trigger Remote SBOM Workflow",
+          "branch": "main",
+          "date": "2026-09-01T00:10:18Z",
+          "url": "https://github.com/eclipse-xfsc/federated-catalogue/actions/runs/33453666628"
+        }
+      ],
+      "openIssueCount": 21,
+      "openHumanPRCount": 8,
+      "needsReviewPRCount": 0,
+      "releaseCount": 1,
+      "latestRelease": "qa-ready-2026-07-15",
+      "governanceScore": 3,
+      "governanceFiles": {
+        "license": true,
+        "contributing": true,
+        "readme": true
+      },
+      "trends": {
+        "contributorCount": {
+          "previous": 13,
+          "current": 13,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "openIssueCount": {
+          "previous": 21,
+          "current": 21,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "bad"
+        },
+        "ciRecentFailureCount": {
+          "previous": 0,
+          "current": 2,
+          "delta": 2,
+          "direction": "up",
+          "sentiment": "bad"
         }
       }
     }
