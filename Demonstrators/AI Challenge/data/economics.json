@@ -1,0 +1,13 @@
+{
+  "currency": "EUR",
+  "note": "Synthetic planning figures for the exercise. NOT real airline data. Teams should treat them as configurable parameters, not truth.",
+  "revenue_loss_blocked_suite_per_leg": 10000,
+  "revenue_loss_degraded_suite_per_leg": 2500,
+  "unscheduled_removal_cost": 3800,
+  "nff_shop_test_cost": 1450,
+  "aog_delay_cost_per_minute": 95,
+  "line_labour_cost_per_hour": 110,
+  "expedited_freight_surcharge": 2200,
+  "assumed_nff_rate_baseline": 0.34,
+  "assumed_nff_rate_baseline_source": "synthetic assumption for the exercise"
+}
