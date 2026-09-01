@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T06:05:22.207165+00:00",
+  "generatedAt": "2026-09-01T06:04:39.005897+00:00",
   "repos": [
     {
       "key": "root",
@@ -9,15 +9,15 @@
       "url": "https://github.com/eclipse-xfsc/facis",
       "exists": true,
       "health": "yellow",
-      "lastCommitDate": "2026-08-30T06:04:07Z",
-      "daysSinceLastCommit": 1,
+      "lastCommitDate": "2026-08-31T16:35:35Z",
+      "daysSinceLastCommit": 0,
       "contributorCount": 11,
       "ciLastRunStatus": "pending",
-      "ciLastRunAt": "2026-08-31T06:04:48Z",
+      "ciLastRunAt": "2026-09-01T06:04:09Z",
       "currentlyFailingWorkflows": [],
-      "ciRecentFailureCount": 3,
+      "ciRecentFailureCount": 2,
       "ciFailuresByDay": [
-        3,
+        2,
         0,
         0,
         0,
@@ -37,12 +37,6 @@
           "branch": "main",
           "date": "2026-08-25T06:06:31Z",
           "url": "https://github.com/eclipse-xfsc/facis/actions/runs/32815534676"
-        },
-        {
-          "workflowName": "Federation Dashboard",
-          "branch": "main",
-          "date": "2026-08-24T06:09:34Z",
-          "url": "https://github.com/eclipse-xfsc/facis/actions/runs/32696152729"
         }
       ],
       "openIssueCount": 1,
@@ -72,8 +66,8 @@
           "sentiment": "bad"
         },
         "ciRecentFailureCount": {
-          "previous": 4,
-          "current": 3,
+          "previous": 3,
+          "current": 2,
           "delta": -1,
           "direction": "down",
           "sentiment": "good"
@@ -89,22 +83,37 @@
       "exists": true,
       "health": "red",
       "lastCommitDate": "2026-08-19T13:10:10Z",
-      "daysSinceLastCommit": 11,
+      "daysSinceLastCommit": 12,
       "contributorCount": 12,
       "ciLastRunStatus": "failure",
-      "ciLastRunAt": "2026-08-28T12:51:10Z",
-      "currentlyFailingWorkflows": [],
-      "ciRecentFailureCount": 3,
+      "ciLastRunAt": "2026-09-01T00:59:13Z",
+      "currentlyFailingWorkflows": [
+        "Call Eclipse Dash License Scanner (Go)",
+        ".github/workflows/sbom.yml"
+      ],
+      "ciRecentFailureCount": 5,
       "ciFailuresByDay": [
-        0,
         0,
         0,
         3,
         0,
         0,
-        0
+        0,
+        2
       ],
       "failedRuns": [
+        {
+          "workflowName": "Call Eclipse Dash License Scanner (Go)",
+          "branch": "main",
+          "date": "2026-09-01T00:59:13Z",
+          "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/33456946991"
+        },
+        {
+          "workflowName": ".github/workflows/sbom.yml",
+          "branch": "main",
+          "date": "2026-09-01T00:11:49Z",
+          "url": "https://github.com/eclipse-xfsc/facis-dcs/actions/runs/33453768593"
+        },
         {
           "workflowName": "Docker and Helm",
           "branch": "qa-ready-2026-08-24",
@@ -152,9 +161,9 @@
         },
         "ciRecentFailureCount": {
           "previous": 3,
-          "current": 3,
-          "delta": 0,
-          "direction": "stable",
+          "current": 5,
+          "delta": 2,
+          "direction": "up",
           "sentiment": "bad"
         }
       }
@@ -168,7 +177,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-08-03T17:00:52Z",
-      "daysSinceLastCommit": 27,
+      "daysSinceLastCommit": 28,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-01T19:35:09Z",
@@ -226,14 +235,16 @@
       "repo": "facis-fap-iot-ai",
       "url": "https://github.com/eclipse-xfsc/facis-fap-iot-ai",
       "exists": true,
-      "health": "green",
+      "health": "red",
       "lastCommitDate": "2026-07-31T08:21:27Z",
-      "daysSinceLastCommit": 30,
+      "daysSinceLastCommit": 31,
       "contributorCount": 7,
       "ciLastRunStatus": "startup_failure",
-      "ciLastRunAt": "2026-08-01T00:43:09Z",
-      "currentlyFailingWorkflows": [],
-      "ciRecentFailureCount": 0,
+      "ciLastRunAt": "2026-09-01T00:47:34Z",
+      "currentlyFailingWorkflows": [
+        "Trigger Remote SBOM Workflow"
+      ],
+      "ciRecentFailureCount": 1,
       "ciFailuresByDay": [
         0,
         0,
@@ -241,9 +252,16 @@
         0,
         0,
         0,
-        0
+        1
       ],
-      "failedRuns": [],
+      "failedRuns": [
+        {
+          "workflowName": "Trigger Remote SBOM Workflow",
+          "branch": "main",
+          "date": "2026-09-01T00:43:21Z",
+          "url": "https://github.com/eclipse-xfsc/facis-fap-iot-ai/actions/runs/33455902137"
+        }
+      ],
       "openIssueCount": 0,
       "openHumanPRCount": 0,
       "needsReviewPRCount": 0,
@@ -272,10 +290,10 @@
         },
         "ciRecentFailureCount": {
           "previous": 0,
-          "current": 0,
-          "delta": 0,
-          "direction": "stable",
-          "sentiment": "neutral"
+          "current": 1,
+          "delta": 1,
+          "direction": "up",
+          "sentiment": "bad"
         }
       }
     },
@@ -288,7 +306,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-06-08T11:05:16Z",
-      "daysSinceLastCommit": 83,
+      "daysSinceLastCommit": 84,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-06-08T11:05:18Z",
@@ -348,7 +366,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-04-13T11:43:50Z",
-      "daysSinceLastCommit": 139,
+      "daysSinceLastCommit": 140,
       "contributorCount": 2,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-04-13T11:43:52Z",
@@ -408,7 +426,7 @@
       "exists": true,
       "health": "yellow",
       "lastCommitDate": "2026-03-18T21:15:31Z",
-      "daysSinceLastCommit": 165,
+      "daysSinceLastCommit": 166,
       "contributorCount": 1,
       "ciLastRunStatus": null,
       "ciLastRunAt": null,
