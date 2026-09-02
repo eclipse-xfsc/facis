@@ -19,6 +19,34 @@ floor for everyone.
 4. Build your flow. Test it against the checker (`checker/README.md`).
 5. Submit via Pull Request - see `CONTRIBUTING.md`. Day-1 PRs are the baselines that Day 2 extends.
 
+## Working with ORCE
+To work with **ORCE**, this is the repository you should use:
+https://github.com/eclipse-xfsc/orchestration-engine
+
+Bring ORCE up locally with Docker:
+```bash
+docker pull ecofacis/xfsc-orce:2.0.13
+
+docker run -d \
+  --name xfsc-orce \
+  -p 1880:1880 \
+  -p 8080:8080 \
+  ecofacis/xfsc-orce:2.0.13
+```
+
+ORCE will then be available at:
+```text
+http://localhost:1880
+```
+
+Use the following credentials to sign in:
+```text
+Username: admin
+Password: xfsc-orce
+```
+Use this local ORCE instance to develop and test your challenge solution.
+
+
 ## Repository layout
 ```
 CHALLENGE.md        the challenge statement (read this first)
