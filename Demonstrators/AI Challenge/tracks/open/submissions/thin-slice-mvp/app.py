@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
-"""Local HTTP adapter for the Thin Slice 1 workflow."""
+"""Local HTTP adapter for the Thin Slice 2 workflow."""
 
 from __future__ import annotations
 
 import json
+import os
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 from workflow import parse_request_body, run_workflow
 
 
 HOST = "0.0.0.0"
-PORT = 8080
+PORT = int(os.getenv("PORT", "8080"))
 ENDPOINT = "/api/airbus-challenge/thin-slice-mvp/run"
 
 

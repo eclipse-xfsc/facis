@@ -1,20 +1,27 @@
-# Thin Slice MVP - Open track
+# Thin Slice 2 - Open track
 
-This submission is the first vertical slice: a local HTTP endpoint runs all five
-ordered stages, shares typed state between them, returns the contract v1.1 shape,
-and degrades safely for malformed or unknown cases.
+This slice uses a LangGraph `StateGraph` to run five role-specific agents. Each
+agent receives authoritative facts from local Python data tools, then asks the
+shared `qwen3.5:9b` Ollama model for a short structured rationale. Calculations
+and safety decisions remain deterministic. If Ollama is unavailable, a circuit
+breaker returns grounded fallback text and preserves the response contract.
 
-It intentionally uses only the Python standard library so the walking skeleton
-runs immediately. Each stage exposes a stable `run(state)` agent interface. In the
-next slice, those stages can become LangGraph nodes backed by one shared LLM and
-role-specific data tools.
+## Setup and run
 
-## Run
-
-From this directory:
+Start Ollama in one terminal:
 
 ```bash
-python3 app.py
+~/Applications/Ollama.app/Contents/Resources/ollama serve
+```
+
+From the repository root in another terminal:
+
+```bash
+python3 -m venv .venv
+. .venv/bin/activate
+pip install -r "Demonstrators/AI Challenge/tracks/open/submissions/thin-slice-mvp/requirements.txt"
+cd "Demonstrators/AI Challenge/tracks/open/submissions/thin-slice-mvp"
+python app.py
 ```
 
 The endpoint is:
@@ -23,7 +30,7 @@ The endpoint is:
 POST http://localhost:8080/api/airbus-challenge/thin-slice-mvp/run
 ```
 
-Example:
+Test the reference case:
 
 ```bash
 curl -s -X POST -H 'Content-Type: application/json' \
@@ -31,29 +38,20 @@ curl -s -X POST -H 'Content-Type: application/json' \
   http://localhost:8080/api/airbus-challenge/thin-slice-mvp/run
 ```
 
-Validate the live endpoint:
+## Verify
 
 ```bash
-python3 ../../../../checker/validate_contract.py \
-  http://localhost:8080/api/airbus-challenge/thin-slice-mvp/run \
-  CASE-2026-0002 D-AXFB-1K
+python -m unittest discover -s tests -v
+python ../../../../checker/validate_contract.py result.json CASE-2026-0002
 ```
 
-Run unit tests and validate the committed result:
+Set `OLLAMA_ENABLED=0` for a fast deterministic run. Optional configuration:
+`OLLAMA_BASE_URL`, `OLLAMA_MODEL`, and `OLLAMA_TIMEOUT_SECONDS`.
 
-```bash
-python3 -m unittest discover -s tests -v
-python3 ../../../../checker/validate_contract.py result.json CASE-2026-0002
-```
+## Implemented tools
 
-## Current scope
-
-- Real case lookup from `data/cases_seed.json`
-- Five ordered agent boundaries and shared workflow state
-- Contract-valid response and required integration flags
-- Safe degraded response for malformed, mismatched, or unknown input
-- Placeholder maintenance reasoning only
-
-The `MONITOR` decision and subsequent outputs are safety-oriented placeholders,
-not evidence-backed answers for known faulty cases. Thin Slice 2 will add the real
-telemetry, BITE, manual, history, planning, and economics tools.
+- Case, BITE, telemetry and flight-phase correlation
+- Historical NFF-rate calculation and policy application
+- Ground-slot, stock, skills and certification planning
+- Simulated task-card execution result
+- Configurable labour, part, removal and shop-test economics
