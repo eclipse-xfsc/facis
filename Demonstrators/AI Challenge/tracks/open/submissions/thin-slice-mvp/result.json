@@ -6,49 +6,246 @@
       "stage": "diagnosis",
       "agent": 1,
       "status": "complete",
+      "tool_calls": [
+        {
+          "tool": "case_repository.lookup",
+          "output": {
+            "fault_code": "F-25-2140"
+          }
+        },
+        {
+          "tool": "bite_events.lookup",
+          "output": [
+            "bite:F-25-2140x30"
+          ]
+        },
+        {
+          "tool": "telemetry.analyse_signal",
+          "output": {
+            "signal": "can_error_count",
+            "peak": 57.0,
+            "threshold": 20.0,
+            "threshold_source": "manual_limit",
+            "threshold_exceeded": true,
+            "monotonic_degradation": false,
+            "recent_leg_maxima": [
+              {
+                "flight_id": "FD4019",
+                "value": 26.0
+              },
+              {
+                "flight_id": "FD4020",
+                "value": 41.0
+              },
+              {
+                "flight_id": "FD4021",
+                "value": 47.0
+              },
+              {
+                "flight_id": "FD4022",
+                "value": 57.0
+              },
+              {
+                "flight_id": "FD4023",
+                "value": 37.0
+              },
+              {
+                "flight_id": "FD4024",
+                "value": 50.0
+              }
+            ],
+            "vibration_phase_share": 0.973
+          }
+        },
+        {
+          "tool": "manual_retriever.search",
+          "input": {
+            "query": "F-25-2140 CAN connector DA-CON-3390 (harness path, ref. SB-25-2140-R1) can_error_count",
+            "top_k": 2
+          },
+          "output": {
+            "chunk_ids": [
+              "SB-25-2140-R1#01",
+              "SB-25-2140-R1#00"
+            ]
+          }
+        }
+      ],
       "output": {
         "fault_code": "F-25-2140",
         "leading_cause": "CAN connector DA-CON-3390 (harness path, ref. SB-25-2140-R1)",
-        "confidence": 0.95,
+        "confidence": 0.92,
+        "healthy": false,
         "evidence": [
           "bite:F-25-2140x30",
           "telemetry:can-error-vibration-share=0.97",
-          "TSM-25-21-55"
+          "TSM-25-21-55",
+          "SB-25-2140-R1"
         ],
         "trend": {
+          "signal": "can_error_count",
+          "peak": 57.0,
+          "threshold": 20.0,
+          "threshold_source": "manual_limit",
+          "threshold_exceeded": true,
           "monotonic_degradation": false,
+          "recent_leg_maxima": [
+            {
+              "flight_id": "FD4019",
+              "value": 26.0
+            },
+            {
+              "flight_id": "FD4020",
+              "value": 41.0
+            },
+            {
+              "flight_id": "FD4021",
+              "value": 47.0
+            },
+            {
+              "flight_id": "FD4022",
+              "value": 57.0
+            },
+            {
+              "flight_id": "FD4023",
+              "value": 37.0
+            },
+            {
+              "flight_id": "FD4024",
+              "value": 50.0
+            }
+          ],
           "vibration_phase_share": 0.973
         },
-        "agent_rationale": "BITE and flight-phase telemetry support the tool-calculated leading cause.",
-        "reasoning_source": "ollama:qwen3.5:9b"
+        "agent_analysis": "Telemetry shows a can-error-vibration-share of 0.97 indicating strong correlation between vibration and CAN errors.",
+        "llm_recommendation": "CAN connector DA-CON-3390 (harness path, ref. SB-25-2140-R1)",
+        "effective_recommendation": "CAN connector DA-CON-3390 (harness path, ref. SB-25-2140-R1)",
+        "selected_evidence": [
+          "bite:F-25-2140x30",
+          "telemetry:can-error-vibration-share=0.97"
+        ],
+        "retrieved_evidence": [
+          "SB-25-2140-R1#01",
+          "SB-25-2140-R1#00"
+        ],
+        "reasoning_source": "ollama:qwen3.5:9b",
+        "guardrail_status": "passed"
       }
     },
     {
       "stage": "nff_assessment",
       "agent": 2,
       "status": "complete",
+      "tool_calls": [
+        {
+          "tool": "maintenance_history.nff_rate",
+          "output": {
+            "similar_cases": 19,
+            "nff_cases": 9
+          }
+        },
+        {
+          "tool": "nff_policy.apply",
+          "output": {
+            "decision": "CONNECTOR_TASK"
+          }
+        },
+        {
+          "tool": "manual_retriever.search",
+          "input": {
+            "query": "OPS-NFF-01 CONNECTOR_TASK OPS-NFF-01: vibration-correlated and not monotonic; connector task before removal",
+            "top_k": 2
+          },
+          "output": {
+            "chunk_ids": [
+              "OPS-NFF-POLICY#00",
+              "OPS-GROUNDTIME#00"
+            ]
+          }
+        }
+      ],
       "output": {
         "nff_risk": 0.47,
         "decision": "CONNECTOR_TASK",
         "reproducible_on_ground": false,
-        "decision_rule": "OPS-NFF-01: not reproducible - TSM-mandated task before any removal",
+        "decision_rule": "OPS-NFF-01: vibration-correlated and not monotonic; connector task before removal",
         "history": {
           "similar_cases": 19,
           "nff_cases": 9
         },
+        "second_opinion_required": false,
         "citations": [
           "OPS-NFF-POLICY",
+          "TSM-25-21-55",
+          "SB-25-2140-R1",
           "maintenance_history.csv",
-          "TSM-25-21-55"
+          "history:nff_rate=0.47"
         ],
-        "agent_rationale": "Historical NFF rate and OPS-NFF-01 support the calculated decision.",
-        "reasoning_source": "ollama:qwen3.5:9b"
+        "agent_analysis": "The NFF risk is 0.47 and the decision rule specifies a connector task before removal.",
+        "llm_recommendation": "CONNECTOR_TASK",
+        "effective_recommendation": "CONNECTOR_TASK",
+        "selected_evidence": [
+          "OPS-NFF-POLICY#00"
+        ],
+        "retrieved_evidence": [
+          "OPS-NFF-POLICY#00",
+          "OPS-GROUNDTIME#00"
+        ],
+        "reasoning_source": "ollama:qwen3.5:9b",
+        "guardrail_status": "passed"
       }
     },
     {
       "stage": "repair_plan",
       "agent": 3,
       "status": "complete",
+      "tool_calls": [
+        {
+          "tool": "flight_schedule.find_ground_slot",
+          "output": "FD4018"
+        },
+        {
+          "tool": "parts_stock.check",
+          "output": [
+            {
+              "part_number": "DA-CON-3390",
+              "qty": 1,
+              "source": "ON_HAND"
+            }
+          ]
+        },
+        {
+          "tool": "technician_roster.match",
+          "output": [
+            {
+              "technician_id": "TECH-1003",
+              "role": "LEAD",
+              "skills_matched": [
+                "ATA25-CABIN",
+                "AVIONICS-CAN"
+              ]
+            },
+            {
+              "technician_id": "TECH-1002",
+              "role": "CERTIFYING",
+              "authorisation": "B1"
+            }
+          ]
+        },
+        {
+          "tool": "manual_retriever.search",
+          "input": {
+            "query": "TASKCARD-25-21-CAN-RESEAT ground time parts skills authorisation",
+            "top_k": 2
+          },
+          "output": {
+            "chunk_ids": [
+              "TASKCARD-25-21-CAN-RESEAT#00",
+              "TASKCARD-25-21-CAN-RESEAT#01"
+            ]
+          }
+        }
+      ],
       "output": {
         "task_card_id": "TASK-25-21-CAN-RESEAT",
         "task_duration_min": 55,
@@ -82,15 +279,53 @@
         "qualified_technician": true,
         "feasible": true,
         "blockers": [],
-        "note": "Certifying signature is scheduled at certifier shift start when outside the work slot.",
-        "agent_rationale": "The selected ground slot has sufficient time, stock, skills, and certification.",
-        "reasoning_source": "ollama:qwen3.5:9b"
+        "note": "Shift overlap requires dispatcher confirmation before release.",
+        "agent_analysis": "The task is feasible with qualified technicians and no blockers, though shift overlap requires dispatcher confirmation.",
+        "llm_recommendation": "TASK-25-21-CAN-RESEAT",
+        "effective_recommendation": "TASK-25-21-CAN-RESEAT",
+        "selected_evidence": [
+          "TASKCARD-25-21-CAN-RESEAT#00"
+        ],
+        "retrieved_evidence": [
+          "TASKCARD-25-21-CAN-RESEAT#00",
+          "TASKCARD-25-21-CAN-RESEAT#01"
+        ],
+        "reasoning_source": "ollama:qwen3.5:9b",
+        "guardrail_status": "passed"
       }
     },
     {
       "stage": "execution",
       "agent": 4,
       "status": "complete",
+      "tool_calls": [
+        {
+          "tool": "task_card.load",
+          "output": "TASK-25-21-CAN-RESEAT"
+        },
+        {
+          "tool": "execution_result.verify",
+          "output": {
+            "name": "termination_resistance",
+            "value": 60.1,
+            "unit": "ohm",
+            "nominal": 60
+          }
+        },
+        {
+          "tool": "manual_retriever.search",
+          "input": {
+            "query": "TASKCARD-25-21-CAN-RESEAT functional test acceptance",
+            "top_k": 2
+          },
+          "output": {
+            "chunk_ids": [
+              "TASKCARD-25-21-CAN-RESEAT#00",
+              "TASKCARD-25-21-CAN-RESEAT#01"
+            ]
+          }
+        }
+      ],
       "output": {
         "work_order_id": "WO-90001",
         "task_card_id": "TASK-25-21-CAN-RESEAT",
@@ -105,28 +340,65 @@
         },
         "root_cause": "connector locking clip not engaged (SB-25-2140-R1)",
         "termination_measurement_ohms": 60.1,
-        "agent_rationale": "The simulated task result records an accepted measurement and functional test.",
-        "reasoning_source": "ollama:qwen3.5:9b"
+        "simulation": true,
+        "agent_analysis": "The connector locking clip was not engaged, causing a fault confirmed by the functional test.",
+        "llm_recommendation": "CONFIRMED_FAULT",
+        "effective_recommendation": "CONFIRMED_FAULT",
+        "selected_evidence": [
+          "TASKCARD-25-21-CAN-RESEAT#00"
+        ],
+        "retrieved_evidence": [
+          "TASKCARD-25-21-CAN-RESEAT#00",
+          "TASKCARD-25-21-CAN-RESEAT#01"
+        ],
+        "reasoning_source": "ollama:qwen3.5:9b",
+        "guardrail_status": "passed"
       }
     },
     {
       "stage": "outcome_learning",
       "agent": 5,
       "status": "complete",
+      "tool_calls": [
+        {
+          "tool": "economics.calculate",
+          "output": {
+            "nff_avoided": true,
+            "saving_eur": 5029.17
+          }
+        },
+        {
+          "tool": "manual_retriever.search",
+          "input": {
+            "query": "OPS-NFF-01 removal shop test cost learning",
+            "top_k": 2
+          },
+          "output": {
+            "chunk_ids": [
+              "OPS-NFF-POLICY#00",
+              "OPS-NFF-POLICY#01"
+            ]
+          }
+        }
+      ],
       "output": {
         "nff_avoided": true,
         "saving_eur": 5029.17,
         "cost_actual_eur": 220.83,
         "cost_counterfactual_remove_now_eur": 5250,
-        "cost_model": {
-          "labour_eur": 100.83,
-          "part_eur": 120.0,
-          "removal_eur": 3800,
-          "shop_test_eur": 1450
-        },
-        "feedback": "Decision rule 'OPS-NFF-01: not reproducible - TSM-mandated task before any removal' held; flag this signature earlier.",
-        "agent_rationale": "The configured cost model shows the avoided NFF removal cost.",
-        "reasoning_source": "ollama:qwen3.5:9b"
+        "feedback": "Decision 'CONNECTOR_TASK' recorded; incorporate verified execution data on closure.",
+        "agent_analysis": "The decision avoided a No-Fault-Found removal, saving \u20ac5029.17 while incurring only \u20ac220.83 actual costs.",
+        "llm_recommendation": "INCORPORATE_ON_CLOSURE",
+        "effective_recommendation": "INCORPORATE_ON_CLOSURE",
+        "selected_evidence": [
+          "OPS-NFF-POLICY#00"
+        ],
+        "retrieved_evidence": [
+          "OPS-NFF-POLICY#00",
+          "OPS-NFF-POLICY#01"
+        ],
+        "reasoning_source": "ollama:qwen3.5:9b",
+        "guardrail_status": "passed"
       }
     }
   ],
@@ -137,42 +409,101 @@
     "diagnosis": {
       "fault_code": "F-25-2140",
       "leading_cause": "CAN connector DA-CON-3390 (harness path, ref. SB-25-2140-R1)",
-      "confidence": 0.95,
+      "confidence": 0.92,
+      "healthy": false,
       "evidence": [
         "bite:F-25-2140x30",
         "telemetry:can-error-vibration-share=0.97",
-        "TSM-25-21-55"
+        "TSM-25-21-55",
+        "SB-25-2140-R1"
       ],
       "trend": {
+        "signal": "can_error_count",
+        "peak": 57.0,
+        "threshold": 20.0,
+        "threshold_source": "manual_limit",
+        "threshold_exceeded": true,
         "monotonic_degradation": false,
+        "recent_leg_maxima": [
+          {
+            "flight_id": "FD4019",
+            "value": 26.0
+          },
+          {
+            "flight_id": "FD4020",
+            "value": 41.0
+          },
+          {
+            "flight_id": "FD4021",
+            "value": 47.0
+          },
+          {
+            "flight_id": "FD4022",
+            "value": 57.0
+          },
+          {
+            "flight_id": "FD4023",
+            "value": 37.0
+          },
+          {
+            "flight_id": "FD4024",
+            "value": 50.0
+          }
+        ],
         "vibration_phase_share": 0.973
       },
-      "agent_rationale": "BITE and flight-phase telemetry support the tool-calculated leading cause.",
-      "reasoning_source": "ollama:qwen3.5:9b"
+      "agent_analysis": "Telemetry shows a can-error-vibration-share of 0.97 indicating strong correlation between vibration and CAN errors.",
+      "llm_recommendation": "CAN connector DA-CON-3390 (harness path, ref. SB-25-2140-R1)",
+      "effective_recommendation": "CAN connector DA-CON-3390 (harness path, ref. SB-25-2140-R1)",
+      "selected_evidence": [
+        "bite:F-25-2140x30",
+        "telemetry:can-error-vibration-share=0.97"
+      ],
+      "retrieved_evidence": [
+        "SB-25-2140-R1#01",
+        "SB-25-2140-R1#00"
+      ],
+      "reasoning_source": "ollama:qwen3.5:9b",
+      "guardrail_status": "passed"
     },
     "nff_assessment": {
       "nff_risk": 0.47,
       "decision": "CONNECTOR_TASK",
       "reproducible_on_ground": false,
-      "decision_rule": "OPS-NFF-01: not reproducible - TSM-mandated task before any removal",
+      "decision_rule": "OPS-NFF-01: vibration-correlated and not monotonic; connector task before removal",
       "history": {
         "similar_cases": 19,
         "nff_cases": 9
       },
+      "second_opinion_required": false,
       "citations": [
         "OPS-NFF-POLICY",
+        "TSM-25-21-55",
+        "SB-25-2140-R1",
         "maintenance_history.csv",
-        "TSM-25-21-55"
+        "history:nff_rate=0.47"
       ],
-      "agent_rationale": "Historical NFF rate and OPS-NFF-01 support the calculated decision.",
-      "reasoning_source": "ollama:qwen3.5:9b"
+      "agent_analysis": "The NFF risk is 0.47 and the decision rule specifies a connector task before removal.",
+      "llm_recommendation": "CONNECTOR_TASK",
+      "effective_recommendation": "CONNECTOR_TASK",
+      "selected_evidence": [
+        "OPS-NFF-POLICY#00"
+      ],
+      "retrieved_evidence": [
+        "OPS-NFF-POLICY#00",
+        "OPS-GROUNDTIME#00"
+      ],
+      "reasoning_source": "ollama:qwen3.5:9b",
+      "guardrail_status": "passed"
     },
     "evidence_ids": [
       "bite:F-25-2140x30",
       "telemetry:can-error-vibration-share=0.97",
       "TSM-25-21-55",
+      "SB-25-2140-R1",
       "OPS-NFF-POLICY",
-      "maintenance_history.csv"
+      "maintenance_history.csv",
+      "history:nff_rate=0.47"
     ],
     "repair_plan": {
       "task_card_id": "TASK-25-21-CAN-RESEAT",
@@ -207,9 +538,19 @@
       "qualified_technician": true,
       "feasible": true,
       "blockers": [],
-      "note": "Certifying signature is scheduled at certifier shift start when outside the work slot.",
-      "agent_rationale": "The selected ground slot has sufficient time, stock, skills, and certification.",
-      "reasoning_source": "ollama:qwen3.5:9b"
+      "note": "Shift overlap requires dispatcher confirmation before release.",
+      "agent_analysis": "The task is feasible with qualified technicians and no blockers, though shift overlap requires dispatcher confirmation.",
+      "llm_recommendation": "TASK-25-21-CAN-RESEAT",
+      "effective_recommendation": "TASK-25-21-CAN-RESEAT",
+      "selected_evidence": [
+        "TASKCARD-25-21-CAN-RESEAT#00"
+      ],
+      "retrieved_evidence": [
+        "TASKCARD-25-21-CAN-RESEAT#00",
+        "TASKCARD-25-21-CAN-RESEAT#01"
+      ],
+      "reasoning_source": "ollama:qwen3.5:9b",
+      "guardrail_status": "passed"
     },
     "execution": {
       "work_order_id": "WO-90001",
@@ -225,23 +566,38 @@
       },
       "root_cause": "connector locking clip not engaged (SB-25-2140-R1)",
       "termination_measurement_ohms": 60.1,
-      "agent_rationale": "The simulated task result records an accepted measurement and functional test.",
-      "reasoning_source": "ollama:qwen3.5:9b"
+      "simulation": true,
+      "agent_analysis": "The connector locking clip was not engaged, causing a fault confirmed by the functional test.",
+      "llm_recommendation": "CONFIRMED_FAULT",
+      "effective_recommendation": "CONFIRMED_FAULT",
+      "selected_evidence": [
+        "TASKCARD-25-21-CAN-RESEAT#00"
+      ],
+      "retrieved_evidence": [
+        "TASKCARD-25-21-CAN-RESEAT#00",
+        "TASKCARD-25-21-CAN-RESEAT#01"
+      ],
+      "reasoning_source": "ollama:qwen3.5:9b",
+      "guardrail_status": "passed"
     },
     "outcome_learning": {
       "nff_avoided": true,
       "saving_eur": 5029.17,
       "cost_actual_eur": 220.83,
       "cost_counterfactual_remove_now_eur": 5250,
-      "cost_model": {
-        "labour_eur": 100.83,
-        "part_eur": 120.0,
-        "removal_eur": 3800,
-        "shop_test_eur": 1450
-      },
-      "feedback": "Decision rule 'OPS-NFF-01: not reproducible - TSM-mandated task before any removal' held; flag this signature earlier.",
-      "agent_rationale": "The configured cost model shows the avoided NFF removal cost.",
-      "reasoning_source": "ollama:qwen3.5:9b"
+      "feedback": "Decision 'CONNECTOR_TASK' recorded; incorporate verified execution data on closure.",
+      "agent_analysis": "The decision avoided a No-Fault-Found removal, saving \u20ac5029.17 while incurring only \u20ac220.83 actual costs.",
+      "llm_recommendation": "INCORPORATE_ON_CLOSURE",
+      "effective_recommendation": "INCORPORATE_ON_CLOSURE",
+      "selected_evidence": [
+        "OPS-NFF-POLICY#00"
+      ],
+      "retrieved_evidence": [
+        "OPS-NFF-POLICY#00",
+        "OPS-NFF-POLICY#01"
+      ],
+      "reasoning_source": "ollama:qwen3.5:9b",
+      "guardrail_status": "passed"
     },
     "integrations": {
       "ai_iot": false,

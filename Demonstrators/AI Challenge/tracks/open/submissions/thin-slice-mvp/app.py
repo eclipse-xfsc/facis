@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Local HTTP adapter for the Thin Slice 2 workflow."""
+"""Local HTTP adapter for the observable Thin Slice 4 workflow."""
 
 from __future__ import annotations
 
@@ -7,7 +7,8 @@ import json
 import os
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
-from workflow import parse_request_body, run_workflow
+from workflow import degraded_response, parse_request_body, run_workflow
+from observability import tracing_status
 
 
 HOST = "0.0.0.0"
@@ -39,9 +40,9 @@ class ChallengeHandler(BaseHTTPRequestHandler):
         try:
             response = run_workflow(payload, request_errors=errors)
         except Exception as exc:  # Last-resort contract protection for the demo.
-            response = run_workflow(
-                {},
-                request_errors=[f"Workflow degraded after {type(exc).__name__}"],
+            response = degraded_response(
+                payload,
+                errors=errors + [f"Workflow degraded after {type(exc).__name__}"],
             )
         self._write_json(200, response)
 
@@ -51,4 +52,9 @@ class ChallengeHandler(BaseHTTPRequestHandler):
 
 if __name__ == "__main__":
     print(f"Thin Slice MVP listening on http://localhost:{PORT}{ENDPOINT}")
+    status = tracing_status()
+    if status["active"]:
+        print(f"Phoenix tracing enabled: {status['endpoint']}")
+    elif status["enabled"]:
+        print(f"Phoenix tracing unavailable: {status['error']}")
     ThreadingHTTPServer((HOST, PORT), ChallengeHandler).serve_forever()
