@@ -1,11 +1,14 @@
-# ORCE track - local Node-RED runtime (no cloud deployment is provided)
+# ORCE track - local runtime using the published ORCE image only.
 services:
-  node-red:
-    image: nodered/node-red:4.0
+  orce:
+    image: ecofacis/xfsc-orce:2.0.13
+    platform: linux/amd64
     ports:
       - "1880:1880"
     volumes:
-      - node_red_data:/data
+      - orce_data:/data
+    init: true
     restart: unless-stopped
+
 volumes:
-  node_red_data:
+  orce_data:
