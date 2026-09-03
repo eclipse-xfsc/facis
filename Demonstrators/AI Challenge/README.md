@@ -1,7 +1,7 @@
 # The Airbus AI Challenge, powered by FACIS
 **ContainerDays / AI Context Series - Hamburg, 3-4 September 2026 - Schuppen 52**
 
-One aviation maintenance challenge, five open cases plus healthy seats. Three tool tracks. Every participant builds the **complete five-agent workflow** end to end with the tool of their choice - and the same flow must handle whichever case it is given (contract v1.1).
+One aviation maintenance challenge, five open cases plus healthy seats. Two tool tracks. Every participant builds the **complete five-agent workflow** end to end with the tool of their choice - and the same flow must handle whichever case it is given (contract v1.1).
 
 Teams assemble **on the day**: there is always at least one ORCE team, and the rest form
 around whatever tool their members pick. No team heads are assigned - coaches are on the
