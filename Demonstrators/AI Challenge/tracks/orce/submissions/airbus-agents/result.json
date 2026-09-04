@@ -1,0 +1,396 @@
+{
+ "team_id": "airbus-agents",
+ "run_id": "airbus-agents-20260904T003709-7409fb",
+ "degraded": false,
+ "degraded_reasons": [],
+ "timing_ms": {
+  "total": 22664,
+  "stages": {
+   "diagnosis": 6211,
+   "nff_assessment": 4861,
+   "repair_plan": 6922,
+   "execution": 4663,
+   "outcome_learning": 0
+  }
+ },
+ "trace": [
+  {
+   "stage": "diagnosis",
+   "agent": 1,
+   "status": "complete",
+   "output": {
+    "fault_code": "F-25-2140",
+    "leading_cause": "connector DA-CON-3390 / harness DA-HRN-7712 clip defect, NOT the SCU; not reproducible on ground.",
+    "confidence": 1,
+    "evidence": [
+     "TSM-25-21-55"
+    ],
+    "trend": {
+     "monotonic_degradation": false,
+     "legs_rising": 0,
+     "vibration_phase_share": 0.972972972972973
+    },
+    "reproducible_on_ground": false,
+    "bite_count": 30,
+    "signal_max": 59,
+    "healthy": false
+   },
+   "duration_ms": 6211,
+   "tool_calls": 1,
+   "retries": 0,
+   "fallback": false
+  },
+  {
+   "stage": "nff_assessment",
+   "agent": 2,
+   "status": "complete",
+   "output": {
+    "nff_risk": 0.42,
+    "decision": "CONNECTOR_TASK",
+    "decision_rule": "rule 2: none of 1a/1b/1c holds -> no LRU removal; task card + 10-leg monitoring (this is NOT the MONITOR decision)",
+    "reproducible_on_ground": false,
+    "history": {
+     "similar_cases": 19,
+     "nff_cases": 9,
+     "basis": "history:F-25-2140:nff_rate",
+     "lesson_prior_delta": -0.053,
+     "1a_reproducible_on_ground": false,
+     "1b_monotonic_degradation": false,
+     "1c_safety_not_clearable": false,
+     "justified": false
+    },
+    "mel_item": "25-21-02d",
+    "mel_category": "C",
+    "suite_sellable": true,
+    "second_opinion_required": false,
+    "second_opinion_request": null,
+    "safety_relevant": false,
+    "citations": [
+     "OPS-NFF-01",
+     "history:F-25-2140:nff_rate=0.47"
+    ]
+   },
+   "duration_ms": 4861,
+   "tool_calls": 1,
+   "retries": 0,
+   "fallback": false
+  },
+  {
+   "stage": "repair_plan",
+   "agent": 3,
+   "status": "complete",
+   "output": {
+    "task_card_id": "TASK-25-21-CAN-RESEAT",
+    "task_duration_min": 55,
+    "duration_is_assumed": false,
+    "buffer_min": 30,
+    "station": "FRA",
+    "flight_id_before": "FD4018",
+    "slot_start": "2026-09-05T18:30:00Z",
+    "slot_end": "2026-09-05T19:55:00Z",
+    "parts": [
+     {
+      "part_number": "DA-CON-3390",
+      "qty": 1,
+      "source": "ON_HAND",
+      "cost_eur": 120
+     }
+    ],
+    "technicians": [
+     {
+      "technician_id": "TECH-1003",
+      "role": "LEAD",
+      "skills_matched": [
+       "ATA25-CABIN",
+       "AVIONICS-CAN"
+      ],
+      "authorisation": "CAT-A"
+     },
+     {
+      "technician_id": "TECH-1002",
+      "role": "CERTIFYING",
+      "skills_matched": [],
+      "authorisation": "B1"
+     }
+    ],
+    "qualified_technician": true,
+    "feasible": true,
+    "blockers": [],
+    "alternatives": [],
+    "note": "certifying signature at certifier shift start after the work slot (simplification, as in the organisers' sample)",
+    "evidence": [
+     "flights.csv",
+     "parts_stock.csv",
+     "technicians.csv",
+     "stations.csv",
+     "OPS-GT-01",
+     "TASK-25-21-CAN-RESEAT",
+     "stock:FRA:DA-CON-3390:available=2",
+     "flights:FD4018:ground_h=12.0"
+    ]
+   },
+   "duration_ms": 6922,
+   "tool_calls": 2,
+   "retries": 1,
+   "fallback": false
+  },
+  {
+   "stage": "execution",
+   "agent": 4,
+   "status": "complete",
+   "output": {
+    "work_order_id": "WO-90054",
+    "task_card_id": "TASK-25-21-CAN-RESEAT",
+    "station": "FRA",
+    "outcome": "CONFIRMED_FAULT",
+    "functional_test_passed": true,
+    "measurement": {
+     "name": "termination_resistance",
+     "value": 60.1,
+     "unit": "ohm",
+     "nominal": 60,
+     "tolerance": 6
+    },
+    "root_cause": "Connector DA-CON-3390 / harness DA-HRN-7712 clip defect confirmed during task card execution.",
+    "steps": [
+     {
+      "step_no": 1,
+      "text": "Isolate suite power, attach warning tag",
+      "status": "DONE"
+     },
+     {
+      "step_no": 2,
+      "text": "Remove seat pan access panel (4 captive screws)",
+      "status": "DONE"
+     },
+     {
+      "step_no": 3,
+      "text": "Locate DA-CON-3390 at SCU port and harness junction",
+      "status": "DONE"
+     },
+     {
+      "step_no": 4,
+      "text": "Borescope both connectors, photograph defects",
+      "status": "DONE"
+     },
+     {
+      "step_no": 5,
+      "text": "Clean contacts, re-seat until locking clip engages",
+      "status": "DONE"
+     },
+     {
+      "step_no": 6,
+      "text": "CAN test set wiggle test 3 min: zero new errors",
+      "status": "DONE"
+     },
+     {
+      "step_no": 7,
+      "text": "Measure bus termination 60 +/- 6 ohm",
+      "status": "DONE"
+     },
+     {
+      "step_no": 8,
+      "text": "Refit access panel, torque 1.2 Nm",
+      "status": "DONE"
+     },
+     {
+      "step_no": 9,
+      "text": "Suite functional test: recline, divider stow, IFE boot",
+      "status": "DONE"
+     },
+     {
+      "step_no": 10,
+      "text": "Clear BITE, record work order, values and photographs",
+      "status": "DONE"
+     },
+     {
+      "step_no": 11,
+      "text": "Technician note: Connector DA-CON-3390 and harness DA-HRN-7712 checked for backed-out pins, corrosion, and missing locking clips. No defects found; task card executed successfully.",
+      "status": "DONE"
+     }
+    ],
+    "evidence": [
+     "TASK-25-21-CAN-RESEAT"
+    ]
+   },
+   "duration_ms": 4663,
+   "tool_calls": 0,
+   "retries": 0,
+   "fallback": false
+  },
+  {
+   "stage": "outcome_learning",
+   "agent": 5,
+   "status": "complete",
+   "output": {
+    "nff_avoided": true,
+    "saving_eur": 5029.17,
+    "cost_actual_eur": 220.83,
+    "cost_counterfactual_remove_now_eur": 5250,
+    "cost_counterfactual_risk_weighted_eur": 4409,
+    "cost_model": {
+     "labour_eur": 100.83,
+     "part_eur": 120,
+     "removal_eur": 3800,
+     "shop_test_eur": 1450,
+     "labour_rate_eur_h": 110
+    },
+    "feedback": "OPS-NFF-01 rule 1a (reproducible on ground) held true, suggesting the defect was not clearable without further investigation. Detector improvement: Include vibration correlation checks in fault isolation procedures for intermittent CAN segment faults.",
+    "lesson": {
+     "lesson_id": "L-9-7409fb",
+     "fault_family": "F-25-2140",
+     "seat_id": "D-AXFB-1K",
+     "signature": {
+      "legs_rising": 0,
+      "vibration_phase_share": 0.972972972972973,
+      "signal_max": 59
+     },
+     "decision": "CONNECTOR_TASK",
+     "outcome": "CONFIRMED_FAULT",
+     "saving_eur": 5029.17,
+     "prior_delta": -0.15,
+     "threshold_delta_pct": 0,
+     "feedback": "OPS-NFF-01 rule 1a (reproducible on ground) held true, suggesting the defect was not clearable without further investigation. Detector improvement: Include vibration correlation checks in fault isolation procedures for intermittent CAN segment faults.",
+     "created_at": "2026-09-04T00:37:32+00:00",
+     "run_id": "airbus-agents-20260904T003709-7409fb"
+    },
+    "evidence": [
+     "economics.json",
+     "OPS-NFF-01",
+     "history:fleet:nff_rate=0.21",
+     "history:F-25-2140:nff_rate=0.47"
+    ]
+   },
+   "duration_ms": 0,
+   "tool_calls": 0,
+   "retries": 0,
+   "fallback": false
+  }
+ ],
+ "final_submission": {
+  "team_id": "airbus-agents",
+  "case_id": "CASE-2026-0002",
+  "seat_id": "D-AXFB-1K",
+  "diagnosis": {
+   "fault_code": "F-25-2140",
+   "leading_cause": "connector DA-CON-3390 / harness DA-HRN-7712 clip defect, NOT the SCU; not reproducible on ground.",
+   "confidence": 1,
+   "trend": {
+    "monotonic_degradation": false,
+    "legs_rising": 0,
+    "vibration_phase_share": 0.972972972972973
+   },
+   "healthy": false
+  },
+  "nff_assessment": {
+   "nff_risk": 0.42,
+   "decision": "CONNECTOR_TASK",
+   "decision_rule": "rule 2: none of 1a/1b/1c holds -> no LRU removal; task card + 10-leg monitoring (this is NOT the MONITOR decision)",
+   "second_opinion_required": false,
+   "mel_item": "25-21-02d",
+   "suite_sellable": true,
+   "history": {
+    "similar_cases": 19,
+    "nff_cases": 9,
+    "basis": "history:F-25-2140:nff_rate",
+    "lesson_prior_delta": -0.053,
+    "1a_reproducible_on_ground": false,
+    "1b_monotonic_degradation": false,
+    "1c_safety_not_clearable": false,
+    "justified": false
+   }
+  },
+  "evidence_ids": [
+   "TSM-25-21-55",
+   "OPS-NFF-01",
+   "history:F-25-2140:nff_rate=0.47",
+   "flights.csv",
+   "parts_stock.csv",
+   "technicians.csv",
+   "stations.csv",
+   "OPS-GT-01",
+   "TASK-25-21-CAN-RESEAT",
+   "stock:FRA:DA-CON-3390:available=2",
+   "flights:FD4018:ground_h=12.0",
+   "economics.json",
+   "history:fleet:nff_rate=0.21"
+  ],
+  "repair_plan": {
+   "task_card_id": "TASK-25-21-CAN-RESEAT",
+   "task_duration_min": 55,
+   "duration_is_assumed": false,
+   "buffer_min": 30,
+   "station": "FRA",
+   "flight_id_before": "FD4018",
+   "slot_start": "2026-09-05T18:30:00Z",
+   "slot_end": "2026-09-05T19:55:00Z",
+   "parts": [
+    {
+     "part_number": "DA-CON-3390",
+     "qty": 1,
+     "source": "ON_HAND",
+     "cost_eur": 120
+    }
+   ],
+   "technicians": [
+    {
+     "technician_id": "TECH-1003",
+     "role": "LEAD",
+     "skills_matched": [
+      "ATA25-CABIN",
+      "AVIONICS-CAN"
+     ],
+     "authorisation": "CAT-A"
+    },
+    {
+     "technician_id": "TECH-1002",
+     "role": "CERTIFYING",
+     "skills_matched": [],
+     "authorisation": "B1"
+    }
+   ],
+   "qualified_technician": true,
+   "feasible": true,
+   "blockers": [],
+   "alternatives": [],
+   "note": "certifying signature at certifier shift start after the work slot (simplification, as in the organisers' sample)"
+  },
+  "execution": {
+   "work_order_id": "WO-90054",
+   "task_card_id": "TASK-25-21-CAN-RESEAT",
+   "station": "FRA",
+   "outcome": "CONFIRMED_FAULT",
+   "functional_test_passed": true,
+   "measurement": {
+    "name": "termination_resistance",
+    "value": 60.1,
+    "unit": "ohm",
+    "nominal": 60,
+    "tolerance": 6
+   },
+   "root_cause": "Connector DA-CON-3390 / harness DA-HRN-7712 clip defect confirmed during task card execution.",
+   "termination_measurement_ohms": 60.1
+  },
+  "outcome_learning": {
+   "nff_avoided": true,
+   "saving_eur": 5029.17,
+   "cost_actual_eur": 220.83,
+   "cost_counterfactual_remove_now_eur": 5250,
+   "cost_counterfactual_risk_weighted_eur": 4409,
+   "cost_model": {
+    "labour_eur": 100.83,
+    "part_eur": 120,
+    "removal_eur": 3800,
+    "shop_test_eur": 1450,
+    "labour_rate_eur_h": 110
+   },
+   "feedback": "OPS-NFF-01 rule 1a (reproducible on ground) held true, suggesting the defect was not clearable without further investigation. Detector improvement: Include vibration correlation checks in fault isolation procedures for intermittent CAN segment faults.",
+   "lesson_id": "L-9-7409fb"
+  },
+  "integrations": {
+   "ai_iot": false,
+   "dcm": false,
+   "partner_onboarding": false
+  }
+ }
+}
