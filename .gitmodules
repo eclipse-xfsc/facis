@@ -16,3 +16,6 @@
 [submodule "FAP/Principal Credential Issuance/implementation"]
 	path = FAP/Principal Credential Issuance/implementation
 	url = https://github.com/eclipse-xfsc/facis-fap-principal-credential-issuance.git
+[submodule "Demonstrators/Zero Trust Demonstrators/implementation"]
+	path = Demonstrators/Zero Trust Demonstrators/implementation
+	url = https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator.git
