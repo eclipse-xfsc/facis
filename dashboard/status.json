@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-08T06:04:23.459473+00:00",
+  "generatedAt": "2026-09-09T06:04:30.804616+00:00",
   "repos": [
     {
       "key": "root",
@@ -9,23 +9,30 @@
       "url": "https://github.com/eclipse-xfsc/facis",
       "exists": true,
       "health": "green",
-      "lastCommitDate": "2026-09-07T06:05:20Z",
+      "lastCommitDate": "2026-09-08T19:47:53Z",
       "daysSinceLastCommit": 0,
       "contributorCount": 11,
       "ciLastRunStatus": "pending",
-      "ciLastRunAt": "2026-09-08T06:03:46Z",
+      "ciLastRunAt": "2026-09-09T06:03:43Z",
       "currentlyFailingWorkflows": [],
-      "ciRecentFailureCount": 0,
+      "ciRecentFailureCount": 1,
       "ciFailuresByDay": [
         0,
         0,
         0,
         0,
         0,
-        0,
+        1,
         0
       ],
-      "failedRuns": [],
+      "failedRuns": [
+        {
+          "workflowName": "Federation Dashboard",
+          "branch": "main",
+          "date": "2026-09-08T06:03:46Z",
+          "url": "https://github.com/eclipse-xfsc/facis/actions/runs/34193064166"
+        }
+      ],
       "openIssueCount": 1,
       "openHumanPRCount": 2,
       "needsReviewPRCount": 0,
@@ -54,10 +61,10 @@
         },
         "ciRecentFailureCount": {
           "previous": 0,
-          "current": 0,
-          "delta": 0,
-          "direction": "stable",
-          "sentiment": "neutral"
+          "current": 1,
+          "delta": 1,
+          "direction": "up",
+          "sentiment": "bad"
         }
       }
     },
@@ -70,7 +77,7 @@
       "exists": true,
       "health": "red",
       "lastCommitDate": "2026-08-19T13:10:10Z",
-      "daysSinceLastCommit": 19,
+      "daysSinceLastCommit": 20,
       "contributorCount": 12,
       "ciLastRunStatus": "failure",
       "ciLastRunAt": "2026-09-01T00:59:13Z",
@@ -113,11 +120,11 @@
           "sentiment": "neutral"
         },
         "ciRecentFailureCount": {
-          "previous": 2,
+          "previous": 0,
           "current": 0,
-          "delta": -2,
-          "direction": "down",
-          "sentiment": "good"
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
         }
       }
     },
@@ -130,7 +137,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-08-03T17:00:52Z",
-      "daysSinceLastCommit": 35,
+      "daysSinceLastCommit": 36,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-01T19:35:09Z",
@@ -190,7 +197,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-07-31T08:21:27Z",
-      "daysSinceLastCommit": 38,
+      "daysSinceLastCommit": 39,
       "contributorCount": 7,
       "ciLastRunStatus": "startup_failure",
       "ciLastRunAt": "2026-09-01T00:47:34Z",
@@ -233,11 +240,11 @@
           "sentiment": "neutral"
         },
         "ciRecentFailureCount": {
-          "previous": 1,
+          "previous": 0,
           "current": 0,
-          "delta": -1,
-          "direction": "down",
-          "sentiment": "good"
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
         }
       }
     },
@@ -250,7 +257,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-06-08T11:05:16Z",
-      "daysSinceLastCommit": 91,
+      "daysSinceLastCommit": 92,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-06-08T11:05:18Z",
@@ -310,7 +317,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-04-13T11:43:50Z",
-      "daysSinceLastCommit": 147,
+      "daysSinceLastCommit": 148,
       "contributorCount": 2,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-04-13T11:43:52Z",
@@ -370,7 +377,7 @@
       "exists": true,
       "health": "yellow",
       "lastCommitDate": "2026-03-18T21:15:31Z",
-      "daysSinceLastCommit": 173,
+      "daysSinceLastCommit": 174,
       "contributorCount": 1,
       "ciLastRunStatus": null,
       "ciLastRunAt": null,
@@ -430,7 +437,7 @@
       "exists": true,
       "health": "yellow",
       "lastCommitDate": "2026-07-31T11:06:02Z",
-      "daysSinceLastCommit": 38,
+      "daysSinceLastCommit": 39,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-26T10:15:00Z",
@@ -490,16 +497,16 @@
       "exists": true,
       "health": "yellow",
       "lastCommitDate": "2026-08-27T09:55:34Z",
-      "daysSinceLastCommit": 11,
+      "daysSinceLastCommit": 12,
       "contributorCount": 13,
       "ciLastRunStatus": "success",
-      "ciLastRunAt": "2026-09-04T12:44:48Z",
+      "ciLastRunAt": "2026-09-08T22:18:42Z",
       "currentlyFailingWorkflows": [],
       "ciRecentFailureCount": 2,
       "ciFailuresByDay": [
         0,
-        0,
         2,
+        0,
         0,
         0,
         0,
@@ -521,7 +528,7 @@
       ],
       "openIssueCount": 21,
       "openHumanPRCount": 13,
-      "needsReviewPRCount": 0,
+      "needsReviewPRCount": 2,
       "releaseCount": 1,
       "latestRelease": "qa-ready-2026-07-15",
       "governanceScore": 3,
@@ -546,11 +553,11 @@
           "sentiment": "bad"
         },
         "ciRecentFailureCount": {
-          "previous": 4,
+          "previous": 2,
           "current": 2,
-          "delta": -2,
-          "direction": "down",
-          "sentiment": "good"
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "bad"
         }
       }
     }
