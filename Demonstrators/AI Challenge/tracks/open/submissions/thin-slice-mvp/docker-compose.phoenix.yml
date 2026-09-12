@@ -1,0 +1,13 @@
+services:
+  phoenix:
+    image: arizephoenix/phoenix:version-19.10.0
+    ports:
+      - "6006:6006"
+      - "4317:4317"
+    environment:
+      PHOENIX_WORKING_DIR: /data
+    volumes:
+      - phoenix-data:/data
+
+volumes:
+  phoenix-data:
