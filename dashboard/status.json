@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-11T06:04:13.276944+00:00",
+  "generatedAt": "2026-09-12T06:04:13.789782+00:00",
   "repos": [
     {
       "key": "root",
@@ -9,23 +9,29 @@
       "url": "https://github.com/eclipse-xfsc/facis",
       "exists": true,
       "health": "yellow",
-      "lastCommitDate": "2026-09-10T06:04:56Z",
+      "lastCommitDate": "2026-09-11T06:04:13Z",
       "daysSinceLastCommit": 0,
       "contributorCount": 11,
       "ciLastRunStatus": "pending",
-      "ciLastRunAt": "2026-09-11T06:03:37Z",
+      "ciLastRunAt": "2026-09-12T06:03:23Z",
       "currentlyFailingWorkflows": [],
-      "ciRecentFailureCount": 3,
+      "ciRecentFailureCount": 4,
       "ciFailuresByDay": [
         0,
         0,
-        0,
+        1,
         1,
         1,
         1,
         0
       ],
       "failedRuns": [
+        {
+          "workflowName": "Federation Dashboard",
+          "branch": "main",
+          "date": "2026-09-11T06:03:37Z",
+          "url": "https://github.com/eclipse-xfsc/facis/actions/runs/34568361799"
+        },
         {
           "workflowName": "Federation Dashboard",
           "branch": "main",
@@ -72,8 +78,8 @@
           "sentiment": "bad"
         },
         "ciRecentFailureCount": {
-          "previous": 2,
-          "current": 3,
+          "previous": 3,
+          "current": 4,
           "delta": 1,
           "direction": "up",
           "sentiment": "bad"
@@ -89,7 +95,7 @@
       "exists": true,
       "health": "red",
       "lastCommitDate": "2026-08-19T13:10:10Z",
-      "daysSinceLastCommit": 22,
+      "daysSinceLastCommit": 23,
       "contributorCount": 12,
       "ciLastRunStatus": "failure",
       "ciLastRunAt": "2026-09-01T00:59:13Z",
@@ -149,7 +155,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-08-03T17:00:52Z",
-      "daysSinceLastCommit": 38,
+      "daysSinceLastCommit": 39,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-01T19:35:09Z",
@@ -209,7 +215,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-07-31T08:21:27Z",
-      "daysSinceLastCommit": 41,
+      "daysSinceLastCommit": 42,
       "contributorCount": 7,
       "ciLastRunStatus": "startup_failure",
       "ciLastRunAt": "2026-09-01T00:47:34Z",
@@ -269,7 +275,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-06-08T11:05:16Z",
-      "daysSinceLastCommit": 94,
+      "daysSinceLastCommit": 95,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-06-08T11:05:18Z",
@@ -329,7 +335,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-04-13T11:43:50Z",
-      "daysSinceLastCommit": 150,
+      "daysSinceLastCommit": 151,
       "contributorCount": 2,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-04-13T11:43:52Z",
@@ -389,7 +395,7 @@
       "exists": true,
       "health": "yellow",
       "lastCommitDate": "2026-03-18T21:15:31Z",
-      "daysSinceLastCommit": 176,
+      "daysSinceLastCommit": 177,
       "contributorCount": 1,
       "ciLastRunStatus": null,
       "ciLastRunAt": null,
@@ -449,7 +455,7 @@
       "exists": true,
       "health": "yellow",
       "lastCommitDate": "2026-07-31T11:06:02Z",
-      "daysSinceLastCommit": 41,
+      "daysSinceLastCommit": 42,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-26T10:15:00Z",
@@ -507,63 +513,54 @@
       "repo": "federated-catalogue",
       "url": "https://github.com/eclipse-xfsc/federated-catalogue",
       "exists": true,
-      "health": "yellow",
-      "lastCommitDate": "2026-09-09T18:55:52Z",
-      "daysSinceLastCommit": 1,
+      "health": "red",
+      "lastCommitDate": "2026-09-11T09:53:57Z",
+      "daysSinceLastCommit": 0,
       "contributorCount": 13,
-      "ciLastRunStatus": "success",
-      "ciLastRunAt": "2026-09-10T12:26:54Z",
-      "currentlyFailingWorkflows": [],
-      "ciRecentFailureCount": 6,
+      "ciLastRunStatus": "failure",
+      "ciLastRunAt": "2026-09-11T12:35:52Z",
+      "currentlyFailingWorkflows": [
+        "Maven Build & Test",
+        "Build and Push Docker Images"
+      ],
+      "ciRecentFailureCount": 4,
       "ciFailuresByDay": [
         0,
         0,
         0,
         0,
-        6,
         0,
+        4,
         0
       ],
       "failedRuns": [
         {
           "workflowName": "Maven Build & Test",
-          "branch": "main",
-          "date": "2026-09-09T13:18:43Z",
-          "url": "https://github.com/eclipse-xfsc/federated-catalogue/actions/runs/34356271623"
+          "branch": "feature/NF-11-license-headers-and-contributing",
+          "date": "2026-09-11T12:35:52Z",
+          "url": "https://github.com/eclipse-xfsc/federated-catalogue/actions/runs/34599739603"
         },
         {
           "workflowName": "Build and Push Docker Images",
-          "branch": "main",
-          "date": "2026-09-09T13:18:43Z",
-          "url": "https://github.com/eclipse-xfsc/federated-catalogue/actions/runs/34356270956"
+          "branch": "feature/NF-11-license-headers-and-contributing",
+          "date": "2026-09-11T12:35:51Z",
+          "url": "https://github.com/eclipse-xfsc/federated-catalogue/actions/runs/34599738889"
         },
         {
           "workflowName": "Maven Build & Test",
-          "branch": "main",
-          "date": "2026-09-09T13:18:08Z",
-          "url": "https://github.com/eclipse-xfsc/federated-catalogue/actions/runs/34356213837"
-        },
-        {
-          "workflowName": "Build and Push Docker Images",
-          "branch": "main",
-          "date": "2026-09-09T13:18:07Z",
-          "url": "https://github.com/eclipse-xfsc/federated-catalogue/actions/runs/34356213151"
+          "branch": "feature/NF-11-license-headers-and-contributing",
+          "date": "2026-09-11T07:53:09Z",
+          "url": "https://github.com/eclipse-xfsc/federated-catalogue/actions/runs/34576488033"
         },
         {
           "workflowName": "Maven Build & Test",
-          "branch": "main",
-          "date": "2026-09-09T13:16:31Z",
-          "url": "https://github.com/eclipse-xfsc/federated-catalogue/actions/runs/34356044782"
-        },
-        {
-          "workflowName": "Build and Push Docker Images",
-          "branch": "main",
-          "date": "2026-09-09T13:16:30Z",
-          "url": "https://github.com/eclipse-xfsc/federated-catalogue/actions/runs/34356044052"
+          "branch": "feature/CAT-FR-CO-05_json-schema-on-jsonld",
+          "date": "2026-09-11T07:35:24Z",
+          "url": "https://github.com/eclipse-xfsc/federated-catalogue/actions/runs/34575091237"
         }
       ],
       "openIssueCount": 21,
-      "openHumanPRCount": 8,
+      "openHumanPRCount": 5,
       "needsReviewPRCount": 1,
       "releaseCount": 1,
       "latestRelease": "qa-ready-2026-07-15",
@@ -590,10 +587,10 @@
         },
         "ciRecentFailureCount": {
           "previous": 6,
-          "current": 6,
-          "delta": 0,
-          "direction": "stable",
-          "sentiment": "bad"
+          "current": 4,
+          "delta": -2,
+          "direction": "down",
+          "sentiment": "good"
         }
       }
     }
