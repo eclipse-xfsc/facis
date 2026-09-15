@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-14T06:05:21.549745+00:00",
+  "generatedAt": "2026-09-15T06:04:43.411182+00:00",
   "repos": [
     {
       "key": "root",
@@ -9,11 +9,11 @@
       "url": "https://github.com/eclipse-xfsc/facis",
       "exists": true,
       "health": "yellow",
-      "lastCommitDate": "2026-09-13T06:05:16Z",
+      "lastCommitDate": "2026-09-14T06:05:21Z",
       "daysSinceLastCommit": 0,
       "contributorCount": 11,
       "ciLastRunStatus": "pending",
-      "ciLastRunAt": "2026-09-14T06:04:45Z",
+      "ciLastRunAt": "2026-09-15T06:04:03Z",
       "currentlyFailingWorkflows": [],
       "ciRecentFailureCount": 6,
       "ciFailuresByDay": [
@@ -26,6 +26,12 @@
         0
       ],
       "failedRuns": [
+        {
+          "workflowName": "Federation Dashboard",
+          "branch": "main",
+          "date": "2026-09-14T06:04:45Z",
+          "url": "https://github.com/eclipse-xfsc/facis/actions/runs/34811950642"
+        },
         {
           "workflowName": "Federation Dashboard",
           "branch": "main",
@@ -55,12 +61,6 @@
           "branch": "main",
           "date": "2026-09-09T06:03:43Z",
           "url": "https://github.com/eclipse-xfsc/facis/actions/runs/34317413768"
-        },
-        {
-          "workflowName": "Federation Dashboard",
-          "branch": "main",
-          "date": "2026-09-08T06:03:46Z",
-          "url": "https://github.com/eclipse-xfsc/facis/actions/runs/34193064166"
         }
       ],
       "openIssueCount": 1,
@@ -90,10 +90,10 @@
           "sentiment": "bad"
         },
         "ciRecentFailureCount": {
-          "previous": 5,
+          "previous": 6,
           "current": 6,
-          "delta": 1,
-          "direction": "up",
+          "delta": 0,
+          "direction": "stable",
           "sentiment": "bad"
         }
       }
@@ -107,7 +107,7 @@
       "exists": true,
       "health": "red",
       "lastCommitDate": "2026-08-19T13:10:10Z",
-      "daysSinceLastCommit": 25,
+      "daysSinceLastCommit": 26,
       "contributorCount": 12,
       "ciLastRunStatus": "failure",
       "ciLastRunAt": "2026-09-01T00:59:13Z",
@@ -167,7 +167,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-08-03T17:00:52Z",
-      "daysSinceLastCommit": 41,
+      "daysSinceLastCommit": 42,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-01T19:35:09Z",
@@ -227,7 +227,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-07-31T08:21:27Z",
-      "daysSinceLastCommit": 44,
+      "daysSinceLastCommit": 45,
       "contributorCount": 7,
       "ciLastRunStatus": "startup_failure",
       "ciLastRunAt": "2026-09-01T00:47:34Z",
@@ -287,7 +287,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-06-08T11:05:16Z",
-      "daysSinceLastCommit": 97,
+      "daysSinceLastCommit": 98,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-06-08T11:05:18Z",
@@ -347,7 +347,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-04-13T11:43:50Z",
-      "daysSinceLastCommit": 153,
+      "daysSinceLastCommit": 154,
       "contributorCount": 2,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-04-13T11:43:52Z",
@@ -407,7 +407,7 @@
       "exists": true,
       "health": "yellow",
       "lastCommitDate": "2026-03-18T21:15:31Z",
-      "daysSinceLastCommit": 179,
+      "daysSinceLastCommit": 180,
       "contributorCount": 1,
       "ciLastRunStatus": null,
       "ciLastRunAt": null,
@@ -467,7 +467,7 @@
       "exists": true,
       "health": "yellow",
       "lastCommitDate": "2026-07-31T11:06:02Z",
-      "daysSinceLastCommit": 44,
+      "daysSinceLastCommit": 45,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-26T10:15:00Z",
@@ -526,23 +526,31 @@
       "url": "https://github.com/eclipse-xfsc/federated-catalogue",
       "exists": true,
       "health": "red",
-      "lastCommitDate": "2026-09-11T09:53:57Z",
-      "daysSinceLastCommit": 2,
+      "lastCommitDate": "2026-09-14T15:31:04Z",
+      "daysSinceLastCommit": 0,
       "contributorCount": 13,
-      "ciLastRunStatus": "failure",
-      "ciLastRunAt": "2026-09-11T12:35:52Z",
-      "currentlyFailingWorkflows": [],
-      "ciRecentFailureCount": 4,
+      "ciLastRunStatus": "success",
+      "ciLastRunAt": "2026-09-14T21:55:05Z",
+      "currentlyFailingWorkflows": [
+        "Security Scan (OSV + Grype)"
+      ],
+      "ciRecentFailureCount": 3,
       "ciFailuresByDay": [
         0,
         0,
+        2,
         0,
-        4,
         0,
-        0,
+        1,
         0
       ],
       "failedRuns": [
+        {
+          "workflowName": "Security Scan (OSV + Grype)",
+          "branch": "main",
+          "date": "2026-09-14T15:41:49Z",
+          "url": "https://github.com/eclipse-xfsc/federated-catalogue/actions/runs/34863852801"
+        },
         {
           "workflowName": "Maven Build & Test",
           "branch": "feature/NF-11-license-headers-and-contributing",
@@ -554,23 +562,11 @@
           "branch": "feature/NF-11-license-headers-and-contributing",
           "date": "2026-09-11T12:35:51Z",
           "url": "https://github.com/eclipse-xfsc/federated-catalogue/actions/runs/34599738889"
-        },
-        {
-          "workflowName": "Maven Build & Test",
-          "branch": "feature/NF-11-license-headers-and-contributing",
-          "date": "2026-09-11T07:53:09Z",
-          "url": "https://github.com/eclipse-xfsc/federated-catalogue/actions/runs/34576488033"
-        },
-        {
-          "workflowName": "Maven Build & Test",
-          "branch": "feature/CAT-FR-CO-05_json-schema-on-jsonld",
-          "date": "2026-09-11T07:35:24Z",
-          "url": "https://github.com/eclipse-xfsc/federated-catalogue/actions/runs/34575091237"
         }
       ],
       "openIssueCount": 21,
-      "openHumanPRCount": 5,
-      "needsReviewPRCount": 1,
+      "openHumanPRCount": 4,
+      "needsReviewPRCount": 2,
       "releaseCount": 1,
       "latestRelease": "qa-ready-2026-07-15",
       "governanceScore": 3,
@@ -596,10 +592,10 @@
         },
         "ciRecentFailureCount": {
           "previous": 4,
-          "current": 4,
-          "delta": 0,
-          "direction": "stable",
-          "sentiment": "bad"
+          "current": 3,
+          "delta": -1,
+          "direction": "down",
+          "sentiment": "good"
         }
       }
     }
