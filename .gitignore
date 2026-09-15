@@ -3,4 +3,5 @@
 .DS_Store
 .idea
 .vscode
+.venv/
 DCS/implementation/backend/gen
