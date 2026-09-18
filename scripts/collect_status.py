@@ -291,7 +291,7 @@ def main():
         "generatedAt": datetime.now(timezone.utc).isoformat(),
         "repos": results,
     }
-    os.makedirs("docs", exist_ok=True)
+
     with open(STATUS_PATH, "w") as f:
         json.dump(output, f, indent=2)
     print(f"Wrote {STATUS_PATH} with {len(results)} repos")
