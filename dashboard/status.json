@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-18T06:04:13.715517+00:00",
+  "generatedAt": "2026-09-19T05:15:10.648793+00:00",
   "repos": [
     {
       "key": "root",
@@ -9,15 +9,15 @@
       "url": "https://github.com/eclipse-xfsc/facis",
       "exists": true,
       "health": "yellow",
-      "lastCommitDate": "2026-09-17T06:04:23Z",
+      "lastCommitDate": "2026-09-18T10:00:27Z",
       "daysSinceLastCommit": 0,
       "contributorCount": 11,
       "ciLastRunStatus": "pending",
-      "ciLastRunAt": "2026-09-18T06:03:38Z",
+      "ciLastRunAt": "2026-09-19T05:14:19Z",
       "currentlyFailingWorkflows": [],
-      "ciRecentFailureCount": 6,
+      "ciRecentFailureCount": 7,
       "ciFailuresByDay": [
-        1,
+        2,
         1,
         1,
         1,
@@ -26,6 +26,12 @@
         0
       ],
       "failedRuns": [
+        {
+          "workflowName": "Federation Dashboard",
+          "branch": "main",
+          "date": "2026-09-18T06:03:38Z",
+          "url": "https://github.com/eclipse-xfsc/facis/actions/runs/35313282187"
+        },
         {
           "workflowName": "Federation Dashboard",
           "branch": "main",
@@ -64,7 +70,7 @@
         }
       ],
       "openIssueCount": 1,
-      "openHumanPRCount": 3,
+      "openHumanPRCount": 2,
       "needsReviewPRCount": 0,
       "releaseCount": 0,
       "latestRelease": null,
@@ -90,11 +96,11 @@
           "sentiment": "bad"
         },
         "ciRecentFailureCount": {
-          "previous": 7,
-          "current": 6,
-          "delta": -1,
-          "direction": "down",
-          "sentiment": "good"
+          "previous": 6,
+          "current": 7,
+          "delta": 1,
+          "direction": "up",
+          "sentiment": "bad"
         }
       }
     },
@@ -107,7 +113,7 @@
       "exists": true,
       "health": "red",
       "lastCommitDate": "2026-08-19T13:10:10Z",
-      "daysSinceLastCommit": 29,
+      "daysSinceLastCommit": 30,
       "contributorCount": 12,
       "ciLastRunStatus": "failure",
       "ciLastRunAt": "2026-09-01T00:59:13Z",
@@ -167,7 +173,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-08-03T17:00:52Z",
-      "daysSinceLastCommit": 45,
+      "daysSinceLastCommit": 46,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-01T19:35:09Z",
@@ -227,7 +233,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-07-31T08:21:27Z",
-      "daysSinceLastCommit": 48,
+      "daysSinceLastCommit": 49,
       "contributorCount": 7,
       "ciLastRunStatus": "startup_failure",
       "ciLastRunAt": "2026-09-01T00:47:34Z",
@@ -287,7 +293,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-06-08T11:05:16Z",
-      "daysSinceLastCommit": 101,
+      "daysSinceLastCommit": 102,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-06-08T11:05:18Z",
@@ -347,7 +353,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-04-13T11:43:50Z",
-      "daysSinceLastCommit": 157,
+      "daysSinceLastCommit": 158,
       "contributorCount": 2,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-04-13T11:43:52Z",
@@ -407,7 +413,7 @@
       "exists": true,
       "health": "yellow",
       "lastCommitDate": "2026-03-18T21:15:31Z",
-      "daysSinceLastCommit": 183,
+      "daysSinceLastCommit": 184,
       "contributorCount": 1,
       "ciLastRunStatus": null,
       "ciLastRunAt": null,
@@ -467,7 +473,7 @@
       "exists": true,
       "health": "yellow",
       "lastCommitDate": "2026-07-31T11:06:02Z",
-      "daysSinceLastCommit": 48,
+      "daysSinceLastCommit": 49,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-26T10:15:00Z",
@@ -526,17 +532,17 @@
       "url": "https://github.com/eclipse-xfsc/federated-catalogue",
       "exists": true,
       "health": "green",
-      "lastCommitDate": "2026-09-15T12:03:06Z",
-      "daysSinceLastCommit": 2,
+      "lastCommitDate": "2026-09-18T06:47:22Z",
+      "daysSinceLastCommit": 0,
       "contributorCount": 13,
       "ciLastRunStatus": "success",
-      "ciLastRunAt": "2026-09-15T21:08:01Z",
+      "ciLastRunAt": "2026-09-18T06:47:26Z",
       "currentlyFailingWorkflows": [],
       "ciRecentFailureCount": 1,
       "ciFailuresByDay": [
         0,
-        0,
         1,
+        0,
         0,
         0,
         0,
@@ -551,7 +557,7 @@
         }
       ],
       "openIssueCount": 21,
-      "openHumanPRCount": 5,
+      "openHumanPRCount": 4,
       "needsReviewPRCount": 0,
       "releaseCount": 1,
       "latestRelease": "qa-ready-2026-07-15",
