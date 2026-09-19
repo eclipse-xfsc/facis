@@ -1,0 +1,595 @@
+{
+  "generatedAt": "2026-09-19T05:15:10.648793+00:00",
+  "repos": [
+    {
+      "key": "root",
+      "label": "FACIS",
+      "owner": "eclipse-xfsc",
+      "repo": "facis",
+      "url": "https://github.com/eclipse-xfsc/facis",
+      "exists": true,
+      "health": "yellow",
+      "lastCommitDate": "2026-09-18T10:00:27Z",
+      "daysSinceLastCommit": 0,
+      "contributorCount": 11,
+      "ciLastRunStatus": "pending",
+      "ciLastRunAt": "2026-09-19T05:14:19Z",
+      "currentlyFailingWorkflows": [],
+      "ciRecentFailureCount": 7,
+      "ciFailuresByDay": [
+        2,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "failedRuns": [
+        {
+          "workflowName": "Federation Dashboard",
+          "branch": "main",
+          "date": "2026-09-18T06:03:38Z",
+          "url": "https://github.com/eclipse-xfsc/facis/actions/runs/35313282187"
+        },
+        {
+          "workflowName": "Federation Dashboard",
+          "branch": "main",
+          "date": "2026-09-17T06:03:45Z",
+          "url": "https://github.com/eclipse-xfsc/facis/actions/runs/35188219206"
+        },
+        {
+          "workflowName": "Federation Dashboard",
+          "branch": "main",
+          "date": "2026-09-16T06:03:42Z",
+          "url": "https://github.com/eclipse-xfsc/facis/actions/runs/35062044888"
+        },
+        {
+          "workflowName": "Federation Dashboard",
+          "branch": "main",
+          "date": "2026-09-15T06:04:03Z",
+          "url": "https://github.com/eclipse-xfsc/facis/actions/runs/34935310269"
+        },
+        {
+          "workflowName": "Federation Dashboard",
+          "branch": "main",
+          "date": "2026-09-14T06:04:45Z",
+          "url": "https://github.com/eclipse-xfsc/facis/actions/runs/34811950642"
+        },
+        {
+          "workflowName": "Federation Dashboard",
+          "branch": "main",
+          "date": "2026-09-13T06:04:28Z",
+          "url": "https://github.com/eclipse-xfsc/facis/actions/runs/34741852597"
+        },
+        {
+          "workflowName": "Federation Dashboard",
+          "branch": "main",
+          "date": "2026-09-12T06:03:23Z",
+          "url": "https://github.com/eclipse-xfsc/facis/actions/runs/34677141141"
+        }
+      ],
+      "openIssueCount": 1,
+      "openHumanPRCount": 2,
+      "needsReviewPRCount": 0,
+      "releaseCount": 0,
+      "latestRelease": null,
+      "governanceScore": 3,
+      "governanceFiles": {
+        "license": true,
+        "contributing": true,
+        "readme": true
+      },
+      "trends": {
+        "contributorCount": {
+          "previous": 11,
+          "current": 11,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "openIssueCount": {
+          "previous": 1,
+          "current": 1,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "bad"
+        },
+        "ciRecentFailureCount": {
+          "previous": 6,
+          "current": 7,
+          "delta": 1,
+          "direction": "up",
+          "sentiment": "bad"
+        }
+      }
+    },
+    {
+      "key": "dcs",
+      "label": "DCS",
+      "owner": "eclipse-xfsc",
+      "repo": "facis-dcs",
+      "url": "https://github.com/eclipse-xfsc/facis-dcs",
+      "exists": true,
+      "health": "red",
+      "lastCommitDate": "2026-08-19T13:10:10Z",
+      "daysSinceLastCommit": 30,
+      "contributorCount": 12,
+      "ciLastRunStatus": "failure",
+      "ciLastRunAt": "2026-09-01T00:59:13Z",
+      "currentlyFailingWorkflows": [],
+      "ciRecentFailureCount": 0,
+      "ciFailuresByDay": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "failedRuns": [],
+      "openIssueCount": 0,
+      "openHumanPRCount": 1,
+      "needsReviewPRCount": 0,
+      "releaseCount": 1,
+      "latestRelease": "qa-ready-2026-08-24",
+      "governanceScore": 3,
+      "governanceFiles": {
+        "license": true,
+        "contributing": true,
+        "readme": true
+      },
+      "trends": {
+        "contributorCount": {
+          "previous": 12,
+          "current": 12,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "openIssueCount": {
+          "previous": 0,
+          "current": 0,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "ciRecentFailureCount": {
+          "previous": 0,
+          "current": 0,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        }
+      }
+    },
+    {
+      "key": "dcm",
+      "label": "DCM",
+      "owner": "eclipse-xfsc",
+      "repo": "facis-fap-decentralized-catalogue-management",
+      "url": "https://github.com/eclipse-xfsc/facis-fap-decentralized-catalogue-management",
+      "exists": true,
+      "health": "green",
+      "lastCommitDate": "2026-08-03T17:00:52Z",
+      "daysSinceLastCommit": 46,
+      "contributorCount": 4,
+      "ciLastRunStatus": "success",
+      "ciLastRunAt": "2026-07-01T19:35:09Z",
+      "currentlyFailingWorkflows": [],
+      "ciRecentFailureCount": 0,
+      "ciFailuresByDay": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "failedRuns": [],
+      "openIssueCount": 5,
+      "openHumanPRCount": 0,
+      "needsReviewPRCount": 0,
+      "releaseCount": 0,
+      "latestRelease": null,
+      "governanceScore": 3,
+      "governanceFiles": {
+        "license": true,
+        "contributing": true,
+        "readme": true
+      },
+      "trends": {
+        "contributorCount": {
+          "previous": 4,
+          "current": 4,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "openIssueCount": {
+          "previous": 5,
+          "current": 5,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "bad"
+        },
+        "ciRecentFailureCount": {
+          "previous": 0,
+          "current": 0,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        }
+      }
+    },
+    {
+      "key": "iot-ai",
+      "label": "IoT & AI",
+      "owner": "eclipse-xfsc",
+      "repo": "facis-fap-iot-ai",
+      "url": "https://github.com/eclipse-xfsc/facis-fap-iot-ai",
+      "exists": true,
+      "health": "green",
+      "lastCommitDate": "2026-07-31T08:21:27Z",
+      "daysSinceLastCommit": 49,
+      "contributorCount": 7,
+      "ciLastRunStatus": "startup_failure",
+      "ciLastRunAt": "2026-09-01T00:47:34Z",
+      "currentlyFailingWorkflows": [],
+      "ciRecentFailureCount": 0,
+      "ciFailuresByDay": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "failedRuns": [],
+      "openIssueCount": 0,
+      "openHumanPRCount": 0,
+      "needsReviewPRCount": 0,
+      "releaseCount": 0,
+      "latestRelease": null,
+      "governanceScore": 3,
+      "governanceFiles": {
+        "license": true,
+        "contributing": true,
+        "readme": true
+      },
+      "trends": {
+        "contributorCount": {
+          "previous": 7,
+          "current": 7,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "openIssueCount": {
+          "previous": 0,
+          "current": 0,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "ciRecentFailureCount": {
+          "previous": 0,
+          "current": 0,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        }
+      }
+    },
+    {
+      "key": "partner-onboarding",
+      "label": "Partner Onboarding",
+      "owner": "eclipse-xfsc",
+      "repo": "facis-fap-partner-onboarding",
+      "url": "https://github.com/eclipse-xfsc/facis-fap-partner-onboarding",
+      "exists": true,
+      "health": "green",
+      "lastCommitDate": "2026-06-08T11:05:16Z",
+      "daysSinceLastCommit": 102,
+      "contributorCount": 4,
+      "ciLastRunStatus": "success",
+      "ciLastRunAt": "2026-06-08T11:05:18Z",
+      "currentlyFailingWorkflows": [],
+      "ciRecentFailureCount": 0,
+      "ciFailuresByDay": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "failedRuns": [],
+      "openIssueCount": 0,
+      "openHumanPRCount": 0,
+      "needsReviewPRCount": 0,
+      "releaseCount": 0,
+      "latestRelease": null,
+      "governanceScore": 3,
+      "governanceFiles": {
+        "license": true,
+        "contributing": true,
+        "readme": true
+      },
+      "trends": {
+        "contributorCount": {
+          "previous": 4,
+          "current": 4,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "openIssueCount": {
+          "previous": 0,
+          "current": 0,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "ciRecentFailureCount": {
+          "previous": 0,
+          "current": 0,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        }
+      }
+    },
+    {
+      "key": "aviation-poc",
+      "label": "Aviation PoC",
+      "owner": "eclipse-xfsc",
+      "repo": "facis-poc-federation-aviation",
+      "url": "https://github.com/eclipse-xfsc/facis-poc-federation-aviation",
+      "exists": true,
+      "health": "green",
+      "lastCommitDate": "2026-04-13T11:43:50Z",
+      "daysSinceLastCommit": 158,
+      "contributorCount": 2,
+      "ciLastRunStatus": "success",
+      "ciLastRunAt": "2026-04-13T11:43:52Z",
+      "currentlyFailingWorkflows": [],
+      "ciRecentFailureCount": 0,
+      "ciFailuresByDay": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "failedRuns": [],
+      "openIssueCount": 0,
+      "openHumanPRCount": 0,
+      "needsReviewPRCount": 0,
+      "releaseCount": 0,
+      "latestRelease": null,
+      "governanceScore": 3,
+      "governanceFiles": {
+        "license": true,
+        "contributing": true,
+        "readme": true
+      },
+      "trends": {
+        "contributorCount": {
+          "previous": 2,
+          "current": 2,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "openIssueCount": {
+          "previous": 0,
+          "current": 0,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "ciRecentFailureCount": {
+          "previous": 0,
+          "current": 0,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        }
+      }
+    },
+    {
+      "key": "credential-issuance",
+      "label": "Principal Credential Issuance",
+      "owner": "eclipse-xfsc",
+      "repo": "facis-fap-principal-credential-issuance",
+      "url": "https://github.com/eclipse-xfsc/facis-fap-principal-credential-issuance",
+      "exists": true,
+      "health": "yellow",
+      "lastCommitDate": "2026-03-18T21:15:31Z",
+      "daysSinceLastCommit": 184,
+      "contributorCount": 1,
+      "ciLastRunStatus": null,
+      "ciLastRunAt": null,
+      "currentlyFailingWorkflows": [],
+      "ciRecentFailureCount": 0,
+      "ciFailuresByDay": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "failedRuns": [],
+      "openIssueCount": 0,
+      "openHumanPRCount": 0,
+      "needsReviewPRCount": 0,
+      "releaseCount": 0,
+      "latestRelease": null,
+      "governanceScore": 2,
+      "governanceFiles": {
+        "license": false,
+        "contributing": true,
+        "readme": true
+      },
+      "trends": {
+        "contributorCount": {
+          "previous": 1,
+          "current": 1,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "openIssueCount": {
+          "previous": 0,
+          "current": 0,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "ciRecentFailureCount": {
+          "previous": 0,
+          "current": 0,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        }
+      }
+    },
+    {
+      "key": "smart-deployment",
+      "label": "ESB",
+      "owner": "eclipse-xfsc",
+      "repo": "smartdeployment",
+      "url": "https://github.com/eclipse-xfsc/smartdeployment",
+      "exists": true,
+      "health": "yellow",
+      "lastCommitDate": "2026-07-31T11:06:02Z",
+      "daysSinceLastCommit": 49,
+      "contributorCount": 4,
+      "ciLastRunStatus": "success",
+      "ciLastRunAt": "2026-07-26T10:15:00Z",
+      "currentlyFailingWorkflows": [],
+      "ciRecentFailureCount": 0,
+      "ciFailuresByDay": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "failedRuns": [],
+      "openIssueCount": 0,
+      "openHumanPRCount": 3,
+      "needsReviewPRCount": 0,
+      "releaseCount": 0,
+      "latestRelease": null,
+      "governanceScore": 2,
+      "governanceFiles": {
+        "license": false,
+        "contributing": true,
+        "readme": true
+      },
+      "trends": {
+        "contributorCount": {
+          "previous": 4,
+          "current": 4,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "openIssueCount": {
+          "previous": 0,
+          "current": 0,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "ciRecentFailureCount": {
+          "previous": 0,
+          "current": 0,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        }
+      }
+    },
+    {
+      "key": "federated-catalogue",
+      "label": "Federated Catalogue",
+      "owner": "eclipse-xfsc",
+      "repo": "federated-catalogue",
+      "url": "https://github.com/eclipse-xfsc/federated-catalogue",
+      "exists": true,
+      "health": "green",
+      "lastCommitDate": "2026-09-18T06:47:22Z",
+      "daysSinceLastCommit": 0,
+      "contributorCount": 13,
+      "ciLastRunStatus": "success",
+      "ciLastRunAt": "2026-09-18T06:47:26Z",
+      "currentlyFailingWorkflows": [],
+      "ciRecentFailureCount": 1,
+      "ciFailuresByDay": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "failedRuns": [
+        {
+          "workflowName": "Security Scan (OSV + Grype)",
+          "branch": "main",
+          "date": "2026-09-14T15:41:49Z",
+          "url": "https://github.com/eclipse-xfsc/federated-catalogue/actions/runs/34863852801"
+        }
+      ],
+      "openIssueCount": 21,
+      "openHumanPRCount": 4,
+      "needsReviewPRCount": 0,
+      "releaseCount": 1,
+      "latestRelease": "qa-ready-2026-07-15",
+      "governanceScore": 3,
+      "governanceFiles": {
+        "license": true,
+        "contributing": true,
+        "readme": true
+      },
+      "trends": {
+        "contributorCount": {
+          "previous": 13,
+          "current": 13,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "openIssueCount": {
+          "previous": 21,
+          "current": 21,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "bad"
+        },
+        "ciRecentFailureCount": {
+          "previous": 1,
+          "current": 1,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "bad"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+:root { --bg: #f5f6f8; --fg: #1a1d24; --card-bg: #ffffff; --muted: #6b7280; --border: #e2e4e9; --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06); }
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0b0d12; --fg: #e6e6e6; --card-bg: #161a22; --muted: #9aa0a8; --border: #262b35; --shadow: 0 2px 8px rgba(0,0,0,0.45); }
+}
+* { box-sizing: border-box; }
+body { font-family: system-ui, sans-serif; margin: 0; padding: 1.5rem; background: var(--bg); color: var(--fg); }
+h1 { font-size: 1.3rem; margin: 0 0 0.2rem; }
+.meta { color: var(--muted); font-size: 0.8rem; margin-bottom: 1.2rem; }
+.page-section-title { font-size: 0.95rem; font-weight: 700; margin: 1.2rem 0 0.5rem; }
+.page-section-title:first-of-type { margin-top: 0; }
+
+.summary { display: flex; gap: 0.7rem; flex-wrap: wrap; }
+.stat { flex: 1; min-width: 110px; border-radius: 8px; padding: 0.6rem 0.8rem; background: var(--card-bg); border: 1px solid var(--border); border-top: 4px solid var(--dot); text-align: center; box-shadow: var(--shadow); }
+.stat b { display: block; font-size: 1.4rem; line-height: 1.2; }
+.stat span { font-size: 0.75rem; color: var(--muted); }
+.stat.green { --dot: #2ecc71; } .stat.yellow { --dot: #f1c40f; } .stat.red { --dot: #e74c3c; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 0.7rem; }
+.card { border-radius: 8px; padding: 0; background: var(--card-bg); border: 1px solid var(--border); border-top: 4px solid var(--dot-dark); box-shadow: var(--shadow); overflow: hidden; }
+.card.green { --dot: #2ecc71; --dot-dark: #1f9a57; }
+.card.yellow { --dot: #f1c40f; --dot-dark: #c99a0c; }
+.card.red { --dot: #e74c3c; --dot-dark: #b83327; }
+.card.unknown { --dot: #7f8c8d; --dot-dark: #5f6a6a; }
+
+.card-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.3rem 0.5rem; padding: 0.5rem 0.9rem; background: color-mix(in srgb, var(--dot-dark) 25%, var(--card-bg)); border-bottom: 1px solid var(--border); }
+.card-header-left { display: flex; align-items: center; gap: 0.4rem; min-width: 0; flex: 1 1 auto; }
+.card-icon { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--dot-dark); }
+.card-icon svg { display: block; width: 18px; height: 18px; }
+.card-header-left h2 { margin: 0; font-size: 0.95rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 3.5rem; }
+.card-header-left h2 a { color: inherit; text-decoration: none; }
+.card-header-left h2 a:hover { text-decoration: underline; }
+.card-status { display: flex; align-items: center; gap: 0.25rem; font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em; color: var(--dot-dark); white-space: nowrap; flex-shrink: 0; padding: 0.1rem 0.45rem; border: 1px solid var(--dot-dark); border-radius: 999px; }
+
+.card-body { padding: 0.7rem 0.9rem; }
+
+.section { margin-top: 0.5rem; }
+.section-title { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--fg); margin-bottom: 0.2rem; }
+.row { display: flex; justify-content: space-between; font-size: 0.8rem; margin: 0.08rem 0; }
+.row span:first-child { color: var(--muted); }
+.row b { font-weight: 600; }
+.trend { font-size: 0.72rem; margin-left: 0.3rem; }
+.trend.good { color: #1a9c53; } .trend.bad { color: #d0392b; } .trend.neutral { color: var(--muted); }
+.value-bad { color: #d0392b; }
+.stale { color: #e0a11e; }
+
+.sparkline { margin-top: 0.25rem; }
+.spark-svg { width: 100%; height: 24px; display: block; }
+
+.chart-caption { font-size: 0.6rem; color: var(--muted); margin-bottom: 0.15rem; }
+.chart-x-axis { display: flex; justify-content: space-between; font-size: 0.6rem; color: var(--muted); margin-top: 0.1rem; }
+
+.chip-row { display: flex; gap: 0.25rem; flex-wrap: wrap; margin-top: 0.15rem; }
+.chip { font-size: 0.65rem; padding: 0.05rem 0.45rem; border-radius: 999px; border: 1px solid var(--border); }
+.chip.yes { color: #1a9c53; border-color: #1a9c5355; }
+.chip.no { color: #d0392b; border-color: #d0392b55; }
+
+.alert-box { background: color-mix(in srgb, #f1c40f 12%, transparent); border: 1px solid #f1c40f55; border-radius: 6px; padding: 0.3rem 0.55rem; font-size: 0.76rem; margin-bottom: 0.4rem; }
