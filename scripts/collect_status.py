@@ -53,7 +53,14 @@ REPOS = [
         "repo": "federated-catalogue",
         "label": "Federated Catalogue",
     },
+    {
+        "key": "zero-trust-demonstrator",
+        "owner": "eclipse-xfsc",
+        "repo": "facis-zero-trust-demonstrator",
+        "label": "Zero Trust Demonstrator",
+    },
 ]
+
 
 TOKEN = os.environ.get("GITHUB_TOKEN")
 STATUS_PATH = "dashboard/status.json"

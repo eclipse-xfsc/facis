@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-28T05:18:26.200541+00:00",
+  "generatedAt": "2026-09-28T11:26:16.557074+00:00",
   "repos": [
     {
       "key": "root",
@@ -9,10 +9,10 @@
       "url": "https://github.com/eclipse-xfsc/facis",
       "exists": true,
       "health": "green",
-      "lastCommitDate": "2026-09-28T04:07:06Z",
+      "lastCommitDate": "2026-09-28T05:18:26Z",
       "daysSinceLastCommit": 0,
       "contributorCount": 11,
-      "ciLastRunStatus": "pending",
+      "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-09-28T05:17:31Z",
       "currentlyFailingWorkflows": [],
       "ciRecentFailureCount": 0,
@@ -27,7 +27,7 @@
       ],
       "failedRuns": [],
       "openIssueCount": 1,
-      "openHumanPRCount": 2,
+      "openHumanPRCount": 3,
       "needsReviewPRCount": 0,
       "releaseCount": 0,
       "latestRelease": null,
@@ -190,7 +190,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-07-31T08:21:27Z",
-      "daysSinceLastCommit": 58,
+      "daysSinceLastCommit": 59,
       "contributorCount": 7,
       "ciLastRunStatus": "startup_failure",
       "ciLastRunAt": "2026-09-01T00:47:34Z",
@@ -250,7 +250,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-06-08T11:05:16Z",
-      "daysSinceLastCommit": 111,
+      "daysSinceLastCommit": 112,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-06-08T11:05:18Z",
@@ -399,11 +399,11 @@
       },
       "trends": {
         "contributorCount": {
-          "previous": 1,
+          "previous": 2,
           "current": 2,
-          "delta": 1,
-          "direction": "up",
-          "sentiment": "good"
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
         },
         "openIssueCount": {
           "previous": 0,
@@ -430,7 +430,7 @@
       "exists": true,
       "health": "yellow",
       "lastCommitDate": "2026-07-31T11:06:02Z",
-      "daysSinceLastCommit": 58,
+      "daysSinceLastCommit": 59,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-26T10:15:00Z",
@@ -490,7 +490,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-09-18T06:47:22Z",
-      "daysSinceLastCommit": 9,
+      "daysSinceLastCommit": 10,
       "contributorCount": 13,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-09-18T06:47:26Z",
@@ -538,6 +538,153 @@
           "delta": 0,
           "direction": "stable",
           "sentiment": "neutral"
+        }
+      }
+    },
+    {
+      "key": "zero-trust-demonstrator",
+      "label": "Zero Trust Demonstrator",
+      "owner": "eclipse-xfsc",
+      "repo": "facis-zero-trust-demonstrator",
+      "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator",
+      "exists": true,
+      "health": "red",
+      "lastCommitDate": "2026-09-22T14:07:35Z",
+      "daysSinceLastCommit": 5,
+      "contributorCount": 6,
+      "ciLastRunStatus": "success",
+      "ciLastRunAt": "2026-09-28T10:14:21Z",
+      "currentlyFailingWorkflows": [
+        "Eclipse Dash licence scan (Go)"
+      ],
+      "ciRecentFailureCount": 14,
+      "ciFailuresByDay": [
+        0,
+        2,
+        11,
+        0,
+        0,
+        0,
+        1
+      ],
+      "failedRuns": [
+        {
+          "workflowName": "Eclipse Dash licence scan (Go)",
+          "branch": "feat/plane-separation-design",
+          "date": "2026-09-28T10:14:20Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/36408500478"
+        },
+        {
+          "workflowName": "CI",
+          "branch": "feat/m2-bdd-pack",
+          "date": "2026-09-24T23:26:10Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/36072710232"
+        },
+        {
+          "workflowName": "Eclipse Dash licence scan (Go)",
+          "branch": "feat/m2-bdd-pack",
+          "date": "2026-09-24T23:26:10Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/36072709530"
+        },
+        {
+          "workflowName": "CI",
+          "branch": "feat/m2-bdd-pack",
+          "date": "2026-09-24T21:20:33Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/36060848262"
+        },
+        {
+          "workflowName": "Eclipse Dash licence scan (Go)",
+          "branch": "feat/m2-bdd-pack",
+          "date": "2026-09-24T21:20:32Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/36060847382"
+        },
+        {
+          "workflowName": "CI",
+          "branch": "feat/m2-bdd-pack",
+          "date": "2026-09-24T20:53:09Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/36057865243"
+        },
+        {
+          "workflowName": "Eclipse Dash licence scan (Go)",
+          "branch": "feat/m2-bdd-pack",
+          "date": "2026-09-24T20:53:08Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/36057864363"
+        },
+        {
+          "workflowName": "CI",
+          "branch": "feat/m2-bdd-pack",
+          "date": "2026-09-24T20:35:54Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/36055948516"
+        },
+        {
+          "workflowName": "Eclipse Dash licence scan (Go)",
+          "branch": "feat/m2-bdd-pack",
+          "date": "2026-09-24T20:35:54Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/36055947811"
+        },
+        {
+          "workflowName": "CI",
+          "branch": "feat/m2-bdd-pack",
+          "date": "2026-09-24T20:33:27Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/36055670547"
+        },
+        {
+          "workflowName": "Eclipse Dash licence scan (Go)",
+          "branch": "feat/m2-bdd-pack",
+          "date": "2026-09-24T20:33:26Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/36055669504"
+        },
+        {
+          "workflowName": "Eclipse Dash licence scan (Go)",
+          "branch": "feat/m2-bdd-pack",
+          "date": "2026-09-24T07:27:38Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/35969725523"
+        },
+        {
+          "workflowName": "Eclipse Dash licence scan (Go)",
+          "branch": "feat/fztd-169-lifecycle-bdd",
+          "date": "2026-09-23T19:07:13Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/35907164580"
+        },
+        {
+          "workflowName": "Eclipse Dash licence scan (Go)",
+          "branch": "feat/attestation-contracts-and-determinism",
+          "date": "2026-09-23T16:29:22Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/35889091120"
+        }
+      ],
+      "openIssueCount": 0,
+      "openHumanPRCount": 4,
+      "needsReviewPRCount": 2,
+      "releaseCount": 0,
+      "latestRelease": null,
+      "governanceScore": 3,
+      "governanceFiles": {
+        "license": true,
+        "contributing": true,
+        "readme": true
+      },
+      "trends": {
+        "contributorCount": {
+          "previous": 6,
+          "current": 6,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "openIssueCount": {
+          "previous": 0,
+          "current": 0,
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
+        },
+        "ciRecentFailureCount": {
+          "previous": 13,
+          "current": 14,
+          "delta": 1,
+          "direction": "up",
+          "sentiment": "bad"
         }
       }
     }
