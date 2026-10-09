@@ -6,4 +6,6 @@ The two trust zones a interconnected via a Trust Management Infrastructure (TRAI
 The Identity Credential Access Management (ICAM ) is based on Self Sovereign Identity (SSI) Principles to build community federations. 
 In general it is a group of participants who agree on a set of governance rules for data exchange, without the need of being member of any legal construct. It's a group of loosely coupled actors which interact to each other. Actually they just need a set of governance rules and similar technology to trust each other which is a good fit for zero trust combined with SSI concepts and the triangle of trust.
 
-
+The specification for Zero Trust Demonstrators is available in : 
+- [Markdown Version](https://github.com/Jessia2597/facis/blob/main/Demonstrators/Zero%20Trust%20Demonstrators/specification/README.md)
+- [PDF Version](https://github.com/Jessia2597/facis/blob/main/Demonstrators/Zero%20Trust%20Demonstrators/specification/ZTD_Software_Requirements_Specification.pdf)
