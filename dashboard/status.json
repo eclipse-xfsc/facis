@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-21T05:15:37.925180+00:00",
+  "generatedAt": "2026-10-22T05:16:01.812212+00:00",
   "repos": [
     {
       "key": "root",
@@ -9,11 +9,11 @@
       "url": "https://github.com/eclipse-xfsc/facis",
       "exists": true,
       "health": "green",
-      "lastCommitDate": "2026-10-21T04:05:55Z",
+      "lastCommitDate": "2026-10-21T05:15:38Z",
       "daysSinceLastCommit": 0,
       "contributorCount": 11,
       "ciLastRunStatus": "pending",
-      "ciLastRunAt": "2026-10-21T05:14:42Z",
+      "ciLastRunAt": "2026-10-22T05:15:21Z",
       "currentlyFailingWorkflows": [],
       "ciRecentFailureCount": 0,
       "ciFailuresByDay": [
@@ -70,7 +70,7 @@
       "exists": true,
       "health": "red",
       "lastCommitDate": "2026-10-13T17:02:48Z",
-      "daysSinceLastCommit": 7,
+      "daysSinceLastCommit": 8,
       "contributorCount": 12,
       "ciLastRunStatus": "failure",
       "ciLastRunAt": "2026-10-13T17:03:00Z",
@@ -113,11 +113,11 @@
           "sentiment": "neutral"
         },
         "ciRecentFailureCount": {
-          "previous": 4,
+          "previous": 0,
           "current": 0,
-          "delta": -4,
-          "direction": "down",
-          "sentiment": "good"
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
         }
       }
     },
@@ -130,7 +130,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-08-03T17:00:52Z",
-      "daysSinceLastCommit": 78,
+      "daysSinceLastCommit": 79,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-01T19:35:09Z",
@@ -190,7 +190,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-07-31T08:21:27Z",
-      "daysSinceLastCommit": 81,
+      "daysSinceLastCommit": 82,
       "contributorCount": 7,
       "ciLastRunStatus": "startup_failure",
       "ciLastRunAt": "2026-10-01T00:49:27Z",
@@ -250,7 +250,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-06-08T11:05:16Z",
-      "daysSinceLastCommit": 134,
+      "daysSinceLastCommit": 135,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-06-08T11:05:18Z",
@@ -310,7 +310,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-04-13T11:43:50Z",
-      "daysSinceLastCommit": 190,
+      "daysSinceLastCommit": 191,
       "contributorCount": 2,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-04-13T11:43:52Z",
@@ -370,18 +370,18 @@
       "exists": true,
       "health": "yellow",
       "lastCommitDate": "2026-10-19T13:47:18Z",
-      "daysSinceLastCommit": 1,
+      "daysSinceLastCommit": 2,
       "contributorCount": 3,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-10-19T13:47:22Z",
       "currentlyFailingWorkflows": [],
-      "ciRecentFailureCount": 6,
+      "ciRecentFailureCount": 4,
       "ciFailuresByDay": [
-        3,
-        0,
+        1,
         0,
         2,
         1,
+        0,
         0,
         0
       ],
@@ -409,18 +409,6 @@
           "branch": "main",
           "date": "2026-10-15T11:25:42Z",
           "url": "https://github.com/eclipse-xfsc/facis-fap-principal-credential-issuance/actions/runs/38727256204"
-        },
-        {
-          "workflowName": "Eclipse Dash licence scan",
-          "branch": "main",
-          "date": "2026-10-14T12:36:22Z",
-          "url": "https://github.com/eclipse-xfsc/facis-fap-principal-credential-issuance/actions/runs/38565086808"
-        },
-        {
-          "workflowName": "Eclipse Dash licence scan",
-          "branch": "main",
-          "date": "2026-10-14T11:00:16Z",
-          "url": "https://github.com/eclipse-xfsc/facis-fap-principal-credential-issuance/actions/runs/38553503645"
         }
       ],
       "openIssueCount": 0,
@@ -450,9 +438,9 @@
           "sentiment": "neutral"
         },
         "ciRecentFailureCount": {
-          "previous": 7,
-          "current": 6,
-          "delta": -1,
+          "previous": 6,
+          "current": 4,
+          "delta": -2,
           "direction": "down",
           "sentiment": "good"
         }
@@ -467,7 +455,7 @@
       "exists": true,
       "health": "yellow",
       "lastCommitDate": "2026-07-31T11:06:02Z",
-      "daysSinceLastCommit": 81,
+      "daysSinceLastCommit": 82,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-26T10:15:00Z",
@@ -527,7 +515,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-10-02T12:18:30Z",
-      "daysSinceLastCommit": 18,
+      "daysSinceLastCommit": 19,
       "contributorCount": 13,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-10-02T12:18:46Z",
@@ -585,87 +573,137 @@
       "repo": "facis-zero-trust-demonstrator",
       "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator",
       "exists": true,
-      "health": "yellow",
+      "health": "red",
       "lastCommitDate": "2026-10-20T07:17:52Z",
-      "daysSinceLastCommit": 0,
+      "daysSinceLastCommit": 1,
       "contributorCount": 6,
       "ciLastRunStatus": "success",
-      "ciLastRunAt": "2026-10-20T07:17:55Z",
-      "currentlyFailingWorkflows": [],
-      "ciRecentFailureCount": 10,
+      "ciLastRunAt": "2026-10-21T12:13:55Z",
+      "currentlyFailingWorkflows": [
+        "Eclipse Dash licence scan (Go)"
+      ],
+      "ciRecentFailureCount": 18,
       "ciFailuresByDay": [
-        2,
-        2,
-        2,
-        2,
-        2,
         0,
+        0,
+        0,
+        0,
+        0,
+        18,
         0
       ],
       "failedRuns": [
         {
+          "workflowName": "Eclipse Dash licence scan (Go)",
+          "branch": "fix/go-1.27.3-builder",
+          "date": "2026-10-21T12:13:54Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/39597948441"
+        },
+        {
           "workflowName": "CI",
-          "branch": "feat/token-store-serve",
-          "date": "2026-10-19T16:29:14Z",
-          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/39285803798"
+          "branch": "feat/train-zone-manager",
+          "date": "2026-10-21T11:23:57Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/39591655706"
         },
         {
           "workflowName": "Eclipse Dash licence scan (Go)",
-          "branch": "feat/token-store-serve",
-          "date": "2026-10-19T16:29:14Z",
-          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/39285803034"
+          "branch": "feat/train-zone-manager",
+          "date": "2026-10-21T11:23:56Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/39591655076"
+        },
+        {
+          "workflowName": "CI",
+          "branch": "opsx/observability-stack",
+          "date": "2026-10-21T11:22:59Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/39591538477"
+        },
+        {
+          "workflowName": "Eclipse Dash licence scan (Go)",
+          "branch": "opsx/observability-stack",
+          "date": "2026-10-21T11:22:58Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/39591537573"
         },
         {
           "workflowName": "CI",
           "branch": "opsx/openbao-own-release",
-          "date": "2026-10-18T12:19:50Z",
-          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/39126824820"
+          "date": "2026-10-21T11:06:50Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/39589531011"
         },
         {
           "workflowName": "Eclipse Dash licence scan (Go)",
           "branch": "opsx/openbao-own-release",
-          "date": "2026-10-18T12:19:50Z",
-          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/39126824522"
-        },
-        {
-          "workflowName": "CI",
-          "branch": "feat/m3-zone-baseline",
-          "date": "2026-10-17T12:14:59Z",
-          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/39031773803"
-        },
-        {
-          "workflowName": "Eclipse Dash licence scan (Go)",
-          "branch": "feat/m3-zone-baseline",
-          "date": "2026-10-17T12:14:59Z",
-          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/39031773528"
-        },
-        {
-          "workflowName": "CI",
-          "branch": "feat/m3-zone-baseline",
-          "date": "2026-10-16T17:20:35Z",
-          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/38938923328"
-        },
-        {
-          "workflowName": "Eclipse Dash licence scan (Go)",
-          "branch": "feat/m3-zone-baseline",
-          "date": "2026-10-16T17:20:34Z",
-          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/38938922563"
+          "date": "2026-10-21T11:06:50Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/39589530498"
         },
         {
           "workflowName": "CI",
           "branch": "opsx/registration-inventory",
-          "date": "2026-10-15T15:23:42Z",
-          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/38759929567"
+          "date": "2026-10-21T10:49:44Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/39587428070"
         },
         {
           "workflowName": "Eclipse Dash licence scan (Go)",
           "branch": "opsx/registration-inventory",
-          "date": "2026-10-15T15:23:42Z",
-          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/38759928671"
+          "date": "2026-10-21T10:49:44Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/39587427550"
+        },
+        {
+          "workflowName": "Eclipse Dash licence scan (Go)",
+          "branch": "feat/zt24-spire-participant-zones",
+          "date": "2026-10-21T10:35:05Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/39585652963"
+        },
+        {
+          "workflowName": "CI",
+          "branch": "feat/zt24-spire-participant-zones",
+          "date": "2026-10-21T10:35:04Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/39585651389"
+        },
+        {
+          "workflowName": "CI",
+          "branch": "feat/zt23-mesh-mode-sidecar-fallback",
+          "date": "2026-10-21T10:13:31Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/39583002707"
+        },
+        {
+          "workflowName": "Eclipse Dash licence scan (Go)",
+          "branch": "feat/zt23-mesh-mode-sidecar-fallback",
+          "date": "2026-10-21T10:13:31Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/39583002638"
+        },
+        {
+          "workflowName": "CI",
+          "branch": "feat/atls-channel-binding",
+          "date": "2026-10-21T09:29:44Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/39577389189"
+        },
+        {
+          "workflowName": "Eclipse Dash licence scan (Go)",
+          "branch": "feat/atls-channel-binding",
+          "date": "2026-10-21T09:29:43Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/39577388159"
+        },
+        {
+          "workflowName": "CI",
+          "branch": "feat/plane-separation-design",
+          "date": "2026-10-21T09:10:15Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/39574869380"
+        },
+        {
+          "workflowName": "Eclipse Dash licence scan (Go)",
+          "branch": "feat/plane-separation-design",
+          "date": "2026-10-21T09:10:14Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/39574868382"
+        },
+        {
+          "workflowName": "CI",
+          "branch": "feat/plane-separation-design",
+          "date": "2026-10-21T08:33:18Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/39570150864"
         }
       ],
       "openIssueCount": 0,
-      "openHumanPRCount": 16,
+      "openHumanPRCount": 19,
       "needsReviewPRCount": 4,
       "releaseCount": 0,
       "latestRelease": null,
@@ -691,11 +729,11 @@
           "sentiment": "neutral"
         },
         "ciRecentFailureCount": {
-          "previous": 17,
-          "current": 10,
-          "delta": -7,
-          "direction": "down",
-          "sentiment": "good"
+          "previous": 10,
+          "current": 18,
+          "delta": 8,
+          "direction": "up",
+          "sentiment": "bad"
         }
       }
     }
