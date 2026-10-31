@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-30T05:12:38.503152+00:00",
+  "generatedAt": "2026-10-31T05:10:03.819745+00:00",
   "repos": [
     {
       "key": "root",
@@ -9,11 +9,11 @@
       "url": "https://github.com/eclipse-xfsc/facis",
       "exists": true,
       "health": "green",
-      "lastCommitDate": "2026-10-29T05:12:51Z",
+      "lastCommitDate": "2026-10-31T04:03:43Z",
       "daysSinceLastCommit": 0,
       "contributorCount": 11,
       "ciLastRunStatus": "pending",
-      "ciLastRunAt": "2026-10-30T05:11:41Z",
+      "ciLastRunAt": "2026-10-31T05:09:19Z",
       "currentlyFailingWorkflows": [],
       "ciRecentFailureCount": 0,
       "ciFailuresByDay": [
@@ -70,7 +70,7 @@
       "exists": true,
       "health": "red",
       "lastCommitDate": "2026-10-13T17:02:48Z",
-      "daysSinceLastCommit": 16,
+      "daysSinceLastCommit": 17,
       "contributorCount": 12,
       "ciLastRunStatus": "failure",
       "ciLastRunAt": "2026-10-13T17:03:00Z",
@@ -130,7 +130,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-08-03T17:00:52Z",
-      "daysSinceLastCommit": 87,
+      "daysSinceLastCommit": 88,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-01T19:35:09Z",
@@ -190,7 +190,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-07-31T08:21:27Z",
-      "daysSinceLastCommit": 90,
+      "daysSinceLastCommit": 91,
       "contributorCount": 7,
       "ciLastRunStatus": "startup_failure",
       "ciLastRunAt": "2026-10-01T00:49:27Z",
@@ -250,7 +250,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-06-08T11:05:16Z",
-      "daysSinceLastCommit": 143,
+      "daysSinceLastCommit": 144,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-06-08T11:05:18Z",
@@ -310,7 +310,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-04-13T11:43:50Z",
-      "daysSinceLastCommit": 199,
+      "daysSinceLastCommit": 200,
       "contributorCount": 2,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-04-13T11:43:52Z",
@@ -370,7 +370,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-10-19T13:47:18Z",
-      "daysSinceLastCommit": 10,
+      "daysSinceLastCommit": 11,
       "contributorCount": 3,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-10-22T11:00:26Z",
@@ -413,11 +413,11 @@
           "sentiment": "neutral"
         },
         "ciRecentFailureCount": {
-          "previous": 1,
+          "previous": 0,
           "current": 0,
-          "delta": -1,
-          "direction": "down",
-          "sentiment": "good"
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
         }
       }
     },
@@ -430,7 +430,7 @@
       "exists": true,
       "health": "yellow",
       "lastCommitDate": "2026-10-29T18:44:40Z",
-      "daysSinceLastCommit": 0,
+      "daysSinceLastCommit": 1,
       "contributorCount": 5,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-26T10:15:00Z",
@@ -459,11 +459,11 @@
       },
       "trends": {
         "contributorCount": {
-          "previous": 4,
+          "previous": 5,
           "current": 5,
-          "delta": 1,
-          "direction": "up",
-          "sentiment": "good"
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
         },
         "openIssueCount": {
           "previous": 0,
@@ -490,7 +490,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-10-02T12:18:30Z",
-      "daysSinceLastCommit": 27,
+      "daysSinceLastCommit": 28,
       "contributorCount": 13,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-10-02T12:18:46Z",
@@ -549,23 +549,51 @@
       "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator",
       "exists": true,
       "health": "red",
-      "lastCommitDate": "2026-10-20T07:17:52Z",
-      "daysSinceLastCommit": 9,
-      "contributorCount": 6,
+      "lastCommitDate": "2026-10-30T11:25:48Z",
+      "daysSinceLastCommit": 0,
+      "contributorCount": 7,
       "ciLastRunStatus": "failure",
-      "ciLastRunAt": "2026-10-28T11:31:45Z",
-      "currentlyFailingWorkflows": [],
-      "ciRecentFailureCount": 7,
+      "ciLastRunAt": "2026-10-30T16:27:10Z",
+      "currentlyFailingWorkflows": [
+        "CI",
+        "Token store",
+        "Eclipse Dash licence scan (Go)"
+      ],
+      "ciRecentFailureCount": 6,
       "ciFailuresByDay": [
         0,
         0,
+        1,
+        1,
         0,
-        5,
-        2,
-        0,
+        4,
         0
       ],
       "failedRuns": [
+        {
+          "workflowName": "CI",
+          "branch": "feat/token-store-key-custody",
+          "date": "2026-10-30T16:27:10Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/41090013706"
+        },
+        {
+          "workflowName": "Token store",
+          "branch": "feat/token-store-key-custody",
+          "date": "2026-10-30T16:27:10Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/41090012787"
+        },
+        {
+          "workflowName": "Eclipse Dash licence scan (Go)",
+          "branch": "feat/token-store-key-custody",
+          "date": "2026-10-30T16:27:10Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/41090012635"
+        },
+        {
+          "workflowName": "Eclipse Dash licence scan (Go)",
+          "branch": "feat/atls-channel-binding",
+          "date": "2026-10-30T11:50:47Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/41051002022"
+        },
         {
           "workflowName": "CI",
           "branch": "feat/policy-package",
@@ -574,39 +602,9 @@
         },
         {
           "workflowName": "Eclipse Dash licence scan (Go)",
-          "branch": "feat/policy-package",
-          "date": "2026-10-28T11:31:45Z",
-          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/40680652871"
-        },
-        {
-          "workflowName": "Eclipse Dash licence scan (Go)",
           "branch": "feat/m3-guard-integration",
           "date": "2026-10-27T10:58:37Z",
           "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/40492621053"
-        },
-        {
-          "workflowName": "Eclipse Dash licence scan (Go)",
-          "branch": "feat/connector-token-path",
-          "date": "2026-10-27T10:57:50Z",
-          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/40492522978"
-        },
-        {
-          "workflowName": "Eclipse Dash licence scan (Go)",
-          "branch": "feat/zt24-spire-participant-zones",
-          "date": "2026-10-27T08:27:24Z",
-          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/40473617589"
-        },
-        {
-          "workflowName": "CI",
-          "branch": "opsx/observability-stack",
-          "date": "2026-10-27T08:27:23Z",
-          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/40473614938"
-        },
-        {
-          "workflowName": "Eclipse Dash licence scan (Go)",
-          "branch": "opsx/observability-stack",
-          "date": "2026-10-27T08:27:22Z",
-          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/40473614314"
         }
       ],
       "openIssueCount": 0,
@@ -623,10 +621,10 @@
       "trends": {
         "contributorCount": {
           "previous": 6,
-          "current": 6,
-          "delta": 0,
-          "direction": "stable",
-          "sentiment": "neutral"
+          "current": 7,
+          "delta": 1,
+          "direction": "up",
+          "sentiment": "good"
         },
         "openIssueCount": {
           "previous": 0,
@@ -637,10 +635,10 @@
         },
         "ciRecentFailureCount": {
           "previous": 7,
-          "current": 7,
-          "delta": 0,
-          "direction": "stable",
-          "sentiment": "bad"
+          "current": 6,
+          "delta": -1,
+          "direction": "down",
+          "sentiment": "good"
         }
       }
     }
