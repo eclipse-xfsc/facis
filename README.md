@@ -41,7 +41,7 @@ This repository is responsible for implementing the standarized templates/ bluep
 | PoC | Description | Repository Link |
 |-----|-------------|:-----------------:|
 | *Aviation Collaboration* | It specifies the industrial usecases for secure cross-organizational service orchestration. | [`eclipse-xfsc/facis-aviation-poc`](https://github.com/eclipse-xfsc/facis/tree/main/PoC/aviation-poc) |
-| *Other PoC directories* | - | *Coming Soon.*|
+| *Convoy Demonstrator* | - | [`eclipse-xfsc/facis-convoy-demonstrator`](https://github.com/Jessia2597/facis/tree/main/PoC/convoy-demonstrator)|
 
 #### 3. Demonstrators
 | Demonstrators | Description | Repository Link |
