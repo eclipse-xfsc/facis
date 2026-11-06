@@ -41,11 +41,12 @@ This repository is responsible for implementing the standarized templates/ bluep
 | PoC | Description | Repository Link |
 |-----|-------------|:-----------------:|
 | *Aviation Collaboration* | It specifies the industrial usecases for secure cross-organizational service orchestration. | [`eclipse-xfsc/facis-aviation-poc`](https://github.com/eclipse-xfsc/facis/tree/main/PoC/aviation-poc) |
-| *Convoy Demonstrator* | - | [`eclipse-xfsc/facis-convoy-demonstrator`](https://github.com/Jessia2597/facis/tree/main/PoC/convoy-demonstrator)|
+| *Convoy Demonstrator* | - | [`eclipse-xfsc/facis-convoy-demonstrator`](https://github.com/eclipse-xfsc/facis/tree/main/PoC/convoy-demonstrator)|
 
 #### 3. Demonstrators
 | Demonstrators | Description | Repository Link |
 |-----|-------------|:-----------------:|
+| *AI challenge* | One aviation maintenance challenge, five open cases plus healthy seats. Two tool tracks. Every participant builds the complete five-agent workflow end to end with the tool of their choice. | [`eclipse-xfsc/demonstrators/ai-challenge`](https://github.com/eclipse-xfsc/facis/tree/main/Demonstrators/AI%20Challenge) |
 | *Zero Trust Demonstrators* | showes how Two Trust Zones interact through the TRAIN framework to securely exchange digital services between participants.  | [`eclipse-xfsc/demonstrators/zero-trust-demonstrators`](https://github.com/eclipse-xfsc/facis/tree/main/Demonstrators) |
 
 
