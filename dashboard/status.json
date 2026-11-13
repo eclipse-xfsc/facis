@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-12T05:11:31.990889+00:00",
+  "generatedAt": "2026-11-13T05:10:59.472084+00:00",
   "repos": [
     {
       "key": "root",
@@ -9,11 +9,11 @@
       "url": "https://github.com/eclipse-xfsc/facis",
       "exists": true,
       "health": "green",
-      "lastCommitDate": "2026-11-11T05:11:09Z",
+      "lastCommitDate": "2026-11-12T05:11:32Z",
       "daysSinceLastCommit": 0,
       "contributorCount": 11,
       "ciLastRunStatus": "pending",
-      "ciLastRunAt": "2026-11-12T05:10:30Z",
+      "ciLastRunAt": "2026-11-13T05:09:56Z",
       "currentlyFailingWorkflows": [],
       "ciRecentFailureCount": 0,
       "ciFailuresByDay": [
@@ -70,7 +70,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-10-13T17:02:48Z",
-      "daysSinceLastCommit": 29,
+      "daysSinceLastCommit": 30,
       "contributorCount": 12,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-11-06T14:44:58Z",
@@ -130,7 +130,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-08-03T17:00:52Z",
-      "daysSinceLastCommit": 100,
+      "daysSinceLastCommit": 101,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-01T19:35:09Z",
@@ -190,7 +190,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-07-31T08:21:27Z",
-      "daysSinceLastCommit": 103,
+      "daysSinceLastCommit": 104,
       "contributorCount": 7,
       "ciLastRunStatus": "startup_failure",
       "ciLastRunAt": "2026-10-01T00:49:27Z",
@@ -250,7 +250,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-06-08T11:05:16Z",
-      "daysSinceLastCommit": 156,
+      "daysSinceLastCommit": 157,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-06-08T11:05:18Z",
@@ -310,7 +310,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-04-13T11:43:50Z",
-      "daysSinceLastCommit": 212,
+      "daysSinceLastCommit": 213,
       "contributorCount": 2,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-04-13T11:43:52Z",
@@ -370,24 +370,19 @@
       "exists": true,
       "health": "red",
       "lastCommitDate": "2026-10-19T13:47:18Z",
-      "daysSinceLastCommit": 23,
+      "daysSinceLastCommit": 24,
       "contributorCount": 3,
       "ciLastRunStatus": "failure",
       "ciLastRunAt": "2026-11-11T14:04:08Z",
-      "currentlyFailingWorkflows": [
-        "Images",
-        "CI",
-        "Eclipse Dash licence scan",
-        "Security scans"
-      ],
+      "currentlyFailingWorkflows": [],
       "ciRecentFailureCount": 22,
       "ciFailuresByDay": [
         0,
         0,
         0,
         0,
-        0,
         22,
+        0,
         0
       ],
       "failedRuns": [
@@ -526,7 +521,7 @@
       ],
       "openIssueCount": 38,
       "openHumanPRCount": 26,
-      "needsReviewPRCount": 4,
+      "needsReviewPRCount": 2,
       "releaseCount": 2,
       "latestRelease": "qa-ready-22-10-2026",
       "governanceScore": 3,
@@ -551,10 +546,10 @@
           "sentiment": "bad"
         },
         "ciRecentFailureCount": {
-          "previous": 15,
+          "previous": 22,
           "current": 22,
-          "delta": 7,
-          "direction": "up",
+          "delta": 0,
+          "direction": "stable",
           "sentiment": "bad"
         }
       }
@@ -568,7 +563,7 @@
       "exists": true,
       "health": "red",
       "lastCommitDate": "2026-11-02T07:37:43Z",
-      "daysSinceLastCommit": 9,
+      "daysSinceLastCommit": 10,
       "contributorCount": 5,
       "ciLastRunStatus": "failure",
       "ciLastRunAt": "2026-11-02T07:37:48Z",
@@ -628,7 +623,7 @@
       "exists": true,
       "health": "red",
       "lastCommitDate": "2026-10-02T12:18:30Z",
-      "daysSinceLastCommit": 40,
+      "daysSinceLastCommit": 41,
       "contributorCount": 13,
       "ciLastRunStatus": "failure",
       "ciLastRunAt": "2026-11-01T00:10:18Z",
@@ -688,23 +683,19 @@
       "exists": true,
       "health": "red",
       "lastCommitDate": "2026-11-06T16:21:38Z",
-      "daysSinceLastCommit": 5,
+      "daysSinceLastCommit": 6,
       "contributorCount": 8,
       "ciLastRunStatus": "failure",
       "ciLastRunAt": "2026-11-11T14:04:24Z",
-      "currentlyFailingWorkflows": [
-        "CI",
-        "Eclipse Dash licence scan (Go)",
-        "Token store"
-      ],
+      "currentlyFailingWorkflows": [],
       "ciRecentFailureCount": 8,
       "ciFailuresByDay": [
         0,
         0,
         0,
         0,
-        0,
         8,
+        0,
         0
       ],
       "failedRuns": [
@@ -784,11 +775,11 @@
           "sentiment": "neutral"
         },
         "ciRecentFailureCount": {
-          "previous": 9,
+          "previous": 8,
           "current": 8,
-          "delta": -1,
-          "direction": "down",
-          "sentiment": "good"
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "bad"
         }
       }
     }
