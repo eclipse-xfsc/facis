@@ -19,3 +19,6 @@
 [submodule "Demonstrators/Zero Trust Demonstrators/implementation"]
 	path = Demonstrators/Zero Trust Demonstrators/implementation
 	url = https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator.git
+[submodule "PoC/convoy-demonstrator/implementation"]
+	path = PoC/convoy-demonstrator/implementation
+	url = https://github.com/eclipse-xfsc/facis-poc-convoy-demonstrator.git
