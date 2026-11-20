@@ -40,8 +40,8 @@ This repository is responsible for implementing the standarized templates/ bluep
 #### 2. FACIS Proof-Of-Concepts (PoC) 
 | PoC | Description | Repository Link |
 |-----|-------------|:-----------------:|
-| *Aviation Collaboration* | It specifies the industrial usecases for secure cross-organizational service orchestration. | [`eclipse-xfsc/facis-aviation-poc`](https://github.com/eclipse-xfsc/facis/tree/main/PoC/aviation-poc) |
-| *Convoy Demonstrator* | - | [`eclipse-xfsc/facis-convoy-demonstrator`](https://github.com/eclipse-xfsc/facis/tree/main/PoC/convoy-demonstrator)|
+| *Aviation Collaboration* | Aviation Federation Portal: a flow-based implementation on ORCE of the onboarding lifecycle in a federated ecosystem. It verifies certificates, creates DIDs, issues Verifiable Credentials and a Verifiable Presentation, and validates them against trust anchors and a compliance API.  | [`eclipse-xfsc/facis-aviation-poc`](https://github.com/eclipse-xfsc/facis/tree/main/PoC/aviation-poc) |
+| *Convoy Demonstrator* | showes trusted, cross-OEM vehicle coordination through federated identity, verifiable credentials, and secure, fail-safe convoy orchestration using the XFSC framework.| [`eclipse-xfsc/facis-convoy-demonstrator`](https://github.com/eclipse-xfsc/facis/tree/main/PoC/convoy-demonstrator)|
 
 #### 3. Demonstrators
 | Demonstrators | Description | Repository Link |
