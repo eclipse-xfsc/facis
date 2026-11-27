@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-26T05:11:04.042702+00:00",
+  "generatedAt": "2026-11-27T05:10:48.270608+00:00",
   "repos": [
     {
       "key": "root",
@@ -9,11 +9,11 @@
       "url": "https://github.com/eclipse-xfsc/facis",
       "exists": true,
       "health": "green",
-      "lastCommitDate": "2026-11-25T05:11:04Z",
+      "lastCommitDate": "2026-11-27T04:03:50Z",
       "daysSinceLastCommit": 0,
       "contributorCount": 11,
       "ciLastRunStatus": "pending",
-      "ciLastRunAt": "2026-11-26T05:10:16Z",
+      "ciLastRunAt": "2026-11-27T05:09:55Z",
       "currentlyFailingWorkflows": [],
       "ciRecentFailureCount": 0,
       "ciFailuresByDay": [
@@ -70,7 +70,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-10-13T17:02:48Z",
-      "daysSinceLastCommit": 43,
+      "daysSinceLastCommit": 44,
       "contributorCount": 13,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-11-06T14:44:58Z",
@@ -130,7 +130,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-08-03T17:00:52Z",
-      "daysSinceLastCommit": 114,
+      "daysSinceLastCommit": 115,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-07-01T19:35:09Z",
@@ -188,26 +188,35 @@
       "repo": "facis-fap-iot-ai",
       "url": "https://github.com/eclipse-xfsc/facis-fap-iot-ai",
       "exists": true,
-      "health": "green",
-      "lastCommitDate": "2026-07-31T08:21:27Z",
-      "daysSinceLastCommit": 117,
-      "contributorCount": 7,
-      "ciLastRunStatus": "success",
-      "ciLastRunAt": "2026-11-25T15:13:20Z",
-      "currentlyFailingWorkflows": [],
-      "ciRecentFailureCount": 0,
+      "health": "red",
+      "lastCommitDate": "2026-11-26T14:05:08Z",
+      "daysSinceLastCommit": 0,
+      "contributorCount": 8,
+      "ciLastRunStatus": "failure",
+      "ciLastRunAt": "2026-11-26T18:57:39Z",
+      "currentlyFailingWorkflows": [
+        "CI"
+      ],
+      "ciRecentFailureCount": 1,
       "ciFailuresByDay": [
         0,
         0,
         0,
         0,
         0,
-        0,
+        1,
         0
       ],
-      "failedRuns": [],
+      "failedRuns": [
+        {
+          "workflowName": "CI",
+          "branch": "feature/icam-ai-insight-adaptations",
+          "date": "2026-11-26T18:57:39Z",
+          "url": "https://github.com/eclipse-xfsc/facis-fap-iot-ai/actions/runs/45879978584"
+        }
+      ],
       "openIssueCount": 0,
-      "openHumanPRCount": 4,
+      "openHumanPRCount": 6,
       "needsReviewPRCount": 1,
       "releaseCount": 0,
       "latestRelease": null,
@@ -220,10 +229,10 @@
       "trends": {
         "contributorCount": {
           "previous": 7,
-          "current": 7,
-          "delta": 0,
-          "direction": "stable",
-          "sentiment": "neutral"
+          "current": 8,
+          "delta": 1,
+          "direction": "up",
+          "sentiment": "good"
         },
         "openIssueCount": {
           "previous": 0,
@@ -234,10 +243,10 @@
         },
         "ciRecentFailureCount": {
           "previous": 0,
-          "current": 0,
-          "delta": 0,
-          "direction": "stable",
-          "sentiment": "neutral"
+          "current": 1,
+          "delta": 1,
+          "direction": "up",
+          "sentiment": "bad"
         }
       }
     },
@@ -250,7 +259,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-06-08T11:05:16Z",
-      "daysSinceLastCommit": 170,
+      "daysSinceLastCommit": 171,
       "contributorCount": 4,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-06-08T11:05:18Z",
@@ -310,7 +319,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-04-13T11:43:50Z",
-      "daysSinceLastCommit": 226,
+      "daysSinceLastCommit": 227,
       "contributorCount": 2,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-04-13T11:43:52Z",
@@ -370,7 +379,7 @@
       "exists": true,
       "health": "green",
       "lastCommitDate": "2026-11-18T22:15:37Z",
-      "daysSinceLastCommit": 7,
+      "daysSinceLastCommit": 8,
       "contributorCount": 6,
       "ciLastRunStatus": "success",
       "ciLastRunAt": "2026-11-23T06:36:11Z",
@@ -413,11 +422,11 @@
           "sentiment": "bad"
         },
         "ciRecentFailureCount": {
-          "previous": 5,
+          "previous": 0,
           "current": 0,
-          "delta": -5,
-          "direction": "down",
-          "sentiment": "good"
+          "delta": 0,
+          "direction": "stable",
+          "sentiment": "neutral"
         }
       }
     },
@@ -430,7 +439,7 @@
       "exists": true,
       "health": "red",
       "lastCommitDate": "2026-11-02T07:37:43Z",
-      "daysSinceLastCommit": 23,
+      "daysSinceLastCommit": 24,
       "contributorCount": 5,
       "ciLastRunStatus": "failure",
       "ciLastRunAt": "2026-11-02T07:37:48Z",
@@ -490,7 +499,7 @@
       "exists": true,
       "health": "red",
       "lastCommitDate": "2026-10-02T12:18:30Z",
-      "daysSinceLastCommit": 54,
+      "daysSinceLastCommit": 55,
       "contributorCount": 13,
       "ciLastRunStatus": "failure",
       "ciLastRunAt": "2026-11-01T00:10:18Z",
@@ -550,25 +559,30 @@
       "exists": true,
       "health": "red",
       "lastCommitDate": "2026-11-23T14:07:28Z",
-      "daysSinceLastCommit": 2,
+      "daysSinceLastCommit": 3,
       "contributorCount": 8,
-      "ciLastRunStatus": "failure",
-      "ciLastRunAt": "2026-11-25T18:47:39Z",
+      "ciLastRunStatus": "success",
+      "ciLastRunAt": "2026-11-26T13:31:46Z",
       "currentlyFailingWorkflows": [
-        "CI",
         "Eclipse Dash licence scan (Go)"
       ],
-      "ciRecentFailureCount": 5,
+      "ciRecentFailureCount": 6,
       "ciFailuresByDay": [
         0,
         0,
         0,
         0,
-        0,
         5,
+        1,
         0
       ],
       "failedRuns": [
+        {
+          "workflowName": "Eclipse Dash licence scan (Go)",
+          "branch": "opsx/zone-istio-1-31-4",
+          "date": "2026-11-26T13:31:46Z",
+          "url": "https://github.com/eclipse-xfsc/facis-zero-trust-demonstrator/actions/runs/45830015768"
+        },
         {
           "workflowName": "CI",
           "branch": "feat/atls-channel-binding",
@@ -627,8 +641,8 @@
           "sentiment": "neutral"
         },
         "ciRecentFailureCount": {
-          "previous": 4,
-          "current": 5,
+          "previous": 5,
+          "current": 6,
           "delta": 1,
           "direction": "up",
           "sentiment": "bad"
